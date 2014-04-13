@@ -21,8 +21,7 @@ namespace RezRouting.Tests.RouteMapping
                 builder.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
-                    orders.Collection(notes 
-                        => notes.HandledBy<NotesController>());
+                    orders.Collection(notes => notes.HandledBy<NotesController>());
                 });
                 return new MappingExpectations(builder.MapRoutes())
                     .ExpectMatch("GET orders", "Orders.Index", "Orders#Index")
