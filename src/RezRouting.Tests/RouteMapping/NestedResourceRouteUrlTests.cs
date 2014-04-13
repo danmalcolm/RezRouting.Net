@@ -1,19 +1,19 @@
 using System.Collections.Generic;
-using RezRouting.Tests.RouteMapping.TestControllers.Orders;
-using RezRouting.Tests.Shared.Expectations;
+using RezRouting.Tests.Infrastructure.Expectations;
+using RezRouting.Tests.Infrastructure.TestControllers.Orders;
 using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
     public class NestedResourceRouteUrlTests
     {
-        [Theory, PropertyData("Collections2LevelsData")]
+        [Theory, PropertyData("Collections2LevelsExpectations")]
         public void Collections2Levels(UrlExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> Collections2LevelsData
+        public static IEnumerable<object[]> Collections2LevelsExpectations
         {
             get
             {
@@ -60,13 +60,13 @@ namespace RezRouting.Tests.RouteMapping
             }
         }
 
-        [Theory, PropertyData("SingularInCollectionData")]
+        [Theory, PropertyData("SingularInCollectionExpectations")]
         public void SingularInCollection(UrlExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> SingularInCollectionData
+        public static IEnumerable<object[]> SingularInCollectionExpectations
         {
             get
             {

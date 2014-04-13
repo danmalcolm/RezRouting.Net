@@ -77,19 +77,6 @@ namespace RezRouting.Tests.Utility
             Assert.Equal(singular, plural.Singularize(Plurality.CouldBeEither));
         }
 
-//        //Uppercases individual words and removes some characters 
-//        [Theory]
-//        [InlineData("some title", "Some Title")]
-//        [InlineData("some-title", "Some Title")]
-//        [InlineData("sometitle", "Sometitle")]
-//        [InlineData("some-title: The begining", "Some Title: The Begining")]
-//        [InlineData("some_title:_the_begining", "Some Title: The Begining")]
-//        [InlineData("some title: The_begining", "Some Title: The Begining")]
-//        public void Titleize(string input, string expectedOuput)
-//        {
-//            Assert.Equal(expectedOuput, input.Titleize());
-//        }
-
         [InlineData("some_title", "some-title")]
         [InlineData("some-title", "some-title")]
         [InlineData("some_title_goes_here", "some-title-goes-here")]

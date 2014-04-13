@@ -17,7 +17,7 @@ namespace RezRouting
         public RootResourceBuilder()
         {
             CustomName("Root");
-            CustomPath("");
+            CustomUrlPath("");
             Include("Show");
         }
 

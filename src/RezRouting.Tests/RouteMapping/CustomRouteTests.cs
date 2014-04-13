@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using RezRouting.Configuration;
-using RezRouting.Tests.Shared.Expectations;
+using RezRouting.Tests.Infrastructure.Expectations;
 using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
     public class CustomRouteTests
     {
-        [Theory, PropertyData("CustomRoutesData")]
+        [Theory, PropertyData("CustomRoutesExpectations")]
         public void MappingCustomRoutes(MappingExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> CustomRoutesData
+        public static IEnumerable<object[]> CustomRoutesExpectations
         {
             get
             {
@@ -33,7 +33,7 @@ namespace RezRouting.Tests.RouteMapping
                     configuration.AddCustomRoute(bust);
                 });
                 root.Collection(asses => asses.HandledBy<AssesController>());
-                root.Collection(asses => asses.HandledBy<DonkeysController>());
+                root.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
                 
                 return new MappingExpectations(root.MapRoutes())
                     .ExpectMatch("GET asses", "Asses.Index", "Asses#Index")

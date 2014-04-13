@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using RezRouting.Tests.RouteMapping.TestControllers.Users;
-using RezRouting.Tests.Shared.Expectations;
+using RezRouting.Tests.Infrastructure.Expectations;
+using RezRouting.Tests.Infrastructure.TestControllers.Users;
 using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping

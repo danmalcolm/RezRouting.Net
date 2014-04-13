@@ -1,10 +1,6 @@
-using System.Collections.Generic;
 using System.Web.Mvc;
-using RezRouting.Tests.RouteMapping.TestControllers.Profile;
-using RezRouting.Tests.Shared.Assertions;
-using RezRouting.Tests.Shared.Expectations;
+using RezRouting.Tests.Infrastructure.Assertions;
 using Xunit;
-using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
@@ -51,6 +47,12 @@ namespace RezRouting.Tests.RouteMapping
             builder.ShouldMapRoutesWithControllerActions("customactionname#index", "customactionname#show");
         }
 
+        [Fact]
+        public void ShouldMapRouteToFirstControllerWhenSameActionExistsOnMultipleContollers()
+        {
+            builder.Collection(test => test.HandledBy<SameActions1Controller,SameActions2Controller>());
+            builder.ShouldMapRoutesWithControllerActions("sameactions1#index");
+        }
 
         public class Test1Controller : Controller
         {
@@ -111,7 +113,23 @@ namespace RezRouting.Tests.RouteMapping
             {
                 return null;
             }
-        } 
+        }
+
+        public class SameActions1Controller : Controller
+        {
+            public ActionResult Index()
+            {
+                return null;
+            }
+        }
+
+        public class SameActions2Controller : Controller
+        {
+            public ActionResult Index()
+            {
+                return null;
+            }
+        }
     }
 }
 

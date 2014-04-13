@@ -31,7 +31,7 @@ namespace RezRouting
             customName = name;
         }
 
-        public void CustomPath(string path)
+        public void CustomUrlPath(string path)
         {
             customPath = path;
         }

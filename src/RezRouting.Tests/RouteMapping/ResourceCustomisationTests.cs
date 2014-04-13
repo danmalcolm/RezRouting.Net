@@ -1,25 +1,25 @@
-﻿using System;
-using System.Linq;
-using FluentAssertions;
-using RezRouting.Routing;
-using RezRouting.Tests.RouteMapping.TestControllers.Products2;
+﻿using RezRouting.Tests.Infrastructure.Assertions;
+using RezRouting.Tests.Infrastructure.TestControllers.Products2;
+using RezRouting.Tests.Infrastructure.TestControllers.Users;
 using Xunit;
 
 namespace RezRouting.Tests.RouteMapping
 {
+    /// <summary>
+    /// Tests customisations available at resource level
+    /// </summary>
     public class ResourceCustomisationTests
     {
         [Fact]
         public void ShouldUseDefaultConventionForResourceNameAndPathWithMultipleControllers()
         {
             var builder = new RootResourceBuilder();
-            builder.Collection(users => users.HandledBy<ProductsDisplayController,ProductsEditController>());
-            var routes = builder.MapRoutes();
-            var routeNames = new[]
-            {
-                "Products.Index", "Products.Show", "Products.New", "Products.Create", "Products.Edit", "Products.Update", "Products.Delete"
-            };
-            routes.OfType<ResourceActionRoute>().Select(x => x.Name).Should().Contain(routeNames);
+            builder.Collection(products
+                => products.HandledBy<ProductsDisplayController, ProductsEditController>());
+
+            builder.ShouldMapRoutesWithNames("Products.Index", "Products.Show", 
+                "Products.New", "Products.Create", "Products.Edit", "Products.Update",
+                "Products.Delete");
         }
 
         [Fact]
@@ -28,16 +28,13 @@ namespace RezRouting.Tests.RouteMapping
             var builder = new RootResourceBuilder();
             builder.Collection(products =>
             {
-                products.CustomName("Salamanders");
                 products.HandledBy<ProductsDisplayController, ProductsEditController>();
+                products.CustomName("Salamanders");
             });
-            var routes = builder.MapRoutes();
-            Console.Write(builder.DebugSummary());
-            var routeNames = new[]
-            {
-                "Salamanders.Index", "Salamanders.Show", "Salamanders.New", "Salamanders.Create", "Salamanders.Edit", "Salamanders.Update", "Salamanders.Delete"
-            };
-            routes.OfType<ResourceActionRoute>().Select(x => x.Name).Should().Contain(routeNames);
+
+            builder.ShouldMapRoutesWithNames("Salamanders.Index", "Salamanders.Show",
+                "Salamanders.New", "Salamanders.Create", "Salamanders.Edit",
+                "Salamanders.Update", "Salamanders.Delete");
         }
 
         [Fact]
@@ -46,16 +43,39 @@ namespace RezRouting.Tests.RouteMapping
             var builder = new RootResourceBuilder();
             builder.Collection(products =>
             {
-                products.CustomPath("salamanders");
+                products.CustomUrlPath("salamanders");
                 products.HandledBy<ProductsDisplayController, ProductsEditController>();
             });
-            var routes = builder.MapRoutes();
-            Console.Write(builder.DebugSummary());
-            var expected = new[]
+
+            builder.ShouldMapRoutesWithUrls("salamanders", "salamanders/{id}",
+                "salamanders/new", "salamanders", "salamanders/{id}/edit",
+                "salamanders/{id}", "salamanders/{id}");
+        }
+
+        [Fact]
+        public void ShouldOnlyMapRoutesSpecifiedWhenUsingIncludeFilter()
+        {
+            var root = new RootResourceBuilder();
+            root.Collection(users =>
             {
-                "salamanders", "salamanders/{id}", "salamanders/new", "salamanders", "salamanders/{id}/edit", "salamanders/{id}", "salamanders/{id}"
-            };
-            routes.OfType<ResourceActionRoute>().Select(x => x.Url).Should().Contain(expected);
+                users.Include("Index", "Show");
+                users.HandledBy<UsersController>();
+            });
+            root.ShouldMapRoutesWithNames("Users.Index", "Users.Show");
+        }
+
+        [Fact]
+        public void ShouldNotMapRoutesSpecifiedViaExcludeFilter()
+        {
+            var root = new RootResourceBuilder();
+            root.Collection(users =>
+            {
+                users.Exclude("Delete");
+                users.HandledBy<UsersController>();
+            });
+            root.ShouldMapRoutesWithNames("Users.Index", "Users.Show", "Users.New", 
+                "Users.Create", "Users.Edit", "Users.Update");
+        
         }
     }
 }
