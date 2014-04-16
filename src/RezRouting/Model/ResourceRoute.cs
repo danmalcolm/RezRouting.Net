@@ -50,8 +50,7 @@ namespace RezRouting.Model
 
         private RouteProperties GetRouteProperties(string resourceName, string resourceUrl)
         {
-            // Name - based on ancestors and self, e.g. Parent.Child or GrandParent.Parent.Child
-            //string resourceTypeNamesPath = string.Join(".", resource.AncestorsAndSelf.Select(x => x.Name));
+            // Name - based on nested resource path and action name
             string name = string.Format("{0}.{1}", resourceName, RouteType.Name);
 
             // URL - path to resource + any additional path

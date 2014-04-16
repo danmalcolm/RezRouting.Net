@@ -13,11 +13,11 @@ namespace RezRouting.Tests.Configuration
     /// </summary>
     public class ResourceNameConfigurationTests
     {
-        private readonly RootResourceBuilder builder;
+        private readonly RouteMapper builder;
 
         public ResourceNameConfigurationTests()
         {
-            builder = new RootResourceBuilder();
+            builder = new RouteMapper();
             builder.Collection(users => users.HandledBy<UsersController>());
         }
 

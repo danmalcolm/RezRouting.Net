@@ -21,10 +21,10 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Collection(users => users.HandledBy<UsersController>());
+                var mapper = new RouteMapper();
+                mapper.Collection(users => users.HandledBy<UsersController>());
 
-                return new UrlExpectations(root.MapRoutes())
+                return new UrlExpectations(mapper.MapRoutes())
                     .ForRoute("Users.Index", new {httpMethod = "GET"}, "/users")
                     .ForAction("users#index", new {httpMethod = "GET"}, "/users")
                     .ForRoute("Users.Show", new {httpMethod = "GET", id = "123"}, "/users/123")
@@ -53,10 +53,10 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Singular(session => session.HandledBy<SessionController>());
+                var mapper = new RouteMapper();
+                mapper.Singular(session => session.HandledBy<SessionController>());
 
-                return new UrlExpectations(root.MapRoutes())
+                return new UrlExpectations(mapper.MapRoutes())
                     .ForRoute("Session.Show", new { httpMethod = "GET" }, "/session")
                     .ForAction("session#show", new { httpMethod = "GET" }, "/session")
                     .ForRoute("Session.New", new { httpMethod = "GET" }, "/session/new")

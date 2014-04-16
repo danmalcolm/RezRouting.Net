@@ -16,16 +16,14 @@ namespace RezRouting
     {
         private const string DefaultIdName = "id";
         private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
-
+        private readonly HashSet<Type> controllerTypes = new HashSet<Type>();
+        private readonly List<string> includedRouteNames = new List<string>();
+        private readonly List<string> excludedRouteNames = new List<string>();
         private string customName;
         private string customPath;
         private string customIdName;
         private string customIdNameAsAncestor;
 
-        private readonly HashSet<Type> controllerTypes = new HashSet<Type>();
-        private readonly List<string> includedRouteNames = new List<string>();
-        private readonly List<string> excludedRouteNames = new List<string>();
-        
         public void CustomName(string name)
         {
             customName = name;
@@ -35,7 +33,7 @@ namespace RezRouting
         {
             customPath = path;
         }
-        
+
         protected void CustomIdName(string name)
         {
             customIdName = name;
@@ -57,7 +55,7 @@ namespace RezRouting
         /// <param name="names">The names of the RouteTypes to include</param>
         public void Include(params string[] names)
         {
-            if(excludedRouteNames.Any())
+            if (excludedRouteNames.Any())
                 throw new InvalidOperationException("Cannot combine include and exclude");
             includedRouteNames.AddRange(names);
         }
@@ -72,33 +70,33 @@ namespace RezRouting
             if (includedRouteNames.Any())
                 throw new InvalidOperationException("Cannot combine include and exclude");
             excludedRouteNames.AddRange(names);
-        }        
-      
+        }
+
         /// <summary>
-        /// Maps routes for all standard resource actions found on the supplied controller type
+        /// Sets a controller used to handle this resource's actions
         /// </summary>
         /// <typeparam name="TController"></typeparam>
         public void HandledBy<TController>()
             where TController : Controller
         {
-            HandledBy(typeof(TController));
+            HandledBy(typeof (TController));
         }
 
         /// <summary>
-        /// Maps routes for all standard resource actions found on the supplied controller types
+        /// Sets controllers used to handle this resource's actions
         /// </summary>
         /// <typeparam name="TController1"></typeparam>
         /// <typeparam name="TController2"></typeparam>
-        public void HandledBy<TController1,TController2>()
+        public void HandledBy<TController1, TController2>()
             where TController1 : Controller
             where TController2 : Controller
         {
-            HandledBy(typeof(TController1));
-            HandledBy(typeof(TController2));
+            HandledBy(typeof (TController1));
+            HandledBy(typeof (TController2));
         }
 
         /// <summary>
-        /// Maps routes for all standard resource actions found on the supplied controller types
+        /// Sets controllers used to handle this resource's actions
         /// </summary>
         /// <typeparam name="TController1"></typeparam>
         /// <typeparam name="TController2"></typeparam>
@@ -108,13 +106,13 @@ namespace RezRouting
             where TController2 : Controller
             where TController3 : Controller
         {
-            HandledBy(typeof(TController1));
-            HandledBy(typeof(TController2));
-            HandledBy(typeof(TController3));
+            HandledBy(typeof (TController1));
+            HandledBy(typeof (TController2));
+            HandledBy(typeof (TController3));
         }
 
         /// <summary>
-        /// Maps routes for all standard resource actions found on the supplied controller types
+        /// Sets controllers used to handle this resource's actions
         /// </summary>
         /// <typeparam name="TController1"></typeparam>
         /// <typeparam name="TController2"></typeparam>
@@ -126,24 +124,24 @@ namespace RezRouting
             where TController3 : Controller
             where TController4 : Controller
         {
-            HandledBy(typeof(TController1));
-            HandledBy(typeof(TController2));
-            HandledBy(typeof(TController3));
-            HandledBy(typeof(TController4));
+            HandledBy(typeof (TController1));
+            HandledBy(typeof (TController2));
+            HandledBy(typeof (TController3));
+            HandledBy(typeof (TController4));
         }
 
         /// <summary>
-        /// Maps routes for all actions found on the controller type
+        /// Sets a controller used to handle actions
         /// </summary>
         /// <param name="controllerType"></param>
+        // ReSharper disable once MemberCanBePrivate.Global
         public void HandledBy(Type controllerType)
         {
             controllerTypes.Add(controllerType);
         }
 
         /// <summary>
-        /// Creates routes for a child collection of resources, i.e. items represented by a 
-        /// plural path in the URL, such as /users or /products
+        /// Sets up routes for a child collection resource within the current resource
         /// </summary>
         /// <param name="configure"></param>
         public void Collection(Action<CollectionBuilder> configure)
@@ -154,11 +152,7 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Creates routes for a child singular resource, i.e. an item represented by a singular path
-        /// in the URL, such as /session or /profile. Singular resources do not have an identifer
-        /// in the route URL and are used either for a logical entity, /settings or if a resource 
-        /// can be identified implicitly from other information. For example, a user's authentication 
-        /// status might be used to display a singular profile resource.
+        /// Creates routes for a child singular resource within the current resource
         /// </summary>
         /// <param name="configure"></param>
         public void Singular(Action<SingularBuilder> configure)
@@ -176,7 +170,7 @@ namespace RezRouting
         /// <param name="configuration"></param>
         /// <param name="ancestors"></param>
         /// <returns></returns>
-        protected Resource Build(RouteConfiguration configuration, IEnumerable<Resource> ancestors)
+        internal Resource Build(RouteConfiguration configuration, IEnumerable<Resource> ancestors)
         {
             // Get applicable RouteTypes for current resource type (singular or collection)
             var routeTypes = configuration.RouteTypes
@@ -184,21 +178,21 @@ namespace RezRouting
             if (includedRouteNames.Any())
             {
                 routeTypes = routeTypes.Where(
-                        rt => includedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
+                    rt => includedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
             }
             if (excludedRouteNames.Any())
             {
                 routeTypes = routeTypes.Where(
-                        rt => !excludedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
+                    rt => !excludedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
             }
-            
+
             // Get available actions on controllers handling actions for our resource
             var actions = (from controllerType in controllerTypes
                 let descriptor = new ReflectedControllerDescriptor(controllerType)
-                from action in  descriptor.GetCanonicalActions()
+                from action in descriptor.GetCanonicalActions()
                 let actionName = action.GetActionNameOverride() ?? action.ActionName
-                select new { ControllerType = descriptor.ControllerType, ActionName = actionName }).ToList();
-            
+                select new {ControllerType = descriptor.ControllerType, ActionName = actionName}).ToList();
+
             // Get first available action for each route
             var routes = from routeType in routeTypes
                 orderby routeType.MappingOrder
@@ -207,27 +201,30 @@ namespace RezRouting
                 where action != null
                 select new ResourceRoute(routeType, action.ControllerType);
 
-            string resourceName = customName ?? InferNameFromControllers(configuration);
+            string resourceName = customName ?? GetNameBasedOnControllers(configuration);
             string resourcePath = customPath ?? FormatResourcePath(resourceName, configuration);
 
             string idName = customIdName ?? DefaultIdName;
-            string idNameAsAncestor = customIdNameAsAncestor ?? resourceName.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
-            
-            var resource = new Resource(ancestors, resourceName, resourcePath, ResourceType, idName, idNameAsAncestor, routes);
+            string idNameAsAncestor = customIdNameAsAncestor ??
+                                      resourceName.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
+
+            var resource = new Resource(ancestors, resourceName, resourcePath, ResourceType, idName, idNameAsAncestor,
+                routes);
             var childResources = from child in children
-                                 select child.Build(configuration, ancestors.Concat(new [] { resource }));
+                select child.Build(configuration, ancestors.Concat(new[] {resource}));
             resource.SetChildren(childResources);
             return resource;
         }
 
-        private string InferNameFromControllers(RouteConfiguration configuration)
+        private string GetNameBasedOnControllers(RouteConfiguration configuration)
         {
             string name = configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
             if (string.IsNullOrWhiteSpace(name))
             {
                 string controllerTypeNames = string.Join(", ", controllerTypes.Select(x => x.Name));
                 throw new RouteConfigurationException(
-                    "Unable to infer resource name from controller types " + controllerTypeNames + ". Consider setting the name explicitly via the ResourceName method.");
+                    "Unable to infer resource name from controller types " + controllerTypeNames +
+                    ". Consider setting the name explicitly via the ResourceName method.");
             }
             return name;
         }

@@ -42,9 +42,9 @@ namespace RezRouting.Configuration
         public IResourceNameConvention ResourceNameConvention { get; private set; }
 
         public IResourcePathFormatter ResourcePathFormatter { get; private set; }
-
+        
         /// <summary>
-        /// Uses the supplied implementation to get the resource name
+        /// Uses the supplied IResourceNameConvention implementation to get the resource name
         /// </summary>
         /// <param name="convention"></param>
         public void CustomiseResourceNames(IResourceNameConvention convention)
@@ -73,7 +73,7 @@ namespace RezRouting.Configuration
         }
 
         /// <summary>
-        /// Uses the supplied formatter implementation to format the resource path
+        /// Uses the supplied IResourcePathFormatter implementation to format the resource path
         /// </summary>
         /// <param name="formatter"></param>
         public void FormatResourcePaths(IResourcePathFormatter formatter)

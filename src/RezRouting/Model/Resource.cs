@@ -27,7 +27,7 @@ namespace RezRouting.Model
         {
             this.ancestors = ancestors.ToReadOnlyList();
             this.name = name;
-            this.fullName = string.Join(".", this.ancestors.Skip(1).Select(a => a.name).Concat(new[] {name}));
+            this.fullName = string.Join(".", this.ancestors.Select(a => a.name).Concat(new[] {name}));
             this.path = path;
             this.resourceType = resourceType;
             this.idName = idName;

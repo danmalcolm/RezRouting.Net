@@ -10,7 +10,7 @@ namespace RezRouting.Tests.RouteMapping
     /// </summary>
     public class ControllerActionDiscoveryTests
     {
-        private readonly RootResourceBuilder builder = new RootResourceBuilder();
+        private readonly RouteMapper builder = new RouteMapper();
             
         [Fact]
         public void ShouldMapRoutesForActionsSupportedBy1Controller()

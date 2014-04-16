@@ -10,11 +10,11 @@ namespace RezRouting.Tests.Configuration
     /// </summary>
     public class UrlPathConfigurationTests
     {
-        private readonly RootResourceBuilder builder;
+        private readonly RouteMapper builder;
 
         public UrlPathConfigurationTests()
         {
-            builder = new RootResourceBuilder();
+            builder = new RouteMapper();
             builder.Collection(users => users.HandledBy<UsersController>());
         }
 

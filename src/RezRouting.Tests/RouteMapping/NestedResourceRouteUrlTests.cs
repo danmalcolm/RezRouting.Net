@@ -7,18 +7,18 @@ namespace RezRouting.Tests.RouteMapping
 {
     public class NestedResourceRouteUrlTests
     {
-        [Theory, PropertyData("Collections2LevelsExpectations")]
-        public void Collections2Levels(UrlExpectation expectation)
+        [Theory, PropertyData("NestedCollectionsExpectations")]
+        public void ShouldCreateUrlsForNestedCollections(UrlExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> Collections2LevelsExpectations
+        public static IEnumerable<object[]> NestedCollectionsExpectations
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Collection(orders =>
+                var mapper = new RouteMapper();
+                mapper.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
                     orders.Collection(notes
@@ -26,7 +26,7 @@ namespace RezRouting.Tests.RouteMapping
                 });
 
 
-                return new UrlExpectations(root.MapRoutes())
+                return new UrlExpectations(mapper.MapRoutes())
                     .ForRoute("Orders.Index", new { httpMethod = "GET" }, "/orders")
                     .ForAction("orders#index", new { httpMethod = "GET" }, "/orders")
                     .ForRoute("Orders.Show", new { httpMethod = "GET", id = "123" }, "/orders/123")
@@ -61,7 +61,7 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Theory, PropertyData("SingularInCollectionExpectations")]
-        public void SingularInCollection(UrlExpectation expectation)
+        public void ShouldCreateUrlsForSingularInCollection(UrlExpectation expectation)
         {
             expectation.Verify();
         }
@@ -70,14 +70,14 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Collection(orders =>
+                var mapper = new RouteMapper();
+                mapper.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
                     orders.Singular(customer => customer.HandledBy<CustomerController>());
                 });
 
-                return new UrlExpectations(root.MapRoutes())
+                return new UrlExpectations(mapper.MapRoutes())
                     .ForRoute("Orders.Index", new { httpMethod = "GET" }, "/orders")
                     .ForAction("orders#index", new { httpMethod = "GET" }, "/orders")
                     .ForRoute("Orders.Show", new { httpMethod = "GET", id = "123" }, "/orders/123")

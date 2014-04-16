@@ -18,10 +18,10 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Collection(users => users.HandledBy<UsersController>());
+                var mapper = new RouteMapper();
+                mapper.Collection(users => users.HandledBy<UsersController>());
 
-                return new MappingExpectations(root.MapRoutes())
+                return new MappingExpectations(mapper.MapRoutes())
                     .ExpectMatch("POST users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
                         form: new NameValueCollection {{"X-HTTP-Method-Override", "DELETE"}},
                         desc: "DELETE via form method override")

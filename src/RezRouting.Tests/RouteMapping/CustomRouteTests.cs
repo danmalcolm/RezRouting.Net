@@ -18,8 +18,8 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Configure(configuration =>
+                var mapper = new RouteMapper();
+                mapper.Configure(configuration =>
                 {
                     var search = new RouteType("Search", new[] { ResourceType.Collection },
                         CollectionLevel.Collection, "Search", "search", StandardHttpMethod.Get, 9);
@@ -32,10 +32,10 @@ namespace RezRouting.Tests.RouteMapping
                     configuration.AddCustomRoute(kick);
                     configuration.AddCustomRoute(bust);
                 });
-                root.Collection(asses => asses.HandledBy<AssesController>());
-                root.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
+                mapper.Collection(asses => asses.HandledBy<AssesController>());
+                mapper.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
                 
-                return new MappingExpectations(root.MapRoutes())
+                return new MappingExpectations(mapper.MapRoutes())
                     .ExpectMatch("GET asses", "Asses.Index", "Asses#Index")
                     .ExpectMatch("GET asses/search", "Asses.Search", "Asses#Search")
                     .ExpectMatch("POST asses/123/kick", "Asses.Kick", "Asses#Kick", new { id = "123" })

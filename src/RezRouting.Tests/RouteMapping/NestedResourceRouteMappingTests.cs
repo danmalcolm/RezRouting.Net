@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RezRouting.Tests.Infrastructure.Expectations;
 using RezRouting.Tests.Infrastructure.TestControllers.Orders;
@@ -17,7 +18,7 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var builder = new RootResourceBuilder();
+                var builder = new RouteMapper();
                 builder.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
@@ -53,7 +54,7 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var builder = new RootResourceBuilder();
+                var builder = new RouteMapper();
                 builder.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
@@ -108,14 +109,14 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var root = new RootResourceBuilder();
-                root.Collection(orders =>
+                var mapper = new RouteMapper();
+                mapper.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
                     orders.Singular(customer => customer.HandledBy<CustomerController>());
                 });
-
-                return new MappingExpectations(root.MapRoutes())
+                Console.Write(mapper.DebugSummary());
+                return new MappingExpectations(mapper.MapRoutes())
                     .ExpectMatch("GET orders", "Orders.Index", "Orders#Index")
                     .ExpectMatch("GET orders/123", "Orders.Show", "Orders#Show", new { id = "123" })
                     .ExpectMatch("GET orders/new", "Orders.New", "Orders#New")

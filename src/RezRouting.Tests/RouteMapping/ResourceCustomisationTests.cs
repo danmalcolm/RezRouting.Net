@@ -13,7 +13,7 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldUseDefaultConventionForResourceNameAndPathWithMultipleControllers()
         {
-            var builder = new RootResourceBuilder();
+            var builder = new RouteMapper();
             builder.Collection(products
                 => products.HandledBy<ProductsDisplayController, ProductsEditController>());
 
@@ -25,14 +25,14 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldUseCustomNameIfSpecifiedAtResourceLevel()
         {
-            var builder = new RootResourceBuilder();
-            builder.Collection(products =>
+            var mapper = new RouteMapper();
+            mapper.Collection(products =>
             {
                 products.HandledBy<ProductsDisplayController, ProductsEditController>();
                 products.CustomName("Salamanders");
             });
 
-            builder.ShouldMapRoutesWithNames("Salamanders.Index", "Salamanders.Show",
+            mapper.ShouldMapRoutesWithNames("Salamanders.Index", "Salamanders.Show",
                 "Salamanders.New", "Salamanders.Create", "Salamanders.Edit",
                 "Salamanders.Update", "Salamanders.Delete");
         }
@@ -40,7 +40,7 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldUseCustomPathInRouteUrlsIfSpecified()
         {
-            var builder = new RootResourceBuilder();
+            var builder = new RouteMapper();
             builder.Collection(products =>
             {
                 products.CustomUrlPath("salamanders");
@@ -55,25 +55,25 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldOnlyMapRoutesSpecifiedWhenUsingIncludeFilter()
         {
-            var root = new RootResourceBuilder();
-            root.Collection(users =>
+            var mapper = new RouteMapper();
+            mapper.Collection(users =>
             {
                 users.Include("Index", "Show");
                 users.HandledBy<UsersController>();
             });
-            root.ShouldMapRoutesWithNames("Users.Index", "Users.Show");
+            mapper.ShouldMapRoutesWithNames("Users.Index", "Users.Show");
         }
 
         [Fact]
         public void ShouldNotMapRoutesSpecifiedViaExcludeFilter()
         {
-            var root = new RootResourceBuilder();
-            root.Collection(users =>
+            var mapper = new RouteMapper();
+            mapper.Collection(users =>
             {
                 users.Exclude("Delete");
                 users.HandledBy<UsersController>();
             });
-            root.ShouldMapRoutesWithNames("Users.Index", "Users.Show", "Users.New", 
+            mapper.ShouldMapRoutesWithNames("Users.Index", "Users.Show", "Users.New", 
                 "Users.Create", "Users.Edit", "Users.Update");
         
         }

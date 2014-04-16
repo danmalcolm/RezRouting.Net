@@ -1,21 +1,19 @@
 ﻿using System.Linq;
-using System.Web.UI;
 using FluentAssertions;
 using RezRouting.Routing;
-using RezRouting.Tests.Infrastructure.Assertions;
 using RezRouting.Tests.Infrastructure.TestControllers.Users;
 using Xunit;
 
 namespace RezRouting.Tests.RouteMapping
 {
-    public class RootResourceBuilderTests
+    public class RouteMapperTests
     {
         [Fact]
         public void ShouldAddRoutesToRouteCollection()
         {
-            var root = new RootResourceBuilder();
-            root.Collection(users => users.HandledBy<UsersController>());
-            var routes = root.MapRoutes();
+            var mapper = new RouteMapper();
+            mapper.Collection(users => users.HandledBy<UsersController>());
+            var routes = mapper.MapRoutes();
 
             var expectedRouteNames = new[]
             {
@@ -27,9 +25,9 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldMapUsingSpecialTypeOfRoutes()
         {
-            var root = new RootResourceBuilder();
-            root.Collection(users => users.HandledBy<UsersController>());
-            var routes = root.MapRoutes();
+            var mapper = new RouteMapper();
+            mapper.Collection(users => users.HandledBy<UsersController>());
+            var routes = mapper.MapRoutes();
 
             routes.Should().ContainItemsAssignableTo<ResourceActionRoute>();
         }

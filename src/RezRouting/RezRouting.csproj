@@ -90,7 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceBuilder.cs" />
     <Compile Include="ResourceType.cs" />
-    <Compile Include="RootResourceBuilder.cs" />
+    <Compile Include="RouteMapper.cs" />
     <Compile Include="Routing\HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="Routing\ResourceActionRoute.cs" />
     <Compile Include="Routing\ControllerNameFormatter.cs" />

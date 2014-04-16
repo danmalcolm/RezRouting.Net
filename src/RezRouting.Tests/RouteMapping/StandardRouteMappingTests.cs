@@ -18,7 +18,7 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var builder = new RootResourceBuilder();
+                var builder = new RouteMapper();
                 builder.Collection(users => users.HandledBy<UsersController>());
 
                 return new MappingExpectations(builder.MapRoutes())
@@ -43,7 +43,7 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var builder = new RootResourceBuilder();
+                var builder = new RouteMapper();
                 builder.Singular(session => session.HandledBy<SessionController>());
                 
                 return new MappingExpectations(builder.MapRoutes())
