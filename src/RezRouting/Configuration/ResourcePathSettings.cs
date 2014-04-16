@@ -4,8 +4,7 @@ using RezRouting.Routing;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Settings control how the path to a resource within the route URL is formatted, based
-    /// on the resource name.
+    /// Control how the path segement for a resource within the route URL is formatted
     /// </summary>
     public class ResourcePathSettings
     {

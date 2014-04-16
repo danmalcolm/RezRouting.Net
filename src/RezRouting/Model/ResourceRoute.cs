@@ -53,7 +53,7 @@ namespace RezRouting.Model
             // Name - based on nested resource path and action name
             string name = string.Format("{0}.{1}", resourceName, RouteType.Name);
 
-            // URL - path to resource + any additional path
+            // URL - path to resource + additional path segment(s) for route
             string url = resourceUrl;
             if (!string.IsNullOrWhiteSpace(RouteType.UrlPath))
             {

@@ -13,26 +13,30 @@ namespace RezRouting.Model
     /// </summary>
     public class Resource
     {
-        private readonly string name;
+        private readonly ResourceRouteProperties routeProperties;
         private string fullName;
-        private readonly string path;
         private readonly ResourceType resourceType;
-        private readonly string idName;
-        private readonly string idNameAsAncestor;
         private readonly IList<Resource> ancestors;
         private readonly IList<ResourceRoute> routes;
         private IList<Resource> children;
 
-        public Resource(IEnumerable<Resource> ancestors, string name, string path, ResourceType resourceType, string idName, string idNameAsAncestor, IEnumerable<ResourceRoute> routes)
+        public Resource(IEnumerable<Resource> ancestors, ResourceRouteProperties routeProperties, ResourceType resourceType, IEnumerable<ResourceRoute> routes)
         {
             this.ancestors = ancestors.ToReadOnlyList();
-            this.name = name;
-            this.fullName = string.Join(".", this.ancestors.Select(a => a.name).Concat(new[] {name}));
-            this.path = path;
+            this.routeProperties = routeProperties;
+            this.fullName = FormatFullName();
             this.resourceType = resourceType;
-            this.idName = idName;
-            this.idNameAsAncestor = idNameAsAncestor;
             this.routes = routes.ToReadOnlyList();
+        }
+
+        private string FormatFullName()
+        {
+            var parts = new List<string>();
+            if(!string.IsNullOrWhiteSpace(routeProperties.RouteNamePrefix))
+                parts.Add(routeProperties.RouteNamePrefix);
+            parts.AddRange(ancestors.Select(a => a.routeProperties.Name));
+            parts.Add(routeProperties.Name);
+            return string.Join(".", parts);
         }
 
         internal void SetChildren(IEnumerable<Resource> resources)
@@ -62,28 +66,28 @@ namespace RezRouting.Model
 
         private void AppendUrlPathAsAncestor(StringBuilder url)
         {
-            if (url.Length > 0 && path.Length > 0) url.Append("/");
-            url.Append(path);
+            if (url.Length > 0 && routeProperties.Path.Length > 0) url.Append("/");
+            url.Append(routeProperties.Path);
             
             bool includeId = resourceType == ResourceType.Collection;
             if (includeId)
             {
                 if (url.Length > 0) url.Append("/");
-                url.AppendFormat("{{{0}}}", idNameAsAncestor);
+                url.AppendFormat("{{{0}}}", routeProperties.IdNameAsAncestor);
             }
         }
 
         private void AppendUrlPathForRoute(StringBuilder url, RouteType routeType)
         {
             if (url.Length > 0) url.Append("/");
-            url.Append(path);
+            url.Append(routeProperties.Path);
 
             bool includeId = resourceType == ResourceType.Collection
                 && routeType.CollectionLevel == CollectionLevel.Item;
             if (includeId)
             {
                 if (url.Length > 0) url.Append("/");
-                url.AppendFormat("{{{0}}}", idName);
+                url.AppendFormat("{{{0}}}", routeProperties.IdName);
             }
         }
 
@@ -92,7 +96,7 @@ namespace RezRouting.Model
             string indent = "".PadLeft(level, ' ');
             summary.AppendLine("-------------------------------------------------------------------------------");
             summary.Append(indent);
-            summary.AppendFormat(@"""{0}"" ({1}) (~/{2})", name, resourceType, path);
+            summary.AppendFormat(@"""{0}"" ({1}) (~/{2})", routeProperties.Name, resourceType, routeProperties.Path);
             summary.AppendLine();
             summary.AppendLine();
             foreach (var route in routes)

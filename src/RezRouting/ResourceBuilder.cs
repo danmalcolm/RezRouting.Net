@@ -201,19 +201,26 @@ namespace RezRouting
                 where action != null
                 select new ResourceRoute(routeType, action.ControllerType);
 
+            var routeProperties = GetRouteProperties(configuration);
+
+            var resource = new Resource(ancestors, routeProperties, ResourceType, routes);
+            var childResources = from child in children
+                select child.Build(configuration, ancestors.Concat(new[] {resource}));
+            resource.SetChildren(childResources);
+            return resource;
+        }
+
+        private ResourceRouteProperties GetRouteProperties(RouteConfiguration configuration)
+        {
             string resourceName = customName ?? GetNameBasedOnControllers(configuration);
             string resourcePath = customPath ?? FormatResourcePath(resourceName, configuration);
 
             string idName = customIdName ?? DefaultIdName;
             string idNameAsAncestor = customIdNameAsAncestor ??
                                       resourceName.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
-
-            var resource = new Resource(ancestors, resourceName, resourcePath, ResourceType, idName, idNameAsAncestor,
-                routes);
-            var childResources = from child in children
-                select child.Build(configuration, ancestors.Concat(new[] {resource}));
-            resource.SetChildren(childResources);
-            return resource;
+            
+            var routeProperties = new ResourceRouteProperties(configuration.RouteNamePrefix, resourceName, resourcePath, idName, idNameAsAncestor);
+            return routeProperties;
         }
 
         private string GetNameBasedOnControllers(RouteConfiguration configuration)

@@ -94,6 +94,7 @@
     <Compile Include="RouteMapping\HttpMethodOverrideTests.cs" />
     <Compile Include="RouteMapping\NestedResourceRouteMappingTests.cs" />
     <Compile Include="RouteMapping\ResourceCustomisationTests.cs" />
+    <Compile Include="RouteMapping\RouteMapperConfigurationTests.cs" />
     <Compile Include="RouteMapping\RouteMapperTests.cs" />
     <Compile Include="RouteMapping\ControllerActionDiscoveryTests.cs" />
     <Compile Include="RouteMapping\OutboundUrlCreationTests.cs" />

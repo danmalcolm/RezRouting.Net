@@ -82,6 +82,8 @@
     <Compile Include="Configuration\ResourcePathSettings.cs" />
     <Compile Include="Configuration\RouteConfiguration.cs" />
     <Compile Include="Configuration\RouteType.cs" />
+    <Compile Include="Model\ResourceRouteProperties.cs" />
+    <Compile Include="RouteConfigurationBuilder.cs" />
     <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="Routing\PathSegmentCleaner.cs" />
     <Compile Include="StandardHttpMethods.cs" />

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Routing;
-using RezRouting.Configuration;
 using RezRouting.Model;
 using RezRouting.Utility;
 
@@ -14,7 +13,7 @@ namespace RezRouting
     /// </summary>
     public class RouteMapper
     {
-        private readonly RouteConfiguration configuration = new RouteConfiguration();
+        private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
 
         /// <summary>
@@ -22,9 +21,9 @@ namespace RezRouting
         /// shared route configuration options
         /// </summary>
         /// <param name="configure"></param>
-        public void Configure(Action<RouteConfiguration> configure)
+        public void Configure(Action<RouteConfigurationBuilder> configure)
         {
-            configure(configuration);
+            configure(configurationBuilder);
         }
 
         /// <summary>
@@ -84,6 +83,7 @@ namespace RezRouting
 
         private IEnumerable<Resource> BuildResources()
         {
+            var configuration = configurationBuilder.Build();
             return builders.Select(x => x.Build(configuration, Enumerable.Empty<Resource>()));
         }
     }
