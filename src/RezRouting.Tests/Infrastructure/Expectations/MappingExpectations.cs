@@ -13,6 +13,11 @@ namespace RezRouting.Tests.Infrastructure.Expectations
         private readonly RouteCollection routes;
         private readonly List<MappingExpectation> expectations = new List<MappingExpectation>();
 
+        public static MappingExpectations For(RouteMapper mapper)
+        {
+            return new MappingExpectations(mapper.MapRoutes());
+        }
+
         public MappingExpectations(RouteCollection routes)
         {
             this.routes = routes;

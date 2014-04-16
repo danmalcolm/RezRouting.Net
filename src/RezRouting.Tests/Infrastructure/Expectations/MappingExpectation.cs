@@ -13,7 +13,7 @@ namespace RezRouting.Tests.Infrastructure.Expectations
     /// </summary>
     public class MappingExpectation
     {
-        public static MappingExpectation Match(RouteCollection routes, HttpContextBase httpContext, string routeName, string controllerAction, object otherRouteValues, string desc)
+        public static MappingExpectation Match(RouteCollection routes, HttpContextBase httpContext, string routeName, string controllerAction, object otherRouteValues = null, string desc = "")
         {
             var actionParts = controllerAction.Split(new[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
             string controller = actionParts[0];
@@ -26,7 +26,7 @@ namespace RezRouting.Tests.Infrastructure.Expectations
                 RouteName = routeName,
                 Controller = controller,
                 Action = action,
-                OtherRouteValues = otherRouteValues
+                OtherRouteValues = otherRouteValues ?? new object()
             };
         }
 

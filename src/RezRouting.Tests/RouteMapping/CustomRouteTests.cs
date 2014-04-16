@@ -36,12 +36,12 @@ namespace RezRouting.Tests.RouteMapping
                 mapper.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
                 
                 return new MappingExpectations(mapper.MapRoutes())
-                    .ExpectMatch("GET asses", "Asses.Index", "Asses#Index")
-                    .ExpectMatch("GET asses/search", "Asses.Search", "Asses#Search")
-                    .ExpectMatch("POST asses/123/kick", "Asses.Kick", "Asses#Kick", new { id = "123" })
-                    .ExpectMatch("DELETE asses/123/bust", "Asses.Bust", "Asses#Bust", new { id = "123" })
-                    .ExpectMatch("GET donkeys/search", "Donkeys.Search", "Donkeys#Search")
-                    .ExpectNoMatch("GET donkeys/123/kick")
+                    .ExpectMatch("GET /asses", "Asses.Index", "Asses#Index")
+                    .ExpectMatch("GET /asses/search", "Asses.Search", "Asses#Search")
+                    .ExpectMatch("POST /asses/123/kick", "Asses.Kick", "Asses#Kick", new { id = "123" })
+                    .ExpectMatch("DELETE /asses/123/bust", "Asses.Bust", "Asses#Bust", new { id = "123" })
+                    .ExpectMatch("GET /donkeys/search", "Donkeys.Search", "Donkeys#Search")
+                    .ExpectNoMatch("GET /donkeys/123/kick")
                     .AsPropertyData();
             }
         }

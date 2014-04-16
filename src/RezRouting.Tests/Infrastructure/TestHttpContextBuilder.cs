@@ -15,7 +15,7 @@ namespace RezRouting.Tests.Infrastructure
             string httpMethod = requestParts[0];
             string path = requestParts[1];
 
-            var uri = new Uri("http://www.tempuri.org/" + path, UriKind.Absolute);
+            var uri = new Uri("http://www.tempuri.org" + path, UriKind.Absolute);
             var httpContext = new Mock<HttpContextBase>();
             httpContext.Setup(c => c.Request.ApplicationPath).Returns("/");
             httpContext.Setup(c => c.Request.AppRelativeCurrentExecutionFilePath).Returns("~" + uri.LocalPath);

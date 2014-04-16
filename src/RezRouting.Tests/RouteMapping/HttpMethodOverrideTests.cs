@@ -22,22 +22,22 @@ namespace RezRouting.Tests.RouteMapping
                 mapper.Collection(users => users.HandledBy<UsersController>());
 
                 return new MappingExpectations(mapper.MapRoutes())
-                    .ExpectMatch("POST users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
                         form: new NameValueCollection {{"X-HTTP-Method-Override", "DELETE"}},
                         desc: "DELETE via form method override")
-                    .ExpectMatch("POST users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
                         headers: new NameValueCollection {{"X-HTTP-Method-Override", "DELETE"}},
                         desc: "DELETE via HTTP header method override")
-                    .ExpectMatch("POST users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Delete", "Users#Destroy", new {id = "123"},
                         form: new NameValueCollection {{"_method", "DELETE"}},
                         desc: "DELETE via _method form value")
-                    .ExpectMatch("POST users/123", "Users.Update", "Users#Update", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Update", "Users#Update", new {id = "123"},
                         form: new NameValueCollection {{"X-HTTP-Method-Override", "PUT"}},
                         desc: "PUT via form method override")
-                    .ExpectMatch("POST users/123", "Users.Update", "Users#Update", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Update", "Users#Update", new {id = "123"},
                         headers: new NameValueCollection {{"X-HTTP-Method-Override", "PUT"}},
                         desc: "PUT via HTTP header method override")
-                    .ExpectMatch("POST users/123", "Users.Update", "Users#Update", new {id = "123"},
+                    .ExpectMatch("POST /users/123", "Users.Update", "Users#Update", new {id = "123"},
                         form: new NameValueCollection {{"_method", "PUT"}},
                         desc: "PUT via _method form value")
                     .AsPropertyData();

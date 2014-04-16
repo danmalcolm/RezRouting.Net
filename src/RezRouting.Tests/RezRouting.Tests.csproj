@@ -90,7 +90,6 @@
     <Compile Include="Configuration\ResourcePathConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteMapping\CustomRouteTests.cs" />
-    <Compile Include="RouteMapping\HomeRouteMappingTests.cs" />
     <Compile Include="RouteMapping\HttpMethodOverrideTests.cs" />
     <Compile Include="RouteMapping\NestedResourceRouteMappingTests.cs" />
     <Compile Include="RouteMapping\ResourceCustomisationTests.cs" />
