@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Web.Routing;
 using RezRouting.Utility;
@@ -11,84 +12,79 @@ namespace RezRouting.Model
     /// Contains configuration and routes for a specific resource (singular or collection).
     /// An intermediate model created by the ResourceBuilders.
     /// </summary>
-    public class Resource
+    internal class Resource
     {
-        private readonly ResourceRouteProperties routeProperties;
-        private string fullName;
+        private readonly string fullName;
+        private readonly Resource parent;
+        private readonly RouteUrlProperties urlProperties;
         private readonly ResourceType resourceType;
-        private readonly IList<Resource> ancestors;
         private readonly IList<ResourceRoute> routes;
         private IList<Resource> children;
 
-        public Resource(IEnumerable<Resource> ancestors, ResourceRouteProperties routeProperties, ResourceType resourceType, IEnumerable<ResourceRoute> routes)
+        public Resource(string fullName, Resource parent, RouteUrlProperties urlProperties, ResourceType resourceType, IEnumerable<ResourceRoute> routes)
         {
-            this.ancestors = ancestors.ToReadOnlyList();
-            this.routeProperties = routeProperties;
-            this.fullName = FormatFullName();
+            this.fullName = fullName;
+            this.parent = parent;
+            this.urlProperties = urlProperties;
             this.resourceType = resourceType;
             this.routes = routes.ToReadOnlyList();
-        }
-
-        private string FormatFullName()
-        {
-            var parts = new List<string>();
-            if(!string.IsNullOrWhiteSpace(routeProperties.RouteNamePrefix))
-                parts.Add(routeProperties.RouteNamePrefix);
-            parts.AddRange(ancestors.Select(a => a.routeProperties.Name));
-            parts.Add(routeProperties.Name);
-            return string.Join(".", parts);
         }
 
         internal void SetChildren(IEnumerable<Resource> resources)
         {
             this.children = resources.ToReadOnlyList();
         }
-        
+
         public void MapRoutes(RouteCollection routeCollection)
         {
-            this.routes.Each(x => MapRoute(x, routeCollection));
-            children.Each(x => x.MapRoutes(routeCollection));
+            foreach (var route in routes)
+            {
+                string url = GetUrl(route.RouteType);
+                route.MapRoute(fullName, url, routeCollection);
+            }
+            foreach (var child in children)
+            {
+                child.MapRoutes(routeCollection);                
+            }
         }
 
-        private void MapRoute(ResourceRoute route, RouteCollection routeCollection)
-        {
-            string resourceUrlPath = GetResourceUrlPath(route.RouteType);
-            route.MapRoute(fullName, resourceUrlPath, routeCollection);
-        }
-        
-        private string GetResourceUrlPath(RouteType routeType)
+        private string GetUrl(RouteType routeType)
         {
             var url = new StringBuilder();
-            ancestors.Each(x => x.AppendUrlPathAsAncestor(url));
-            AppendUrlPathForRoute(url, routeType);
+            if (parent != null)
+            {
+                url.Append(parent.GetUrlAsAncestor());
+            }
+            if (url.Length > 0) url.Append("/");
+            url.Append(urlProperties.Path);
+
+            bool includeId = resourceType == ResourceType.Collection
+                             && routeType.CollectionLevel == CollectionLevel.Item;
+            if (includeId)
+            {
+                if (url.Length > 0) url.Append("/");
+                url.AppendFormat("{{{0}}}", urlProperties.IdName);
+            }
             return url.ToString();
         }
 
-        private void AppendUrlPathAsAncestor(StringBuilder url)
+        private string GetUrlAsAncestor()
         {
-            if (url.Length > 0 && routeProperties.Path.Length > 0) url.Append("/");
-            url.Append(routeProperties.Path);
-            
+            var url = new StringBuilder();
+            if (parent != null)
+            {
+                url.Append(parent.GetUrlAsAncestor());
+            }
+            if (url.Length > 0 && urlProperties.Path.Length > 0) url.Append("/");
+            url.Append(urlProperties.Path);
+
             bool includeId = resourceType == ResourceType.Collection;
             if (includeId)
             {
                 if (url.Length > 0) url.Append("/");
-                url.AppendFormat("{{{0}}}", routeProperties.IdNameAsAncestor);
+                url.AppendFormat("{{{0}}}", urlProperties.IdNameAsAncestor);
             }
-        }
-
-        private void AppendUrlPathForRoute(StringBuilder url, RouteType routeType)
-        {
-            if (url.Length > 0) url.Append("/");
-            url.Append(routeProperties.Path);
-
-            bool includeId = resourceType == ResourceType.Collection
-                && routeType.CollectionLevel == CollectionLevel.Item;
-            if (includeId)
-            {
-                if (url.Length > 0) url.Append("/");
-                url.AppendFormat("{{{0}}}", routeProperties.IdName);
-            }
+            return url.ToString();
         }
 
         public void DebugSummary(StringBuilder summary, int level)
@@ -96,13 +92,13 @@ namespace RezRouting.Model
             string indent = "".PadLeft(level, ' ');
             summary.AppendLine("-------------------------------------------------------------------------------");
             summary.Append(indent);
-            summary.AppendFormat(@"""{0}"" ({1}) (~/{2})", routeProperties.Name, resourceType, routeProperties.Path);
+            summary.AppendFormat(@"""{0}"" ({1}) (~/{2})", fullName, resourceType, urlProperties.Path);
             summary.AppendLine();
             summary.AppendLine();
             foreach (var route in routes)
             {
                 summary.Append(indent);
-                string resourceUrlPath = GetResourceUrlPath(route.RouteType);
+                string resourceUrlPath = GetUrl(route.RouteType);
                 route.DebugSummary(fullName, resourceUrlPath, summary);
                 summary.AppendLine();
                 summary.AppendLine();

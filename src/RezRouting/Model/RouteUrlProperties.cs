@@ -3,20 +3,14 @@
     /// <summary>
     /// Common properties applied to Routes for a resource
     /// </summary>
-    public class ResourceRouteProperties
+    internal class RouteUrlProperties
     {
-        public ResourceRouteProperties(string routeNamePrefix, string name, string path, string idName, string idNameAsAncestor)
+        public RouteUrlProperties(string path, string idName, string idNameAsAncestor)
         {
-            RouteNamePrefix = routeNamePrefix;
-            Name = name;
             Path = path;
             IdName = idName;
             IdNameAsAncestor = idNameAsAncestor;
         }
-
-        public string RouteNamePrefix { get; private set; }
-
-        public string Name { get; private set; }
 
         public string Path { get; private set; }
 

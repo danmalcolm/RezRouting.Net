@@ -9,9 +9,9 @@ using RezRouting.Routing;
 namespace RezRouting.Model
 {
     /// <summary>
-    /// A route configured for a specific singular or collection resource
+    /// A route configured for a an action on a singular or collection resource
     /// </summary>
-    public class ResourceRoute
+    internal class ResourceRoute
     {
         public RouteType RouteType { get; private set; }
         private readonly Type controllerType;
@@ -24,7 +24,7 @@ namespace RezRouting.Model
 
         public void MapRoute(string resourceName, string resourceUrl, RouteCollection routes)
         {
-            var properties = GetRouteProperties(resourceName, resourceUrl);
+            var properties = GetRouteInfo(resourceName, resourceUrl);
 
             var route = new ResourceActionRoute(properties.Name, properties.Url, new MvcRouteHandler())
             {
@@ -44,11 +44,11 @@ namespace RezRouting.Model
 
         public void DebugSummary(string resourceName, string resourceUrl, StringBuilder summary)
         {
-            var properties = GetRouteProperties(resourceName, resourceUrl);
+            var properties = GetRouteInfo(resourceName, resourceUrl);
             summary.Append(properties);
         }
 
-        private RouteProperties GetRouteProperties(string resourceName, string resourceUrl)
+        private RouteInfo GetRouteInfo(string resourceName, string resourceUrl)
         {
             // Name - based on nested resource path and action name
             string name = string.Format("{0}.{1}", resourceName, RouteType.Name);
@@ -67,12 +67,12 @@ namespace RezRouting.Model
             object constraints = new { httpMethod = new HttpMethodOrOverrideConstraint(httpMethod) };
             var namespaces = new[] { controllerType.Namespace };
 
-            return new RouteProperties(name, url, defaults, constraints, namespaces);
+            return new RouteInfo(name, url, defaults, constraints, namespaces);
         }
 
-        private class RouteProperties
+        private class RouteInfo
         {
-            public RouteProperties(string name, string url, object defaults, object constraints, string[] namespaces)
+            public RouteInfo(string name, string url, object defaults, object constraints, string[] namespaces)
             {
                 Name = name;
                 Url = url;

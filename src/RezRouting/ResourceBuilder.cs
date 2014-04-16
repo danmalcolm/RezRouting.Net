@@ -79,7 +79,7 @@ namespace RezRouting
         public void HandledBy<TController>()
             where TController : Controller
         {
-            HandledBy(typeof (TController));
+            HandledBy(typeof(TController));
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace RezRouting
             where TController1 : Controller
             where TController2 : Controller
         {
-            HandledBy(typeof (TController1));
-            HandledBy(typeof (TController2));
+            HandledBy(typeof(TController1));
+            HandledBy(typeof(TController2));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace RezRouting
             where TController2 : Controller
             where TController3 : Controller
         {
-            HandledBy(typeof (TController1));
-            HandledBy(typeof (TController2));
-            HandledBy(typeof (TController3));
+            HandledBy(typeof(TController1));
+            HandledBy(typeof(TController2));
+            HandledBy(typeof(TController3));
         }
 
         /// <summary>
@@ -124,10 +124,10 @@ namespace RezRouting
             where TController3 : Controller
             where TController4 : Controller
         {
-            HandledBy(typeof (TController1));
-            HandledBy(typeof (TController2));
-            HandledBy(typeof (TController3));
-            HandledBy(typeof (TController4));
+            HandledBy(typeof(TController1));
+            HandledBy(typeof(TController2));
+            HandledBy(typeof(TController3));
+            HandledBy(typeof(TController4));
         }
 
         /// <summary>
@@ -167,10 +167,53 @@ namespace RezRouting
         /// <summary>
         /// Builds a resource model based on settings configured
         /// </summary>
-        /// <param name="configuration"></param>
-        /// <param name="ancestors"></param>
         /// <returns></returns>
-        internal Resource Build(RouteConfiguration configuration, IEnumerable<Resource> ancestors)
+        internal Resource Build(RouteConfiguration configuration, Resource parent, string fullNamePrefix)
+        {
+            string name = customName ?? GetNameBasedOnControllers(configuration);
+            var routeProperties = GetRouteUrlProperties(configuration, name);
+            string fullName = fullNamePrefix + name;
+
+            var routes = GetRoutes(configuration);
+
+            var resource = new Resource(fullName, parent, routeProperties, ResourceType, routes);
+            var childResources = from child in children
+                                 select child.Build(configuration, resource, fullName + ".");
+            resource.SetChildren(childResources);
+            return resource;
+        }
+
+        private RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, string name)
+        {
+            string resourcePath = customPath ?? FormatResourcePath(name, configuration);
+
+            string idName = customIdName ?? DefaultIdName;
+            string idNameAsAncestor = customIdNameAsAncestor 
+                ?? GetDefaultIdNameAsAncestor(name);
+
+            var routeProperties = new RouteUrlProperties(resourcePath, idName, idNameAsAncestor);
+            return routeProperties;
+        }
+
+        private static string GetDefaultIdNameAsAncestor(string name)
+        {
+            return name.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
+        }
+
+        private string GetNameBasedOnControllers(RouteConfiguration configuration)
+        {
+            string name = configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                string controllerTypeNames = string.Join(", ", controllerTypes.Select(x => x.Name));
+                throw new RouteConfigurationException(
+                    "Unable to infer resource name from controller types " + controllerTypeNames +
+                    ". Consider setting the name explicitly via the ResourceName method.");
+            }
+            return name;
+        }
+
+        private IEnumerable<ResourceRoute> GetRoutes(RouteConfiguration configuration)
         {
             // Get applicable RouteTypes for current resource type (singular or collection)
             var routeTypes = configuration.RouteTypes
@@ -200,40 +243,7 @@ namespace RezRouting
                     (a => a.ActionName.EqualsIgnoreCase(routeType.ControllerAction))
                 where action != null
                 select new ResourceRoute(routeType, action.ControllerType);
-
-            var routeProperties = GetRouteProperties(configuration);
-
-            var resource = new Resource(ancestors, routeProperties, ResourceType, routes);
-            var childResources = from child in children
-                select child.Build(configuration, ancestors.Concat(new[] {resource}));
-            resource.SetChildren(childResources);
-            return resource;
-        }
-
-        private ResourceRouteProperties GetRouteProperties(RouteConfiguration configuration)
-        {
-            string resourceName = customName ?? GetNameBasedOnControllers(configuration);
-            string resourcePath = customPath ?? FormatResourcePath(resourceName, configuration);
-
-            string idName = customIdName ?? DefaultIdName;
-            string idNameAsAncestor = customIdNameAsAncestor ??
-                                      resourceName.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
-            
-            var routeProperties = new ResourceRouteProperties(configuration.RouteNamePrefix, resourceName, resourcePath, idName, idNameAsAncestor);
-            return routeProperties;
-        }
-
-        private string GetNameBasedOnControllers(RouteConfiguration configuration)
-        {
-            string name = configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                string controllerTypeNames = string.Join(", ", controllerTypes.Select(x => x.Name));
-                throw new RouteConfigurationException(
-                    "Unable to infer resource name from controller types " + controllerTypeNames +
-                    ". Consider setting the name explicitly via the ResourceName method.");
-            }
-            return name;
+            return routes;
         }
 
         private string FormatResourcePath(string resourceName, RouteConfiguration configuration)
