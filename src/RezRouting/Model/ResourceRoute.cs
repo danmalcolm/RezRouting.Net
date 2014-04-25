@@ -74,9 +74,9 @@ namespace RezRouting.Model
             string httpMethod = RouteType.HttpMethod;
             var constraints = new RouteValueDictionary();
             constraints["httpMethod"] = new HttpMethodOrOverrideConstraint(httpMethod);
-            foreach (string key in RouteType.RequestValues.Keys)
+            foreach (string key in RouteType.QueryStringValues.Keys)
             {
-                string value = RouteType.RequestValues[key].ToString();
+                string value = RouteType.QueryStringValues[key].ToString();
                 // Route values with key matching key of a constraint are 
                 // excluded from the QueryString during URL generation. In this case, we want 
                 // to include the value, as it needed part of the route URL. We work around

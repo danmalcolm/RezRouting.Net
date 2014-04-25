@@ -6,7 +6,7 @@ using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
-    public class RequestValueConstraintRouteMappingTests
+    public class QueryStringValueConstraintRouteMappingTests
     {
         [Theory, PropertyData("StandardCollectionRouteExpectations")]
         public void ShouldSelectRouteBasedOnQueryString(MappingExpectation expectation)

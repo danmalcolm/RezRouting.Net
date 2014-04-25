@@ -18,7 +18,7 @@ namespace RezRouting.Configuration
             HttpMethod = httpMethod;
             UrlPath = urlPath;
             MappingOrder = mappingOrder;
-            RequestValues = new RouteValueDictionary(requestValues ?? new object());
+            QueryStringValues = new RouteValueDictionary(requestValues ?? new object());
         }
 
         
@@ -61,10 +61,10 @@ namespace RezRouting.Configuration
         public int MappingOrder { get; set; }
 
         /// <summary>
-        /// A collection of addition request values used to constrain to this
+        /// A collection of additional querystring values used to constrain to this
         /// route
         /// </summary>
-        public RouteValueDictionary RequestValues { get; set; }
+        public RouteValueDictionary QueryStringValues { get; set; }
         
         /// <summary>
         /// Indicates whether any properties of a route conflict with this one
@@ -85,9 +85,9 @@ namespace RezRouting.Configuration
             {
                 return
                     string.Format(
-                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ControllerAction: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}, RequestValues: {7}",
+                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ControllerAction: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}, QueryStringValues: {7}",
                         Name, string.Join(",", ResourceTypes), CollectionLevel, ControllerAction, HttpMethod, UrlPath,
-                        MappingOrder, RequestValues);
+                        MappingOrder, QueryStringValues);
             }
         }
     }

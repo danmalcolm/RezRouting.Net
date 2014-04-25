@@ -100,7 +100,7 @@
     <Compile Include="RouteMapping\ControllerActionDiscoveryTests.cs" />
     <Compile Include="RouteMapping\OutboundUrlCreationTests.cs" />
     <Compile Include="RouteMapping\NestedResourceRouteUrlTests.cs" />
-    <Compile Include="RouteMapping\RequestValueConstraintRouteMappingTests.cs" />
+    <Compile Include="RouteMapping\QueryStringValueConstraintRouteMappingTests.cs" />
     <Compile Include="RouteMapping\StandardRouteMappingTests.cs" />
     <Compile Include="Infrastructure\Assertions\RouteBuilderAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActionInfo.cs" />
