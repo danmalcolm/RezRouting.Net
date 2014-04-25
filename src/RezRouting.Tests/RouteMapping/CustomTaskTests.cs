@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using RezRouting.Tests.Infrastructure.Expectations;
-using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
     public class CustomTaskTests
     {
-        [Theory, PropertyData("CustomRoutesExpectations")]
+//        [Theory, PropertyData("CustomRoutesExpectations")]
         public void MappingCustomRoutes(MappingExpectation expectation)
         {
             expectation.Verify();
@@ -21,11 +20,6 @@ namespace RezRouting.Tests.RouteMapping
                 mapper.Collection(albums =>
                 {
                     albums.HandledBy<AlbumsController>();
-                    albums.Subtasks(tasks =>
-                    {
-                        tasks.Path("edit");
-                        tasks.HandledBy<RenameController, UpdateCostsController>();
-                    });
                 });
                
                 

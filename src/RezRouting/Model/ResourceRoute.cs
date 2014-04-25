@@ -29,7 +29,7 @@ namespace RezRouting.Model
             var route = new ResourceActionRoute(properties.Name, properties.Url, new MvcRouteHandler())
             {
                 Defaults = new RouteValueDictionary(properties.Defaults),
-                Constraints = new RouteValueDictionary(properties.Constraints),
+                Constraints = properties.Constraints,
                 DataTokens = new RouteValueDictionary(),
             };
 
@@ -63,16 +63,33 @@ namespace RezRouting.Model
             
             string controller = ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
             var defaults = new { controller = controller, action = RouteType.ControllerAction };
-            string httpMethod = RouteType.HttpMethod;
-            object constraints = new { httpMethod = new HttpMethodOrOverrideConstraint(httpMethod) };
+            var constraints = GetConstraints();
             var namespaces = new[] { controllerType.Namespace };
 
             return new RouteInfo(name, url, defaults, constraints, namespaces);
         }
 
+        private RouteValueDictionary GetConstraints()
+        {
+            string httpMethod = RouteType.HttpMethod;
+            var constraints = new RouteValueDictionary();
+            constraints["httpMethod"] = new HttpMethodOrOverrideConstraint(httpMethod);
+            foreach (string key in RouteType.RequestValues.Keys)
+            {
+                string value = RouteType.RequestValues[key].ToString();
+                // Route values with key matching key of a constraint are 
+                // excluded from the QueryString during URL generation. In this case, we want 
+                // to include the value, as it needed part of the route URL. We work around
+                // this by formatting an alternative key name
+                string constraintKey = "__requestvalueconstraint__" + key;
+                constraints[constraintKey] = new QueryStringValueConstraint(key, value);
+            }
+            return constraints;
+        }
+
         private class RouteInfo
         {
-            public RouteInfo(string name, string url, object defaults, object constraints, string[] namespaces)
+            public RouteInfo(string name, string url, object defaults, RouteValueDictionary constraints, string[] namespaces)
             {
                 Name = name;
                 Url = url;
@@ -84,7 +101,7 @@ namespace RezRouting.Model
             public string Name { get; set; }
             public string Url { get; set; }
             public object Defaults { get; set; }
-            public object Constraints { get; set; }
+            public RouteValueDictionary Constraints { get; set; }
             public string[] Namespaces { get; set; }
 
             public override string ToString()

@@ -82,10 +82,12 @@
     <Compile Include="Configuration\ResourcePathSettings.cs" />
     <Compile Include="Configuration\RouteConfiguration.cs" />
     <Compile Include="Configuration\RouteType.cs" />
+    <Compile Include="Configuration\StandardRouteTypes.cs" />
     <Compile Include="Model\RouteUrlProperties.cs" />
     <Compile Include="RouteConfigurationBuilder.cs" />
     <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="Routing\PathSegmentCleaner.cs" />
+    <Compile Include="Routing\QueryStringValueConstraint.cs" />
     <Compile Include="StandardHttpMethods.cs" />
     <Compile Include="Model\Resource.cs" />
     <Compile Include="Model\ResourceRoute.cs" />

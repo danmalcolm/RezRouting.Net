@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure.Assertions;
 using RezRouting.Tests.Infrastructure.TestControllers.Users;

@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Routing;
+using RezRouting.Configuration;
 using RezRouting.Model;
 using RezRouting.Utility;
 
 namespace RezRouting
 {
     /// <summary>
-    /// The entry point for mapping resources' routes within a web application
+    /// The entry point for mapping routes for resources within a web application
     /// </summary>
     public class RouteMapper
     {
-        private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
+        private readonly RouteConfigurationBuilder configurationBuilder 
+            = new RouteConfigurationBuilder(StandardRouteTypes.Build());
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
-
+        
         /// <summary>
         /// Customises all routes by mapped by the current RouteMapper by changing 
         /// shared route configuration options

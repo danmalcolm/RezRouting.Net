@@ -6,10 +6,14 @@ using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
-    public class CustomRouteTests
+    /// <summary>
+    /// Tests configuration of additional RouteTypes at mapper level - shared
+    /// by all resources
+    /// </summary>
+    public class SharedCustomRouteTests
     {
         [Theory, PropertyData("CustomRoutesExpectations")]
-        public void MappingCustomRoutes(MappingExpectation expectation)
+        public void ShouldMapCustomRoutesToAvailableActions(MappingExpectation expectation)
         {
             expectation.Verify();
         }
@@ -28,9 +32,9 @@ namespace RezRouting.Tests.RouteMapping
                     var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular },
                         CollectionLevel.Item, "Bust", "bust", StandardHttpMethod.Delete, 9);
                     
-                    configuration.AddCustomRoute(search);
-                    configuration.AddCustomRoute(kick);
-                    configuration.AddCustomRoute(bust);
+                    configuration.AddRoute(search);
+                    configuration.AddRoute(kick);
+                    configuration.AddRoute(bust);
                 });
                 mapper.Collection(asses => asses.HandledBy<AssesController>());
                 mapper.Collection(donkeys => donkeys.HandledBy<DonkeysController>());

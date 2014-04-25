@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Web.Routing;
 using RezRouting.Utility;
 
 namespace RezRouting.Configuration
@@ -8,7 +9,7 @@ namespace RezRouting.Configuration
     /// </summary>
     public class RouteType
     {
-        public RouteType(string name, IEnumerable<ResourceType> resourceTypes, CollectionLevel collectionLevel, string controllerAction, string urlPath, string httpMethod, int mappingOrder)
+        public RouteType(string name, IEnumerable<ResourceType> resourceTypes, CollectionLevel collectionLevel, string controllerAction, string urlPath, string httpMethod, int mappingOrder, object requestValues = null)
         {
             Name = name;
             ResourceTypes = resourceTypes.ToReadOnlyList();
@@ -17,8 +18,10 @@ namespace RezRouting.Configuration
             HttpMethod = httpMethod;
             UrlPath = urlPath;
             MappingOrder = mappingOrder;
+            RequestValues = new RouteValueDictionary(requestValues ?? new object());
         }
 
+        
         /// <summary>
         /// The name of the route - this is used when mapping the route
         /// </summary>
@@ -58,6 +61,12 @@ namespace RezRouting.Configuration
         public int MappingOrder { get; set; }
 
         /// <summary>
+        /// A collection of addition request values used to constrain to this
+        /// route
+        /// </summary>
+        public RouteValueDictionary RequestValues { get; set; }
+        
+        /// <summary>
         /// Indicates whether any properties of a route conflict with this one
         /// </summary>
         /// <param name="routeType"></param>
@@ -76,9 +85,9 @@ namespace RezRouting.Configuration
             {
                 return
                     string.Format(
-                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ControllerAction: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}",
+                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ControllerAction: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}, RequestValues: {7}",
                         Name, string.Join(",", ResourceTypes), CollectionLevel, ControllerAction, HttpMethod, UrlPath,
-                        MappingOrder);
+                        MappingOrder, RequestValues);
             }
         }
     }

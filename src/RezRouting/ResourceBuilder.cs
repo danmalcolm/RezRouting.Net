@@ -14,6 +14,8 @@ namespace RezRouting
     /// </summary>
     public abstract class ResourceBuilder
     {
+        private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
+        
         private const string DefaultIdName = "id";
         private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
         private readonly HashSet<Type> controllerTypes = new HashSet<Type>();
@@ -47,6 +49,16 @@ namespace RezRouting
         protected abstract ResourceType ResourceType { get; }
 
         #region Configuration options
+
+        /// <summary>
+        /// Customises all routes by mapped for the current resource based on the
+        /// configuration options specified - applies only to the current resource, not to any nested
+        /// resources</summary>
+        /// <param name="configure"></param>
+        public void Configure(Action<RouteConfigurationBuilder> configure)
+        {
+            configure(configurationBuilder);
+        }
 
         /// <summary>
         /// Specifies the routes to include when mapping routes for this resource.
@@ -168,8 +180,9 @@ namespace RezRouting
         /// Builds a resource model based on settings configured
         /// </summary>
         /// <returns></returns>
-        internal Resource Build(RouteConfiguration configuration, Resource parent, string fullNamePrefix)
+        internal Resource Build(RouteConfiguration sharedConfiguration, Resource parent, string fullNamePrefix)
         {
+            var configuration = configurationBuilder.Extend(sharedConfiguration);
             string name = customName ?? GetNameBasedOnControllers(configuration);
             var routeProperties = GetRouteUrlProperties(configuration, name);
             string fullName = fullNamePrefix + name;
@@ -178,7 +191,7 @@ namespace RezRouting
 
             var resource = new Resource(fullName, parent, routeProperties, ResourceType, routes);
             var childResources = from child in children
-                                 select child.Build(configuration, resource, fullName + ".");
+                                 select child.Build(sharedConfiguration, resource, fullName + ".");
             resource.SetChildren(childResources);
             return resource;
         }

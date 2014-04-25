@@ -54,11 +54,11 @@ namespace RezRouting.Tests.Configuration
         }
 
         [Fact]
-        public void ShouldNotFindNameFromControllersWithoutCommonStart()
+        public void ShouldUseNameFromFirstControllerIfNoCommonStartIsFound()
         {
             var types = new[] { typeof(ThingController), typeof(SchmingController) };
             convention.GetResourceName(types, ResourceType.Collection)
-                .Should().Be("");
+                .Should().Be("Things");
         }
 
         public class ThingController

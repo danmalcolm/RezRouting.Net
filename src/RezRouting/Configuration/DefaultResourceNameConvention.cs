@@ -15,7 +15,7 @@ namespace RezRouting.Configuration
             if (names.Length == 0)
                 throw new ArgumentException("At least one type is expected", "controllerTypes");
 
-            var name = GetCommonStart(names);
+            var name = GetCommonStartOrFirst(names);
             if (name != "")
             {
                 name = resourceType == ResourceType.Collection
@@ -25,7 +25,7 @@ namespace RezRouting.Configuration
             return name;
         }
 
-        private static string GetCommonStart(string[] names)
+        private static string GetCommonStartOrFirst(string[] names)
         {
             var normalized = names.Select(x => x.ToLowerInvariant()).ToArray();
             var first = normalized.First();
@@ -36,8 +36,7 @@ namespace RezRouting.Configuration
             {
                 index++;
             }
-
-            string name = names.First().Substring(0, index);
+            string name = (index > 0) ? names.First().Substring(0, index) : names.First();
             return name;
         }
     }

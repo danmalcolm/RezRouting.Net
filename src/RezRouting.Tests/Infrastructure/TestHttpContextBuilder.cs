@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Web;
 using Moq;
 
@@ -31,6 +32,14 @@ namespace RezRouting.Tests.Infrastructure
             httpContext.Setup(x => x.Request.Form).Returns(form);
             httpContext.Setup(x => x.Request.Unvalidated.Form).Returns(form);
             httpContext.Setup(x => x.Response.ApplyAppPathModifier(It.IsAny<string>())).Returns((string x) => x);
+            httpContext.Setup(x => x.Request[It.IsAny<string>()]).Returns((string key) =>
+            {
+                if (queryString.AllKeys.Contains(key))
+                    return queryString[key];
+                if (form.AllKeys.Contains(key))
+                    return form[key];
+               return null;
+            });
             return httpContext.Object;
         } 
     }

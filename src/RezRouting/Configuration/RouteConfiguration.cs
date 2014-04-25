@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RezRouting.Utility;
 
 namespace RezRouting.Configuration
 {
@@ -7,15 +8,15 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class RouteConfiguration
     {
-        public RouteConfiguration(List<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, IResourcePathFormatter resourcePathFormatter, string routeNamePrefix)
+        public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, IResourcePathFormatter resourcePathFormatter, string routeNamePrefix)
         {
-            RouteTypes = routeTypes;
+            RouteTypes = routeTypes.ToReadOnlyList();
             ResourceNameConvention = resourceNameConvention;
             ResourcePathFormatter = resourcePathFormatter;
             RouteNamePrefix = routeNamePrefix;
         }
 
-        public List<RouteType> RouteTypes { get; private set; }
+        public IList<RouteType> RouteTypes { get; private set; }
 
         public IResourceNameConvention ResourceNameConvention { get; private set; }
 

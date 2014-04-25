@@ -11,30 +11,37 @@ namespace RezRouting
     public class RouteConfigurationBuilder
     {
         private readonly List<RouteType> routeTypes;
-        private IResourceNameConvention resourceNameConvention;
-        private IResourcePathFormatter resourcePathFormatter;
-        private string routeNamePrefix;
+        private readonly Setting<IResourceNameConvention> resourceNameConvention;
+        private readonly Setting<IResourcePathFormatter> resourcePathFormatter; 
+        private readonly Setting<string> routeNamePrefix; 
         
-        public RouteConfigurationBuilder()
+        public RouteConfigurationBuilder(IEnumerable<RouteType> routeTypes = null)
         {
-            routeTypes = new List<RouteType>
-            {
-                new RouteType("Index", new[] { ResourceType.Collection }, CollectionLevel.Collection, "Index", "", StandardHttpMethod.Get, 0),
-                new RouteType("Show", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Item, "Show", "", StandardHttpMethod.Get, 3),
-                new RouteType("New", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Collection, "New", "new", StandardHttpMethod.Get, 1),
-                new RouteType("Create", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Collection, "Create", "", StandardHttpMethod.Post, 4),
-                new RouteType("Edit", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Item, "Edit", "edit", StandardHttpMethod.Get, 2),
-                new RouteType("Update", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Item, "Update", "", StandardHttpMethod.Put, 5),
-                new RouteType("Delete", new[] { ResourceType.Singular, ResourceType.Collection }, CollectionLevel.Item, "Destroy", "", StandardHttpMethod.Delete, 6)
-            };
-            resourceNameConvention = new DefaultResourceNameConvention();
-            resourcePathFormatter = new DefaultResourcePathFormatter(new ResourcePathSettings());
-            routeNamePrefix = "";
+            this.routeTypes = routeTypes != null 
+                ? routeTypes.ToList() 
+                : new List<RouteType>();
+            resourceNameConvention = new Setting<IResourceNameConvention>();
+            resourcePathFormatter = new Setting<IResourcePathFormatter>();
+            routeNamePrefix = new Setting<string>();
         }
-        
-        public void AddCustomRoute(RouteType routeType)
+
+        /// <summary>
+        /// Removes all RouteTypes
+        /// </summary>
+        public void ClearRoutes()
         {
-            var conflictingRouteTypes = routeTypes.Where(rt => rt.ConflictsWith(routeType));
+            routeTypes.Clear();
+        }
+
+        /// <summary>
+        /// Adds a new RouteType
+        /// </summary>
+        /// <param name="routeType"></param>
+        public void AddRoute(RouteType routeType)
+        {
+            var conflictingRouteTypes = routeTypes
+                .Where(rt => rt.ConflictsWith(routeType))
+                .ToArray();
             if (conflictingRouteTypes.Any())
             {
                 throw new ArgumentException(string.Format(@"The route is not valid as it conflicts with the following: 
@@ -51,7 +58,7 @@ namespace RezRouting
         public void CustomiseResourceNames(IResourceNameConvention convention)
         {
             if (convention == null) throw new ArgumentNullException("convention");
-            resourceNameConvention = convention;
+            resourceNameConvention.Set(convention);
         }
 
         /// <summary>
@@ -60,7 +67,8 @@ namespace RezRouting
         public void CustomiseResourceNames(Func<IEnumerable<Type>, ResourceType, string> create)
         {
             if (create == null) throw new ArgumentNullException("create");
-            resourceNameConvention = new CustomResourceNameConvention(create);
+            var convention = new CustomResourceNameConvention(create);
+            resourceNameConvention.Set(convention);
         }
 
         /// <summary>
@@ -70,7 +78,8 @@ namespace RezRouting
         public void FormatResourcePaths(ResourcePathSettings settings)
         {
             if (settings == null) throw new ArgumentNullException("settings");
-            resourcePathFormatter = new DefaultResourcePathFormatter(settings);
+            var formatter = new DefaultResourcePathFormatter(settings);
+            resourcePathFormatter.Set(formatter);
         }
 
         /// <summary>
@@ -80,7 +89,7 @@ namespace RezRouting
         public void FormatResourcePaths(IResourcePathFormatter formatter)
         {
             if (formatter == null) throw new ArgumentNullException("formatter");
-            resourcePathFormatter = formatter;
+            resourcePathFormatter.Set(formatter);
         }
 
         /// <summary>
@@ -91,17 +100,57 @@ namespace RezRouting
         public void FormatResourcePaths(Func<string, string> create)
         {
             if (create == null) throw new ArgumentNullException("create");
-            resourcePathFormatter = new CustomResourcePathFormatter(create);
+            resourcePathFormatter.Set(new CustomResourcePathFormatter(create));
         }
 
         public void PrefixRouteNames(string prefix)
         {
-            routeNamePrefix = prefix;
+            routeNamePrefix.Set(prefix);
         }
 
         internal RouteConfiguration Build()
         {
-            return new RouteConfiguration(routeTypes, resourceNameConvention, resourcePathFormatter, routeNamePrefix);
+            return new RouteConfiguration(routeTypes, 
+                resourceNameConvention.GetOrDefault(new DefaultResourceNameConvention()),
+                resourcePathFormatter.GetOrDefault(new DefaultResourcePathFormatter(new ResourcePathSettings())),
+                routeNamePrefix.GetOrDefault(""));
         }
+
+        /// <summary>
+        /// Creates a new RouteConfiguration instance based on an existing
+        /// instance, overriding any of the configuration options specified.
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        internal RouteConfiguration Extend(RouteConfiguration configuration)
+        {
+            var routeTypes2 = configuration.RouteTypes.Concat(routeTypes);
+            var resourceNameConvention2 = resourceNameConvention.GetOrDefault(configuration.ResourceNameConvention);
+            var resourcePathFormatter2 = resourcePathFormatter.GetOrDefault(configuration.ResourcePathFormatter);
+            var routeNamePrefix2 = routeNamePrefix.GetOrDefault(configuration.RouteNamePrefix);
+            
+            return new RouteConfiguration(routeTypes2, resourceNameConvention2, resourcePathFormatter2, routeNamePrefix2);
+        }
+
+        internal class Setting<T>
+        {
+            private T value;
+
+            internal bool IsSet { get; private set; }
+           
+            internal void Set(T setting)
+            {
+                IsSet = true;
+                value = setting;
+            }
+
+            public T GetOrDefault(T @default)
+            {
+                return IsSet ? value : @default;
+            }
+        }
+
     }
+
+    
 }
