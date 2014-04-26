@@ -35,9 +35,9 @@ namespace RezRouting.Tests.RouteMapping
                     asses.HandledBy<AssesController>();
                     asses.Configure(config =>
                     {
-                        config.AddRoute(search);
-                        config.AddRoute(kick);
-                        config.AddRoute(bust);
+                        config.AddRouteType(search);
+                        config.AddRouteType(kick);
+                        config.AddRouteType(bust);
                     });
                 });
                 mapper.Collection(donkeys =>
@@ -45,9 +45,9 @@ namespace RezRouting.Tests.RouteMapping
                     donkeys.HandledBy<DonkeysController>();
                     donkeys.Configure(config =>
                     {
-                        config.AddRoute(search);
-                        config.AddRoute(kick);
-                        config.AddRoute(bust);
+                        config.AddRouteType(search);
+                        config.AddRouteType(kick);
+                        config.AddRouteType(bust);
                     });
                 });
 

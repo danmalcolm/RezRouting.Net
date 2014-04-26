@@ -4,7 +4,7 @@ using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure.Expectations;
 using Xunit.Extensions;
 
-namespace RezRouting.Tests.RouteMapping
+namespace RezRouting.Tests.Configuration
 {
     /// <summary>
     /// Tests configuration of additional RouteTypes at mapper level - shared
@@ -12,13 +12,13 @@ namespace RezRouting.Tests.RouteMapping
     /// </summary>
     public class SharedCustomRouteTests
     {
-        [Theory, PropertyData("CustomRoutesExpectations")]
-        public void ShouldMapCustomRoutesToAvailableActions(MappingExpectation expectation)
+        [Theory, PropertyData("SharedCustomRoutesExpectations")]
+        public void ShouldMapSharedCustomRoutesForAllResources(MappingExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> CustomRoutesExpectations
+        public static IEnumerable<object[]> SharedCustomRoutesExpectations
         {
             get
             {
@@ -32,9 +32,9 @@ namespace RezRouting.Tests.RouteMapping
                     var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular },
                         CollectionLevel.Item, "Bust", "bust", StandardHttpMethod.Delete, 9);
                     
-                    configuration.AddRoute(search);
-                    configuration.AddRoute(kick);
-                    configuration.AddRoute(bust);
+                    configuration.AddRouteType(search);
+                    configuration.AddRouteType(kick);
+                    configuration.AddRouteType(bust);
                 });
                 mapper.Collection(asses => asses.HandledBy<AssesController>());
                 mapper.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
@@ -50,6 +50,48 @@ namespace RezRouting.Tests.RouteMapping
             }
         }
 
+        [Theory, PropertyData("CustomRoutesExpectations")]
+        public void ShouldMapResourceLevelCustomRoutesOnResourceOnly(MappingExpectation expectation)
+        {
+            expectation.Verify();
+        }
+
+        public static IEnumerable<object[]> CustomRoutesExpectations
+        {
+            get
+            {
+                var mapper = new RouteMapper();
+
+                var search = new RouteType("Search", new[] { ResourceType.Collection },
+                        CollectionLevel.Collection, "Search", "search", StandardHttpMethod.Get, 9);
+                var kick = new RouteType("Kick", new[] { ResourceType.Collection, ResourceType.Singular },
+                    CollectionLevel.Item, "Kick", "kick", StandardHttpMethod.Post, 9);
+                var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular },
+                    CollectionLevel.Item, "Bust", "bust", StandardHttpMethod.Delete, 9);
+
+                mapper.Collection(asses =>
+                {
+                    asses.HandledBy<AssesController>();
+                    asses.Configure(config =>
+                    {
+                        config.AddRouteType(search);
+                        config.AddRouteType(kick);
+                        config.AddRouteType(bust);
+                    });
+                });
+                mapper.Collection(donkeys => donkeys.HandledBy<DonkeysController>());
+
+                return new MappingExpectations(mapper.MapRoutes())
+                    .ExpectMatch("GET /asses", "Asses.Index", "Asses#Index")
+                    .ExpectMatch("GET /asses/search", "Asses.Search", "Asses#Search")
+                    .ExpectMatch("POST /asses/123/kick", "Asses.Kick", "Asses#Kick", new { id = "123" })
+                    .ExpectMatch("DELETE /asses/123/bust", "Asses.Bust", "Asses#Bust", new { id = "123" })
+                    .ExpectNoMatch("GET /donkeys/search")
+                    .AsPropertyData();
+            }
+        }
+
+       
         public class AssesController : Controller
         {
             public ActionResult Index()

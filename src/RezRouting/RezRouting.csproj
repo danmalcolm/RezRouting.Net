@@ -81,6 +81,8 @@
     <Compile Include="Configuration\IResourcePathFormatter.cs" />
     <Compile Include="Configuration\ResourcePathSettings.cs" />
     <Compile Include="Configuration\RouteConfiguration.cs" />
+    <Compile Include="Configuration\CustomRouteSettings.cs" />
+    <Compile Include="Configuration\CustomRouteSettingsBuilder.cs" />
     <Compile Include="Configuration\RouteType.cs" />
     <Compile Include="Configuration\StandardRouteTypes.cs" />
     <Compile Include="Model\RouteUrlProperties.cs" />

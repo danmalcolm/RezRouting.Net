@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Web.Routing;
 using RezRouting.Utility;
@@ -9,18 +10,45 @@ namespace RezRouting.Configuration
     /// </summary>
     public class RouteType
     {
-        public RouteType(string name, IEnumerable<ResourceType> resourceTypes, CollectionLevel collectionLevel, string controllerAction, string urlPath, string httpMethod, int mappingOrder, object requestValues = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceTypes"></param>
+        /// <param name="collectionLevel"></param>
+        /// <param name="actionName"></param>
+        /// <param name="urlPath"></param>
+        /// <param name="httpMethod"></param>
+        /// <param name="mappingOrder"></param>
+        /// <param name="includeController">A function that determines whether a route should be set up 
+        /// on the controller with the action specified on the RouteType. The function is called with each
+        /// controller that has been set up for an individual resource (using the resource.HandledBy methods)
+        /// that has an action method matching this RouteType's actionName. 2 arguments are supplied, the 
+        /// controller type and an index representing its position in the sequence of matching controllers. 
+        /// If includeController is not specified, only the first controller type with an action matching
+        /// the RouteType's action is used.</param>
+        /// <param name="customize">A function that customizes the Route's properties</param>
+        public RouteType(string name, 
+            IEnumerable<ResourceType> resourceTypes, 
+            CollectionLevel collectionLevel, 
+            string actionName, 
+            string urlPath, 
+            string httpMethod, 
+            int mappingOrder, 
+            Func<Type,int,bool> includeController = null,
+            Action<CustomRouteSettingsBuilder> customize = null
+        )
         {
             Name = name;
             ResourceTypes = resourceTypes.ToReadOnlyList();
             CollectionLevel = collectionLevel;
-            ControllerAction = controllerAction;
+            ActionName = actionName;
             HttpMethod = httpMethod;
             UrlPath = urlPath;
             MappingOrder = mappingOrder;
-            QueryStringValues = new RouteValueDictionary(requestValues ?? new object());
+            IncludeController = includeController ?? ((type,index) => index == 0);
+            Customize = customize ?? (x => { });
         }
-
         
         /// <summary>
         /// The name of the route - this is used when mapping the route
@@ -41,7 +69,7 @@ namespace RezRouting.Configuration
         /// <summary>
         /// The name of the controller action method
         /// </summary>
-        public string ControllerAction { get; private set; }
+        public string ActionName { get; private set; }
         
         /// <summary>
         /// The HTTP method used to access the action
@@ -59,6 +87,23 @@ namespace RezRouting.Configuration
         /// GET products/1 and GET products/new
         /// </summary>
         public int MappingOrder { get; set; }
+
+        /// <summary>
+        /// A function that determines whether a route should be set up on a controller with 
+        /// the action specified on the RouteType. The function is called with each controller 
+        /// that has been set up for an individual resource (using the resource.HandledBy methods)
+        /// that has an action method matching this RouteType's actionName. 2 arguments are supplied, the 
+        /// controller type and an index representing its position in the sequence of matching controllers. 
+        /// If includeController is not specified, only the first controller type with an action matching
+        /// the RouteType's action is used.
+        /// </summary>
+        public Func<Type, int, bool> IncludeController { get; set; }
+
+        /// <summary>
+        /// Action that performs additional customization of a routes properties
+        /// before it is mapped
+        /// </summary>
+        public Action<CustomRouteSettingsBuilder> Customize { get; set; }
 
         /// <summary>
         /// A collection of additional querystring values used to constrain to this
@@ -85,9 +130,9 @@ namespace RezRouting.Configuration
             {
                 return
                     string.Format(
-                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ControllerAction: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}, QueryStringValues: {7}",
-                        Name, string.Join(",", ResourceTypes), CollectionLevel, ControllerAction, HttpMethod, UrlPath,
-                        MappingOrder, QueryStringValues);
+                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ActionName: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}",
+                        Name, string.Join(",", ResourceTypes), CollectionLevel, ActionName, HttpMethod, UrlPath,
+                        MappingOrder);
             }
         }
     }

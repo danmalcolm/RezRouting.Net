@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Configuration;
 using RezRouting.Model;
+using RezRouting.Routing;
 using RezRouting.Utility;
 
 namespace RezRouting
@@ -18,7 +19,7 @@ namespace RezRouting
         
         private const string DefaultIdName = "id";
         private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
-        private readonly HashSet<Type> controllerTypes = new HashSet<Type>();
+        private readonly List<Type> controllerTypes = new List<Type>();
         private readonly List<string> includedRouteNames = new List<string>();
         private readonly List<string> excludedRouteNames = new List<string>();
         private string customName;
@@ -149,6 +150,10 @@ namespace RezRouting
         // ReSharper disable once MemberCanBePrivate.Global
         public void HandledBy(Type controllerType)
         {
+            if (controllerTypes.Contains(controllerType))
+            {
+                throw new ArgumentException(string.Format("The controller type {0} has already been added for this resource", controllerType.Name));
+            }
             controllerTypes.Add(controllerType);
         }
 
@@ -183,7 +188,7 @@ namespace RezRouting
         internal Resource Build(RouteConfiguration sharedConfiguration, Resource parent, string fullNamePrefix)
         {
             var configuration = configurationBuilder.Extend(sharedConfiguration);
-            string name = customName ?? GetNameBasedOnControllers(configuration);
+            string name = customName ?? configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
             var routeProperties = GetRouteUrlProperties(configuration, name);
             string fullName = fullNamePrefix + name;
 
@@ -208,27 +213,49 @@ namespace RezRouting
             return routeProperties;
         }
 
+        private string FormatResourcePath(string resourceName, RouteConfiguration configuration)
+        {
+            return configuration.ResourcePathFormatter.GetResourcePath(resourceName);
+        }
+
         private static string GetDefaultIdNameAsAncestor(string name)
         {
             return name.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
         }
 
-        private string GetNameBasedOnControllers(RouteConfiguration configuration)
-        {
-            string name = configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                string controllerTypeNames = string.Join(", ", controllerTypes.Select(x => x.Name));
-                throw new RouteConfigurationException(
-                    "Unable to infer resource name from controller types " + controllerTypeNames +
-                    ". Consider setting the name explicitly via the ResourceName method.");
-            }
-            return name;
-        }
-
         private IEnumerable<ResourceRoute> GetRoutes(RouteConfiguration configuration)
         {
-            // Get applicable RouteTypes for current resource type (singular or collection)
+            var routeTypes = GetApplicableRouteTypes(configuration);
+
+            // Get list of available actions for each controller handling actions for resource
+            var controllers = (from controllerType in controllerTypes
+                let controllerDescriptor = new ReflectedControllerDescriptor(controllerType)
+                from actionDescriptor in controllerDescriptor.GetCanonicalActions()
+                let actionName = actionDescriptor.GetActionNameOverride() ?? actionDescriptor.ActionName
+                group actionName by controllerType into @group
+                select new
+                {
+                    ControllerType = @group.Key, 
+                    ActionNames = @group.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray()
+                })
+                .ToList();
+
+            // Create route(s) for each RouteType based on matching controllers
+            var routes = from routeType in routeTypes
+                orderby routeType.MappingOrder
+                let matchingControllers = controllers
+                    .Where(x => x.ActionNames.Contains(routeType.ActionName, StringComparer.InvariantCultureIgnoreCase))
+                    .ToList()
+                from controller in matchingControllers
+                let index = matchingControllers.IndexOf(controller)
+                where routeType.IncludeController(controller.ControllerType, index)
+                let customizations = GetCustomizations(routeType, controller.ControllerType, index, matchingControllers.Count)
+                select new ResourceRoute(routeType, controller.ControllerType, customizations);
+            return routes;
+        }
+
+        private IEnumerable<RouteType> GetApplicableRouteTypes(RouteConfiguration configuration)
+        {
             var routeTypes = configuration.RouteTypes
                 .Where(rt => rt.ResourceTypes.Contains(ResourceType));
             if (includedRouteNames.Any())
@@ -241,27 +268,20 @@ namespace RezRouting
                 routeTypes = routeTypes.Where(
                     rt => !excludedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
             }
-
-            // Get available actions on controllers handling actions for our resource
-            var actions = (from controllerType in controllerTypes
-                let descriptor = new ReflectedControllerDescriptor(controllerType)
-                from action in descriptor.GetCanonicalActions()
-                let actionName = action.GetActionNameOverride() ?? action.ActionName
-                select new {ControllerType = descriptor.ControllerType, ActionName = actionName}).ToList();
-
-            // Get first available action for each route
-            var routes = from routeType in routeTypes
-                orderby routeType.MappingOrder
-                let action = actions.FirstOrDefault
-                    (a => a.ActionName.EqualsIgnoreCase(routeType.ControllerAction))
-                where action != null
-                select new ResourceRoute(routeType, action.ControllerType);
-            return routes;
+            return routeTypes;
         }
 
-        private string FormatResourcePath(string resourceName, RouteConfiguration configuration)
+        private CustomRouteSettings GetCustomizations(RouteType routeType, Type controllerType, int matchingControllerIndex, int matchingControllerCount)
         {
-            return configuration.ResourcePathFormatter.GetResourcePath(resourceName);
+            var builder = new CustomRouteSettingsBuilder(controllerType, matchingControllerIndex);
+            // Add a default suffix to the RouteName to ensure that it is unique
+            if (matchingControllerCount > 1)
+            {
+                string suffix = "." + ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
+                builder.NameSuffix(suffix);
+            }
+            routeType.Customize(builder);
+            return builder.Build();
         }
     }
 }

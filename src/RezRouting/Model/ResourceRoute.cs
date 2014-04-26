@@ -9,17 +9,19 @@ using RezRouting.Routing;
 namespace RezRouting.Model
 {
     /// <summary>
-    /// A route configured for a an action on a singular or collection resource
+    /// A route configured for an action on a resource
     /// </summary>
     internal class ResourceRoute
     {
         public RouteType RouteType { get; private set; }
         private readonly Type controllerType;
-        
-        public ResourceRoute(RouteType routeType, Type controllerType)
+        private readonly CustomRouteSettings settings;
+
+        public ResourceRoute(RouteType routeType, Type controllerType, CustomRouteSettings settings)
         {
             RouteType = routeType;
             this.controllerType = controllerType;
+            this.settings = settings;
         }
 
         public void MapRoute(string resourceName, string resourceUrl, RouteCollection routes)
@@ -51,7 +53,7 @@ namespace RezRouting.Model
         private RouteInfo GetRouteInfo(string resourceName, string resourceUrl)
         {
             // Name - based on nested resource path and action name
-            string name = string.Format("{0}.{1}", resourceName, RouteType.Name);
+            string name = string.Format("{0}.{1}{2}", resourceName, RouteType.Name, settings.NameSuffix);
 
             // URL - path to resource + additional path segment(s) for route
             string url = resourceUrl;
@@ -62,7 +64,7 @@ namespace RezRouting.Model
             }
             
             string controller = ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
-            var defaults = new { controller = controller, action = RouteType.ControllerAction };
+            var defaults = new { controller = controller, action = RouteType.ActionName };
             var constraints = GetConstraints();
             var namespaces = new[] { controllerType.Namespace };
 
@@ -74,13 +76,14 @@ namespace RezRouting.Model
             string httpMethod = RouteType.HttpMethod;
             var constraints = new RouteValueDictionary();
             constraints["httpMethod"] = new HttpMethodOrOverrideConstraint(httpMethod);
-            foreach (string key in RouteType.QueryStringValues.Keys)
+            var queryStringValues = settings.QueryStringValues;
+            foreach (string key in queryStringValues.Keys)
             {
-                string value = RouteType.QueryStringValues[key].ToString();
-                // Route values with key matching key of a constraint are 
-                // excluded from the QueryString during URL generation. In this case, we want 
-                // to include the value, as it needed part of the route URL. We work around
-                // this by formatting an alternative key name
+                string value = queryStringValues[key].ToString();
+                // Route values whose key matches the key of a constraint are excluded 
+                // from the query string during URL generation. Here, we specifically want
+                // to include the value in the query string, so we use an alternative
+                // key in the constraint dictionary. The constraint itself has the real key.
                 string constraintKey = "__requestvalueconstraint__" + key;
                 constraints[constraintKey] = new QueryStringValueConstraint(key, value);
             }
@@ -98,11 +101,11 @@ namespace RezRouting.Model
                 Namespaces = namespaces;
             }
 
-            public string Name { get; set; }
-            public string Url { get; set; }
-            public object Defaults { get; set; }
-            public RouteValueDictionary Constraints { get; set; }
-            public string[] Namespaces { get; set; }
+            public string Name { get; private set; }
+            public string Url { get; private set; }
+            public object Defaults { get; private set; }
+            public RouteValueDictionary Constraints { get; private set; }
+            public string[] Namespaces { get; private set; }
 
             public override string ToString()
             {

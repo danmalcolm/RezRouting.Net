@@ -1,7 +1,7 @@
 ﻿namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Specifies modification to case when formatting a value for use when mapping routes
+    /// Specifies changes to case when formatting a string value
     /// </summary>
     public enum CaseStyle
     {

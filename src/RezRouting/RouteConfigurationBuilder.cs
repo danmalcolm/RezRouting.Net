@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RezRouting.Configuration;
+using RezRouting.Utility;
 
 namespace RezRouting
 {
@@ -28,7 +29,7 @@ namespace RezRouting
         /// <summary>
         /// Removes all RouteTypes
         /// </summary>
-        public void ClearRoutes()
+        public void ClearRouteTypes()
         {
             routeTypes.Clear();
         }
@@ -37,8 +38,10 @@ namespace RezRouting
         /// Adds a new RouteType
         /// </summary>
         /// <param name="routeType"></param>
-        public void AddRoute(RouteType routeType)
+        public void AddRouteType(RouteType routeType)
         {
+            if (routeType == null) throw new ArgumentNullException("routeType");
+
             var conflictingRouteTypes = routeTypes
                 .Where(rt => rt.ConflictsWith(routeType))
                 .ToArray();
@@ -52,7 +55,17 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Uses the supplied IResourceNameConvention implementation to get the resource name
+        /// Adds one or more new RouteTypes
+        /// </summary>
+        /// <param name="routeType"></param>
+        public void AddRoutes(params RouteType[] routeType)
+        {
+            if (routeType == null) throw new ArgumentNullException("routeType");
+            routeType.Each(AddRouteType);
+        }
+
+        /// <summary>
+        /// Sets the strategy used to get the resource name
         /// </summary>
         /// <param name="convention"></param>
         public void CustomiseResourceNames(IResourceNameConvention convention)
@@ -62,7 +75,7 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Uses the supplied function to get the resource name.
+        /// Sets a custom function used to get the resource name.
         /// </summary>
         public void CustomiseResourceNames(Func<IEnumerable<Type>, ResourceType, string> create)
         {

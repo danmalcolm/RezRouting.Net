@@ -3,6 +3,10 @@ using System.Web.Routing;
 
 namespace RezRouting.Routing
 {
+    /// <summary>
+    /// Constrains route to URLs with a specific key and value in the querystring.
+    /// With URL generation, the route values are tested for the specified key and value.
+    /// </summary>
     public class QueryStringValueConstraint : IRouteConstraint
     {
         private readonly string key;

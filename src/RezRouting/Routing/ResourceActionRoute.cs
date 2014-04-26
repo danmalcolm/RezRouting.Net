@@ -22,13 +22,5 @@ namespace RezRouting.Routing
         }
 
         public string Name { get; private set; }
-
-        protected override bool ProcessConstraint(HttpContextBase httpContext, object constraint, string parameterName, RouteValueDictionary values,
-            RouteDirection routeDirection)
-        {
-            var i = 0;
-            return base.ProcessConstraint(httpContext, constraint, parameterName, values, routeDirection);
-            i = 2;
-        }
     }
 }
