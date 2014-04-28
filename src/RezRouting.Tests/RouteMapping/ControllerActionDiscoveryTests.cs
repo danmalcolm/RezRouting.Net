@@ -70,7 +70,7 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Fact]
-        public void ShouldAddSuffixToRouteNameWhenMappingSameRouteOnMultipleControllers()
+        public void RouteNameConventionShouldIncludeControllerNameVariationWhenMappingSameRouteToMultipleControllers()
         {
             var customRouteType = new RouteType("Custom", new[] { ResourceType.Collection }, CollectionLevel.Item, "Custom",
                 "custom", "GET", 10, includeController: (type, index) => index <= 1);
@@ -80,7 +80,7 @@ namespace RezRouting.Tests.RouteMapping
                 c.AddRouteType(customRouteType);
             });
             mapper.Collection(test => test.HandledBy<SameActions1Controller, SameActions2Controller, SameActions3Controller>());
-            mapper.ShouldMapRoutesWithNames("SameActions.Custom.SameActions1", "SameActions.Custom.SameActions2");
+            mapper.ShouldMapRoutesWithNames("SameActions.SameActions1.Custom", "SameActions.SameActions2.Custom");
         }
 
         public class Test1Controller : Controller

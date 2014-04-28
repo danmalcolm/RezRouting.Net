@@ -8,7 +8,6 @@ namespace RezRouting.Configuration
     /// </summary>
     public class CustomRouteSettingsBuilder
     {
-        private string nameSuffix = "";
         private RouteValueDictionary queryStringValues = new RouteValueDictionary();
 
         public CustomRouteSettingsBuilder(Type controllerType, int matchingControllerIndex)
@@ -20,23 +19,13 @@ namespace RezRouting.Configuration
         /// <summary>
         /// The type of the controller for the current route
         /// </summary>
-        public Type ControllerType { get; set; }
+        public Type ControllerType { get; private set; }
 
         /// <summary>
-        /// The index of the controller among those containing actions that
-        /// match the current route.
+        /// The index of the controller among those being included for the
+        /// current route.
         /// </summary>
-        public int MatchingControllerIndex { get; set; }
-
-        /// <summary>
-        /// Sets a value that will be added to the name of the Route
-        /// </summary>
-        /// <param name="suffix"></param>
-        public void NameSuffix(string suffix)
-        {
-            if (suffix == null) throw new ArgumentNullException("suffix");
-            nameSuffix = suffix ?? "";
-        }
+        public int MatchingControllerIndex { get; private set; }
 
         /// <summary>
         /// Constrains the route to requests with the specified values in the querystring
@@ -59,7 +48,7 @@ namespace RezRouting.Configuration
 
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(nameSuffix, queryStringValues);
+            return new CustomRouteSettings(queryStringValues);
         }
     }
 }

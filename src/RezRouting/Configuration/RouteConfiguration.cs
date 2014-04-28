@@ -4,15 +4,16 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Settings that apply to routes set up by a RouteMapper
+    /// Route mapping settings
     /// </summary>
     internal class RouteConfiguration
     {
-        public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, IResourcePathFormatter resourcePathFormatter, string routeNamePrefix)
+        public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, IResourcePathFormatter resourcePathFormatter, IRouteNameConvention routeNameConvention, string routeNamePrefix)
         {
             RouteTypes = routeTypes.ToReadOnlyList();
             ResourceNameConvention = resourceNameConvention;
             ResourcePathFormatter = resourcePathFormatter;
+            RouteNameConvention = routeNameConvention;
             RouteNamePrefix = routeNamePrefix;
         }
 
@@ -21,6 +22,8 @@ namespace RezRouting.Configuration
         public IResourceNameConvention ResourceNameConvention { get; private set; }
 
         public IResourcePathFormatter ResourcePathFormatter { get; private set; }
+
+        public IRouteNameConvention RouteNameConvention { get; private set; }
 
         public string RouteNamePrefix { get; private set; }
     }

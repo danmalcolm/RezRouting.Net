@@ -6,7 +6,10 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configuration for an individual route that applies to an action on a resource
+    /// Defines properties of a type of route that applies to an action on a resource - 
+    /// a blueprint for an instance of a Route created for a specific resource. RezRouting
+    /// contains standard RouteTypes and can be extended with custom application-specific
+    /// RouteTypes.
     /// </summary>
     public class RouteType
     {
@@ -100,7 +103,7 @@ namespace RezRouting.Configuration
         public Func<Type, int, bool> IncludeController { get; set; }
 
         /// <summary>
-        /// Action that performs additional customization of a routes properties
+        /// Action that performs additional customization of a route's properties
         /// before it is mapped
         /// </summary>
         public Action<CustomRouteSettingsBuilder> Customize { get; set; }

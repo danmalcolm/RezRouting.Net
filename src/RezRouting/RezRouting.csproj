@@ -75,10 +75,13 @@
     <Compile Include="Configuration\CaseStyle.cs" />
     <Compile Include="Configuration\CustomResourceNameConvention.cs" />
     <Compile Include="Configuration\CustomResourcePathFormatter.cs" />
+    <Compile Include="Configuration\CustomRouteNameConvention.cs" />
     <Compile Include="Configuration\DefaultResourceNameConvention.cs" />
     <Compile Include="Configuration\DefaultResourcePathFormatter.cs" />
+    <Compile Include="Configuration\DefaultRouteNameConvention.cs" />
     <Compile Include="Configuration\IResourceNameConvention.cs" />
     <Compile Include="Configuration\IResourcePathFormatter.cs" />
+    <Compile Include="Configuration\IRouteNameConvention.cs" />
     <Compile Include="Configuration\ResourcePathSettings.cs" />
     <Compile Include="Configuration\RouteConfiguration.cs" />
     <Compile Include="Configuration\CustomRouteSettings.cs" />

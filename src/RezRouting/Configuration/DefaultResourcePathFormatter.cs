@@ -20,7 +20,7 @@ namespace RezRouting.Configuration
 
             if (settings.WordSeparator != "")
             {
-                result = Regex.Replace(result, "([a-z])(?=[A-Z])", "$1-");
+                result = Regex.Replace(result, "([a-z])(?=[A-Z])", "$1" + settings.WordSeparator);
             }
             switch (settings.CaseStyle)
             {

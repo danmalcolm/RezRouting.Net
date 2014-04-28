@@ -13,7 +13,7 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <param name="caseStyle"></param>
         /// <param name="wordSeparator">A string added between "camel humps" in the resource name. 
-        /// Can be used to hyphens or underscores, e.g. PurchaseOrders => purchase-orders</param>
+        /// Can be used to add hyphens or underscores, e.g. PurchaseOrders => purchase-orders</param>
         public ResourcePathSettings(CaseStyle caseStyle = CaseStyle.Lower, string wordSeparator = null)
         {
             wordSeparator = wordSeparator ?? "";

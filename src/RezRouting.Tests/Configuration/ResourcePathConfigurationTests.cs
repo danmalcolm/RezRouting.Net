@@ -31,14 +31,14 @@ namespace RezRouting.Tests.Configuration
         {
             builder.Configure(config => config.FormatResourcePaths(new MyResourcePathFormatter()));
 
-            builder.ShouldMapRoutesWithUrls("USERS", "USERS/{id}", "USERS/new", "USERS", "USERS/{id}/edit", "USERS/{id}", "USERS/{id}");
+            builder.ShouldMapRoutesWithUrls("_USERS_", "_USERS_/{id}", "_USERS_/new", "_USERS_", "_USERS_/{id}/edit", "_USERS_/{id}", "_USERS_/{id}");
         }
 
         public class MyResourcePathFormatter : IResourcePathFormatter
         {
             public string GetResourcePath(string resourceName)
             {
-                return resourceName.ToUpper();
+                return "_" + resourceName.ToUpper() + "_";
             }
         }
 

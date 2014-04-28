@@ -28,7 +28,7 @@ namespace RezRouting.Tests.RouteMapping
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
-                        settings.QueryStringValues(new { command = command });
+                        settings.QueryStringValues(new { cmd = command });
                     });
                 var commandHandleRouteType = new RouteType("HandleCommand",
                     new[] { ResourceType.Collection }, CollectionLevel.Item, "Handle",
@@ -37,14 +37,16 @@ namespace RezRouting.Tests.RouteMapping
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
-                        settings.QueryStringValues(new { command = command });
+                        settings.QueryStringValues(new { cmd = command });
                     });
                 mapper.Configure(config => config.AddRoutes(commandEditRouteType, commandHandleRouteType));
-                mapper.Collection(albums => albums.HandledBy<ProductsController, RenameController,UpdateCostsController>());
+                mapper.Collection(products => products.HandledBy<ProductsController, RenameController,UpdateCostsController>());
                 
                 return new MappingExpectations(mapper.MapRoutes())
-                    .ExpectMatch("GET /products/123/edit?command=rename", "Products.EditCommand.Rename", "Rename#Edit", new { id = "123" })
-                    .ExpectMatch("POST /products/123/edit?command=rename", "Products.HandleCommand.Rename", "Rename#Handle", new { id = "123" })
+                    .ExpectMatch("GET /products/123/edit?cmd=rename", "Products.Rename.EditCommand", "Rename#Edit", new { id = "123" })
+                    .ExpectMatch("POST /products/123/edit?cmd=rename", "Products.Rename.HandleCommand", "Rename#Handle", new { id = "123" })
+                    .ExpectMatch("GET /products/123/edit?cmd=updatecosts", "Products.UpdateCosts.EditCommand", "UpdateCosts#Edit", new { id = "123" })
+                    .ExpectMatch("POST /products/123/edit?cmd=updatecosts", "Products.UpdateCosts.HandleCommand", "UpdateCosts#Handle", new { id = "123" })
                     .AsPropertyData();
             }
         }

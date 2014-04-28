@@ -86,10 +86,7 @@ namespace RezRouting
         private IEnumerable<Resource> BuildResources()
         {
             var configuration = configurationBuilder.Build();
-            string namePrefix = configuration.RouteNamePrefix;
-            if (namePrefix != "")
-                namePrefix += ".";
-            return builders.Select(x => x.Build(configuration, null, namePrefix));
+            return builders.Select(x => x.Build(configuration, new string[0], null));
         }
     }
 }

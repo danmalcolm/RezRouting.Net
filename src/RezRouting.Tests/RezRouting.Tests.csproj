@@ -84,8 +84,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DefaultRouteNameConventionTests.cs" />
     <Compile Include="Configuration\DefaultResourceNameConventionTests.cs" />
     <Compile Include="Configuration\DefaultResourcePathFormatterTests.cs" />
+    <Compile Include="Configuration\RouteNameConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceNameConfigurationTests.cs" />
     <Compile Include="Configuration\ResourcePathConfigurationTests.cs" />
     <Compile Include="Configuration\SharedCustomRouteTests.cs" />

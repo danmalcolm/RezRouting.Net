@@ -185,20 +185,27 @@ namespace RezRouting
         /// Builds a resource model based on settings configured
         /// </summary>
         /// <returns></returns>
-        internal Resource Build(RouteConfiguration sharedConfiguration, Resource parent, string fullNamePrefix)
+        internal Resource Build(RouteConfiguration sharedConfiguration, string[] ancestorNames, Resource parent)
         {
             var configuration = configurationBuilder.Extend(sharedConfiguration);
-            string name = customName ?? configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
-            var routeProperties = GetRouteUrlProperties(configuration, name);
-            string fullName = fullNamePrefix + name;
+            string resourceName = GetResourceName(configuration);
+            var routeProperties = GetRouteUrlProperties(configuration, resourceName);
+            string fullResourceName = configuration.RouteNamePrefix + "."
+                                      + string.Join(".", ancestorNames) + "." + resourceName;
 
-            var routes = GetRoutes(configuration);
+            var resourceNames = ancestorNames.Append(resourceName);
+            var routes = GetRoutes(resourceNames, configuration);
 
-            var resource = new Resource(fullName, parent, routeProperties, ResourceType, routes);
+            var resource = new Resource(fullResourceName, parent, routeProperties, ResourceType, routes);
             var childResources = from child in children
-                                 select child.Build(sharedConfiguration, resource, fullName + ".");
+                                 select child.Build(sharedConfiguration, resourceNames, resource);
             resource.SetChildren(childResources);
             return resource;
+        }
+
+        private string GetResourceName(RouteConfiguration configuration)
+        {
+            return customName ?? configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
         }
 
         private RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, string name)
@@ -223,7 +230,7 @@ namespace RezRouting
             return name.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
         }
 
-        private IEnumerable<ResourceRoute> GetRoutes(RouteConfiguration configuration)
+        private IEnumerable<ResourceRoute> GetRoutes(string[] resourceNames, RouteConfiguration configuration)
         {
             var routeTypes = GetApplicableRouteTypes(configuration);
 
@@ -243,14 +250,18 @@ namespace RezRouting
             // Create route(s) for each RouteType based on matching controllers
             var routes = from routeType in routeTypes
                 orderby routeType.MappingOrder
-                let matchingControllers = controllers
+                let includedControllers = controllers
                     .Where(x => x.ActionNames.Contains(routeType.ActionName, StringComparer.InvariantCultureIgnoreCase))
+                    .Where((controller,index) => routeType.IncludeController(controller.ControllerType, index))
                     .ToList()
-                from controller in matchingControllers
-                let index = matchingControllers.IndexOf(controller)
+                from controller in includedControllers
+                let index = includedControllers.IndexOf(controller)
+                let multipleControllers = includedControllers.Count > 1
+                let controllerType = controller.ControllerType
                 where routeType.IncludeController(controller.ControllerType, index)
-                let customizations = GetCustomizations(routeType, controller.ControllerType, index, matchingControllers.Count)
-                select new ResourceRoute(routeType, controller.ControllerType, customizations);
+                let customizations = GetCustomizations(routeType, controllerType, index, includedControllers.Count)
+                let routeName = GetRouteName(configuration, resourceNames, routeType, controllerType, multipleControllers)
+                select new ResourceRoute(routeName, routeType, controller.ControllerType, customizations);
             return routes;
         }
 
@@ -274,14 +285,16 @@ namespace RezRouting
         private CustomRouteSettings GetCustomizations(RouteType routeType, Type controllerType, int matchingControllerIndex, int matchingControllerCount)
         {
             var builder = new CustomRouteSettingsBuilder(controllerType, matchingControllerIndex);
-            // Add a default suffix to the RouteName to ensure that it is unique
-            if (matchingControllerCount > 1)
-            {
-                string suffix = "." + ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
-                builder.NameSuffix(suffix);
-            }
             routeType.Customize(builder);
             return builder.Build();
+        }
+
+        private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, bool multiple)
+        {
+            string prefix = configuration.RouteNamePrefix;
+            if (prefix != "")
+                prefix += ".";
+            return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType, controllerType, multiple);
         }
     }
 }

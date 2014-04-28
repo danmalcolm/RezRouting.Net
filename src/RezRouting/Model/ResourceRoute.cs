@@ -9,16 +9,18 @@ using RezRouting.Routing;
 namespace RezRouting.Model
 {
     /// <summary>
-    /// A route configured for an action on a resource
+    /// A route configured for an action on a resource. An intermediate model created by the ResourceBuilders.
     /// </summary>
     internal class ResourceRoute
     {
+        public string RouteName { get; private set; }
         public RouteType RouteType { get; private set; }
         private readonly Type controllerType;
         private readonly CustomRouteSettings settings;
 
-        public ResourceRoute(RouteType routeType, Type controllerType, CustomRouteSettings settings)
+        public ResourceRoute(string routeName, RouteType routeType, Type controllerType, CustomRouteSettings settings)
         {
+            RouteName = routeName;
             RouteType = routeType;
             this.controllerType = controllerType;
             this.settings = settings;
@@ -53,7 +55,7 @@ namespace RezRouting.Model
         private RouteInfo GetRouteInfo(string resourceName, string resourceUrl)
         {
             // Name - based on nested resource path and action name
-            string name = string.Format("{0}.{1}{2}", resourceName, RouteType.Name, settings.NameSuffix);
+//            string name = string.Format("{0}.{1}{2}", resourceName, RouteType.Name, settings.NameSuffix);
 
             // URL - path to resource + additional path segment(s) for route
             string url = resourceUrl;
@@ -68,7 +70,7 @@ namespace RezRouting.Model
             var constraints = GetConstraints();
             var namespaces = new[] { controllerType.Namespace };
 
-            return new RouteInfo(name, url, defaults, constraints, namespaces);
+            return new RouteInfo(RouteName, url, defaults, constraints, namespaces);
         }
 
         private RouteValueDictionary GetConstraints()

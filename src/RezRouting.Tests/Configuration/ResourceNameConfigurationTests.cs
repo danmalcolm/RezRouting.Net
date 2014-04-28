@@ -21,7 +21,7 @@ namespace RezRouting.Tests.Configuration
         }
 
         [Fact]
-        public void ShouldUseDefaultConventionForResourceName()
+        public void ShouldUseDefaultConventionForResourceNameWhenNotConfigured()
         {
             builder.ShouldMapRoutesWithNames("Users.Index", "Users.Show", "Users.New", "Users.Create", "Users.Edit", "Users.Update", "Users.Delete");
         }
