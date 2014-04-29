@@ -49,17 +49,20 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Fact]
-        public void ShouldMapRouteToFirstControllerWhenSameActionExistsOnMultipleControllers()
+        public void ShouldMapRouteToAllControllersWhenSameActionExistsOnMultipleControllers()
         {
             mapper.Collection(test => test.HandledBy<SameActions1Controller,SameActions2Controller>());
-            mapper.ShouldMapRoutesWithControllerActions("sameactions1#index");
+            mapper.ShouldMapRoutesWithControllerActions("sameactions1#index", "sameactions2#index");
         }
 
         [Fact]
-        public void ShouldMapToAllControllersIncludedByCustomIncludeFuncWhenSameActionExistsOnMultipleControllers()
+        public void ShouldExcludeControllersIgnoredByCustomizeFunctionWhenSameActionExistsOnMultipleControllers()
         {
             var customRouteType = new RouteType("Custom", new[] {ResourceType.Collection}, CollectionLevel.Item, "Custom",
-                "custom", "GET", 10, includeController: (type, index) => index <= 1);
+                "custom", "GET", 10, customize: route =>
+                {
+                    route.Ignore = route.ControllerType == typeof (SameActions3Controller);
+                });
             mapper.Configure(c =>
             {
                 c.ClearRouteTypes();
@@ -73,13 +76,13 @@ namespace RezRouting.Tests.RouteMapping
         public void RouteNameConventionShouldIncludeControllerNameVariationWhenMappingSameRouteToMultipleControllers()
         {
             var customRouteType = new RouteType("Custom", new[] { ResourceType.Collection }, CollectionLevel.Item, "Custom",
-                "custom", "GET", 10, includeController: (type, index) => index <= 1);
+                "custom", "GET", 10);
             mapper.Configure(c =>
             {
                 c.ClearRouteTypes();
                 c.AddRouteType(customRouteType);
             });
-            mapper.Collection(test => test.HandledBy<SameActions1Controller, SameActions2Controller, SameActions3Controller>());
+            mapper.Collection(test => test.HandledBy<SameActions1Controller, SameActions2Controller>());
             mapper.ShouldMapRoutesWithNames("SameActions.SameActions1.Custom", "SameActions.SameActions2.Custom");
         }
 

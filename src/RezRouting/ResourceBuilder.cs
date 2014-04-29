@@ -242,30 +242,28 @@ namespace RezRouting
                 group actionName by controllerType into @group
                 select new
                 {
-                    ControllerType = @group.Key, 
+                    Type = @group.Key, 
                     ActionNames = @group.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray()
                 })
-                .ToList();
+                .ToArray();
 
-            // Create route(s) for each RouteType based on matching controllers
+            // Create route(s) for each RouteType based on matching controller(s)
             var routes = from routeType in routeTypes
                 orderby routeType.MappingOrder
-                let includedControllers = controllers
-                    .Where(x => x.ActionNames.Contains(routeType.ActionName, StringComparer.InvariantCultureIgnoreCase))
-                    .Where((controller,index) => routeType.IncludeController(controller.ControllerType, index))
-                    .ToList()
-                from controller in includedControllers
-                let index = includedControllers.IndexOf(controller)
-                let multipleControllers = includedControllers.Count > 1
-                let controllerType = controller.ControllerType
-                where routeType.IncludeController(controller.ControllerType, index)
-                let customizations = GetCustomizations(routeType, controllerType, index, includedControllers.Count)
-                let routeName = GetRouteName(configuration, resourceNames, routeType, controllerType, multipleControllers)
-                select new ResourceRoute(routeName, routeType, controller.ControllerType, customizations);
+                let routeControllers = (from c in controllers
+                    where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
+                    let settings = routeType.GetCustomSettings(c.Type)
+                    where !settings.Ignore
+                    select new { c.Type, Settings = settings}).ToArray()
+                let multiple = routeControllers.Length > 1
+                from routeController in routeControllers
+                let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.Type, multiple)
+                select new ResourceRoute(routeName, routeType, routeController.Type, routeController.Settings);
+                        
             return routes;
         }
-
-        private IEnumerable<RouteType> GetApplicableRouteTypes(RouteConfiguration configuration)
+        
+        private RouteType[] GetApplicableRouteTypes(RouteConfiguration configuration)
         {
             var routeTypes = configuration.RouteTypes
                 .Where(rt => rt.ResourceTypes.Contains(ResourceType));
@@ -279,16 +277,9 @@ namespace RezRouting
                 routeTypes = routeTypes.Where(
                     rt => !excludedRouteNames.Contains(rt.Name, StringComparer.InvariantCultureIgnoreCase));
             }
-            return routeTypes;
+            return routeTypes.ToArray();
         }
-
-        private CustomRouteSettings GetCustomizations(RouteType routeType, Type controllerType, int matchingControllerIndex, int matchingControllerCount)
-        {
-            var builder = new CustomRouteSettingsBuilder(controllerType, matchingControllerIndex);
-            routeType.Customize(builder);
-            return builder.Build();
-        }
-
+        
         private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, bool multiple)
         {
             string prefix = configuration.RouteNamePrefix;

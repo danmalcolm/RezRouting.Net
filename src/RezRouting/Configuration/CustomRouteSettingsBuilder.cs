@@ -8,24 +8,18 @@ namespace RezRouting.Configuration
     /// </summary>
     public class CustomRouteSettingsBuilder
     {
+        private bool ignore = false;
         private RouteValueDictionary queryStringValues = new RouteValueDictionary();
 
-        public CustomRouteSettingsBuilder(Type controllerType, int matchingControllerIndex)
+        public CustomRouteSettingsBuilder(Type controllerType)
         {
             ControllerType = controllerType;
-            MatchingControllerIndex = matchingControllerIndex;
         }
 
         /// <summary>
         /// The type of the controller for the current route
         /// </summary>
         public Type ControllerType { get; private set; }
-
-        /// <summary>
-        /// The index of the controller among those being included for the
-        /// current route.
-        /// </summary>
-        public int MatchingControllerIndex { get; private set; }
 
         /// <summary>
         /// Constrains the route to requests with the specified values in the querystring
@@ -48,7 +42,13 @@ namespace RezRouting.Configuration
 
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(queryStringValues);
+            return new CustomRouteSettings(queryStringValues, Ignore);
         }
+
+        /// <summary>
+        /// Specifies whether the route will be mapped or ignored
+        /// </summary>
+        /// <returns></returns>
+        public bool Ignore { get; set; }
     }
 }

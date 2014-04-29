@@ -38,7 +38,6 @@ namespace RezRouting.Configuration
             string urlPath, 
             string httpMethod, 
             int mappingOrder, 
-            Func<Type,int,bool> includeController = null,
             Action<CustomRouteSettingsBuilder> customize = null
         )
         {
@@ -49,7 +48,6 @@ namespace RezRouting.Configuration
             HttpMethod = httpMethod;
             UrlPath = urlPath;
             MappingOrder = mappingOrder;
-            IncludeController = includeController ?? ((type,index) => index == 0);
             Customize = customize ?? (x => { });
         }
         
@@ -92,17 +90,6 @@ namespace RezRouting.Configuration
         public int MappingOrder { get; set; }
 
         /// <summary>
-        /// A function that determines whether a route should be set up on a controller with 
-        /// the action specified on the RouteType. The function is called with each controller 
-        /// that has been set up for an individual resource (using the resource.HandledBy methods)
-        /// that has an action method matching this RouteType's actionName. 2 arguments are supplied, the 
-        /// controller type and an index representing its position in the sequence of matching controllers. 
-        /// If includeController is not specified, only the first controller type with an action matching
-        /// the RouteType's action is used.
-        /// </summary>
-        public Func<Type, int, bool> IncludeController { get; set; }
-
-        /// <summary>
         /// Action that performs additional customization of a route's properties
         /// before it is mapped
         /// </summary>
@@ -137,6 +124,13 @@ namespace RezRouting.Configuration
                         Name, string.Join(",", ResourceTypes), CollectionLevel, ActionName, HttpMethod, UrlPath,
                         MappingOrder);
             }
+        }
+
+        internal CustomRouteSettings GetCustomSettings(Type controllerType)
+        {
+            var builder = new CustomRouteSettingsBuilder(controllerType);
+            Customize(builder);
+            return builder.Build();
         }
     }
 }

@@ -24,7 +24,6 @@ namespace RezRouting.Tests.RouteMapping
                 var commandEditRouteType = new RouteType("EditCommand", 
                     new[] {ResourceType.Collection}, CollectionLevel.Item, "Edit",
                     "edit", "GET", 1, 
-                    includeController: (type,index) => typeof(ICommandController).IsAssignableFrom(type),
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
@@ -33,7 +32,6 @@ namespace RezRouting.Tests.RouteMapping
                 var commandHandleRouteType = new RouteType("HandleCommand",
                     new[] { ResourceType.Collection }, CollectionLevel.Item, "Handle",
                     "edit", "POST", 1,
-                    includeController: (type, index) => typeof(ICommandController).IsAssignableFrom(type),
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
