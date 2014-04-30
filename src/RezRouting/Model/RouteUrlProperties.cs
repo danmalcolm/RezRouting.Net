@@ -1,7 +1,7 @@
 ﻿namespace RezRouting.Model
 {
     /// <summary>
-    /// Common properties applied to Routes for a resource
+    /// Properties to apply when generating a resource's route URL
     /// </summary>
     internal class RouteUrlProperties
     {

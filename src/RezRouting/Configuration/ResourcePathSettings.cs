@@ -4,7 +4,7 @@ using RezRouting.Routing;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Control how the path segement for a resource within the route URL is formatted
+    /// Settings that apply to formatting of a resource's path in a route URL
     /// </summary>
     public class ResourcePathSettings
     {
@@ -12,8 +12,8 @@ namespace RezRouting.Configuration
         /// Creates a new instance of ResourcePathSettings
         /// </summary>
         /// <param name="caseStyle"></param>
-        /// <param name="wordSeparator">A string added between "camel humps" in the resource name. 
-        /// Can be used to add hyphens or underscores, e.g. PurchaseOrders => purchase-orders</param>
+        /// <param name="wordSeparator">A string added between "camel humps" in the resource name, e.g. "PurchaseOrders" => "purchase-orders". 
+        /// Note that only numbers, letters, "-" and "_" may be used</param>
         public ResourcePathSettings(CaseStyle caseStyle = CaseStyle.Lower, string wordSeparator = null)
         {
             wordSeparator = wordSeparator ?? "";

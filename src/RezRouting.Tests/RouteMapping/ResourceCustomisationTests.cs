@@ -53,7 +53,7 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Fact]
-        public void ShouldOnlyMapRoutesSpecifiedWhenUsingIncludeFilter()
+        public void ShouldOnlyMapSpecifiedRoutesWhenUsingIncludeFilter()
         {
             var mapper = new RouteMapper();
             mapper.Collection(users =>
@@ -65,7 +65,7 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Fact]
-        public void ShouldNotMapRoutesSpecifiedViaExcludeFilter()
+        public void ShouldOnlyMapSpecifiedRoutesWhenUsingExcludeFilter()
         {
             var mapper = new RouteMapper();
             mapper.Collection(users =>

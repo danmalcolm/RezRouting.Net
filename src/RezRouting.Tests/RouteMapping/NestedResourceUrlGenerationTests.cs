@@ -5,7 +5,7 @@ using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
-    public class NestedResourceRouteUrlTests
+    public class NestedResourceUrlGenerationTests
     {
         [Theory, PropertyData("NestedCollectionsExpectations")]
         public void ShouldCreateUrlsForNestedCollections(UrlExpectation expectation)

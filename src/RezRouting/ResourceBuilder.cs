@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Configuration;
 using RezRouting.Model;
-using RezRouting.Routing;
 using RezRouting.Utility;
 
 namespace RezRouting
@@ -16,7 +15,7 @@ namespace RezRouting
     public abstract class ResourceBuilder
     {
         private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
-        
+
         private const string DefaultIdName = "id";
         private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
         private readonly List<Type> controllerTypes = new List<Type>();
@@ -180,25 +179,22 @@ namespace RezRouting
         }
 
         #endregion
-
-        /// <summary>
-        /// Builds a resource model based on settings configured
-        /// </summary>
-        /// <returns></returns>
-        internal Resource Build(RouteConfiguration sharedConfiguration, string[] ancestorNames, Resource parent)
+        
+        internal Resource Build(RouteConfiguration sharedConfiguration, ResourceBuildContext context)
         {
             var configuration = configurationBuilder.Extend(sharedConfiguration);
-            string resourceName = GetResourceName(configuration);
-            var routeProperties = GetRouteUrlProperties(configuration, resourceName);
-            string fullResourceName = configuration.RouteNamePrefix + "."
-                                      + string.Join(".", ancestorNames) + "." + resourceName;
 
-            var resourceNames = ancestorNames.Append(resourceName);
+            string resourceName = GetResourceName(configuration);
+            var routeUrlProperties = GetRouteUrlProperties(configuration, resourceName);
+            string fullResourceName = string.Format("{0}.{1}.{2}", 
+                configuration.RouteNamePrefix, string.Join(".", context.AncestorNames), resourceName);
+
+            var resourceNames = context.AncestorNames.Append(resourceName);
             var routes = GetRoutes(resourceNames, configuration);
 
-            var resource = new Resource(fullResourceName, parent, routeProperties, ResourceType, routes);
-            var childResources = from child in children
-                                 select child.Build(sharedConfiguration, resourceNames, resource);
+            var resource = new Resource(fullResourceName, context.Parent, routeUrlProperties, ResourceType, routes);
+            var childContext = new ResourceBuildContext(resourceNames, resource);
+            var childResources = children.Select(x => x.Build(sharedConfiguration, childContext));
             resource.SetChildren(childResources);
             return resource;
         }
@@ -213,7 +209,7 @@ namespace RezRouting
             string resourcePath = customPath ?? FormatResourcePath(name, configuration);
 
             string idName = customIdName ?? DefaultIdName;
-            string idNameAsAncestor = customIdNameAsAncestor 
+            string idNameAsAncestor = customIdNameAsAncestor
                 ?? GetDefaultIdNameAsAncestor(name);
 
             var routeProperties = new RouteUrlProperties(resourcePath, idName, idNameAsAncestor);
@@ -234,35 +230,34 @@ namespace RezRouting
         {
             var routeTypes = GetApplicableRouteTypes(configuration);
 
-            // Get list of available actions for each controller handling actions for resource
+            // Get list of available actions on each controller
             var controllers = (from controllerType in controllerTypes
-                let controllerDescriptor = new ReflectedControllerDescriptor(controllerType)
-                from actionDescriptor in controllerDescriptor.GetCanonicalActions()
-                let actionName = actionDescriptor.GetActionNameOverride() ?? actionDescriptor.ActionName
-                group actionName by controllerType into @group
-                select new
-                {
-                    Type = @group.Key, 
-                    ActionNames = @group.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray()
-                })
-                .ToArray();
+                               let controllerDescriptor = new ReflectedControllerDescriptor(controllerType)
+                               from actionDescriptor in controllerDescriptor.GetCanonicalActions()
+                               let actionName = actionDescriptor.GetActionNameOverride() ?? actionDescriptor.ActionName
+                               group actionName by controllerType into @group
+                               select new
+                               {
+                                   Type = @group.Key,
+                                   ActionNames = @group.Distinct(StringComparer.InvariantCultureIgnoreCase).ToArray()
+                               }).ToList();
 
             // Create route(s) for each RouteType based on matching controller(s)
             var routes = from routeType in routeTypes
-                orderby routeType.MappingOrder
-                let routeControllers = (from c in controllers
-                    where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
-                    let settings = routeType.GetCustomSettings(c.Type)
-                    where !settings.Ignore
-                    select new { c.Type, Settings = settings}).ToArray()
-                let multiple = routeControllers.Length > 1
-                from routeController in routeControllers
-                let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.Type, multiple)
-                select new ResourceRoute(routeName, routeType, routeController.Type, routeController.Settings);
-                        
+                         orderby routeType.MappingOrder
+                         let routeControllers = (from c in controllers
+                                                 where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
+                                                 let settings = routeType.GetCustomSettings(c.Type)
+                                                 where !settings.Ignore
+                                                 select new { c.Type, Settings = settings }).ToList()
+                         let multipleControllers = routeControllers.Count > 1
+                         from routeController in routeControllers
+                         let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.Type, multipleControllers)
+                         select new ResourceRoute(routeName, routeType, routeController.Type, routeController.Settings);
+
             return routes;
         }
-        
+
         private RouteType[] GetApplicableRouteTypes(RouteConfiguration configuration)
         {
             var routeTypes = configuration.RouteTypes
@@ -279,13 +274,13 @@ namespace RezRouting
             }
             return routeTypes.ToArray();
         }
-        
-        private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, bool multiple)
+
+        private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, bool multipleControllers)
         {
             string prefix = configuration.RouteNamePrefix;
             if (prefix != "")
                 prefix += ".";
-            return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType, controllerType, multiple);
+            return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType, controllerType, multipleControllers);
         }
     }
 }

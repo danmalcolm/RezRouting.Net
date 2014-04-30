@@ -9,7 +9,7 @@ using RezRouting.Routing;
 namespace RezRouting.Model
 {
     /// <summary>
-    /// A route configured for an action on a resource. An intermediate model created by the ResourceBuilders.
+    /// A route configured for an action on a resource. An intermediate model created by ResourceBuilder classes.
     /// </summary>
     internal class ResourceRoute
     {

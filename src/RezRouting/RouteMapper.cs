@@ -86,7 +86,8 @@ namespace RezRouting
         private IEnumerable<Resource> BuildResources()
         {
             var configuration = configurationBuilder.Build();
-            return builders.Select(x => x.Build(configuration, new string[0], null));
+            var context = new ResourceBuildContext(new string[0], null);
+            return builders.Select(x => x.Build(configuration, context));
         }
     }
 }

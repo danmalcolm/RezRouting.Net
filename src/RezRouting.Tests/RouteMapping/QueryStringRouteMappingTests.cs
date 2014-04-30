@@ -67,16 +67,14 @@ namespace RezRouting.Tests.RouteMapping
                         customize: x => x.QueryStringValues(new { variation = "2" })
                         );
 
-                    configuration.AddRouteType(custom1);
-                    configuration.AddRouteType(custom2);
+                    configuration.AddRouteTypes(custom1, custom2);
                 });
                 mapper.Collection(samples => samples.HandledBy<SamplesController>());
                 mapper.Collection(users => users.HandledBy<UsersController>());
 
                 return new UrlExpectations(mapper.MapRoutes())
                     .ForRoute("Samples.Index", new { httpMethod = "GET" }, "/samples")
-// TODO - Is it possible to automatically include querystring values with named route, 
-// but doesn't "fit" outbound URL generation?
+// TODO - Is it possible to always include querystring values when generating outbound URLs
 //                    .ForRoute("Samples.Custom1", new { httpMethod = "GET", id = "123" }, "/samples/123/custom?variation=1")
 //                    .ForRoute("Samples.Custom2", new { httpMethod = "GET", id = "123" }, "/samples/123/custom?variation=2")
                     .ForAction("Samples#Custom1", new { httpMethod = "GET", id = "123", variation = "1" }, "/samples/123/custom?variation=1")

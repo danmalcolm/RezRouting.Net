@@ -3,18 +3,18 @@ using System.Web.Mvc;
 
 namespace RezRouting.Utility
 {
-    public static class ActionDescriptorExtensions
+    internal static class ActionDescriptorExtensions
     {
         /// <summary>
-        /// Gets the name specified on a controller action if defined via the 
-        /// ActionNameAttribute attribute 
+        /// Gets the name from an ActionNameAttribute on a controller action or null
+        /// if the attribute is not present
         /// </summary>
         /// <param name="action"></param>
-        /// <returns></returns>
+        /// <returns>The name </returns>
         public static string GetActionNameOverride(this ActionDescriptor action)
         {
             string name = action.GetCustomAttributes(typeof (ActionNameAttribute), true)
-                .Cast<ActionNameAttribute>().Select(x => x.Name).FirstOrDefault();
+                .OfType<ActionNameAttribute>().Select(x => x.Name).FirstOrDefault();
             return name;
         } 
     }

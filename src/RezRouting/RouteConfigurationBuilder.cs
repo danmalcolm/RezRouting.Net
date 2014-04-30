@@ -60,7 +60,7 @@ namespace RezRouting
         /// Adds one or more new RouteTypes
         /// </summary>
         /// <param name="routeType"></param>
-        public void AddRoutes(params RouteType[] routeType)
+        public void AddRouteTypes(params RouteType[] routeType)
         {
             if (routeType == null) throw new ArgumentNullException("routeType");
             routeType.Each(AddRouteType);

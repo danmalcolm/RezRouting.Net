@@ -8,7 +8,6 @@ namespace RezRouting.Tests.RouteMapping
 {
     public class MultipleControllerRouteMappingTests
     {
-
         [Theory, PropertyData("MultipleControllerRouteExpectations")]
         public void ShouldCustomizeRoutesForEachController(MappingExpectation expectation)
         {
@@ -37,7 +36,7 @@ namespace RezRouting.Tests.RouteMapping
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
                         settings.QueryStringValues(new { cmd = command });
                     });
-                mapper.Configure(config => config.AddRoutes(commandEditRouteType, commandHandleRouteType));
+                mapper.Configure(config => config.AddRouteTypes(commandEditRouteType, commandHandleRouteType));
                 mapper.Collection(products => products.HandledBy<ProductsController, RenameController,UpdateCostsController>());
                 
                 return new MappingExpectations(mapper.MapRoutes())

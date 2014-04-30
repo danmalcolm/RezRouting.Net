@@ -4,13 +4,12 @@ using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure.Expectations;
 using Xunit.Extensions;
 
-namespace RezRouting.Tests.Configuration
+namespace RezRouting.Tests.RouteMapping
 {
     /// <summary>
-    /// Tests configuration of additional RouteTypes at mapper level - shared
-    /// by all resources
+    /// Tests configuration of additional RouteTypes configured at mapper level
     /// </summary>
-    public class SharedCustomRouteTests
+    public class CustomRouteMappingTests
     {
         [Theory, PropertyData("SharedCustomRoutesExpectations")]
         public void ShouldMapSharedCustomRoutesForAllResources(MappingExpectation expectation)

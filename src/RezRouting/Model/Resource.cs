@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Web.Routing;
 using RezRouting.Utility;
@@ -10,7 +8,7 @@ namespace RezRouting.Model
 {
     /// <summary>
     /// Contains configuration and routes for a specific resource (singular or collection).
-    /// An intermediate model created by the ResourceBuilders.
+    /// An intermediate model created by ResourceBuilder classes.
     /// </summary>
     internal class Resource
     {

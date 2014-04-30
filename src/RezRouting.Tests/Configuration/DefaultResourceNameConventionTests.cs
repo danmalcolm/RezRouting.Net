@@ -32,7 +32,7 @@ namespace RezRouting.Tests.Configuration
 
 
         [Fact]
-        public void ShouldUsePluralNameInControllerForCollectionResource()
+        public void ShouldUseExistingPluralNameInControllerForCollectionResource()
         {
             convention.GetResourceName(new[] { typeof(ThingsController) }, ResourceType.Collection)
                 .Should().Be("Things");

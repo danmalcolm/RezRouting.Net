@@ -73,14 +73,14 @@ namespace RezRouting.Tests.RouteMapping
         }
 
         [Fact]
-        public void RouteNameConventionShouldIncludeControllerNameVariationWhenMappingSameRouteToMultipleControllers()
+        public void RouteNameConventionShouldIncludeControllerNameVariationWhenMappingRouteToMultipleControllers()
         {
-            var customRouteType = new RouteType("Custom", new[] { ResourceType.Collection }, CollectionLevel.Item, "Custom",
+            var routeType = new RouteType("Custom", new[] { ResourceType.Collection }, CollectionLevel.Item, "Custom",
                 "custom", "GET", 10);
             mapper.Configure(c =>
             {
                 c.ClearRouteTypes();
-                c.AddRouteType(customRouteType);
+                c.AddRouteType(routeType);
             });
             mapper.Collection(test => test.HandledBy<SameActions1Controller, SameActions2Controller>());
             mapper.ShouldMapRoutesWithNames("SameActions.SameActions1.Custom", "SameActions.SameActions2.Custom");

@@ -4,7 +4,7 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Route mapping settings
+    /// Settings that apply to routes mapped by a RouteMapper instance
     /// </summary>
     internal class RouteConfiguration
     {

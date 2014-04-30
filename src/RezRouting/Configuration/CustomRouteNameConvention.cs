@@ -6,7 +6,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Implementation to enable customization of route name via a function
     /// </summary>
-    public class CustomRouteNameConvention : IRouteNameConvention
+    internal class CustomRouteNameConvention : IRouteNameConvention
     {
         private readonly Func<IEnumerable<string>, RouteType, Type, bool, string> create;
 

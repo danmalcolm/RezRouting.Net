@@ -5,8 +5,8 @@ using System.Web.Routing;
 namespace RezRouting.Tests.Infrastructure
 {
     /// <summary>
-    /// Controller and action names parsed from format "controller#action"
-    /// used to make test code more concise.
+    /// Contains a controller and action names - mainly used to parse values from strings in format "controller#action"
+    /// that are used to make test code more concise
     /// </summary>
     public class ControllerActionInfo : IEquatable<ControllerActionInfo>
     {

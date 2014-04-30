@@ -3,7 +3,7 @@ using System.Web.Routing;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Additional customizations specified at RouteType level
+    /// Additional customizations specified at RouteType level for a specific resource
     /// </summary>
     internal class CustomRouteSettings
     {

@@ -9,7 +9,7 @@ namespace RezRouting.Tests.RouteMapping
     /// <summary>
     /// Tests resource route URL creation
     /// </summary>
-    public class OutboundUrlCreationTests
+    public class StandardRouteUrlGenerationTests
     {
         [Theory, PropertyData("StandardCollectionUrlExpectations")]
         public void StandardCollectionUrls(UrlExpectation expectation)

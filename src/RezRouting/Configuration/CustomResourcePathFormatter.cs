@@ -5,7 +5,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Implementation to enable customization of resource path via a function
     /// </summary>
-    public class CustomResourcePathFormatter : IResourcePathFormatter
+    internal class CustomResourcePathFormatter : IResourcePathFormatter
     {
         private readonly Func<string, string> create;
 

@@ -6,7 +6,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Implementation to enable customization of resource name via a function
     /// </summary>
-    public class CustomResourceNameConvention : IResourceNameConvention
+    internal class CustomResourceNameConvention : IResourceNameConvention
     {
         private readonly Func<IEnumerable<Type>,ResourceType, string> create;
 
