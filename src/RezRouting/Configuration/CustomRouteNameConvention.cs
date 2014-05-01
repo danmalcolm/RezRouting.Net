@@ -8,17 +8,17 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class CustomRouteNameConvention : IRouteNameConvention
     {
-        private readonly Func<IEnumerable<string>, RouteType, Type, bool, string> create;
+        private readonly Func<IEnumerable<string>, string, Type, bool, string> create;
 
-        public CustomRouteNameConvention(Func<IEnumerable<string>, RouteType, Type, bool, string> create)
+        public CustomRouteNameConvention(Func<IEnumerable<string>, string, Type, bool, string> create)
         {
             if (create == null) throw new ArgumentNullException("create");
             this.create = create;
         }
 
-        public string GetRouteName(IEnumerable<string> resourceNames, RouteType routeType, Type controllerType, bool multiple)
+        public string GetRouteName(IEnumerable<string> resourceNames, string routeTypeName, Type controllerType, bool includeController)
         {
-            return create(resourceNames, routeType, controllerType, multiple);
+            return create(resourceNames, routeTypeName, controllerType, includeController);
         }
     }
 }

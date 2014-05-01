@@ -103,7 +103,7 @@
     <Compile Include="RouteMapper.cs" />
     <Compile Include="Routing\HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="Routing\ResourceActionRoute.cs" />
-    <Compile Include="Routing\ControllerNameFormatter.cs" />
+    <Compile Include="Routing\RouteValueHelper.cs" />
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="Utility\ActionDescriptorExtensions.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

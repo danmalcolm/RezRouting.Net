@@ -26,11 +26,21 @@ namespace RezRouting
         private string customIdName;
         private string customIdNameAsAncestor;
 
+        /// <summary>
+        /// Sets a specific name for the resource that will be used in route names and URLs. Overrides
+        /// the default resource name logic.
+        /// </summary>
+        /// <param name="name"></param>
         public void CustomName(string name)
         {
             customName = name;
         }
 
+        /// <summary>
+        /// Sets a specific path segment (directory) for the resource that will be used in route URLs. Overrides
+        /// the default resource name and path logic.
+        /// </summary>
+        /// <param name="path"></param>
         public void CustomUrlPath(string path)
         {
             customPath = path;
@@ -280,7 +290,9 @@ namespace RezRouting
             string prefix = configuration.RouteNamePrefix;
             if (prefix != "")
                 prefix += ".";
-            return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType, controllerType, multipleControllers);
+            // If multiple controllers, we have to include controllerName to prevent Route name clashes
+            bool includeControllerName = routeType.IncludeControllerInRouteName || multipleControllers;
+            return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType.Name, controllerType, includeControllerName);
         }
     }
 }

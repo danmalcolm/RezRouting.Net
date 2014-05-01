@@ -5,20 +5,23 @@ using RezRouting.Routing;
 
 namespace RezRouting.Configuration
 {
+    /// <summary>
+    /// Default implementation. Formats route name using pattern "Parent.Child.Route
+    /// </summary>
     public class DefaultRouteNameConvention : IRouteNameConvention
     {
-        public virtual string GetRouteName(IEnumerable<string> resourceNames, RouteType routeType, Type controllerType, bool multiple)
+        public virtual string GetRouteName(IEnumerable<string> resourceNames, string routeTypeName, Type controllerType, bool includeController)
         {
             var name = new StringBuilder();
             name.Append(string.Join(".", resourceNames));
-            if(multiple)
+            if(includeController)
             {
                 name.Append(".");
-                var controllerName = ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
+                var controllerName = RouteValueHelper.TrimControllerFromTypeName(controllerType);
                 name.Append(controllerName);
             }
             name.Append(".");
-            name.Append(routeType.Name);
+            name.Append(routeTypeName);
             return name.ToString();
         }
     }

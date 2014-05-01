@@ -66,6 +66,17 @@ namespace RezRouting
             routeType.Each(AddRouteType);
         }
 
+        public void RemoveRouteType(string name)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            routeTypes.RemoveAll(x => x.Name.EqualsIgnoreCase(name));
+        }
+
+        public void RemoveRouteTypes(params string[] names)
+        {
+            names.Each(RemoveRouteType);
+        }
+
         /// <summary>
         /// Sets the strategy used to get the resource name
         /// </summary>
@@ -131,7 +142,7 @@ namespace RezRouting
         /// <summary>
         /// Sets a custom function used to get the name of a route
         /// </summary>
-        public void CustomiseRouteNames(Func<IEnumerable<string>, RouteType, Type, bool, string> create)
+        public void CustomiseRouteNames(Func<IEnumerable<string>, string, Type, bool, string> create)
         {
             if (create == null) throw new ArgumentNullException("create");
             var convention = new CustomRouteNameConvention(create);
@@ -188,8 +199,5 @@ namespace RezRouting
                 return IsSet ? value : @default;
             }
         }
-
     }
-
-    
 }

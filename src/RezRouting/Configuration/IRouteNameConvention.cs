@@ -8,6 +8,6 @@ namespace RezRouting.Configuration
     /// </summary>
     public interface IRouteNameConvention
     {
-        string GetRouteName(IEnumerable<string> resourceNames, RouteType routeType, Type controllerType, bool multiple);
+        string GetRouteName(IEnumerable<string> resourceNames, string routeTypeName, Type controllerType, bool includeController);
     }
 }

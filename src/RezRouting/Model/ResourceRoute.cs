@@ -65,7 +65,7 @@ namespace RezRouting.Model
                 url += RouteType.UrlPath;
             }
             
-            string controller = ControllerNameFormatter.TrimControllerFromTypeName(controllerType);
+            string controller = RouteValueHelper.TrimControllerFromTypeName(controllerType);
             var defaults = new { controller = controller, action = RouteType.ActionName };
             var constraints = GetConstraints();
             var namespaces = new[] { controllerType.Namespace };

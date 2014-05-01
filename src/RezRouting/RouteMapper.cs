@@ -53,7 +53,7 @@ namespace RezRouting
         /// <summary>
         /// Maps routes for all configured resources to a new RouteCollection
         /// </summary>
-        /// <returns>New RouteCollection</returns>
+        /// <returns>The new RouteCollection</returns>
         public RouteCollection MapRoutes()
         {
             return MapRoutes(new RouteCollection());

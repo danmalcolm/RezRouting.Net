@@ -6,15 +6,14 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Defines properties of a type of route that applies to an action on a resource - 
-    /// a blueprint for an instance of a Route created for a specific resource. RezRouting
+    /// Defines a blueprint for an instance of a Route created for a specific resource. RezRouting
     /// contains standard RouteTypes and can be extended with custom application-specific
     /// RouteTypes.
     /// </summary>
     public class RouteType
     {
         /// <summary>
-        /// 
+        /// Creates a new instance of RouteType
         /// </summary>
         /// <param name="name"></param>
         /// <param name="resourceTypes"></param>
@@ -23,14 +22,10 @@ namespace RezRouting.Configuration
         /// <param name="urlPath"></param>
         /// <param name="httpMethod"></param>
         /// <param name="mappingOrder"></param>
-        /// <param name="includeController">A function that determines whether a route should be set up 
-        /// on the controller with the action specified on the RouteType. The function is called with each
-        /// controller that has been set up for an individual resource (using the resource.HandledBy methods)
-        /// that has an action method matching this RouteType's actionName. 2 arguments are supplied, the 
-        /// controller type and an index representing its position in the sequence of matching controllers. 
-        /// If includeController is not specified, only the first controller type with an action matching
-        /// the RouteType's action is used.</param>
-        /// <param name="customize">A function that customizes the Route's properties</param>
+        /// <param name="includeControllerInRouteName">Specifies whether the controller should be included in the route name when this route is mapped</param>
+        /// <param name="customize">A function that customize each Route that is mapped based on this RouteType. This method is called with each
+        /// controller type that has an action method matching this RouteType's actionName (using the resource.HandledBy methods) .
+        /// </param>
         public RouteType(string name, 
             IEnumerable<ResourceType> resourceTypes, 
             CollectionLevel collectionLevel, 
@@ -38,6 +33,7 @@ namespace RezRouting.Configuration
             string urlPath, 
             string httpMethod, 
             int mappingOrder, 
+            bool includeControllerInRouteName = false,
             Action<CustomRouteSettingsBuilder> customize = null
         )
         {
@@ -48,6 +44,7 @@ namespace RezRouting.Configuration
             HttpMethod = httpMethod;
             UrlPath = urlPath;
             MappingOrder = mappingOrder;
+            IncludeControllerInRouteName = includeControllerInRouteName;
             Customize = customize ?? (x => { });
         }
         
@@ -87,19 +84,19 @@ namespace RezRouting.Configuration
         /// Url path to conflict with the id parameter in certain circumstances, e.g.
         /// GET products/1 and GET products/new
         /// </summary>
-        public int MappingOrder { get; set; }
+        public int MappingOrder { get; private set; }
 
         /// <summary>
         /// Action that performs additional customization of a route's properties
         /// before it is mapped
         /// </summary>
-        public Action<CustomRouteSettingsBuilder> Customize { get; set; }
+        public Action<CustomRouteSettingsBuilder> Customize { get; private set; }
 
         /// <summary>
-        /// A collection of additional querystring values used to constrain to this
-        /// route
+        /// Specifies whether the controller name should be included in the name of
+        /// the route
         /// </summary>
-        public RouteValueDictionary QueryStringValues { get; set; }
+        public bool IncludeControllerInRouteName { get; private set; }
         
         /// <summary>
         /// Indicates whether any properties of a route conflict with this one
@@ -125,6 +122,7 @@ namespace RezRouting.Configuration
                         MappingOrder);
             }
         }
+        
 
         internal CustomRouteSettings GetCustomSettings(Type controllerType)
         {

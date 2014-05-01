@@ -4,7 +4,7 @@ using System.Web.Routing;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Enables customization of an individual Route's properties
+    /// Applies changes to an individual Route's properties
     /// </summary>
     public class CustomRouteSettingsBuilder
     {

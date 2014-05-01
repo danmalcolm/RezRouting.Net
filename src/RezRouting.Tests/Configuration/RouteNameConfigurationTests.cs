@@ -37,9 +37,9 @@ namespace RezRouting.Tests.Configuration
 
         public class MyRouteNameConvention : DefaultRouteNameConvention 
         {
-            public override string GetRouteName(IEnumerable<string> resourceNames, RouteType routeType, Type controllerType, bool multiple)
+            public override string GetRouteName(IEnumerable<string> resourceNames, string routeTypeName, Type controllerType, bool includeController)
             {
-                return "Nice" + base.GetRouteName(resourceNames, routeType, controllerType, multiple);
+                return "Nice" + base.GetRouteName(resourceNames, routeTypeName, controllerType, includeController);
             }
         }
 
@@ -47,7 +47,7 @@ namespace RezRouting.Tests.Configuration
         public void ShouldUseCustomFunctionForRouteNameIfSpecified()
         {
             mapper.Configure(config => config.CustomiseRouteNames
-                ((resourceNames, routeType, controllerType, multiple) => "Whatever." + routeType.Name));
+                ((resourceNames, routeTypeName, controllerType, multiple) => "Whatever." + routeTypeName));
 
             mapper.ShouldMapRoutesWithNames("Whatever.Index", "Whatever.Show", "Whatever.New", "Whatever.Create",
                 "Whatever.Edit", "Whatever.Update", "Whatever.Delete");

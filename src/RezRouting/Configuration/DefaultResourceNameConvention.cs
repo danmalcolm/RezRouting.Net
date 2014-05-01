@@ -10,7 +10,7 @@ namespace RezRouting.Configuration
     {
         public virtual string GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
         {
-            var names = controllerTypes.Select(ControllerNameFormatter.TrimControllerFromTypeName).ToArray();
+            var names = controllerTypes.Select(RouteValueHelper.TrimControllerFromTypeName).ToArray();
             
             if (names.Length == 0)
                 throw new ArgumentException("At least one type is expected", "controllerTypes");

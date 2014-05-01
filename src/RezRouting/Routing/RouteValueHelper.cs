@@ -2,7 +2,7 @@ using System;
 
 namespace RezRouting.Routing
 {
-    internal class ControllerNameFormatter
+    internal class RouteValueHelper
     {
         public static string TrimControllerFromTypeName(Type controllerType)
         {
