@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure.Assertions;
+using RezRouting.Tests.RouteMapping.TestNamespace;
 using Xunit;
 
 namespace RezRouting.Tests.RouteMapping
@@ -41,6 +42,13 @@ namespace RezRouting.Tests.RouteMapping
             mapper.ShouldMapRoutesWithControllerActions("test1#index", "test1#show", "test2#new", "test2#create", "test3#edit", "test3#update", "test4#destroy");
         }
 
+        [Fact]
+        public void ShouldMapRoutesForActionsHandledByAllInScope()
+        {
+            mapper.Collection(test => test.HandledByAllInScopeOf<NamespaceTest1Controller>());
+            mapper.ShouldMapRoutesWithControllerActions("namespacetest1#index", "namespacetest1#show", "namespacetest2#new", "namespacetest2#create", "namespacetest3#edit", "namespacetest3#update", "namespacetest4#destroy");
+        }
+        
         [Fact]
         public void ShouldMapRoutesForActionsWithNameOverrides()
         {
@@ -190,3 +198,52 @@ namespace RezRouting.Tests.RouteMapping
 
 
 
+namespace RezRouting.Tests.RouteMapping.TestNamespace
+{
+    public class NamespaceTest1Controller : Controller
+    {
+        public ActionResult Index()
+        {
+            return null;
+        }
+
+        public ActionResult Show(string id)
+        {
+            return null;
+        }
+    }
+
+    public class NamespaceTest2Controller : Controller
+    {
+        public ActionResult New()
+        {
+            return null;
+        }
+
+        public ActionResult Create(object o)
+        {
+            return null;
+        }
+    }
+
+    public class NamespaceTest3Controller : Controller
+    {
+        public ActionResult Edit(string id)
+        {
+            return null;
+        }
+
+        public ActionResult Update(string id)
+        {
+            return null;
+        }
+    }
+
+    public class NamespaceTest4Controller : Controller
+    {
+        public ActionResult Destroy(string id)
+        {
+            return null;
+        }
+    }
+}

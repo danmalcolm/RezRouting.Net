@@ -153,6 +153,21 @@ namespace RezRouting
         }
 
         /// <summary>
+        /// Sets controllers used to handle this resource's action by 
+        /// finding all controllers within same namespace and assembly
+        /// of a controller type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void HandledByAllInScopeOf<T>()
+        {
+            var type = typeof (T);
+            var assembly = type.Assembly;
+            var types = assembly.GetExportedTypes()
+                .Where(x => x.IsSubclassOf(typeof (Controller)) && x.Namespace == type.Namespace);
+            types.Each(HandledBy);
+        }
+
+        /// <summary>
         /// Sets a controller used to handle actions
         /// </summary>
         /// <param name="controllerType"></param>
