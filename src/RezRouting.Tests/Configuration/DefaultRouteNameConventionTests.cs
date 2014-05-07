@@ -9,14 +9,7 @@ namespace RezRouting.Tests.Configuration
     public class DefaultRouteNameConventionTests
     {
         private readonly DefaultRouteNameConvention convention = new DefaultRouteNameConvention();
-        private readonly RouteType routeType;
-        
-        public DefaultRouteNameConventionTests()
-        {
-            routeType = new RouteType("Index", new[] {ResourceType.Collection}, CollectionLevel.Collection, "Index", "",
-                    StandardHttpMethod.Get, 0);
-        }
-
+     
         [Fact]
         public void ShouldCreateNameForTopLevelResourceWithSingleController()
         {

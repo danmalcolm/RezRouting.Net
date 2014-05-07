@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Routing;
 using RezRouting.Utility;
 
 namespace RezRouting.Configuration
 {
     /// <summary>
     /// Defines a blueprint for an instance of a Route created for a specific resource. RezRouting
-    /// contains standard RouteTypes and can be extended with custom application-specific
-    /// RouteTypes.
+    /// contains standard RouteTypes and can be extended with application-specific RouteTypes.
     /// </summary>
     public class RouteType
     {
@@ -19,7 +17,6 @@ namespace RezRouting.Configuration
         /// <param name="resourceTypes"></param>
         /// <param name="collectionLevel"></param>
         /// <param name="actionName"></param>
-        /// <param name="urlPath"></param>
         /// <param name="httpMethod"></param>
         /// <param name="mappingOrder"></param>
         /// <param name="includeControllerInRouteName">Specifies whether the controller should be included in the route name when this route is mapped</param>
@@ -30,7 +27,6 @@ namespace RezRouting.Configuration
             IEnumerable<ResourceType> resourceTypes, 
             CollectionLevel collectionLevel, 
             string actionName, 
-            string urlPath, 
             string httpMethod, 
             int mappingOrder, 
             bool includeControllerInRouteName = false,
@@ -42,7 +38,6 @@ namespace RezRouting.Configuration
             CollectionLevel = collectionLevel;
             ActionName = actionName;
             HttpMethod = httpMethod;
-            UrlPath = urlPath;
             MappingOrder = mappingOrder;
             IncludeControllerInRouteName = includeControllerInRouteName;
             Customize = customize ?? (x => { });
@@ -117,9 +112,8 @@ namespace RezRouting.Configuration
             {
                 return
                     string.Format(
-                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ActionName: {3}, HttpMethod: {4}, UrlPath: {5}, MappingOrder: {6}",
-                        Name, string.Join(",", ResourceTypes), CollectionLevel, ActionName, HttpMethod, UrlPath,
-                        MappingOrder);
+                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ActionName: {3}, HttpMethod: {4}, MappingOrder: {5}",
+                        Name, string.Join(",", ResourceTypes), CollectionLevel, ActionName, HttpMethod, MappingOrder);
             }
         }
         

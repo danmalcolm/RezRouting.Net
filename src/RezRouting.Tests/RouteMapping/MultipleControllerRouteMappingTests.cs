@@ -21,20 +21,20 @@ namespace RezRouting.Tests.RouteMapping
                 var mapper = new RouteMapper();
                 mapper.Configure(c => c.ClearRouteTypes());
                 var commandEditRouteType = new RouteType("EditCommand", 
-                    new[] {ResourceType.Collection}, CollectionLevel.Item, "Edit",
-                    "edit", "GET", 1, 
+                    new[] {ResourceType.Collection}, CollectionLevel.Item, "Edit", "GET", 1, 
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
                         settings.QueryStringValues(new { cmd = command });
+                        settings.PathSegment = "edit";
                     });
                 var commandHandleRouteType = new RouteType("HandleCommand",
-                    new[] { ResourceType.Collection }, CollectionLevel.Item, "Handle",
-                    "edit", "POST", 1,
+                    new[] { ResourceType.Collection }, CollectionLevel.Item, "Handle", "POST", 1,
                     customize: settings =>
                     {
                         string command = settings.ControllerType.Name.Replace("Controller", "").ToLowerInvariant();
                         settings.QueryStringValues(new { cmd = command });
+                        settings.PathSegment = "edit";
                     });
                 mapper.Configure(config => config.AddRouteTypes(commandEditRouteType, commandHandleRouteType));
                 mapper.Collection(products => products.HandledBy<ProductsController, RenameController,UpdateCostsController>());

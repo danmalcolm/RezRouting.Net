@@ -55,15 +55,13 @@ namespace RezRouting.Model
 
         private RouteInfo GetRouteInfo(string resourceName, string resourceUrl)
         {
-            // Name - based on nested resource path and action name
-//            string name = string.Format("{0}.{1}{2}", resourceName, RouteType.Name, settings.NameSuffix);
-
             // URL - path to resource + additional path segment(s) for route
             string url = resourceUrl;
-            if (!string.IsNullOrWhiteSpace(RouteType.UrlPath))
+
+            if (!string.IsNullOrWhiteSpace(settings.PathSegment))
             {
                 if (url.Length > 0) url += "/";
-                url += RouteType.UrlPath;
+                url += settings.PathSegment;
             }
             
             string controller = RouteValueHelper.TrimControllerFromTypeName(controllerType);

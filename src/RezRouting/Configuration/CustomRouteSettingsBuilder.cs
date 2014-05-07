@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Routing;
 
 namespace RezRouting.Configuration
@@ -8,12 +9,12 @@ namespace RezRouting.Configuration
     /// </summary>
     public class CustomRouteSettingsBuilder
     {
-        private bool ignore = false;
         private RouteValueDictionary queryStringValues = new RouteValueDictionary();
 
         public CustomRouteSettingsBuilder(Type controllerType)
         {
             ControllerType = controllerType;
+            PathSegment = "";
         }
 
         /// <summary>
@@ -40,9 +41,15 @@ namespace RezRouting.Configuration
             queryStringValues = values;
         }
 
+        /// <summary>
+        /// Additional path appended to the route URL after the path to the resource, e.g.
+        /// an edit route might append edit: "/products/123456/edit"
+        /// </summary>
+        public string PathSegment { get; set; }
+
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(queryStringValues, Ignore);
+            return new CustomRouteSettings(queryStringValues, Ignore, PathSegment);
         }
 
         /// <summary>
