@@ -15,6 +15,7 @@ namespace RezRouting.Configuration
         {
             ControllerType = controllerType;
             PathSegment = "";
+            Include = true;
         }
 
         /// <summary>
@@ -49,13 +50,13 @@ namespace RezRouting.Configuration
 
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(queryStringValues, Ignore, PathSegment);
+            return new CustomRouteSettings(queryStringValues, Include, PathSegment);
         }
 
         /// <summary>
         /// Specifies whether the route will be mapped or ignored
         /// </summary>
         /// <returns></returns>
-        public bool Ignore { get; set; }
+        public bool Include { get; set; }
     }
 }

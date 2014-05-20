@@ -273,7 +273,7 @@ namespace RezRouting
                          let routeControllers = (from c in controllers
                                                  where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
                                                  let settings = routeType.GetCustomSettings(c.Type)
-                                                 where !settings.Ignore
+                                                 where settings.Include
                                                  select new { c.Type, Settings = settings }).ToList()
                          let multipleControllers = routeControllers.Count > 1
                          from routeController in routeControllers

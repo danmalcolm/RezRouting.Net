@@ -68,7 +68,7 @@ namespace RezRouting.Tests.RouteMapping
         {
             var customRouteType = new RouteType("Custom", new[] {ResourceType.Collection}, CollectionLevel.Item, "Custom", "GET", 10, customize: route =>
                 {
-                    route.Ignore = route.ControllerType == typeof (SameActions3Controller);
+                    route.Include = route.ControllerType != typeof (SameActions3Controller);
                     route.PathSegment = "custom";
                 });
             mapper.Configure(c =>

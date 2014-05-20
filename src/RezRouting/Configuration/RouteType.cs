@@ -5,7 +5,7 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Defines a blueprint for an instance of a Route created for a specific resource. RezRouting
+    /// Defines a blueprint for a route that applies to a specific resource. RezRouting
     /// contains standard RouteTypes and can be extended with application-specific RouteTypes.
     /// </summary>
     public class RouteType
@@ -44,7 +44,8 @@ namespace RezRouting.Configuration
         }
         
         /// <summary>
-        /// The name of the route - this is used when mapping the route
+        /// The name of the route - used for reference and also used
+        /// in the Routes that are created
         /// </summary>
         public string Name { get; private set; }
 
