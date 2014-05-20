@@ -7,11 +7,12 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class CustomRouteSettings
     {
-        public CustomRouteSettings(RouteValueDictionary queryStringValues, bool include, string pathSegment)
+        public CustomRouteSettings(RouteValueDictionary queryStringValues, bool include, string pathSegment, bool includeControllerInRouteName)
         {
             QueryStringValues = queryStringValues;
             Include = include;
             PathSegment = pathSegment;
+            IncludeControllerInRouteName = includeControllerInRouteName;
         }
 
         public RouteValueDictionary QueryStringValues { get; private set; }
@@ -19,5 +20,7 @@ namespace RezRouting.Configuration
         public bool Include { get; private set; }
 
         public string PathSegment { get; set; }
+
+        public bool IncludeControllerInRouteName { get; set; }
     }
 }

@@ -274,11 +274,11 @@ namespace RezRouting
                                                  where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
                                                  let settings = routeType.GetCustomSettings(c.Type)
                                                  where settings.Include
-                                                 select new { c.Type, Settings = settings }).ToList()
+                                                 select new {ControllerType = c.Type, Settings = settings }).ToList()
                          let multipleControllers = routeControllers.Count > 1
                          from routeController in routeControllers
-                         let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.Type, multipleControllers)
-                         select new ResourceRoute(routeName, routeType, routeController.Type, routeController.Settings);
+                         let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.ControllerType, routeController.Settings, multipleControllers)
+                         select new ResourceRoute(routeName, routeType, routeController.ControllerType, routeController.Settings);
 
             return routes;
         }
@@ -300,13 +300,13 @@ namespace RezRouting
             return routeTypes.ToArray();
         }
 
-        private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, bool multipleControllers)
+        private string GetRouteName(RouteConfiguration configuration, string[] resourceNames, RouteType routeType, Type controllerType, CustomRouteSettings settings, bool multipleControllers)
         {
             string prefix = configuration.RouteNamePrefix;
             if (prefix != "")
                 prefix += ".";
             // If multiple controllers, we have to include controllerName to prevent Route name clashes
-            bool includeControllerName = routeType.IncludeControllerInRouteName || multipleControllers;
+            bool includeControllerName = settings.IncludeControllerInRouteName || multipleControllers;
             return prefix + configuration.RouteNameConvention.GetRouteName(resourceNames, routeType.Name, controllerType, includeControllerName);
         }
     }

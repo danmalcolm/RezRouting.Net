@@ -16,6 +16,7 @@ namespace RezRouting.Configuration
             ControllerType = controllerType;
             PathSegment = "";
             Include = true;
+            IncludeControllerInRouteName = false;
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace RezRouting.Configuration
 
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(queryStringValues, Include, PathSegment);
+            return new CustomRouteSettings(queryStringValues, Include, PathSegment, IncludeControllerInRouteName);
         }
 
         /// <summary>
@@ -58,5 +59,11 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <returns></returns>
         public bool Include { get; set; }
+
+        /// <summary>
+        /// Specifies whether the controller name should be included in the name of
+        /// the route mapped for the controller type
+        /// </summary>
+        public bool IncludeControllerInRouteName { get; set; }
     }
 }

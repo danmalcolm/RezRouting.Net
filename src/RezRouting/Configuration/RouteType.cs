@@ -19,7 +19,6 @@ namespace RezRouting.Configuration
         /// <param name="actionName"></param>
         /// <param name="httpMethod"></param>
         /// <param name="mappingOrder"></param>
-        /// <param name="includeControllerInRouteName">Specifies whether the controller should be included in the route name when this route is mapped</param>
         /// <param name="customize">A function that customize each Route that is mapped based on this RouteType. This method is called with each
         /// controller type that has an action method matching this RouteType's actionName (using the resource.HandledBy methods) .
         /// </param>
@@ -28,8 +27,7 @@ namespace RezRouting.Configuration
             CollectionLevel collectionLevel, 
             string actionName, 
             string httpMethod, 
-            int mappingOrder, 
-            bool includeControllerInRouteName = false,
+            int mappingOrder,
             Action<CustomRouteSettingsBuilder> customize = null
         )
         {
@@ -39,7 +37,6 @@ namespace RezRouting.Configuration
             ActionName = actionName;
             HttpMethod = httpMethod;
             MappingOrder = mappingOrder;
-            IncludeControllerInRouteName = includeControllerInRouteName;
             Customize = customize ?? (x => { });
         }
         
@@ -88,12 +85,6 @@ namespace RezRouting.Configuration
         /// </summary>
         public Action<CustomRouteSettingsBuilder> Customize { get; private set; }
 
-        /// <summary>
-        /// Specifies whether the controller name should be included in the name of
-        /// the route
-        /// </summary>
-        public bool IncludeControllerInRouteName { get; private set; }
-        
         /// <summary>
         /// Indicates whether any properties of a route conflict with this one
         /// </summary>
