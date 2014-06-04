@@ -10,7 +10,7 @@ namespace RezRouting.Model
 {
     /// <summary>
     /// A route configured for an action on a resource. An intermediate model created by 
-    /// ResourceBuilder classes.
+    /// ResourceBuilder classes during route mapping.
     /// </summary>
     internal class ResourceRoute
     {
@@ -29,7 +29,7 @@ namespace RezRouting.Model
 
         public void MapRoute(string resourceName, string resourceUrl, RouteCollection routes)
         {
-            var properties = GetRouteInfo(resourceName, resourceUrl);
+            var properties = GetRouteInfo(resourceUrl);
 
             var route = new ResourceActionRoute(properties.Name, properties.Url, new MvcRouteHandler())
             {
@@ -49,11 +49,11 @@ namespace RezRouting.Model
 
         public void DebugSummary(string resourceName, string resourceUrl, StringBuilder summary)
         {
-            var properties = GetRouteInfo(resourceName, resourceUrl);
+            var properties = GetRouteInfo(resourceUrl);
             summary.Append(properties);
         }
 
-        private RouteInfo GetRouteInfo(string resourceName, string resourceUrl)
+        private RouteInfo GetRouteInfo(string resourceUrl)
         {
             // URL - path to resource + additional path segment(s) for route
             string url = resourceUrl;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Full" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- define properties for building the application -->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <RootFolder>$(MSBuildProjectDirectory)</RootFolder>
+    <PackagesFolder>$(MSBuildProjectDirectory)\package</PackagesFolder>
+    <BuildFolder>$(MSBuildProjectDirectory)\build</BuildFolder>
+    <SlnFolder>$(RootFolder)\src</SlnFolder>
+    <SlnName>RezRouting.sln</SlnName>
+    <SlnPath>$(SlnFolder)\$(SlnName)</SlnPath>
+    <LibProjDir>$(SlnFolder)\RezRouting</LibProjDir>
+    <NuGetFolder>$(SlnFolder)\.nuget</NuGetFolder>
+    <NuGetExePath>$(NuGetFolder)\NuGet.exe</NuGetExePath>
+    <NuSpecPath>$(SlnFolder)\RezRouting.nuspec</NuSpecPath>
+  </PropertyGroup>
+
+  <Target Name="Full" DependsOnTargets="Build;RunTests;PackageNuGet">
+
+  </Target>
+
+  <Target Name="Prepare">
+    <RemoveDir Directories="$(BuildFolder)" Condition="Exists($(BuildFolder))" />
+    <RemoveDir Directories="$(PackagesFolder)" Condition="Exists($(PackagesFolder))" />
+    <MakeDir Directories="$(BuildFolder);$(PackagesFolder)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Prepare">
+    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration)" />
+  </Target>
+
+  <Target Name="RunTests" DependsOnTargets="Prepare">
+
+  </Target>
+
+  <Target Name="PackageNuGet">
+    <Move SourceFiles="$(LibProjDir)\packages.config" DestinationFiles="$(LibProjDir)\_packages.config" />
+    <Exec WorkingDirectory="$(PackagesFolder)" Command="$(NuGetExePath) pack $(SlnFolder)\RezRouting\RezRouting.csproj -Prop Configuration=$(Configuration)" />
+    <OnError ExecuteTargets="RestorePackagesConfigFile" />
+  </Target>
+
+  <Target Name="RestorePackagesConfigFile" AfterTargets="PackageNuGet">
+    <Move SourceFiles="$(LibProjDir)\_packages.config" DestinationFiles="$(LibProjDir)\packages.config" />
+  </Target>
+
+</Project>

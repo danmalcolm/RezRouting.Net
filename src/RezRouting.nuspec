@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RezRouting</id>
+    <version>$version$</version>
+    <authors>Dan Malcolm</authors>
+    <owners>Dan Malcolm</owners>
+    <licenseUrl>https://github.com/danmalcolm/RezRouting.Net/blob/dev/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/danmalcolm/RezRouting.Net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A lightweight library for ASP.Net MVC for the simple set-up of resource-oriented URLs</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Tag1 Tag2</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\RezRouting\bin\Release\RezRouting.dll" target="lib" />
+  </files>
+</package>

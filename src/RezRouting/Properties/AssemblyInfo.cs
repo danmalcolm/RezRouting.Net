@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RezRouting.Net")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A library that sets up ASP.Net MVC routes using resource-oriented URLs - similar to Ruby on Rails' built-in Resource Routing")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Dan Malcolm")]
 [assembly: AssemblyProduct("RezRouting.Net")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©Dan Malcolm 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,5 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.1.0.*")]
+[assembly: AssemblyFileVersion("0.1.0.*")]
+[assembly: AssemblyInformationalVersion("0.1.0-alpha")]
