@@ -56,3 +56,4 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 
+msbuild.log
