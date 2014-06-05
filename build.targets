@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Full" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <!-- define properties for building the application -->
+  <ItemGroup>
+    <XUnitTasksPath Include="$(SlnDir)\packages\xunit*\lib\net20\xunit.runner.msbuild.dll" />
+  </ItemGroup>
+  <UsingTask AssemblyFile="@(XUnitTasksPath)" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <RootFolder>$(MSBuildProjectDirectory)</RootFolder>
-    <PackagesFolder>$(MSBuildProjectDirectory)\package</PackagesFolder>
-    <BuildFolder>$(MSBuildProjectDirectory)\build</BuildFolder>
-    <SlnFolder>$(RootFolder)\src</SlnFolder>
-    <SlnName>RezRouting.sln</SlnName>
-    <SlnPath>$(SlnFolder)\$(SlnName)</SlnPath>
-    <LibProjDir>$(SlnFolder)\RezRouting</LibProjDir>
-    <NuGetFolder>$(SlnFolder)\.nuget</NuGetFolder>
-    <NuGetExePath>$(NuGetFolder)\NuGet.exe</NuGetExePath>
-    <NuSpecPath>$(SlnFolder)\RezRouting.nuspec</NuSpecPath>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <PackageDir>$(RootDir)\package</PackageDir>
+    <BuildDir>$(RootDir)\build</BuildDir>
+    <SlnDir>$(RootDir)\src</SlnDir>
+    <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
+    <MainCsProjDir>$(SlnDir)\RezRouting</MainCsProjDir>
+    <NuSpecPath>$(SlnDir)\RezRouting.nuspec</NuSpecPath>
+    <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
   </PropertyGroup>
 
-  <Target Name="Full" DependsOnTargets="Build;RunTests;PackageNuGet">
-
-  </Target>
+  <Target Name="Full" DependsOnTargets="Build;RunTests;PackageNuGet" />
 
   <Target Name="Prepare">
-    <RemoveDir Directories="$(BuildFolder)" Condition="Exists($(BuildFolder))" />
-    <RemoveDir Directories="$(PackagesFolder)" Condition="Exists($(PackagesFolder))" />
-    <MakeDir Directories="$(BuildFolder);$(PackagesFolder)" />
+    <RemoveDir Directories="$(BuildDir);$(PackageDir)" />
+    <MakeDir Directories="$(BuildDir);$(PackageDir)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="Prepare">
-    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration)" />
+    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);OutputPath=$(BuildDir)"  />
   </Target>
 
-  <Target Name="RunTests" DependsOnTargets="Prepare">
-
+  <Target Name="RunTests">
+      <xunit Assembly="$(BuildDir)\RezRouting.Tests.dll" />
   </Target>
 
   <Target Name="PackageNuGet">
-    <Move SourceFiles="$(LibProjDir)\packages.config" DestinationFiles="$(LibProjDir)\_packages.config" />
-    <Exec WorkingDirectory="$(PackagesFolder)" Command="$(NuGetExePath) pack $(SlnFolder)\RezRouting\RezRouting.csproj -Prop Configuration=$(Configuration)" />
+    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(MainCsProjDir)\RezRouting.csproj -Prop Configuration=$(Configuration)" />
     <OnError ExecuteTargets="RestorePackagesConfigFile" />
   </Target>
 
+  <Target Name="HidePackagesConfigFile" BeforeTargets="PackageNuGet">
+    <!-- rename packages.config to prevent NuGet pack from including dependencies in our package -->
+    <Move SourceFiles="$(MainCsProjDir)\packages.config" DestinationFiles="$(MainCsProjDir)\_packages.config" />
+  </Target>
+  
   <Target Name="RestorePackagesConfigFile" AfterTargets="PackageNuGet">
-    <Move SourceFiles="$(LibProjDir)\_packages.config" DestinationFiles="$(LibProjDir)\packages.config" />
+    <Move SourceFiles="$(MainCsProjDir)\_packages.config" DestinationFiles="$(MainCsProjDir)\packages.config" />
   </Target>
 
 </Project>
