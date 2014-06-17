@@ -5,7 +5,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Additional customizations specified at RouteType level for a specific resource
     /// </summary>
-    internal class CustomRouteSettings
+    public class CustomRouteSettings
     {
         public CustomRouteSettings(RouteValueDictionary queryStringValues, bool include, string pathSegment, bool includeControllerInRouteName)
         {

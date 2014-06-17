@@ -12,18 +12,18 @@ namespace RezRouting.Model
     /// A route configured for an action on a resource. An intermediate model created by 
     /// ResourceBuilder classes during route mapping.
     /// </summary>
-    internal class ResourceRoute
+    public class ResourceRoute
     {
         public string RouteName { get; private set; }
         public RouteType RouteType { get; private set; }
-        private readonly Type controllerType;
+        public Type ControllerType { get; private set; }
         private readonly CustomRouteSettings settings;
 
         public ResourceRoute(string routeName, RouteType routeType, Type controllerType, CustomRouteSettings settings)
         {
             RouteName = routeName;
             RouteType = routeType;
-            this.controllerType = controllerType;
+            this.ControllerType = controllerType;
             this.settings = settings;
         }
 
@@ -31,7 +31,7 @@ namespace RezRouting.Model
         {
             var properties = GetRouteInfo(resourceUrl);
 
-            var route = new ResourceActionRoute(properties.Name, properties.Url, new MvcRouteHandler())
+            var route = new ResourceActionRoute(this, properties.Name, properties.Url, new MvcRouteHandler())
             {
                 Defaults = new RouteValueDictionary(properties.Defaults),
                 Constraints = properties.Constraints,
@@ -64,10 +64,10 @@ namespace RezRouting.Model
                 url += settings.PathSegment;
             }
             
-            string controller = RouteValueHelper.TrimControllerFromTypeName(controllerType);
+            string controller = RouteValueHelper.TrimControllerFromTypeName(ControllerType);
             var defaults = new { controller = controller, action = RouteType.ActionName };
             var constraints = GetConstraints();
-            var namespaces = new[] { controllerType.Namespace };
+            var namespaces = new[] { ControllerType.Namespace };
 
             return new RouteInfo(RouteName, url, defaults, constraints, namespaces);
         }

@@ -43,29 +43,29 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,6 +94,7 @@
     <Compile Include="Configuration\StandardRouteTypes.cs" />
     <Compile Include="Model\RouteUrlProperties.cs" />
     <Compile Include="ResourceBuildContext.cs" />
+    <Compile Include="ResourceUrlHelperExtensions.cs" />
     <Compile Include="RouteConfigurationBuilder.cs" />
     <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="Routing\PathSegmentCleaner.cs" />
@@ -110,7 +111,28 @@
     <Compile Include="Routing\RouteValueHelper.cs" />
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="Utility\ActionDescriptorExtensions.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\BinaryExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\CachedExpressionCompiler.cs" />
+    <Compile Include="Utility\Expressions\CachedExpressionCompiler.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\ConditionalExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\ConstantExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ControllerActionExpressionHelper.cs" />
+    <Compile Include="Utility\ControllerActionInfo.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\DefaultExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\ExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\ExpressionFingerprintChain.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\FingerprintingExpressionVisitor.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\HashCodeCombiner.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\Hoisted.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\HoistingExpressionVisitor.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\IndexExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\LambdaExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\MemberExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\MethodCallExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\ParameterExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\TypeBinaryExpressionFingerprint.cs" />
+    <Compile Include="Utility\Expressions\ExpressionUtil\UnaryExpressionFingerprint.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
