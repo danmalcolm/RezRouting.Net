@@ -8,12 +8,15 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class RouteConfiguration
     {
-        public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, IResourcePathFormatter resourcePathFormatter, IRouteNameConvention routeNameConvention, string routeNamePrefix)
+        public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, 
+            IResourcePathFormatter resourcePathFormatter, IRouteNameConvention routeNameConvention, 
+            IIdNameConvention idNameConvention, string routeNamePrefix)
         {
             RouteTypes = routeTypes.ToReadOnlyList();
             ResourceNameConvention = resourceNameConvention;
             ResourcePathFormatter = resourcePathFormatter;
             RouteNameConvention = routeNameConvention;
+            IdNameConvention = idNameConvention;
             RouteNamePrefix = routeNamePrefix;
         }
 
@@ -24,6 +27,8 @@ namespace RezRouting.Configuration
         public IResourcePathFormatter ResourcePathFormatter { get; private set; }
 
         public IRouteNameConvention RouteNameConvention { get; private set; }
+
+        public IIdNameConvention IdNameConvention { get; private set; }
 
         public string RouteNamePrefix { get; private set; }
     }

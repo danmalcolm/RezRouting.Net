@@ -80,9 +80,11 @@
     <Compile Include="Configuration\CustomResourceNameConvention.cs" />
     <Compile Include="Configuration\CustomResourcePathFormatter.cs" />
     <Compile Include="Configuration\CustomRouteNameConvention.cs" />
+    <Compile Include="Configuration\DefaultIdNameConvention.cs" />
     <Compile Include="Configuration\DefaultResourceNameConvention.cs" />
     <Compile Include="Configuration\DefaultResourcePathFormatter.cs" />
     <Compile Include="Configuration\DefaultRouteNameConvention.cs" />
+    <Compile Include="Configuration\IIdNameConvention.cs" />
     <Compile Include="Configuration\IResourceNameConvention.cs" />
     <Compile Include="Configuration\IResourcePathFormatter.cs" />
     <Compile Include="Configuration\IRouteNameConvention.cs" />

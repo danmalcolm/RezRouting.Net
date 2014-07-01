@@ -14,9 +14,10 @@ namespace RezRouting
         private readonly List<RouteType> routeTypes;
         private readonly Setting<IResourceNameConvention> resourceNameConvention;
         private readonly Setting<IResourcePathFormatter> resourcePathFormatter;
-        private readonly Setting<IRouteNameConvention> routeNameConvention; 
-        private readonly Setting<string> routeNamePrefix; 
-        
+        private readonly Setting<IRouteNameConvention> routeNameConvention;
+        private readonly Setting<IIdNameConvention> idNameConvention;
+        private readonly Setting<string> routeNamePrefix;
+
         public RouteConfigurationBuilder(IEnumerable<RouteType> routeTypes = null)
         {
             this.routeTypes = routeTypes != null 
@@ -25,6 +26,7 @@ namespace RezRouting
             resourceNameConvention = new Setting<IResourceNameConvention>();
             resourcePathFormatter = new Setting<IResourcePathFormatter>();
             routeNameConvention = new Setting<IRouteNameConvention>();
+            idNameConvention = new Setting<IIdNameConvention>();
             routeNamePrefix = new Setting<string>();
         }
 
@@ -148,18 +150,28 @@ namespace RezRouting
             var convention = new CustomRouteNameConvention(create);
             routeNameConvention.Set(convention);
         }
-
+        
         public void PrefixRouteNames(string prefix)
         {
             routeNamePrefix.Set(prefix);
         }
 
+        /// <summary>
+        /// Sets the strategy used to format name of id parameters used in route URLs
+        /// </summary>
+        /// <param name="convention"></param>
+        public void CustomiseIdNames(IIdNameConvention convention)
+        {
+            idNameConvention.Set(convention);
+        }
+        
         internal RouteConfiguration Build()
         {
             return new RouteConfiguration(routeTypes, 
                 resourceNameConvention.GetOrDefault(new DefaultResourceNameConvention()),
                 resourcePathFormatter.GetOrDefault(new DefaultResourcePathFormatter(new ResourcePathSettings())),
                 routeNameConvention.GetOrDefault(new DefaultRouteNameConvention()),
+                idNameConvention.GetOrDefault(new DefaultIdNameConvention()),
                 routeNamePrefix.GetOrDefault(""));
         }
 
@@ -176,10 +188,12 @@ namespace RezRouting
             var resourceNameConvention2 = resourceNameConvention.GetOrDefault(configuration.ResourceNameConvention);
             var resourcePathFormatter2 = resourcePathFormatter.GetOrDefault(configuration.ResourcePathFormatter);
             var routeNameConvention2 = routeNameConvention.GetOrDefault(configuration.RouteNameConvention);
+            var idNameConvention2 = idNameConvention.GetOrDefault(configuration.IdNameConvention);
             var routeNamePrefix2 = routeNamePrefix.GetOrDefault(configuration.RouteNamePrefix);
             
             return new RouteConfiguration(routeTypes2, resourceNameConvention2, 
-                resourcePathFormatter2, routeNameConvention2, routeNamePrefix2);
+                resourcePathFormatter2, routeNameConvention2, idNameConvention2,
+                routeNamePrefix2);
         }
 
         internal class Setting<T>
@@ -199,5 +213,6 @@ namespace RezRouting
                 return IsSet ? value : @default;
             }
         }
+
     }
 }

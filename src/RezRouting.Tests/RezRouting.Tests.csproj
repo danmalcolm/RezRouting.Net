@@ -57,9 +57,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\DefaultRouteNameConventionTests.cs" />
     <Compile Include="Configuration\DefaultResourceNameConventionTests.cs" />
     <Compile Include="Configuration\DefaultResourcePathFormatterTests.cs" />
+    <Compile Include="Configuration\IdNameConfigurationTests.cs" />
     <Compile Include="Configuration\RouteNameConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceNameConfigurationTests.cs" />
     <Compile Include="Configuration\ResourcePathConfigurationTests.cs" />

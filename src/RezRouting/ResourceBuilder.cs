@@ -238,9 +238,10 @@ namespace RezRouting
         {
             string resourcePath = customPath ?? FormatResourcePath(name, configuration);
 
-            string idName = customIdName ?? DefaultIdName;
-            string idNameAsAncestor = customIdNameAsAncestor
-                ?? GetDefaultIdNameAsAncestor(name);
+            string idName = customIdName 
+                ?? configuration.IdNameConvention.GetIdName(name);
+            string idNameAsAncestor = customIdNameAsAncestor 
+                ?? configuration.IdNameConvention.GetIdNameAsAncestor(name);
 
             var routeProperties = new RouteUrlProperties(resourcePath, idName, idNameAsAncestor);
             return routeProperties;
@@ -250,11 +251,6 @@ namespace RezRouting
         {
             string name = ResourceType == ResourceType.Collection ? resourceName.Plural : resourceName.Singular;
             return configuration.ResourcePathFormatter.GetResourcePath(name);
-        }
-
-        private static string GetDefaultIdNameAsAncestor(ResourceName name)
-        {
-            return name.Singular.Camelize() + "Id";
         }
 
         private IEnumerable<ResourceRoute> GetRoutes(string[] resourceNames, RouteConfiguration configuration)
