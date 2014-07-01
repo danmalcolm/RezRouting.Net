@@ -12,9 +12,9 @@ namespace RezRouting.Configuration
             this.settings = settings;
         }
 
-        public string GetResourcePath(string resourceName)
+        public string GetResourcePath(string name)
         {
-            string result = resourceName;
+            string result = name;
 
             result = PathSegmentCleaner.Clean(result);
 

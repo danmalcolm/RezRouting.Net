@@ -30,5 +30,11 @@ namespace RezRouting.Routing
         {
             return string.Format("Name: {0}, Controller: {1}, Action: {2}", Name, Defaults["controller"], Defaults["action"]);
         }
+
+        public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
+        {
+            var virtualPathData = base.GetVirtualPath(requestContext, values);
+            return virtualPathData;
+        }
     }
 }

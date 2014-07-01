@@ -8,7 +8,7 @@ namespace RezRouting.Configuration
 {
     public class DefaultResourceNameConvention : IResourceNameConvention
     {
-        public virtual string GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
+        public virtual ResourceName GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
         {
             var names = controllerTypes.Select(RouteValueHelper.TrimControllerFromTypeName).ToArray();
             
@@ -18,11 +18,19 @@ namespace RezRouting.Configuration
             var name = GetCommonStartOrFirst(names);
             if (name != "")
             {
-                name = resourceType == ResourceType.Collection
-                    ? name.Pluralize(Plurality.CouldBeEither)
-                    : name.Singularize(Plurality.CouldBeEither);
+                string singular = null;
+                string plural = null;
+                if (resourceType == ResourceType.Collection)
+                {
+                    plural = name.Pluralize(Plurality.CouldBeEither);
+                }
+                else
+                {
+                    singular = name.Singularize(Plurality.CouldBeEither);
+                }
+                return new ResourceName(singular, plural);
             }
-            return name;
+            return null;
         }
 
         private static string GetCommonStartOrFirst(string[] names)

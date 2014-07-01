@@ -36,9 +36,9 @@ namespace RezRouting.Tests.Configuration
 
         public class MyResourcePathFormatter : IResourcePathFormatter
         {
-            public string GetResourcePath(string resourceName)
+            public string GetResourcePath(string name)
             {
-                return "_" + resourceName.ToUpper() + "_";
+                return "_" + name.ToUpper() + "_";
             }
         }
 

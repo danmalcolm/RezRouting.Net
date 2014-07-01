@@ -7,17 +7,17 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class CustomResourcePathFormatter : IResourcePathFormatter
     {
-        private readonly Func<string, string> create;
+        private readonly Func<string, string> format;
 
-        public CustomResourcePathFormatter(Func<string, string> create)
+        public CustomResourcePathFormatter(Func<string, string> format)
         {
-            if (create == null) throw new ArgumentNullException("create");
-            this.create = create;
+            if (format == null) throw new ArgumentNullException("format");
+            this.format = format;
         }
 
-        public string GetResourcePath(string resourceName)
+        public string GetResourcePath(string name)
         {
-            return create(resourceName);
+            return format(name);
         }
     }
 }

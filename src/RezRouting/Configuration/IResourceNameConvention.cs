@@ -8,6 +8,6 @@ namespace RezRouting.Configuration
     /// </summary>
     public interface IResourceNameConvention
     {
-        string GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType);
+        ResourceName GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType);
     }
 }

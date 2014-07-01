@@ -12,14 +12,14 @@ namespace RezRouting.Tests.Configuration
         public void ShouldUseSingularNameFromControllerForSingularResource()
         {
             convention.GetResourceName(new[] {typeof (ThingController)}, ResourceType.Singular)
-                .Should().Be("Thing");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
         
         [Fact]
         public void ShouldSingularizePluralNameFromControllerForSingularResource()
         {
             convention.GetResourceName(new[] { typeof(ThingsController) }, ResourceType.Singular)
-                .Should().Be("Thing");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace RezRouting.Tests.Configuration
         {
             var types = new[] { typeof(ThingDisplayController), typeof(ThingEditController) };
             convention.GetResourceName(types, ResourceType.Singular)
-                .Should().Be("Thing");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
 
@@ -35,14 +35,14 @@ namespace RezRouting.Tests.Configuration
         public void ShouldUseExistingPluralNameInControllerForCollectionResource()
         {
             convention.GetResourceName(new[] { typeof(ThingsController) }, ResourceType.Collection)
-                .Should().Be("Things");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
         [Fact]
         public void ShouldPluralizeSingularNameInControllerForCollectionResource()
         {
             convention.GetResourceName(new[] { typeof(ThingController) }, ResourceType.Collection)
-                .Should().Be("Things");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace RezRouting.Tests.Configuration
         {
             var types = new[] { typeof(ThingDisplayController), typeof(ThingEditController) };
             convention.GetResourceName(types, ResourceType.Collection)
-                .Should().Be("Things");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace RezRouting.Tests.Configuration
         {
             var types = new[] { typeof(ThingController), typeof(SchmingController) };
             convention.GetResourceName(types, ResourceType.Collection)
-                .Should().Be("Things");
+                .Should().Be(new ResourceName("Thing", "Things"));
         }
 
         public class ThingController

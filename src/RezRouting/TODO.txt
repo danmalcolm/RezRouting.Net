@@ -1,5 +1,0 @@
-﻿Reverse Ignore > Include
-Rename UrlPath to "ActionPath"
-Move other properties to customize: ActionPath so that they can vary based on the controller
-Add a new Func<Type,bool> include to specify controller
-Separate RouteName property - the part that gets added to route name, e.g. PrepareEntityCommand RouteType, just includes "Prepare" in route name

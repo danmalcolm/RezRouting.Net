@@ -24,6 +24,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.Routing;
 
 namespace RezRouting.Utility.Expressions
 {
@@ -48,6 +49,7 @@ namespace RezRouting.Utility.Expressions
 
             var rvd = new RouteValueDictionary();
             rvd.Add("Action", actionName);
+            rvd.Add("Controller", RouteValueHelper.TrimControllerFromTypeName(typeof(TController)));
             
             AddParameterValuesFromExpressionToDictionary(rvd, call);
             return rvd;

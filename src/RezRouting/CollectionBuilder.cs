@@ -1,6 +1,4 @@
-﻿using RezRouting.Configuration;
-
-namespace RezRouting
+﻿namespace RezRouting
 {
     /// <summary>
     /// Configures routes for the actions available on a collection of resources

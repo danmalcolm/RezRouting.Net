@@ -37,9 +37,10 @@ namespace RezRouting.Tests.Configuration
 
         public class MyResourceNameConvention : DefaultResourceNameConvention 
         {
-            public override string GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
+            public override ResourceName GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
             {
-                return "Nice" + base.GetResourceName(controllerTypes, resourceType);
+                var def = base.GetResourceName(controllerTypes, resourceType);
+                return new ResourceName("Nice" + def.Singular, "Nice" + def.Plural);
             }
         }
 
@@ -47,10 +48,10 @@ namespace RezRouting.Tests.Configuration
         public void ShouldUseCustomFunctionForResourceNameIfSpecified()
         {
             builder.Configure(config => config.CustomiseResourceNames
-                ((types, resourceType) => "Whatever"));
+                ((types, resourceType) => new ResourceName("Whatever")));
 
-            builder.ShouldMapRoutesWithNames("Whatever.Index", "Whatever.Show", "Whatever.New", "Whatever.Create",
-                "Whatever.Edit", "Whatever.Update", "Whatever.Delete");
+            builder.ShouldMapRoutesWithNames("Whatevers.Index", "Whatevers.Show", "Whatevers.New", "Whatevers.Create",
+                "Whatevers.Edit", "Whatevers.Update", "Whatevers.Delete");
         }
     }
 }

@@ -5,6 +5,6 @@
     /// </summary>
     public interface IResourcePathFormatter
     {
-        string GetResourcePath(string resourceName);
+        string GetResourcePath(string name);
     }
 }

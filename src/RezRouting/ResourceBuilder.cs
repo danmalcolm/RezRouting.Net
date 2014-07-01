@@ -21,7 +21,7 @@ namespace RezRouting
         private readonly List<Type> controllerTypes = new List<Type>();
         private readonly List<string> includedRouteNames = new List<string>();
         private readonly List<string> excludedRouteNames = new List<string>();
-        private string customName;
+        private ResourceName customName;
         private string customPath;
         private string customIdName;
         private string customIdNameAsAncestor;
@@ -30,10 +30,9 @@ namespace RezRouting
         /// Sets a specific name for the resource that will be used in route names and URLs. Overrides
         /// the default resource name logic.
         /// </summary>
-        /// <param name="name"></param>
-        public void CustomName(string name)
+        public void CustomName(string singular = null, string plural = null)
         {
-            customName = name;
+            customName = new ResourceName(singular, plural);
         }
 
         /// <summary>
@@ -209,12 +208,18 @@ namespace RezRouting
         {
             var configuration = configurationBuilder.Extend(sharedConfiguration);
 
-            string resourceName = GetResourceName(configuration);
-            var routeUrlProperties = GetRouteUrlProperties(configuration, resourceName);
-            string fullResourceName = string.Format("{0}.{1}.{2}", 
-                configuration.RouteNamePrefix, string.Join(".", context.AncestorNames), resourceName);
+            var resourceName = GetResourceName(configuration);
+            string routeResourceName = ResourceType == ResourceType.Collection
+                ? resourceName.Plural
+                : resourceName.Singular;
 
-            var resourceNames = context.AncestorNames.Append(resourceName);
+            var routeUrlProperties = GetRouteUrlProperties(configuration, resourceName);
+
+            string ancestorPath = string.Join(".", context.AncestorNames);
+            string fullResourceName = string.Format("{0}.{1}.{2}",
+                configuration.RouteNamePrefix, ancestorPath, routeResourceName);
+
+            var resourceNames = context.AncestorNames.Append(routeResourceName);
             var routes = GetRoutes(resourceNames, configuration);
 
             var resource = new Resource(fullResourceName, context.Parent, routeUrlProperties, ResourceType, routes);
@@ -224,12 +229,12 @@ namespace RezRouting
             return resource;
         }
 
-        private string GetResourceName(RouteConfiguration configuration)
+        private ResourceName GetResourceName(RouteConfiguration configuration)
         {
             return customName ?? configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
         }
 
-        private RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, string name)
+        private RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, ResourceName name)
         {
             string resourcePath = customPath ?? FormatResourcePath(name, configuration);
 
@@ -241,14 +246,15 @@ namespace RezRouting
             return routeProperties;
         }
 
-        private string FormatResourcePath(string resourceName, RouteConfiguration configuration)
+        private string FormatResourcePath(ResourceName resourceName, RouteConfiguration configuration)
         {
-            return configuration.ResourcePathFormatter.GetResourcePath(resourceName);
+            string name = ResourceType == ResourceType.Collection ? resourceName.Plural : resourceName.Singular;
+            return configuration.ResourcePathFormatter.GetResourcePath(name);
         }
 
-        private static string GetDefaultIdNameAsAncestor(string name)
+        private static string GetDefaultIdNameAsAncestor(ResourceName name)
         {
-            return name.Singularize(Plurality.CouldBeEither).Camelize() + "Id";
+            return name.Singular.Camelize() + "Id";
         }
 
         private IEnumerable<ResourceRoute> GetRoutes(string[] resourceNames, RouteConfiguration configuration)

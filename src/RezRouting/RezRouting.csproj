@@ -94,7 +94,8 @@
     <Compile Include="Configuration\StandardRouteTypes.cs" />
     <Compile Include="Model\RouteUrlProperties.cs" />
     <Compile Include="ResourceBuildContext.cs" />
-    <Compile Include="ResourceUrlHelperExtensions.cs" />
+    <Compile Include="ResourceName.cs" />
+    <Compile Include="UrlHelperExtensions.cs" />
     <Compile Include="RouteConfigurationBuilder.cs" />
     <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="Routing\PathSegmentCleaner.cs" />
@@ -138,7 +139,6 @@
     <Compile Include="Utility\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TODO.txt" />
     <Content Include="Utility\readme.txt" />
   </ItemGroup>
   <ItemGroup>

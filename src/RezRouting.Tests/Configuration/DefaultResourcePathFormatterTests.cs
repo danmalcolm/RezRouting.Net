@@ -9,17 +9,17 @@ namespace RezRouting.Tests.Configuration
     public class DefaultResourcePathFormatterTests
     {
         [Theory]
-        [InlineData(CaseStyle.None, "", "PurchaseOrders", "PurchaseOrders")]
-        [InlineData(CaseStyle.Upper, "", "PurchaseOrders", "PURCHASEORDERS")]
-        [InlineData(CaseStyle.Lower, "", "PurchaseOrders", "purchaseorders")]
-        [InlineData(CaseStyle.None, "-", "PurchaseOrders", "Purchase-Orders")]
-        [InlineData(CaseStyle.Upper, "-", "PurchaseOrders", "PURCHASE-ORDERS")]
-        [InlineData(CaseStyle.Lower, "-", "PurchaseOrders", "purchase-orders")]
-        public void ShouldFormatBasedOnSettings(CaseStyle caseStyle, string separator, string resourceName, string expected)
+        [InlineData("PurchaseOrders", CaseStyle.None, "", "PurchaseOrders")]
+        [InlineData("PurchaseOrders", CaseStyle.Upper, "", "PURCHASEORDERS")]
+        [InlineData("PurchaseOrders", CaseStyle.Lower, "", "purchaseorders")]
+        [InlineData("PurchaseOrders", CaseStyle.None, "-", "Purchase-Orders")]
+        [InlineData("PurchaseOrders", CaseStyle.Upper, "-", "PURCHASE-ORDERS")]
+        [InlineData("PurchaseOrders", CaseStyle.Lower, "-", "purchase-orders")]
+        public void ShouldFormatCollectionPathBasedOnSettings(string name, CaseStyle caseStyle, string separator, string expected)
         {
             var settings = new ResourcePathSettings(caseStyle, separator);
             var formatter = new DefaultResourcePathFormatter(settings);
-            string result = formatter.GetResourcePath(resourceName);
+            string result = formatter.GetResourcePath(name);
             result.Should().Be(expected);
         }
 

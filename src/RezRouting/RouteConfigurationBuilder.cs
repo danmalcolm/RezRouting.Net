@@ -90,7 +90,7 @@ namespace RezRouting
         /// <summary>
         /// Sets a custom function used to get the resource name.
         /// </summary>
-        public void CustomiseResourceNames(Func<IEnumerable<Type>, ResourceType, string> create)
+        public void CustomiseResourceNames(Func<IEnumerable<Type>, ResourceType, ResourceName> create)
         {
             if (create == null) throw new ArgumentNullException("create");
             var convention = new CustomResourceNameConvention(create);

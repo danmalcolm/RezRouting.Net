@@ -8,15 +8,15 @@ namespace RezRouting.Configuration
     /// </summary>
     internal class CustomResourceNameConvention : IResourceNameConvention
     {
-        private readonly Func<IEnumerable<Type>,ResourceType, string> create;
+        private readonly Func<IEnumerable<Type>, ResourceType, ResourceName> create;
 
-        public CustomResourceNameConvention(Func<IEnumerable<Type>,ResourceType,string> create)
+        public CustomResourceNameConvention(Func<IEnumerable<Type>,ResourceType,ResourceName> create)
         {
             if (create == null) throw new ArgumentNullException("create");
             this.create = create;
         }
 
-        public string GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
+        public ResourceName GetResourceName(IEnumerable<Type> controllerTypes, ResourceType resourceType)
         {
             return create(controllerTypes, resourceType);
         }
