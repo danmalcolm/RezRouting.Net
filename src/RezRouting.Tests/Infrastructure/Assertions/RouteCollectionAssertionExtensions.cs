@@ -19,6 +19,11 @@ namespace RezRouting.Tests.Infrastructure.Assertions
             routes.OfType<ResourceActionRoute>().Select(r => r.Name).Should().BeEquivalentTo(expectedNames);
         }
 
+        public static void ShouldNotContainRoutesWithNames(this RouteCollection routes, params string[] expectedNames)
+        {
+            routes.OfType<ResourceActionRoute>().Select(r => r.Name).Should().NotBeEquivalentTo(expectedNames);
+        }
+
         public static void ShouldContainRoutesWithUrls(this RouteCollection routes, params string[] expectedUrls)
         {
             routes.OfType<ResourceActionRoute>().Select(r => r.Url).Should().BeEquivalentTo(expectedUrls);

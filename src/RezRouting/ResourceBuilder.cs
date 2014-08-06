@@ -15,8 +15,6 @@ namespace RezRouting
     public abstract class ResourceBuilder
     {
         private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
-
-        private const string DefaultIdName = "id";
         private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
         private readonly List<Type> controllerTypes = new List<Type>();
         private readonly List<string> includedRouteNames = new List<string>();
@@ -27,7 +25,7 @@ namespace RezRouting
         private string customIdNameAsAncestor;
 
         /// <summary>
-        /// Sets a specific name for the resource that will be used in route names and URLs. Overrides
+        /// Sets a specific name for the resource that will be used in route names and URLs, overriding
         /// the default resource name logic.
         /// </summary>
         public void CustomName(string singular = null, string plural = null)
@@ -36,8 +34,7 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Sets a specific path segment (directory) for the resource that will be used in route URLs. Overrides
-        /// the default resource name and path logic.
+        /// Sets a specific value for the resource's path segment in route URLs
         /// </summary>
         /// <param name="path"></param>
         public void CustomUrlPath(string path)
@@ -181,7 +178,7 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Sets up routes for a child collection resource within the current resource
+        /// Sets up routes for a child collection resource nested within the current resource
         /// </summary>
         /// <param name="configure"></param>
         public void Collection(Action<CollectionBuilder> configure)
@@ -192,7 +189,7 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Creates routes for a child singular resource within the current resource
+        /// Creates routes for a child singular resource nested within the current resource
         /// </summary>
         /// <param name="configure"></param>
         public void Singular(Action<SingularBuilder> configure)
@@ -220,7 +217,7 @@ namespace RezRouting
                 configuration.RouteNamePrefix, ancestorPath, routeResourceName);
 
             var resourceNames = context.AncestorNames.Append(routeResourceName);
-            var routes = GetRoutes(resourceNames, configuration);
+            var routes = GetRoutes(resourceName, resourceNames, configuration);
 
             var resource = new Resource(fullResourceName, context.Parent, routeUrlProperties, ResourceType, routes);
             var childContext = new ResourceBuildContext(resourceNames, resource);
@@ -253,7 +250,7 @@ namespace RezRouting
             return configuration.ResourcePathFormatter.GetResourcePath(name);
         }
 
-        private IEnumerable<ResourceRoute> GetRoutes(string[] resourceNames, RouteConfiguration configuration)
+        private IEnumerable<ResourceRoute> GetRoutes(ResourceName resourceName, string[] resourceNames, RouteConfiguration configuration)
         {
             var routeTypes = GetApplicableRouteTypes(configuration);
 
@@ -274,13 +271,13 @@ namespace RezRouting
                          orderby routeType.MappingOrder
                          let routeControllers = (from c in controllers
                                                  where c.ActionNames.ContainsIgnoreCase(routeType.ActionName)
-                                                 let settings = routeType.GetCustomSettings(c.Type)
+                                                 let settings = routeType.GetCustomSettings(ResourceType, resourceName, c.Type)
                                                  where settings.Include
                                                  select new {ControllerType = c.Type, Settings = settings }).ToList()
                          let multipleControllers = routeControllers.Count > 1
                          from routeController in routeControllers
                          let routeName = GetRouteName(configuration, resourceNames, routeType, routeController.ControllerType, routeController.Settings, multipleControllers)
-                         select new ResourceRoute(routeName, routeType, routeController.ControllerType, routeController.Settings);
+                         select new ResourceRoute(routeName, routeType, ResourceType, routeController.ControllerType, routeController.Settings);
 
             return routes;
         }

@@ -74,11 +74,12 @@
     <Compile Include="RouteMapping\ResourceNameTests.cs" />
     <Compile Include="RouteMapping\RouteMapperConfigurationTests.cs" />
     <Compile Include="RouteMapping\RouteMapperTests.cs" />
+    <Compile Include="RouteMapping\RouteTypeCustomisationTests.cs" />
     <Compile Include="Utility\ControllerActionDiscoveryTests.cs" />
     <Compile Include="RouteMapping\StandardRouteUrlGenerationTests.cs" />
     <Compile Include="RouteMapping\NestedResourceUrlGenerationTests.cs" />
     <Compile Include="RouteMapping\QueryStringRouteMappingTests.cs" />
-    <Compile Include="RouteMapping\CustomRouteMappingTests.cs" />
+    <Compile Include="RouteMapping\CustomRouteTypeMappingTests.cs" />
     <Compile Include="RouteMapping\StandardRouteMappingTests.cs" />
     <Compile Include="Infrastructure\Assertions\RouteBuilderAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActionInfo.cs" />

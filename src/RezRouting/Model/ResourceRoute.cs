@@ -17,19 +17,21 @@ namespace RezRouting.Model
         public string RouteName { get; private set; }
         public RouteType RouteType { get; private set; }
         public Type ControllerType { get; private set; }
+        private readonly ResourceType resourceType;
         private readonly CustomRouteSettings settings;
 
-        public ResourceRoute(string routeName, RouteType routeType, Type controllerType, CustomRouteSettings settings)
+        public ResourceRoute(string routeName, RouteType routeType, ResourceType resourceType, Type controllerType, CustomRouteSettings settings)
         {
             RouteName = routeName;
             RouteType = routeType;
             this.ControllerType = controllerType;
+            this.resourceType = resourceType;
             this.settings = settings;
         }
 
-        public void MapRoute(string resourceName, string resourceUrl, RouteCollection routes)
+        public void MapRoute(string resourceName, string resourceUrl, string idName, RouteCollection routes)
         {
-            var properties = GetRouteInfo(resourceUrl);
+            var properties = GetRouteInfo(resourceUrl, idName);
 
             var route = new ResourceActionRoute(this, properties.Name, properties.Url, new MvcRouteHandler())
             {
@@ -47,21 +49,29 @@ namespace RezRouting.Model
             routes.Add(properties.Name, route);
         }
 
-        public void DebugSummary(string resourceName, string resourceUrl, StringBuilder summary)
+        public void DebugSummary(string resourceName, string resourceUrl, string idName, StringBuilder summary)
         {
-            var properties = GetRouteInfo(resourceUrl);
+            var properties = GetRouteInfo(resourceUrl,idName);
             summary.Append(properties);
         }
 
-        private RouteInfo GetRouteInfo(string resourceUrl)
+        private RouteInfo GetRouteInfo(string resourceUrl, string idName)
         {
             // URL - path to resource + additional path segment(s) for route
-            string url = resourceUrl;
+            var url = new StringBuilder(resourceUrl);
+
+            bool includeId = resourceType == ResourceType.Collection 
+                && settings.CollectionLevel == CollectionLevel.Item;
+            if (includeId)
+            {
+                if (url.Length > 0) url.Append("/");
+                url.AppendFormat("{{{0}}}", idName);
+            }
 
             if (!string.IsNullOrWhiteSpace(settings.PathSegment))
             {
-                if (url.Length > 0) url += "/";
-                url += settings.PathSegment;
+                if (url.Length > 0) url.Append("/");
+                url.Append(settings.PathSegment);
             }
             
             string controller = RouteValueHelper.TrimControllerFromTypeName(ControllerType);
@@ -69,7 +79,7 @@ namespace RezRouting.Model
             var constraints = GetConstraints();
             var namespaces = new[] { ControllerType.Namespace };
 
-            return new RouteInfo(RouteName, url, defaults, constraints, namespaces);
+            return new RouteInfo(RouteName, url.ToString(), defaults, constraints, namespaces);
         }
 
         private RouteValueDictionary GetConstraints()

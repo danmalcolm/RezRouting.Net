@@ -54,8 +54,8 @@ namespace RezRouting.Tests.RouteMapping
         {
             get
             {
-                var builder = new RouteMapper();
-                builder.Collection(orders =>
+                var mapper = new RouteMapper();
+                mapper.Collection(orders =>
                 {
                     orders.HandledBy<OrdersController>();
                     orders.Collection(notes =>
@@ -64,7 +64,7 @@ namespace RezRouting.Tests.RouteMapping
                         notes.Collection(comments => comments.HandledBy<CommentsController>());
                     });
                 });
-                return new MappingExpectations(builder.MapRoutes())
+                return new MappingExpectations(mapper.MapRoutes())
                     .ExpectMatch("GET /orders", "Orders.Index", "Orders#Index")
                     .ExpectMatch("GET /orders/123", "Orders.Show", "Orders#Show", new { id = "123" })
                     .ExpectMatch("GET /orders/new", "Orders.New", "Orders#New")

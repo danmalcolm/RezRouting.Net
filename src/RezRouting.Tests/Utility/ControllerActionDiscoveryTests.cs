@@ -66,7 +66,7 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void ShouldExcludeControllersIgnoredByCustomizeFunctionWhenSameActionExistsOnMultipleControllers()
         {
-            var customRouteType = new RouteType("Custom", new[] {ResourceType.Collection}, CollectionLevel.Item, "Custom", "GET", 10, customize: route =>
+            var customRouteType = new RouteType("Custom", new[] {ResourceType.Collection}, "Custom", "GET", 10, customize: route =>
                 {
                     route.Include = route.ControllerType != typeof (SameActions3Controller);
                     route.PathSegment = "custom";
@@ -83,7 +83,7 @@ namespace RezRouting.Tests.RouteMapping
         [Fact]
         public void RouteNameConventionShouldIncludeControllerNameVariationWhenMappingRouteToMultipleControllers()
         {
-            var routeType = new RouteType("Custom", new[] { ResourceType.Collection }, CollectionLevel.Item, "Custom", "GET", 10, customize: settings => settings.PathSegment = "custom");
+            var routeType = new RouteType("Custom", new[] { ResourceType.Collection }, "Custom", "GET", 10, customize: settings => settings.PathSegment = "custom");
             mapper.Configure(c =>
             {
                 c.ClearRouteTypes();

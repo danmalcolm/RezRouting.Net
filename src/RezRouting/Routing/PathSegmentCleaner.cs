@@ -3,7 +3,7 @@
 namespace RezRouting.Routing
 {
     /// <summary>
-    /// Validates and cleans path segments (directories) used within route URLs
+    /// Validates and cleans path segments used within route URLs
     /// </summary>
     internal class PathSegmentCleaner
     {

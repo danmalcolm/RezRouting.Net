@@ -29,7 +29,7 @@ namespace RezRouting.Tests.RouteMapping
             mapper.Collection(products =>
             {
                 products.HandledBy<ProductsDisplayController, ProductsEditController>();
-                products.CustomName("Salamanders");
+                products.CustomName("Salamander");
             });
 
             mapper.ShouldMapRoutesWithNames("Salamanders.Index", "Salamanders.Show",

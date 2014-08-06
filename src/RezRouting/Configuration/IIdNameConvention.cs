@@ -1,8 +1,8 @@
 ﻿namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Formats the name of the route value placeholder in URLs. This determines
-    /// the key used in the RouteValueDictionary
+    /// Formats the name of the route value placeholder for the id of a collection item in
+    /// a route URL.
     /// </summary>
     public interface IIdNameConvention
     {

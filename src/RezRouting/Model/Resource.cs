@@ -38,7 +38,7 @@ namespace RezRouting.Model
             foreach (var route in routes)
             {
                 string url = GetUrl(route.RouteType);
-                route.MapRoute(fullName, url, routeCollection);
+                route.MapRoute(fullName, url, urlProperties.IdName, routeCollection);
             }
             foreach (var child in children)
             {
@@ -55,14 +55,7 @@ namespace RezRouting.Model
             }
             if (url.Length > 0) url.Append("/");
             url.Append(urlProperties.Path);
-
-            bool includeId = resourceType == ResourceType.Collection
-                             && routeType.CollectionLevel == CollectionLevel.Item;
-            if (includeId)
-            {
-                if (url.Length > 0) url.Append("/");
-                url.AppendFormat("{{{0}}}", urlProperties.IdName);
-            }
+            
             return url.ToString();
         }
 
@@ -97,7 +90,7 @@ namespace RezRouting.Model
             {
                 summary.Append(indent);
                 string resourceUrlPath = GetUrl(route.RouteType);
-                route.DebugSummary(fullName, resourceUrlPath, summary);
+                route.DebugSummary(fullName, resourceUrlPath, urlProperties.IdName, summary);
                 summary.AppendLine();
                 summary.AppendLine();
             }

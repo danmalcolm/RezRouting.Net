@@ -23,19 +23,19 @@ namespace RezRouting.Tests.RouteMapping
                 mapper.Configure(configuration =>
                 {
                     // 2 routes - have same URL path, with qs param to differentiate
-                    var custom1 = new RouteType("Custom1", new[] { ResourceType.Collection },
-                        CollectionLevel.Item, "Custom1", StandardHttpMethod.Get, 9, 
+                    var custom1 = new RouteType("Custom1", new[] { ResourceType.Collection }, "Custom1", StandardHttpMethod.Get, 9, 
                         customize: x =>
                         {
                             x.QueryStringValues(new {variation = "1"});
                             x.PathSegment = "custom";
+                            x.CollectionLevel = CollectionLevel.Item;
                         });
-                    var custom2 = new RouteType("Custom2", new[] {ResourceType.Collection},
-                        CollectionLevel.Item, "Custom2", StandardHttpMethod.Get, 9,
+                    var custom2 = new RouteType("Custom2", new[] {ResourceType.Collection}, "Custom2", StandardHttpMethod.Get, 9,
                         customize: x =>
                         {
                             x.QueryStringValues(new { variation = "2" });
                             x.PathSegment = "custom";
+                            x.CollectionLevel = CollectionLevel.Item;
                         });
                     configuration.AddRouteType(custom1);
                     configuration.AddRouteType(custom2);
@@ -64,19 +64,19 @@ namespace RezRouting.Tests.RouteMapping
                 mapper.Configure(configuration =>
                 {
                     // 2 routes - have same URL path, with qs param to differentiate
-                    var custom1 = new RouteType("Custom1", new[] {ResourceType.Collection},
-                        CollectionLevel.Item, "Custom1", StandardHttpMethod.Get, 9,
+                    var custom1 = new RouteType("Custom1", new[] {ResourceType.Collection}, "Custom1", StandardHttpMethod.Get, 9,
                         customize: x =>
                         {
                             x.QueryStringValues(new { variation = "1" });
                             x.PathSegment = "custom";
+                            x.CollectionLevel = CollectionLevel.Item;
                         });
-                    var custom2 = new RouteType("Custom2", new[] { ResourceType.Collection },
-                        CollectionLevel.Item, "Custom2", StandardHttpMethod.Get, 9,
+                    var custom2 = new RouteType("Custom2", new[] { ResourceType.Collection }, "Custom2", StandardHttpMethod.Get, 9,
                         customize: x =>
                         {
                             x.QueryStringValues(new { variation = "2" });
                             x.PathSegment = "custom";
+                            x.CollectionLevel = CollectionLevel.Item;
                         });
 
                     configuration.AddRouteTypes(custom1, custom2);

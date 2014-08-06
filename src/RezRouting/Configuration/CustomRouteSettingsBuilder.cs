@@ -10,13 +10,25 @@ namespace RezRouting.Configuration
     {
         private RouteValueDictionary queryStringValues = new RouteValueDictionary();
 
-        public CustomRouteSettingsBuilder(Type controllerType)
+        public CustomRouteSettingsBuilder(ResourceType resourceType, ResourceName resourceName, Type controllerType)
         {
+            ResourceType = resourceType;
+            ResourceName = resourceName;
             ControllerType = controllerType;
             PathSegment = "";
             Include = true;
             IncludeControllerInRouteName = false;
         }
+
+        /// <summary>
+        /// The type of resource for which the route is being created
+        /// </summary>
+        public ResourceType ResourceType { get; set; }
+
+        /// <summary>
+        /// The name of the resource
+        /// </summary>
+        public ResourceName ResourceName { get; set; }
 
         /// <summary>
         /// The type of the controller for the current route
@@ -50,7 +62,7 @@ namespace RezRouting.Configuration
 
         internal CustomRouteSettings Build()
         {
-            return new CustomRouteSettings(queryStringValues, Include, PathSegment, IncludeControllerInRouteName);
+            return new CustomRouteSettings(queryStringValues, Include, PathSegment, IncludeControllerInRouteName, CollectionLevel);
         }
 
         /// <summary>
@@ -64,5 +76,10 @@ namespace RezRouting.Configuration
         /// the route mapped for the controller type
         /// </summary>
         public bool IncludeControllerInRouteName { get; set; }
+
+        /// <summary>
+        /// The level at which the route will be mapped for a collection resource
+        /// </summary>
+        public CollectionLevel CollectionLevel { get; set; }
     }
 }

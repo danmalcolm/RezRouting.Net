@@ -48,7 +48,8 @@ namespace RezRouting
         /// <returns></returns>
         public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, object routeValues)
         {
-            return helper.ResourceUrl(controllerType, action, new RouteValueDictionary(routeValues));
+            var rvd = routeValues != null ? new RouteValueDictionary(routeValues) : null;
+            return helper.ResourceUrl(controllerType, action, rvd);
         }
 
         public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, RouteValueDictionary routeValues)
@@ -57,6 +58,7 @@ namespace RezRouting
             var route = routes.FirstOrDefault(x =>
                 controllerType == x.Model.ControllerType
                            && action.EqualsIgnoreCase(x.Model.RouteType.ActionName));
+            if(routeValues == null) routeValues = new RouteValueDictionary();
             if (route != null)
             {
                 routeValues["httpMethod"] = "GET";

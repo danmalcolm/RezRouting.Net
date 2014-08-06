@@ -15,7 +15,6 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <param name="name"></param>
         /// <param name="resourceTypes"></param>
-        /// <param name="collectionLevel"></param>
         /// <param name="actionName"></param>
         /// <param name="httpMethod"></param>
         /// <param name="mappingOrder"></param>
@@ -24,7 +23,6 @@ namespace RezRouting.Configuration
         /// </param>
         public RouteType(string name, 
             IEnumerable<ResourceType> resourceTypes, 
-            CollectionLevel collectionLevel, 
             string actionName, 
             string httpMethod, 
             int mappingOrder,
@@ -33,7 +31,6 @@ namespace RezRouting.Configuration
         {
             Name = name;
             ResourceTypes = resourceTypes.ToReadOnlyList();
-            CollectionLevel = collectionLevel;
             ActionName = actionName;
             HttpMethod = httpMethod;
             MappingOrder = mappingOrder;
@@ -104,15 +101,15 @@ namespace RezRouting.Configuration
             {
                 return
                     string.Format(
-                        "Name: {0}, ResourceTypes: {1}, CollectionLevel: {2}, ActionName: {3}, HttpMethod: {4}, MappingOrder: {5}",
-                        Name, string.Join(",", ResourceTypes), CollectionLevel, ActionName, HttpMethod, MappingOrder);
+                        "Name: {0}, ResourceTypes: {1}, ActionName: {3}, HttpMethod: {4}, MappingOrder: {5}",
+                        Name, string.Join(",", ResourceTypes), ActionName, HttpMethod, MappingOrder);
             }
         }
         
 
-        internal CustomRouteSettings GetCustomSettings(Type controllerType)
+        internal CustomRouteSettings GetCustomSettings(ResourceType resourceType, ResourceName resourceName, Type controllerType)
         {
-            var builder = new CustomRouteSettingsBuilder(controllerType);
+            var builder = new CustomRouteSettingsBuilder(resourceType, resourceName, controllerType);
             Customize(builder);
             return builder.Build();
         }

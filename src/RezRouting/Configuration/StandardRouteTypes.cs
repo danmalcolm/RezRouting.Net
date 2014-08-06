@@ -8,23 +8,36 @@ namespace RezRouting.Configuration
         {
             return new List<RouteType>
             {
-                new RouteType("Index", new[] {ResourceType.Collection}, CollectionLevel.Collection, "Index",
+                new RouteType("Index", new[] {ResourceType.Collection}, "Index",
                     StandardHttpMethod.Get, 0,
                     customize: settings => settings.PathSegment = ""),
-                new RouteType("Show", new[] {ResourceType.Singular, ResourceType.Collection}, CollectionLevel.Item,
-                    "Show", StandardHttpMethod.Get, 3),
-                new RouteType("New", new[] {ResourceType.Singular, ResourceType.Collection},
-                    CollectionLevel.Collection, "New", StandardHttpMethod.Get, 1,
-                    customize: settings => settings.PathSegment = "new"),
-                new RouteType("Create", new[] {ResourceType.Singular, ResourceType.Collection},
-                    CollectionLevel.Collection, "Create", StandardHttpMethod.Post, 4),
-                new RouteType("Edit", new[] {ResourceType.Singular, ResourceType.Collection}, CollectionLevel.Item,
+                new RouteType("Show", new[] {ResourceType.Singular, ResourceType.Collection},
+                    "Show", StandardHttpMethod.Get, 3, settings => settings.CollectionLevel = CollectionLevel.Item),
+                new RouteType("New", new[] {ResourceType.Singular, ResourceType.Collection}, "New", StandardHttpMethod.Get, 1,
+                    customize: settings =>
+                    {
+                        settings.PathSegment = "new";
+                        settings.CollectionLevel = CollectionLevel.Collection;
+                    }),
+                new RouteType("Create", new[] {ResourceType.Singular, ResourceType.Collection}, "Create", StandardHttpMethod.Post, 4, 
+                    customize: settings => settings.CollectionLevel = CollectionLevel.Collection),
+                new RouteType("Edit", new[] {ResourceType.Singular, ResourceType.Collection},
                     "Edit", StandardHttpMethod.Get, 2,
-                    customize: settings => settings.PathSegment = "edit"),
-                new RouteType("Update", new[] {ResourceType.Singular, ResourceType.Collection}, CollectionLevel.Item,
-                    "Update", StandardHttpMethod.Put, 5),
-                new RouteType("Delete", new[] {ResourceType.Singular, ResourceType.Collection}, CollectionLevel.Item,
-                    "Destroy", StandardHttpMethod.Delete, 6)
+                    customize: settings =>
+                    {
+                        settings.PathSegment = "edit";
+                        settings.CollectionLevel = CollectionLevel.Item;
+                    }),
+                new RouteType("Update", new[] {ResourceType.Singular, ResourceType.Collection},
+                    "Update", StandardHttpMethod.Put, 5, customize: settings =>
+                    {
+                        settings.CollectionLevel = CollectionLevel.Item;
+                    }),
+                new RouteType("Delete", new[] {ResourceType.Singular, ResourceType.Collection},
+                    "Destroy", StandardHttpMethod.Delete, 6, customize: settings =>
+                    {
+                        settings.CollectionLevel = CollectionLevel.Item;
+                    })
             };
         }
     }

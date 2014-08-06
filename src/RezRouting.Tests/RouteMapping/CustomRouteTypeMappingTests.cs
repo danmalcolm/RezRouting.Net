@@ -6,30 +6,39 @@ using Xunit.Extensions;
 
 namespace RezRouting.Tests.RouteMapping
 {
-    public class CustomRouteMappingTests
+    public class CustomRouteTypeMappingTests
     {
-        [Theory, PropertyData("SharedCustomRoutesExpectations")]
+        [Theory, PropertyData("SharedCustomRouteTypeExpectations")]
         public void ShouldMapSharedCustomRoutesForAllResources(MappingExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> SharedCustomRoutesExpectations
+        public static IEnumerable<object[]> SharedCustomRouteTypeExpectations
         {
             get
             {
                 var mapper = new RouteMapper();
                 mapper.Configure(configuration =>
                 {
-                    var search = new RouteType("Search", new[] { ResourceType.Collection },
-                        CollectionLevel.Collection, "Search", StandardHttpMethod.Get, 9,
-                        customize: settings => settings.PathSegment = "search");
-                    var kick = new RouteType("Kick", new[] {ResourceType.Collection, ResourceType.Singular},
-                        CollectionLevel.Item, "Kick", StandardHttpMethod.Post, 9,
-                        customize: settings => settings.PathSegment = "kick");
-                    var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular },
-                        CollectionLevel.Item, "Bust", StandardHttpMethod.Delete, 9,
-                        customize: settings => settings.PathSegment = "bust");
+                    var search = new RouteType("Search", new[] { ResourceType.Collection }, "Search", StandardHttpMethod.Get, 9,
+                        customize: settings =>
+                        {
+                            settings.PathSegment = "search";
+                            settings.CollectionLevel = CollectionLevel.Collection;
+                        });
+                    var kick = new RouteType("Kick", new[] {ResourceType.Collection, ResourceType.Singular}, "Kick", StandardHttpMethod.Post, 9,
+                        customize: settings =>
+                        {
+                            settings.PathSegment = "kick";
+                            settings.CollectionLevel = CollectionLevel.Item;
+                        });
+                    var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular }, "Bust", StandardHttpMethod.Delete, 9,
+                        customize: settings =>
+                        {
+                            settings.PathSegment = "bust";
+                            settings.CollectionLevel = CollectionLevel.Item;
+                        });
                     
                     configuration.AddRouteType(search);
                     configuration.AddRouteType(kick);
@@ -49,28 +58,36 @@ namespace RezRouting.Tests.RouteMapping
             }
         }
 
-        [Theory, PropertyData("CustomRoutesExpectations")]
+        [Theory, PropertyData("ResourceCustomRouteTypeExpectations")]
         public void ShouldMapResourceLevelCustomRoutesOnResourceOnly(MappingExpectation expectation)
         {
             expectation.Verify();
         }
 
-        public static IEnumerable<object[]> CustomRoutesExpectations
+        public static IEnumerable<object[]> ResourceCustomRouteTypeExpectations
         {
             get
             {
                 var mapper = new RouteMapper();
 
-                var search = new RouteType("Search", new[] { ResourceType.Collection },
-                        CollectionLevel.Collection, "Search", StandardHttpMethod.Get, 9,
-                        customize: settings => settings.PathSegment = "search");
-                var kick = new RouteType("Kick", new[] { ResourceType.Collection, ResourceType.Singular },
-                    CollectionLevel.Item, "Kick", StandardHttpMethod.Post, 9,
-                        customize: settings => settings.PathSegment = "kick");
-                var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular },
-                    CollectionLevel.Item, "Bust", StandardHttpMethod.Delete, 9,
-                        customize: settings => settings.PathSegment = "bust");
-
+                var search = new RouteType("Search", new[] { ResourceType.Collection }, "Search", StandardHttpMethod.Get, 9,
+                        customize: settings =>
+                        {
+                            settings.PathSegment = "search";
+                            settings.CollectionLevel = CollectionLevel.Collection;
+                        });
+                var kick = new RouteType("Kick", new[] { ResourceType.Collection, ResourceType.Singular }, "Kick", StandardHttpMethod.Post, 9,
+                    customize: settings =>
+                    {
+                        settings.PathSegment = "kick";
+                        settings.CollectionLevel = CollectionLevel.Item;
+                    });
+                var bust = new RouteType("Bust", new[] { ResourceType.Collection, ResourceType.Singular }, "Bust", StandardHttpMethod.Delete, 9,
+                    customize: settings =>
+                    {
+                        settings.PathSegment = "bust";
+                        settings.CollectionLevel = CollectionLevel.Item;
+                    });
                 mapper.Collection(asses =>
                 {
                     asses.HandledBy<AssesController>();
