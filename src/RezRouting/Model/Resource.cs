@@ -10,7 +10,7 @@ namespace RezRouting.Model
     /// Contains configuration and routes for a specific resource (singular or collection).
     /// An intermediate model created by ResourceBuilder classes.
     /// </summary>
-    internal class Resource
+    public class Resource
     {
         private readonly string fullName;
         private readonly Resource parent;

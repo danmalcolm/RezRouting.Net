@@ -96,6 +96,7 @@
     <Compile Include="Configuration\StandardRouteTypes.cs" />
     <Compile Include="Model\RouteUrlProperties.cs" />
     <Compile Include="ResourceBuildContext.cs" />
+    <Compile Include="ResourceLevel.cs" />
     <Compile Include="ResourceName.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
     <Compile Include="RouteConfigurationBuilder.cs" />

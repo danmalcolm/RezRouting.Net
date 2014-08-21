@@ -8,14 +8,18 @@ using RezRouting.Utility;
 
 namespace RezRouting
 {
+    internal interface IResourceBuilder
+    {
+    }
+
     /// <summary>
     /// Base class for "builder" classes used at configuration time to specify the routes
     /// for a singular or collection resource
     /// </summary>
-    public abstract class ResourceBuilder
+    public abstract class ResourceBuilder : IResourceBuilder
     {
         private readonly RouteConfigurationBuilder configurationBuilder = new RouteConfigurationBuilder();
-        private readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
+        protected readonly List<ResourceBuilder> children = new List<ResourceBuilder>();
         private readonly List<Type> controllerTypes = new List<Type>();
         private readonly List<string> includedRouteNames = new List<string>();
         private readonly List<string> excludedRouteNames = new List<string>();
@@ -205,33 +209,17 @@ namespace RezRouting
         {
             var configuration = configurationBuilder.Extend(sharedConfiguration);
 
-            var resourceName = GetResourceName(configuration);
-            string routeResourceName = ResourceType == ResourceType.Collection
-                ? resourceName.Plural
-                : resourceName.Singular;
-
-            var routeUrlProperties = GetRouteUrlProperties(configuration, resourceName);
-
-            string ancestorPath = string.Join(".", context.AncestorNames);
-            string fullResourceName = string.Format("{0}.{1}.{2}",
-                configuration.RouteNamePrefix, ancestorPath, routeResourceName);
-
-            var resourceNames = context.AncestorNames.Append(routeResourceName);
-            var routes = GetRoutes(resourceName, resourceNames, configuration);
-
-            var resource = new Resource(fullResourceName, context.Parent, routeUrlProperties, ResourceType, routes);
-            var childContext = new ResourceBuildContext(resourceNames, resource);
-            var childResources = children.Select(x => x.Build(sharedConfiguration, childContext));
-            resource.SetChildren(childResources);
-            return resource;
+            return BuildResource(configuration, context);
         }
 
-        private ResourceName GetResourceName(RouteConfiguration configuration)
+        protected abstract Resource BuildResource(RouteConfiguration configuration, ResourceBuildContext context);
+
+        protected ResourceName GetResourceName(RouteConfiguration configuration)
         {
             return customName ?? configuration.ResourceNameConvention.GetResourceName(controllerTypes, ResourceType);
         }
 
-        private RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, ResourceName name)
+        protected RouteUrlProperties GetRouteUrlProperties(RouteConfiguration configuration, ResourceName name)
         {
             string resourcePath = customPath ?? FormatResourcePath(name, configuration);
 
@@ -250,7 +238,7 @@ namespace RezRouting
             return configuration.ResourcePathFormatter.GetResourcePath(name);
         }
 
-        private IEnumerable<ResourceRoute> GetRoutes(ResourceName resourceName, string[] resourceNames, RouteConfiguration configuration)
+        protected IEnumerable<ResourceRoute> GetRoutes(ResourceName resourceName, string[] resourceNames, RouteConfiguration configuration)
         {
             var routeTypes = GetApplicableRouteTypes(configuration);
 

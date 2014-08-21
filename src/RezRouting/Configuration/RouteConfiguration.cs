@@ -6,7 +6,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Settings that apply to routes mapped by a RouteMapper instance
     /// </summary>
-    internal class RouteConfiguration
+    public class RouteConfiguration
     {
         public RouteConfiguration(IEnumerable<RouteType> routeTypes, IResourceNameConvention resourceNameConvention, 
             IResourcePathFormatter resourcePathFormatter, IRouteNameConvention routeNameConvention, 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Properties to apply when generating a resource's route URL
     /// </summary>
-    internal class RouteUrlProperties
+    public class RouteUrlProperties
     {
         public RouteUrlProperties(string path, string idName, string idNameAsAncestor)
         {

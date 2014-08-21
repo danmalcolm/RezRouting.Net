@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2", "RezRouting2.csproj", "{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2.Tests", "..\RezRouting2.Tests\RezRouting2.Tests.csproj", "{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
