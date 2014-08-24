@@ -5,10 +5,12 @@ namespace RezRouting2
 {
     public class Resource
     {
-        public Resource(string name, string urlPath, ResourceLevel level, IEnumerable<Resource> children)
+        private readonly IUrlSegment urlSegment;
+
+        public Resource(string name, IUrlSegment urlSegment, ResourceLevel level, IEnumerable<Resource> children)
         {
             Name = name;
-            UrlPath = urlPath;
+            this.urlSegment = urlSegment;
             Level = level;
             Children = children.ToReadOnlyList();
             Children.Each(child => child.InitParent(this));
@@ -21,9 +23,25 @@ namespace RezRouting2
 
         public string Name { get; private set; }
 
-        public string UrlPath { get; private set; }
+        public string UrlPath
+        {
+            get
+            {
+                // TODO - optimise (create once on construction?)
+                string parentPath = Parent != null ? Parent.UrlPath : "";
+                return string.Concat(parentPath, string.IsNullOrWhiteSpace(parentPath) ? "" : "/", urlSegment.Path);
+            }
+        }
 
-        public ResourceLevel Level { get; set; }
+        public string UrlPathAsAncestor
+        {
+            get
+            {
+                return urlSegment.PathAsAncestor;
+            }
+        }
+
+        public ResourceLevel Level { get; private set; }
 
         public IList<Resource> Children { get; private set; }
 

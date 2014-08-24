@@ -11,28 +11,31 @@ namespace RezRouting2
             Level = level;
             Name = name;
             ChildBuilders = new List<ResourceBuilder>();
+            UrlSegment = new DirectoryUrlSegment(Name);
         }
 
-        protected string Name { get; set; }
+        protected string Name { get; private set; }
 
-        protected ResourceLevel Level { get; set; }
+        protected ResourceLevel Level { get; private set; }
         
-        protected List<ResourceBuilder> ChildBuilders { get; set; }
+        protected List<ResourceBuilder> ChildBuilders { get; private set; }
+        
+        protected IUrlSegment UrlSegment { get; set; }
 
         public Resource Build()
         {
             var children = ChildBuilders.Select(x => x.Build());
-            return new Resource(Name, Name, Level, children);
+            return new Resource(Name, UrlSegment, Level, children);
         }
 
-        public void Singular(string name, Action<SingularResourceBuilder> configure)
+        public void Singular(string name, Action<SingularBuilder> configure)
         {
-            AddChild(new SingularResourceBuilder(name), configure);
+            AddChild(new SingularBuilder(name), configure);
         }
 
-        public void Collection(string name, Action<CollectionResourceBuilder> configure)
+        public void Collection(string name, Action<CollectionBuilder> configure)
         {
-            AddChild(new CollectionResourceBuilder(name), configure);
+            AddChild(new CollectionBuilder(name), configure);
         }
 
         protected void AddChild<T>(T childBuilder, Action<T> configure)
@@ -40,6 +43,11 @@ namespace RezRouting2
         {
             configure(childBuilder);
             ChildBuilders.Add(childBuilder);
+        }
+
+        public void UrlPath(string path)
+        {
+            UrlSegment = new DirectoryUrlSegment(path);
         }
     }
 }

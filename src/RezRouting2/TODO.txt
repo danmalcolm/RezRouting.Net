@@ -1,3 +1,30 @@
-﻿[ ] Collection item structure
+﻿
+[ ] Nested collections, should use different id for ancestors
 
-[ ] Share code between collection and singular
+[ ] Collection id param as ancestor configuration
+
+
+[ ] CollectionItem name should be singular name version
+
+[ ] UrlPath correct term for singular / collection builders. DirectoryPath instead?
+
+[ ] Validate UrlPath for invalid characters
+
+
+
+
+[x] Collection item structure
+
+[x] Share code between collection and singular
+
+[x] Customize URLPath
+
+[x] New UrlSegment to encapsulate differences in behaviour, e.g. straight directory name, id etc.
+
+[x] Resource UrlPath
+
+[x] Collection id param configuration
+
+[x] Configuring items twice should not create 2 child resources
+
+[x] Warning as error
