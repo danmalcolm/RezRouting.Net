@@ -6,5 +6,10 @@
         {
             
         }
+
+        public void UrlPath(string path)
+        {
+            UrlSegment = new DirectoryUrlSegment(path);
+        }
     }
 }

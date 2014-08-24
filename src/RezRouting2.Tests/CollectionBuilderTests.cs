@@ -19,7 +19,7 @@ namespace RezRouting2.Tests
         }
 
         [Fact]
-        public void collection_resource_should_contain_child_for_collection_items()
+        public void collection_resource_should_contain_child_item_resource()
         {
             var builder = new CollectionBuilder("Products");
 
@@ -28,19 +28,19 @@ namespace RezRouting2.Tests
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.Level.Should().Be(ResourceLevel.CollectionItem);
-            item.Name.Should().Be("Item");
             item.Parent.Should().Be(collection);
         }
 
         [Fact]
-        public void should_configure_items_to_use_standard_id_parameter_by_default()
+        public void child_item_resource_name_should_be_singular_of_collection_name()
         {
             var builder = new CollectionBuilder("Products");
-            builder.Items(items => { });
 
             var collection = builder.Build();
+
+            collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
-            item.UrlPath.Should().Be("Products/{id}");
+            item.Name.Should().Be("Product");
         }
 
         [Fact]
@@ -51,8 +51,20 @@ namespace RezRouting2.Tests
             builder.Items(items => items.IdName("productId"));
 
             var collection = builder.Build();
+            collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Products/{productId}");
+        }
+
+        [Fact]
+        public void items_should_use_standard_id_name_by_default()
+        {
+            var builder = new CollectionBuilder("Products");
+            builder.Items(items => { });
+
+            var collection = builder.Build();
+            var item = collection.Children.Single();
+            item.UrlPath.Should().Be("Products/{id}");
         }
 
         [Fact]
@@ -65,6 +77,5 @@ namespace RezRouting2.Tests
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Users/{userName}");
         }
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using RezRouting2.Utility;
 
 namespace RezRouting2
 {
@@ -8,14 +9,19 @@ namespace RezRouting2
 
         public CollectionBuilder(string name) : base(name, ResourceLevel.Collection)
         {
-            itemBuilder = new CollectionItemBuilder("Item");
-            itemBuilder.UrlPath("{id}");
+            string itemName = name.Singularize(Plurality.Plural);
+            itemBuilder = new CollectionItemBuilder(itemName);
             AddChild(itemBuilder, x => {});
         }
 
         public void Items(Action<CollectionItemBuilder> configure)
         {
             configure(itemBuilder);
+        }
+
+        public void UrlPath(string path)
+        {
+            UrlSegment = new DirectoryUrlSegment(path);
         }
     }
 }

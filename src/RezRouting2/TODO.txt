@@ -1,12 +1,12 @@
-﻿
-[ ] Nested collections, should use different id for ancestors
+﻿[x] Nested collections, should use different id for ancestors
+
+[x] CollectionItem name should be singular name version
+
+[ ] UrlPath correct term for singular / collection builders. DirectoryPath instead?
 
 [ ] Collection id param as ancestor configuration
 
 
-[ ] CollectionItem name should be singular name version
-
-[ ] UrlPath correct term for singular / collection builders. DirectoryPath instead?
 
 [ ] Validate UrlPath for invalid characters
 

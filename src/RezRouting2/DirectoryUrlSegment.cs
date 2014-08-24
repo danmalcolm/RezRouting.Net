@@ -7,8 +7,11 @@
             Path = path;
         }
 
-        public string Path { get; private set; } 
+        public string Path { get; private set; }
 
-        public string PathAsAncestor { get; private set; } 
+        public string PathAsAncestor
+        {
+            get { return Path; }
+        }
     }
 }

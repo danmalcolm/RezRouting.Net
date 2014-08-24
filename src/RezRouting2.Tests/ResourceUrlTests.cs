@@ -56,16 +56,16 @@ namespace RezRouting2.Tests
         }
 
         [Fact]
-        public void collection_item_resource_urls_should_use_when_ancestor()
+        public void child_resources_of_collection_item_should_use_ancestor_id_param_name()
         {
             var builder = new CollectionBuilder("Products");
-            builder.Collection("Reviews", reviews => {});
-            var level0 = builder.Build();
-            var collection = level0.Children.Single();
-            var collectionItem = collection.Children.Single();
+            builder.Items(item => item.Collection("Reviews", reviews => {}));
+            var products = builder.Build();
+            var productItem = products.Children.Single();
+            var reviewsItem = productItem.Children.Single().Children.Single();
 
-            collection.UrlPath.Should().Be("Profile/Logins");
-            collectionItem.UrlPath.Should().Be("Profile/Logins/{id}");
+            productItem.UrlPath.Should().Be("Products/{id}");
+            reviewsItem.UrlPath.Should().Be("Products/{productId}/Reviews/{id}");
         }
 
     }

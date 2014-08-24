@@ -28,7 +28,7 @@ namespace RezRouting2
             get
             {
                 // TODO - optimise (create once on construction?)
-                string parentPath = Parent != null ? Parent.UrlPath : "";
+                string parentPath = Parent != null ? Parent.UrlPathAsAncestor : "";
                 return string.Concat(parentPath, string.IsNullOrWhiteSpace(parentPath) ? "" : "/", urlSegment.Path);
             }
         }
@@ -37,7 +37,9 @@ namespace RezRouting2
         {
             get
             {
-                return urlSegment.PathAsAncestor;
+                // TODO - optimise (create once on construction?)
+                string parentPath = Parent != null ? Parent.UrlPathAsAncestor : "";
+                return string.Concat(parentPath, string.IsNullOrWhiteSpace(parentPath) ? "" : "/", urlSegment.PathAsAncestor);
             }
         }
 
