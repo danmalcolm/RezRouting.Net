@@ -16,7 +16,7 @@ namespace RezRouting2
 
         public Route BuildRoute(Resource resource, Type controllerType)
         {
-            var builder = new RouteBuilder();
+            var builder = new RouteBuilder(controllerType);
             configure(resource, controllerType, builder);
             return builder.Build();
         } 

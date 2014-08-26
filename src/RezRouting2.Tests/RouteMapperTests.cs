@@ -92,8 +92,8 @@ namespace RezRouting2.Tests
 
             var resource1 = resources.Single();
             var resource2 = resource1.Children.Single();
-            resource1.Routes.ShouldAllBeEquivalentTo(new [] { new Route("Route1")});
-            resource2.Routes.ShouldAllBeEquivalentTo(new [] { new Route("Route2")});
+            resource1.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route1"});
+            resource2.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route2" });
         }
 
         public class TestController1
