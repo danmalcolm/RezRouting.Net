@@ -76,6 +76,11 @@
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceBuilder.cs" />
     <Compile Include="ResourceLevel.cs" />
+    <Compile Include="Route.cs" />
+    <Compile Include="RouteBuilder.cs" />
+    <Compile Include="RouteMapper.cs" />
+    <Compile Include="RouteMappingContext.cs" />
+    <Compile Include="RouteType.cs" />
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="DirectoryUrlSegment.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />

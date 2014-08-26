@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2", "RezRouting2.csproj", "{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2", "RezRouting2\RezRouting2.csproj", "{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2.Tests", "..\RezRouting2.Tests\RezRouting2.Tests.csproj", "{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting2.Tests", "RezRouting2.Tests\RezRouting2.Tests.csproj", "{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

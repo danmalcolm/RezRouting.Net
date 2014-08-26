@@ -6,6 +6,8 @@ namespace RezRouting2
 {
     public class ResourceBuilder
     {
+        private readonly List<Type> controllerTypes = new List<Type>();
+
         public ResourceBuilder(string name, ResourceLevel level)
         {
             Level = level;
@@ -22,10 +24,19 @@ namespace RezRouting2
         
         protected IUrlSegment UrlSegment { get; set; }
 
-        public Resource Build()
+        public Resource Build(RouteMappingContext context)
         {
-            var children = ChildBuilders.Select(x => x.Build());
-            return new Resource(Name, UrlSegment, Level, children);
+            var children = ChildBuilders.Select(x => x.Build(context));
+            var resource = new Resource(Name, UrlSegment, Level, children);
+            var routes = from controllerType in controllerTypes
+                from routeType in context.RouteTypes
+                let route = routeType.BuildRoute(resource, controllerType)
+                where route != null
+                select route;
+
+            resource.InitRoutes(routes);
+
+            return resource;
         }
 
         protected void AddChild<T>(T childBuilder, Action<T> configure)
@@ -43,6 +54,16 @@ namespace RezRouting2
         public void Collection(string name, Action<CollectionBuilder> configure)
         {
             AddChild(new CollectionBuilder(name), configure);
+        }
+
+        public void HandledBy<T>()
+        {
+            HandledBy(typeof(T));
+        }
+        
+        public void HandledBy(Type type)
+        {
+            controllerTypes.Add(type);
         }
     }
 }

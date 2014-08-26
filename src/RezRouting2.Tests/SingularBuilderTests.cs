@@ -6,12 +6,14 @@ namespace RezRouting2.Tests
 {
     public class SingularBuilderTests
     {
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+
         [Fact]
-        public void should_build_singular_resource_with_root_name()
+        public void should_build_singular_resource()
         {
             var builder = new SingularBuilder("Profile");
             
-            var resource = builder.Build();
+            var resource = builder.Build(context);
             
             resource.Should().NotBeNull();
             resource.Level.Should().Be(ResourceLevel.Singular);
@@ -23,7 +25,7 @@ namespace RezRouting2.Tests
         {
             var builder = new SingularBuilder("Profile");
             
-            var resource = builder.Build();
+            var resource = builder.Build(context);
 
             resource.UrlPath.Should().Be("Profile");
         }
@@ -34,16 +36,16 @@ namespace RezRouting2.Tests
             var builder = new SingularBuilder("Profile");
 
             builder.UrlPath("myprofile");
-            var resource = builder.Build();
+            var resource = builder.Build(context);
 
             resource.UrlPath.Should().Be("myprofile");
         }
         
         [Fact]
-        public void should_not_build_children_if_none_configured()
+        public void should_not_build_any_children_if_none_configured()
         {
             var builder = new SingularBuilder("Profile");
-            var resource = builder.Build();
+            var resource = builder.Build(context);
             resource.Children.Should().BeEmpty();
         }
 
@@ -53,7 +55,7 @@ namespace RezRouting2.Tests
             var builder = new SingularBuilder("Profile");
             builder.Singular("User", user => { });
 
-            var resource = builder.Build();
+            var resource = builder.Build(context);
 
             resource.Children.Should().HaveCount(1);
             var child = resource.Children.Single();
@@ -69,7 +71,7 @@ namespace RezRouting2.Tests
             var builder = new SingularBuilder("Profile");
             builder.Collection("Logins", logins => { });
 
-            var resource = builder.Build();
+            var resource = builder.Build(context);
 
             resource.Children.Should().HaveCount(1);
             var child = resource.Children.Single();

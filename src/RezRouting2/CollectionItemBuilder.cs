@@ -4,15 +4,27 @@ namespace RezRouting2
 {
     public class CollectionItemBuilder : ResourceBuilder
     {
+        private string idName = "";
+        private string idNameAsAncestor = "";
+
         public CollectionItemBuilder(string name)
             : base(name, ResourceLevel.CollectionItem)
         {
-            UrlSegment = new IdUrlSegment("id", name.ToCamelCase() + "Id");
+            idName = "id";
+            idNameAsAncestor = name.ToCamelCase() + "Id";
+            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
         }
 
         public void IdName(string name)
         {
-            UrlSegment = new IdUrlSegment(name, name.ToCamelCase() + "Id");
+            idName = name;
+            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
+        }
+
+        public void IdNameAsAncestor(string name)
+        {
+            idNameAsAncestor = name;
+            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
         }
     }
 }

@@ -16,6 +16,12 @@ namespace RezRouting2
             Children.Each(child => child.InitParent(this));
         }
 
+        // TODO: sort chicken-and-egg - does RouteType need resource, or just some of its props
+        internal void InitRoutes(IEnumerable<Route> routes)
+        {
+            Routes = routes.ToReadOnlyList();
+        }
+
         private void InitParent(Resource parent)
         {
             Parent = parent;
@@ -46,6 +52,8 @@ namespace RezRouting2
         public ResourceLevel Level { get; private set; }
 
         public IList<Resource> Children { get; private set; }
+
+        public IList<Route> Routes { get; private set; }
 
         public Resource Parent { get; private set; }
     }

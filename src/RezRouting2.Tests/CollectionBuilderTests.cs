@@ -6,12 +6,14 @@ namespace RezRouting2.Tests
 {
     public class CollectionBuilderTests
     {
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+
         [Fact]
         public void should_build_collection_resource()
         {
             var builder = new CollectionBuilder("Products");
             
-            var collection = builder.Build();
+            var collection = builder.Build(context);
             
             collection.Should().NotBeNull();
             collection.Level.Should().Be(ResourceLevel.Collection);
@@ -23,7 +25,7 @@ namespace RezRouting2.Tests
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build();
+            var collection = builder.Build(context);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -36,7 +38,7 @@ namespace RezRouting2.Tests
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build();
+            var collection = builder.Build(context);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -50,7 +52,7 @@ namespace RezRouting2.Tests
             builder.Items(items => items.IdName("productCode"));
             builder.Items(items => items.IdName("productId"));
 
-            var collection = builder.Build();
+            var collection = builder.Build(context);
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Products/{productId}");
@@ -62,20 +64,36 @@ namespace RezRouting2.Tests
             var builder = new CollectionBuilder("Products");
             builder.Items(items => { });
 
-            var collection = builder.Build();
+            var collection = builder.Build(context);
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Products/{id}");
         }
 
         [Fact]
-        public void should_configure_items_to_use_custom_id_parameter()
+        public void should_configure_items_to_use_custom_id_name()
         {
             var builder = new CollectionBuilder("Users");
             builder.Items(items => items.IdName("userName"));
 
-            var collection = builder.Build();
+            var collection = builder.Build(context);
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Users/{userName}");
+        }
+
+        [Fact]
+        public void should_configure_items_to_use_custom_id_name_as_ancestor()
+        {
+            var builder = new CollectionBuilder("Users");
+            builder.Items(items =>
+            {
+                items.IdNameAsAncestor("parentId");
+                items.Collection("Comments", logins => {});
+            });
+
+            var collection = builder.Build(context);
+            var nestedItem = collection.Children.Single().Children.Single();
+            nestedItem.Name.Should().Be("Comments");
+            nestedItem.UrlPath.Should().Be("Users/{parentId}/Comments");
         }
     }
 }

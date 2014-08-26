@@ -6,13 +6,15 @@ namespace RezRouting2.Tests
 {
     public class ResourceUrlTests
     {
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+
         [Fact]
         public void top_level_resource_urls_should_be_based_on_directory()
         {
-            var singular = new SingularBuilder("Profile").Build();
+            var singular = new SingularBuilder("Profile").Build(context);
             singular.UrlPath.Should().Be("Profile");
 
-            var collection = new CollectionBuilder("Products").Build();
+            var collection = new CollectionBuilder("Products").Build(context);
             collection.UrlPath.Should().Be("Products");
         }
 
@@ -24,7 +26,7 @@ namespace RezRouting2.Tests
             {
                 user.Singular("Status", status => { });
             });
-            var level0 = builder.Build();
+            var level0 = builder.Build(context);
             var level1 = level0.Children.Single();
             var level2 = level1.Children.Single();
 
@@ -37,7 +39,7 @@ namespace RezRouting2.Tests
         {
             var builder = new CollectionBuilder("Products");
             builder.Items(x => {});
-            var collection = builder.Build();
+            var collection = builder.Build(context);
             var item = collection.Children.Single();
             item.UrlPath.Should().Be("Products/{id}");
         }
@@ -47,7 +49,7 @@ namespace RezRouting2.Tests
         {
             var builder = new SingularBuilder("Profile");
             builder.Collection("Logins", logins => logins.Items(items => { }));
-            var level0 = builder.Build();
+            var level0 = builder.Build(context);
             var collection = level0.Children.Single();
             var collectionItem = collection.Children.Single();
 
@@ -60,7 +62,7 @@ namespace RezRouting2.Tests
         {
             var builder = new CollectionBuilder("Products");
             builder.Items(item => item.Collection("Reviews", reviews => {}));
-            var products = builder.Build();
+            var products = builder.Build(context);
             var productItem = products.Children.Single();
             var reviewsItem = productItem.Children.Single().Children.Single();
 

@@ -1,16 +1,22 @@
-﻿[x] Nested collections, should use different id for ancestors
+﻿[ ] Full routebuilder configuration
 
-[x] CollectionItem name should be singular name version
+[ ] Actually create the MVC routes
 
-[ ] UrlPath correct term for singular / collection builders. DirectoryPath instead?
-
-[ ] Collection id param as ancestor configuration
-
-
+[ ] Extract IXConfigurator from XBuilder (IBuilder is IConfigurator without the Build method)
 
 [ ] Validate UrlPath for invalid characters
 
 
+
+
+[ ] RouteMapper expose resources
+
+
+[x] Configure types handling routes - HandledBy
+
+[x] Introduce RouteTypes 
+
+[x] Add Routes to Resource model
 
 
 [x] Collection item structure
@@ -28,3 +34,13 @@
 [x] Configuring items twice should not create 2 child resources
 
 [x] Warning as error
+
+[x] Nested collections, should use different id for ancestors
+
+[x] CollectionItem name should be singular name version
+
+[x] UrlPath correct term for singular / collection builders. DirectoryPath instead?
+
+[x] Collection id param as ancestor configuration
+
+[x] RouteMapper entry point as in RezRouting
