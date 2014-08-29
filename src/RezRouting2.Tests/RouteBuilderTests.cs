@@ -48,7 +48,6 @@ namespace RezRouting2.Tests
         }
 
         [Theory,
-        InlineData("Route1", "Action1", "GET", "test"),
         InlineData(null, "Action1", "GET", "test"),
         InlineData("Route1", null, "GET", "test"),
         InlineData("Route1", "Action1", null, "test"),

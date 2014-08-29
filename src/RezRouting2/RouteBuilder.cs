@@ -10,10 +10,10 @@ namespace RezRouting2
 
         private bool skip;
 
-        private string name;
-        private string httpMethod = "GET";
-        private string path = "";
-        private string action = "";
+        private string name = null;
+        private string httpMethod = null;
+        private string path = null;
+        private string action = null;
 
         public RouteBuilder(Type controllerType)
         {
