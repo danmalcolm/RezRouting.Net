@@ -71,12 +71,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetMvc\AspNetMvcRouteMapper.cs" />
+    <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
     <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="AspNetMvc\ResourceRoute.cs" />
     <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
+    <Compile Include="IConfigureCollection.cs" />
+    <Compile Include="IConfigureResource.cs" />
+    <Compile Include="IConfigureSingular.cs" />
     <Compile Include="IdUrlSegment.cs" />
+    <Compile Include="IResourceBuilder.cs" />
     <Compile Include="IUrlSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
+    <Compile Include="Utility\UrlPathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

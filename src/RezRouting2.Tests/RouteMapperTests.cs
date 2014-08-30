@@ -42,13 +42,11 @@ namespace RezRouting2.Tests
                 (resource, type, route) =>
                 {
                     actualAttempts.Add(Tuple.Create(resource, type, "RouteType1"));
-                    route.Skip();
                 });
             var routeType2 = new RouteType("RouteType2",
                 (resource, type, route) =>
                 {
                     actualAttempts.Add(Tuple.Create(resource, type, "RouteType2"));
-                    route.Skip();
                 });
             mapper.RouteTypes(routeType1, routeType2);
             var resources = mapper.Build().ToList();
@@ -82,33 +80,17 @@ namespace RezRouting2.Tests
             var routeType1 = new RouteType("RouteType1",
                 (resource, type, route) =>
                 {
-                    if (type != typeof (TestController1))
+                    if (type == typeof (TestController1))
                     {
-                        route.Skip();
+                        route.Configure("Route1", "Action1", "GET", "action1");
                     }
-                    else
-                    {
-                        route.Name("Route1");
-                        route.Action("Action1");
-                        route.HttpMethod("GET");
-                        route.Path("action1");
-                    }
-
                 });
             var routeType2 = new RouteType("RouteType2",
                 (resource, type, route) =>
                 {
-                    if (type != typeof(TestController2))
+                    if (type == typeof(TestController2))
                     {
-                        route.Skip();
-                    }
-                    else
-                    {
-                        route.Name("Route2");
-                        route.Action("Action2");
-                        route.HttpMethod("GET");
-                        route.Path("action2");
-
+                        route.Configure("Route2", "Action2", "GET", "action2");
                     }
                 });
             mapper.RouteTypes(routeType1, routeType2);

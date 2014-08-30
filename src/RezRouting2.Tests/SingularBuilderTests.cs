@@ -27,7 +27,7 @@ namespace RezRouting2.Tests
             
             var resource = builder.Build(context);
 
-            resource.UrlPath.Should().Be("Profile");
+            resource.Url.Should().Be("Profile");
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace RezRouting2.Tests
             builder.UrlPath("myprofile");
             var resource = builder.Build(context);
 
-            resource.UrlPath.Should().Be("myprofile");
+            resource.Url.Should().Be("myprofile");
         }
         
         [Fact]

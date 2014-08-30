@@ -6,11 +6,10 @@ using RezRouting2.Utility;
 
 namespace RezRouting2.AspNetMvc
 {
-    public class AspNetMvcRouteMapper
+    public class MvcRouteMapper
     {
-        public void CreateRoutes(RouteMapper routeMapper, RouteCollection routes)
+        public void CreateRoutes(IEnumerable<Resource> resources, RouteCollection routes)
         {
-            var resources = routeMapper.Build();
             foreach (var route in GetRoutes(resources))
             {
                 CreateRoute(route, routes);

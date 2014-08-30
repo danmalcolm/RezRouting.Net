@@ -1,4 +1,5 @@
 ﻿using System;
+using RezRouting2.Utility;
 
 namespace RezRouting2
 {
@@ -13,7 +14,14 @@ namespace RezRouting2
             Path = path;
         }
 
+        internal void InitResource(Resource resource)
+        {
+            Resource = resource;
+        }
+
         public string Name { set; get; }
+
+        public Resource Resource { get; private set; }
 
         public Type ControllerType { get; private set; }
         
@@ -22,5 +30,13 @@ namespace RezRouting2
         public string HttpMethod { get; private set; }
         
         public string Path { get; private set; }
+
+        public string Url
+        {
+            get
+            {
+                return UrlPathHelper.JoinPaths(Resource.Url, Path);
+            }
+        }
     }
 }

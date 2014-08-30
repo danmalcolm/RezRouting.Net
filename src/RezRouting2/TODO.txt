@@ -1,14 +1,16 @@
-﻿[x] Full routebuilder configuration (methods, actionnames etc)
+﻿[ ] Suggestion: CollectionBuilder should have 2 configure actions, one for collection, one for item?
 
-[ ] Actually create the MVC routes
+[ ] End to end route mapping tests with fake http context etc
 
 [ ] Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
 [ ] Extract IXConfigurator from XBuilder (IBuilder is IConfigurator without the Build method)
 
-[ ] Validate UrlPath for invalid characters
+[ ] Validate UrlPath for invalid characters or trim invalid characters
 
-[ ] RouteMapper expose resources
+[ ] BuiltInRouteTypes.Crud
+
+
 
 
 [x] Configure types handling routes - HandledBy
@@ -16,7 +18,6 @@
 [x] Introduce RouteTypes 
 
 [x] Add Routes to Resource model
-
 
 [x] Collection item structure
 
@@ -43,3 +44,11 @@
 [x] Collection id param as ancestor configuration
 
 [x] RouteMapper entry point as in RezRouting
+
+[x] Full routebuilder configuration (methods, actionnames etc)
+
+[x] Actually create the MVC routes
+
+[x] Route urls
+
+[x] RouteBuilder, add single Configure method, more concise than setting props?

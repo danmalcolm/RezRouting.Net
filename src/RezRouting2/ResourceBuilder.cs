@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RezRouting2
 {
-    public class ResourceBuilder
+    public class ResourceBuilder : IConfigureResource, IResourceBuilder
     {
         private readonly List<Type> controllerTypes = new List<Type>();
 
@@ -12,7 +12,7 @@ namespace RezRouting2
         {
             Level = level;
             Name = name;
-            ChildBuilders = new List<ResourceBuilder>();
+            ChildBuilders = new List<IResourceBuilder>();
             UrlSegment = new DirectoryUrlSegment(Name);
         }
 
@@ -20,7 +20,7 @@ namespace RezRouting2
 
         protected ResourceLevel Level { get; private set; }
         
-        protected List<ResourceBuilder> ChildBuilders { get; private set; }
+        protected List<IResourceBuilder> ChildBuilders { get; private set; }
         
         protected IUrlSegment UrlSegment { get; set; }
 
@@ -40,20 +40,20 @@ namespace RezRouting2
         }
 
         protected void AddChild<T>(T childBuilder, Action<T> configure)
-            where T : ResourceBuilder
+            where T : IConfigureResource, IResourceBuilder
         {
             configure(childBuilder);
             ChildBuilders.Add(childBuilder);
         }
 
-        public void Singular(string name, Action<SingularBuilder> configure)
+        public void Singular(string name, Action<IConfigureSingular> configure)
         {
-            AddChild(new SingularBuilder(name), configure);
+            AddChild(new SingularBuilder(name), x => configure(x));
         }
 
-        public void Collection(string name, Action<CollectionBuilder> configure)
+        public void Collection(string name, Action<IConfigureCollection> configure)
         {
-            AddChild(new CollectionBuilder(name), configure);
+            AddChild(new CollectionBuilder(name), x => configure(x));
         }
 
         public void HandledBy<T>()

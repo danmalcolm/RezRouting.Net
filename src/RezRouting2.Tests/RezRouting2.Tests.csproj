@@ -83,13 +83,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetMvc\RouteMapperTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CollectionBuilderTests.cs" />
     <Compile Include="ResourceUrlTests.cs" />
     <Compile Include="RouteBuilderTests.cs" />
     <Compile Include="RouteMapperTests.cs" />
+    <Compile Include="RouteTests.cs" />
+    <Compile Include="RouteUrlTests.cs" />
     <Compile Include="SingularBuilderTests.cs" />
+    <Compile Include="Utility\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

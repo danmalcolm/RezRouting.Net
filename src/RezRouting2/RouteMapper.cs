@@ -9,18 +9,18 @@ namespace RezRouting2
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
         private readonly List<RouteType> routeTypes = new List<RouteType>();
 
-        public void Collection(string name, Action<CollectionBuilder> configure)
+        public void Collection(string name, Action<IConfigureCollection> configure)
         {
-            AddBuilder(new CollectionBuilder(name), configure);
+            AddBuilder(new CollectionBuilder(name), x => configure(x));
         }
 
-        public void Singular(string name, Action<SingularBuilder> configure)
+        public void Singular(string name, Action<IConfigureSingular> configure)
         {
-            AddBuilder(new SingularBuilder(name), configure);
+            AddBuilder(new SingularBuilder(name), x => configure(x));
         }
 
         private void AddBuilder<T>(T builder, Action<T> configure)
-            where T : ResourceBuilder
+            where T : ResourceBuilder,IConfigureResource
         {
             builders.Add(builder);
             configure(builder);

@@ -20,6 +20,7 @@ namespace RezRouting2
         internal void InitRoutes(IEnumerable<Route> routes)
         {
             Routes = routes.ToReadOnlyList();
+            Routes.Each(route => route.InitResource(this));
         }
 
         private void InitParent(Resource parent)
@@ -29,22 +30,22 @@ namespace RezRouting2
 
         public string Name { get; private set; }
 
-        public string UrlPath
+        public string Url
         {
             get
             {
                 // TODO - optimise (create once on construction?)
-                string parentPath = Parent != null ? Parent.UrlPathAsAncestor : "";
+                string parentPath = Parent != null ? Parent.UrlAsAncestor : "";
                 return string.Concat(parentPath, string.IsNullOrWhiteSpace(parentPath) ? "" : "/", urlSegment.Path);
             }
         }
 
-        public string UrlPathAsAncestor
+        public string UrlAsAncestor
         {
             get
             {
                 // TODO - optimise (create once on construction?)
-                string parentPath = Parent != null ? Parent.UrlPathAsAncestor : "";
+                string parentPath = Parent != null ? Parent.UrlAsAncestor : "";
                 return string.Concat(parentPath, string.IsNullOrWhiteSpace(parentPath) ? "" : "/", urlSegment.PathAsAncestor);
             }
         }

@@ -8,7 +8,7 @@ namespace RezRouting2
     {
         private Type controllerType;
 
-        private bool skip;
+        private bool configured = false;
 
         private string name = null;
         private string httpMethod = null;
@@ -20,52 +20,26 @@ namespace RezRouting2
             this.controllerType = controllerType;
         }
 
-        public void Name(string name)
+        public void Configure(string name, string action, string httpMethod, string path)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (action == null) throw new ArgumentNullException("action");
+            if (httpMethod == null) throw new ArgumentNullException("httpMethod");
+            if (path == null) throw new ArgumentNullException("path");
+
             this.name = name;
-        }
-
-        public void Action(string action)
-        {
             this.action = action;
-        }
-
-        public void HttpMethod(string method)
-        {
-            httpMethod = method;
-        }
-
-        public void Path(string path)
-        {
+            this.httpMethod = httpMethod;
             this.path = path;
+
+            this.configured = true;
         }
 
         public Route Build()
         {
-            if (skip) return null;
-
-            ThrowIfInvalid();
+            if (!configured) return null;
 
             return new Route(name, controllerType, action, httpMethod, path);
-        }
-
-        private void ThrowIfInvalid()
-        {
-            var missingPropertyNames = new List<string>();
-            if(name == null) missingPropertyNames.Add("Name");
-            if(action == null) missingPropertyNames.Add("Action");
-            if(httpMethod == null) missingPropertyNames.Add("HttpMethod");
-            if(path == null) missingPropertyNames.Add("Path");
-            if(missingPropertyNames.Any())
-            {
-                string list = string.Join(", ", missingPropertyNames);
-                throw new InvalidOperationException(string.Format("Cannot build route because the following required properties have not been configured: {0}", list));
-            }
-        }
-
-        public void Skip()
-        {
-            this.skip = true;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace RezRouting2.Tests
             var collection = builder.Build(context);
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
-            item.UrlPath.Should().Be("Products/{productId}");
+            item.Url.Should().Be("Products/{productId}");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace RezRouting2.Tests
 
             var collection = builder.Build(context);
             var item = collection.Children.Single();
-            item.UrlPath.Should().Be("Products/{id}");
+            item.Url.Should().Be("Products/{id}");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace RezRouting2.Tests
 
             var collection = builder.Build(context);
             var item = collection.Children.Single();
-            item.UrlPath.Should().Be("Users/{userName}");
+            item.Url.Should().Be("Users/{userName}");
         }
 
         [Fact]
@@ -93,7 +93,28 @@ namespace RezRouting2.Tests
             var collection = builder.Build(context);
             var nestedItem = collection.Children.Single().Children.Single();
             nestedItem.Name.Should().Be("Comments");
-            nestedItem.UrlPath.Should().Be("Users/{parentId}/Comments");
+            nestedItem.Url.Should().Be("Users/{parentId}/Comments");
+        }
+
+        [Fact]
+        public void should_default_to_url_path_based_on_resource_name()
+        {
+            var builder = new CollectionBuilder("Products");
+
+            var resource = builder.Build(context);
+
+            resource.Url.Should().Be("Products");
+        }
+
+        [Fact]
+        public void should_use_customised_url_path()
+        {
+            var builder = new CollectionBuilder("Products");
+
+            builder.UrlPath("myproducts");
+            var resource = builder.Build(context);
+
+            resource.Url.Should().Be("myproducts");
         }
     }
 }

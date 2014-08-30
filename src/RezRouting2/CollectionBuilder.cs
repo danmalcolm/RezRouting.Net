@@ -3,7 +3,7 @@ using RezRouting2.Utility;
 
 namespace RezRouting2
 {
-    public class CollectionBuilder : ResourceBuilder
+    public class CollectionBuilder : ResourceBuilder, IConfigureCollection, IResourceBuilder
     {
         private readonly CollectionItemBuilder itemBuilder;
 
