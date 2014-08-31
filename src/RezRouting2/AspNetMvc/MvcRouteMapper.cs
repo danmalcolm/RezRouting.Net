@@ -23,12 +23,11 @@ namespace RezRouting2.AspNetMvc
 
         private void CreateRoute(Route model, RouteCollection routes)
         {
-            string url = model.Path;
             string controller = RouteValueHelper.TrimControllerFromTypeName(model.ControllerType);
             var defaults = new {controller = controller, action = model.Action};
             var constraints = GetConstraints(model);
 
-            var route = new ResourceRoute(model.Name, model.Path, new MvcRouteHandler())
+            var route = new ResourceRoute(model.Name, model.Url, new MvcRouteHandler())
             {
                 Defaults = new RouteValueDictionary(defaults),
                 Constraints = constraints,

@@ -17,7 +17,7 @@ namespace RezRouting2.Tests.AspNetMvc
             (resource, type, route) => route.Configure(resource.Name + ".Route2", "Action2", "GET", "action2"));
 
         [Fact]
-        public void should_add_routes_for_each_route_added_by_route_type()
+        public void should_add_route_per_route_in_model()
         {
             var mapper = new RouteMapper();
             mapper.RouteTypes(routeType1, routeType2);
@@ -28,6 +28,7 @@ namespace RezRouting2.Tests.AspNetMvc
 
             routes.Should().HaveCount(2);
             routes.Cast<ResourceRoute>().Select(r => r.Name).ShouldBeEquivalentTo(new [] { "Products.Route1", "Products.Route2" });
+            routes.Cast<ResourceRoute>().Select(r => r.Url).ShouldBeEquivalentTo(new [] { "products/action1", "products/action2" });
         }
 
         [Fact]

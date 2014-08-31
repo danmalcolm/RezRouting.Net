@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using FluentAssertions;
 using Xunit;
 using Xunit.Extensions;
@@ -8,11 +7,6 @@ namespace RezRouting2.Tests
 {
     public class RouteBuilderTests
     {
-        private class TestController
-        {
-            
-        }
-
         [Fact]
         public void should_not_create_route_if_not_configured()
         {
@@ -51,6 +45,11 @@ namespace RezRouting2.Tests
             Action a = () => builder.Configure(name, action, httpMethod, path);
 
             a.ShouldThrow<ArgumentNullException>();
-        } 
+        }
+
+        private class TestController
+        {
+            
+        }
     }
 }
