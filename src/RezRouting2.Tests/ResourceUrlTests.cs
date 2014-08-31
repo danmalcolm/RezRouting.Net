@@ -1,21 +1,22 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using RezRouting2.Options;
 using Xunit;
 
 namespace RezRouting2.Tests
 {
     public class ResourceUrlTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
 
         [Fact]
         public void top_level_resource_urls_should_be_based_on_directory()
         {
             var singular = new SingularBuilder("Profile").Build(context);
-            singular.Url.Should().Be("Profile");
+            singular.Url.Should().Be("profile");
 
             var collection = new CollectionBuilder("Products").Build(context);
-            collection.Url.Should().Be("Products");
+            collection.Url.Should().Be("products");
         }
 
         [Fact]
@@ -30,8 +31,8 @@ namespace RezRouting2.Tests
             var level1 = level0.Children.Single();
             var level2 = level1.Children.Single();
 
-            level1.Url.Should().Be("Profile/User");
-            level2.Url.Should().Be("Profile/User/Status");
+            level1.Url.Should().Be("profile/user");
+            level2.Url.Should().Be("profile/user/status");
         }
 
         [Fact]
@@ -41,7 +42,7 @@ namespace RezRouting2.Tests
             builder.Items(x => {});
             var collection = builder.Build(context);
             var item = collection.Children.Single();
-            item.Url.Should().Be("Products/{id}");
+            item.Url.Should().Be("products/{id}");
         }
 
         [Fact]
@@ -53,8 +54,8 @@ namespace RezRouting2.Tests
             var collection = level0.Children.Single();
             var collectionItem = collection.Children.Single();
 
-            collection.Url.Should().Be("Profile/Logins");
-            collectionItem.Url.Should().Be("Profile/Logins/{id}");
+            collection.Url.Should().Be("profile/logins");
+            collectionItem.Url.Should().Be("profile/logins/{id}");
         }
 
         [Fact]
@@ -66,11 +67,8 @@ namespace RezRouting2.Tests
             var productItem = products.Children.Single();
             var reviewsItem = productItem.Children.Single().Children.Single();
 
-            productItem.Url.Should().Be("Products/{id}");
-            reviewsItem.Url.Should().Be("Products/{productId}/Reviews/{id}");
+            productItem.Url.Should().Be("products/{id}");
+            reviewsItem.Url.Should().Be("products/{productId}/reviews/{id}");
         }
-
-            
-
     }
 }

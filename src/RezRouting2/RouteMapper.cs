@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RezRouting2.Options;
 
 namespace RezRouting2
 {
@@ -8,6 +9,7 @@ namespace RezRouting2
     {
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
         private readonly List<RouteType> routeTypes = new List<RouteType>();
+        private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
 
         public void Collection(string name, Action<IConfigureCollection> configure)
         {
@@ -28,13 +30,19 @@ namespace RezRouting2
 
         public IEnumerable<Resource> Build()
         {
-            var context = new RouteMappingContext(routeTypes);
+            var options = optionsBuilder.Build();
+            var context = new RouteMappingContext(routeTypes, options);
             return builders.Select(x => x.Build(context));
         }
 
         public void RouteTypes(params RouteType[] types)
         {
             this.routeTypes.AddRange(types);
+        }
+
+        public void Options(Action<IConfigureOptions> configure)
+        {
+            configure(optionsBuilder);
         }
     }
 }

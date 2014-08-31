@@ -84,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
+    <Compile Include="Options\DefaultIdNameConventionTests.cs" />
+    <Compile Include="Options\UrlPathFormatterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CollectionBuilderTests.cs" />
     <Compile Include="ResourceUrlTests.cs" />

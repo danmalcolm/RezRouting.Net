@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RezRouting2.Options;
 
 namespace RezRouting2
 {
-    public class ResourceBuilder : IConfigureResource, IResourceBuilder
+    public abstract class ResourceBuilder : IConfigureResource, IResourceBuilder
     {
         private readonly List<Type> controllerTypes = new List<Type>();
 
-        public ResourceBuilder(string name, ResourceLevel level)
+        protected ResourceBuilder(string name, ResourceLevel level)
         {
             Level = level;
             Name = name;
             ChildBuilders = new List<IResourceBuilder>();
-            UrlSegment = new DirectoryUrlSegment(Name);
         }
 
         protected string Name { get; private set; }
@@ -21,13 +21,14 @@ namespace RezRouting2
         protected ResourceLevel Level { get; private set; }
         
         protected List<IResourceBuilder> ChildBuilders { get; private set; }
-        
-        protected IUrlSegment UrlSegment { get; set; }
+
+        protected abstract IUrlSegment GetUrlSegment(RouteOptions options);
 
         public Resource Build(RouteMappingContext context)
         {
             var children = ChildBuilders.Select(x => x.Build(context));
-            var resource = new Resource(Name, UrlSegment, Level, children);
+            var urlSegment = GetUrlSegment(context.Options);
+            var resource = new Resource(Name, urlSegment, Level, children);
             var routes = from controllerType in controllerTypes
                 from routeType in context.RouteTypes
                 let route = routeType.BuildRoute(resource, controllerType)

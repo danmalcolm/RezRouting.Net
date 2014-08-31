@@ -1,4 +1,5 @@
 ﻿using System;
+using RezRouting2.Options;
 using RezRouting2.Utility;
 
 namespace RezRouting2
@@ -6,6 +7,7 @@ namespace RezRouting2
     public class CollectionBuilder : ResourceBuilder, IConfigureCollection, IResourceBuilder
     {
         private readonly CollectionItemBuilder itemBuilder;
+        private string urlPath;
 
         public CollectionBuilder(string name) : base(name, ResourceLevel.Collection)
         {
@@ -21,7 +23,13 @@ namespace RezRouting2
 
         public void UrlPath(string path)
         {
-            UrlSegment = new DirectoryUrlSegment(path);
+            urlPath = path;
+        }
+
+        protected override IUrlSegment GetUrlSegment(RouteOptions options)
+        {
+            string path = urlPath ?? options.PathFormatter.FormatDirectoryName(Name);
+            return new DirectoryUrlSegment(path);
         }
     }
 }

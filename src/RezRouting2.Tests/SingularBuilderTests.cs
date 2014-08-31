@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using RezRouting2.Options;
 using Xunit;
 
 namespace RezRouting2.Tests
 {
     public class SingularBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
 
         [Fact]
         public void should_build_singular_resource()
@@ -27,7 +28,7 @@ namespace RezRouting2.Tests
             
             var resource = builder.Build(context);
 
-            resource.Url.Should().Be("Profile");
+            resource.Url.Should().Be("profile");
         }
 
         [Fact]

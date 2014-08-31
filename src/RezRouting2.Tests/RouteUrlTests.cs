@@ -41,12 +41,12 @@ namespace RezRouting2.Tests
             var level2Collection = level1Item.Children.Single();
             var level2Item = level2Collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
 
-            level1Singular.Routes.Single().Url.Should().Be("Profile/action1");
-            level2Singular.Routes.Single().Url.Should().Be("Profile/User/action1");
-            level1Collection.Routes.Single().Url.Should().Be("Products/action1");
-            level1Item.Routes.Single().Url.Should().Be("Products/{id}/action1");
-            level2Collection.Routes.Single().Url.Should().Be("Products/{productId}/Reviews/action1");
-            level2Item.Routes.Single().Url.Should().Be("Products/{productId}/Reviews/{id}/action1");
+            level1Singular.Routes.Single().Url.Should().Be("profile/action1");
+            level2Singular.Routes.Single().Url.Should().Be("profile/user/action1");
+            level1Collection.Routes.Single().Url.Should().Be("products/action1");
+            level1Item.Routes.Single().Url.Should().Be("products/{id}/action1");
+            level2Collection.Routes.Single().Url.Should().Be("products/{productId}/reviews/action1");
+            level2Item.Routes.Single().Url.Should().Be("products/{productId}/reviews/{id}/action1");
         }
 
         [Fact]

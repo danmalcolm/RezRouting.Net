@@ -1,30 +1,34 @@
-﻿using RezRouting2.Utility;
+﻿using RezRouting2.Options;
+using RezRouting2.Utility;
 
 namespace RezRouting2
 {
     public class CollectionItemBuilder : ResourceBuilder
     {
-        private string idName = "";
-        private string idNameAsAncestor = "";
+        private string customIdName;
+        private string customIdNameAsAncestor;
 
         public CollectionItemBuilder(string name)
             : base(name, ResourceLevel.CollectionItem)
         {
-            idName = "id";
-            idNameAsAncestor = name.ToCamelCase() + "Id";
-            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
         }
 
         public void IdName(string name)
         {
-            idName = name;
-            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
+            customIdName = name;
         }
 
         public void IdNameAsAncestor(string name)
         {
-            idNameAsAncestor = name;
-            UrlSegment = new IdUrlSegment(idName, idNameAsAncestor);
+            customIdNameAsAncestor = name;
+        }
+
+        protected override IUrlSegment GetUrlSegment(RouteOptions options)
+        {
+            string idName = customIdName ?? options.IdNameConvention.GetIdName(Name);
+            string idNameAsAncestor = customIdNameAsAncestor ?? options.IdNameConvention.GetIdNameAsAncestor(Name);
+            
+            return new IdUrlSegment(idName, idNameAsAncestor);
         }
     }
 }

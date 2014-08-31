@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using RezRouting2.Options;
 using Xunit;
 
 namespace RezRouting2.Tests
 {
     public class CollectionBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>());
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
 
         [Fact]
         public void should_build_collection_resource()
@@ -55,7 +56,7 @@ namespace RezRouting2.Tests
             var collection = builder.Build(context);
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
-            item.Url.Should().Be("Products/{productId}");
+            item.Url.Should().Be("products/{productId}");
         }
 
         [Fact]
@@ -66,7 +67,7 @@ namespace RezRouting2.Tests
 
             var collection = builder.Build(context);
             var item = collection.Children.Single();
-            item.Url.Should().Be("Products/{id}");
+            item.Url.Should().Be("products/{id}");
         }
 
         [Fact]
@@ -77,7 +78,7 @@ namespace RezRouting2.Tests
 
             var collection = builder.Build(context);
             var item = collection.Children.Single();
-            item.Url.Should().Be("Users/{userName}");
+            item.Url.Should().Be("users/{userName}");
         }
 
         [Fact]
@@ -93,7 +94,7 @@ namespace RezRouting2.Tests
             var collection = builder.Build(context);
             var nestedItem = collection.Children.Single().Children.Single();
             nestedItem.Name.Should().Be("Comments");
-            nestedItem.Url.Should().Be("Users/{parentId}/Comments");
+            nestedItem.Url.Should().Be("users/{parentId}/comments");
         }
 
         [Fact]
@@ -103,7 +104,7 @@ namespace RezRouting2.Tests
 
             var resource = builder.Build(context);
 
-            resource.Url.Should().Be("Products");
+            resource.Url.Should().Be("products");
         }
 
         [Fact]

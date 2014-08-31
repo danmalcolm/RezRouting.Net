@@ -1,14 +1,17 @@
-﻿[ ] Suggestion: CollectionBuilder should have 2 configure actions, one for collection, one for item?
-
+﻿
 [ ] End to end route mapping tests with fake http context etc
+
+[ ] Routes should contain reference to route and resource
+
+[ ] Suggestion: CollectionBuilder should have 2 configure actions, one for collection, one for item?
 
 [ ] Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
-[ ] Extract IXConfigurator from XBuilder (IBuilder is IConfigurator without the Build method)
+[ ] RouteTypeBuilders, with common functionality, e.g. map route with this action
 
-[ ] Validate UrlPath for invalid characters or trim invalid characters
+[ ] AspNetMvc.BuiltInRouteTypes.Crud
 
-[ ] BuiltInRouteTypes.Crud
+[ ] ControllerScanner - automapping based oncontroller hierarchy
 
 
 
@@ -52,3 +55,11 @@
 [x] Route urls
 
 [x] RouteBuilder, add single Configure method, more concise than setting props?
+
+[x] Extract IXConfigurator from XBuilder (IBuilder is IConfigurator without the Build method)
+
+[x] Add options, e.g. path formatting etc
+
+[x] Path formatting options
+
+[x] Id name convention
