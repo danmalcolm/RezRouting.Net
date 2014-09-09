@@ -35,9 +35,14 @@ namespace RezRouting2
             return builders.Select(x => x.Build(context));
         }
 
-        public void RouteTypes(params RouteType[] types)
+        public void RouteTypes(params RouteType[] routeTypes)
         {
-            this.routeTypes.AddRange(types);
+            this.routeTypes.AddRange(routeTypes);
+        }
+
+        public void RouteTypes(IEnumerable<RouteType> routeTypes)
+        {
+            this.routeTypes.AddRange(routeTypes);
         }
 
         public void Options(Action<IConfigureOptions> configure)
