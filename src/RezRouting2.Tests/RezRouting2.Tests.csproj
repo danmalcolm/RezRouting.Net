@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\RezRouting2\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions.Core">
-      <HintPath>..\RezRouting2\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.1.229\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -79,14 +79,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
-      <HintPath>..\RezRouting2\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
     <Reference Include="xunit.extensions">
-      <HintPath>..\RezRouting2\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="Infrastructure\TestHttpContextBuilder.cs" />
     <Compile Include="Infrastructure\TestRequestContextBuilder.cs" />
     <Compile Include="Options\DefaultIdNameConventionTests.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="ResourceUrlTests.cs" />
     <Compile Include="RouteBuilderTests.cs" />
     <Compile Include="RouteMapperTests.cs" />
-    <Compile Include="RouteTests.cs" />
     <Compile Include="RouteUrlTests.cs" />
     <Compile Include="SingularBuilderTests.cs" />
     <Compile Include="Utility\ResourceExtensions.cs" />

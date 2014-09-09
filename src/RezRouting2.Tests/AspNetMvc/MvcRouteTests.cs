@@ -6,13 +6,13 @@ using RezRouting2.AspNetMvc;
 using RezRouting2.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting2.Tests
+namespace RezRouting2.Tests.AspNetMvc
 {
-    public class RouteTests
+    public class MvcRouteTests
     {
-        private RouteCollection routes;
+        private readonly RouteCollection routes;
 
-        public RouteTests()
+        public MvcRouteTests()
         {
             var show = new RouteType("Show",
                 (resource, type, route) => route.Configure(resource.Name + ".Show", "Show", "GET", ""));
@@ -60,6 +60,22 @@ namespace RezRouting2.Tests
         }
 
         [Fact]
+        public void should_match_route_requiring_put_when_overriden_via_override_in_form_data_within_post_request()
+        {
+            var form = new NameValueCollection { { "X-HTTP-Method-Override", "PUT" } };
+            var r = GetRoute("POST", "/profile", form: form);
+            ((ResourceRoute)r.Route).Name.Should().Be("Profile.Update");
+        }
+
+        [Fact]
+        public void should_match_route_requiring_put_when_overriden_via_method_in_form_data_within_post_request()
+        {
+            var form = new NameValueCollection { { "_method", "PUT" } };
+            var r = GetRoute("POST", "/profile", form: form);
+            ((ResourceRoute)r.Route).Name.Should().Be("Profile.Update");
+        }
+
+        [Fact]
         public void should_not_match_requests_with_invalid_path()
         {
             var r = GetRoute("GET", "/profile2");
@@ -73,7 +89,6 @@ namespace RezRouting2.Tests
             r.Should().BeNull();
         }
 
-
         [Fact]
         public void should_not_match_request_for_path_without_http_method()
         {
@@ -82,11 +97,11 @@ namespace RezRouting2.Tests
 
         }
 
-        private RouteResult GetRoute(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)
+        private RouteData GetRoute(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)
         {
             var httpContext = TestHttpContextBuilder.Create(httpMethod, path, headers, form);
             var routeData = routes.GetRouteData(httpContext);
-            return new RouteResult(routeData);
+            return routeData;
         }
 
         private class RouteResult

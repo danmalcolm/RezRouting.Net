@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
@@ -17,22 +18,7 @@ namespace RezRouting2.Tests.AspNetMvc
             (resource, type, route) => route.Configure(resource.Name + ".Route2", "Action2", "GET", "action2"));
 
         [Fact]
-        public void should_add_route_per_route_in_model()
-        {
-            var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1, routeType2);
-            mapper.Collection("Products", products => products.HandledBy<TestController>());
-
-            var routes = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
-
-            routes.Should().HaveCount(2);
-            routes.Cast<ResourceRoute>().Select(r => r.Name).ShouldBeEquivalentTo(new [] { "Products.Route1", "Products.Route2" });
-            routes.Cast<ResourceRoute>().Select(r => r.Url).ShouldBeEquivalentTo(new [] { "products/action1", "products/action2" });
-        }
-
-        [Fact]
-        public void should_add_routes_for_resources_at_all_levels()
+        public void should_create_routes_for_resources_at_all_levels_of_model()
         {
             var mapper = new RouteMapper();
             mapper.RouteTypes(routeType1);
@@ -61,6 +47,21 @@ namespace RezRouting2.Tests.AspNetMvc
             routes.Cast<ResourceRoute>().Select(x => x.Name).ShouldBeEquivalentTo(expectedRouteNames);
         }
 
+        [Fact]
+        public void should_add_route_model_to_route()
+        {
+            var mapper = new RouteMapper();
+            mapper.RouteTypes(routeType1);
+            mapper.Collection("Products", products => products.HandledBy<TestController>());
+
+            var routes = new RouteCollection();
+            var resources = mapper.Build().ToList();
+            new MvcRouteMapper().CreateRoutes(resources, routes);
+
+            var route = routes.Cast<System.Web.Routing.Route>().Single();
+            route.DataTokens["RouteModel"].Should().Be(resources.First().Routes.First());
+        }
+
         public class TestController : Controller
         {
             public ActionResult Action1()
@@ -72,7 +73,6 @@ namespace RezRouting2.Tests.AspNetMvc
             {
                 return null;
             }
-
         }
     }
 }

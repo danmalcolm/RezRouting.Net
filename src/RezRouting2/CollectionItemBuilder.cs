@@ -1,9 +1,8 @@
 ﻿using RezRouting2.Options;
-using RezRouting2.Utility;
 
 namespace RezRouting2
 {
-    public class CollectionItemBuilder : ResourceBuilder
+    public class CollectionItemBuilder : ResourceBuilder, IConfigureCollectionItem
     {
         private string customIdName;
         private string customIdNameAsAncestor;

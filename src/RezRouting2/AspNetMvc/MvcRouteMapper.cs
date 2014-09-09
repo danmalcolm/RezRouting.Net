@@ -35,6 +35,7 @@ namespace RezRouting2.AspNetMvc
             };
             route.DataTokens["Namespaces"] = new[] {model.ControllerType.Namespace};
             route.DataTokens["UseNamespaceFallback"] = false;
+            route.DataTokens["RouteModel"] = model;
 
             routes.Add(route);
         }

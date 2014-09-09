@@ -1,5 +1,4 @@
 ﻿
-[ ] End to end route mapping tests with fake http context etc
 
 [ ] Routes should contain reference to route and resource
 
@@ -19,6 +18,8 @@
 
 
 
+
+[x] End to end route mapping tests with fake http context etc
 
 [x] Configure types handling routes - HandledBy
 

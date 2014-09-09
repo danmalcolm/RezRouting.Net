@@ -9,9 +9,9 @@ namespace RezRouting2.Options
         private readonly string idNamePascal;
 
         /// <summary>
-        /// The base name used for the identity, e.g. "id"
+        /// 
         /// </summary>
-        /// <param name="idName"></param>
+        /// <param name="idName">Sets the name of the identifier parameter, e.g. "id"</param>
         /// <param name="fullNameForCurrent">Determines whether full name is used within routes at the current 
         /// resource level, e.g. products/{productId}</param>
         public DefaultIdNameConvention(string idName = null, bool fullNameForCurrent = false)
@@ -20,7 +20,6 @@ namespace RezRouting2.Options
             this.idName = idName ?? "id";
             this.idNamePascal = this.idName.Pascalize();
         }
-
 
         public string GetIdName(string resourceName)
         {
