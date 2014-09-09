@@ -80,6 +80,7 @@
     <Compile Include="IConfigureCollectionItem.cs" />
     <Compile Include="IConfigureOptions.cs" />
     <Compile Include="IConfigureResource.cs" />
+    <Compile Include="IConfigureRoute.cs" />
     <Compile Include="IConfigureSingular.cs" />
     <Compile Include="IdUrlSegment.cs" />
     <Compile Include="IResourceBuilder.cs" />

@@ -4,9 +4,9 @@ namespace RezRouting2
 {
     public class RouteType
     {
-        private readonly Action<Resource, Type, RouteBuilder> configure;
+        private readonly Action<Resource, Type, IConfigureRoute> configure;
 
-        public RouteType(string name, Action<Resource,Type,RouteBuilder> configure)
+        public RouteType(string name, Action<Resource,Type,IConfigureRoute> configure)
         {
             this.configure = configure;
             Name = name;

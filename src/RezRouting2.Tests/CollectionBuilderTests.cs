@@ -46,7 +46,7 @@ namespace RezRouting2.Tests
         }
 
         [Fact]
-        public void child_item_resource_name_should_be_singular_of_collection_name()
+        public void child_item_resource_name_should_be_singular_of_collection_name_by_default()
         {
             var builder = new CollectionBuilder("Products");
 
@@ -126,7 +126,7 @@ namespace RezRouting2.Tests
             builder.Items(items =>
             {
                 items.IdNameAsAncestor("parentId");
-                items.Collection("Comments", logins => {});
+                items.Collection("Comments", comments => {});
             });
 
             var collection = builder.Build(context);

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RezRouting2
 {
-    public class RouteBuilder
+    public class RouteBuilder : IConfigureRoute
     {
         private Type controllerType;
 
