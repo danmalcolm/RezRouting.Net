@@ -16,7 +16,7 @@ namespace RezRouting2
             Children.Each(child => child.InitParent(this));
         }
 
-        // TODO: sort chicken-and-egg - does RouteType need resource, or just some of its props
+        // TODO: sort chicken-and-egg - does Route need resource, or just some of its props
         internal void InitRoutes(IEnumerable<Route> routes)
         {
             Routes = routes.ToReadOnlyList();
@@ -29,6 +29,16 @@ namespace RezRouting2
         }
 
         public string Name { get; private set; }
+
+        public string FullName
+        {
+            get {
+                // TODO - optimise (create once on construction?)
+                string parentFullName = Parent != null ? Parent.FullName : "";
+                return string.Concat(parentFullName, string.IsNullOrWhiteSpace(parentFullName) ? "" : ".", Name);
+
+            }
+        }
 
         public string Url
         {

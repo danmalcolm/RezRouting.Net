@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using RezRouting2.Options;
+using RezRouting2.Tests.Utility;
 using Xunit;
 
 namespace RezRouting2.Tests
@@ -19,6 +20,16 @@ namespace RezRouting2.Tests
             collection.Should().NotBeNull();
             collection.Level.Should().Be(ResourceLevel.Collection);
             collection.Name.Should().Be("Products");
+        }
+
+        [Fact]
+        public void full_name_of_top_level_resource_should_be_resource_name_only()
+        {
+            var builder = new CollectionBuilder("Products");
+
+            var collection = builder.Build(context);
+
+            collection.FullName.Should().Be("Products");
         }
 
         [Fact]
@@ -44,6 +55,33 @@ namespace RezRouting2.Tests
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.Name.Should().Be("Product");
+        }
+
+        [Fact]
+        public void full_name_of_child_item_resource_should_include_parent_collection()
+        {
+            var builder = new CollectionBuilder("Products");
+
+            var collection = builder.Build(context);
+
+            var item = collection.Children.Single();
+            item.FullName.Should().Be("Products.Product");
+        }
+
+        [Fact]
+        public void full_name_of_nested_resources_should_include_parents()
+        {
+            var builder = new CollectionBuilder("Products");
+            builder.Items(product =>
+            {
+                product.Collection("Reviews", reviews => { });
+                product.Singular("Manufacturer", manufacturer => { });
+            });
+
+            var collection = builder.Build(context);
+
+            var expectedNames = new[] { "Products", "Products.Product", "Products.Product.Reviews", "Products.Product.Reviews.Review", "Products.Product.Manufacturer"};
+            collection.Expand().Select(x => x.FullName).Should().BeEquivalentTo(expectedNames);
         }
 
         [Fact]

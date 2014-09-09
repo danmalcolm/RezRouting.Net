@@ -21,6 +21,11 @@ namespace RezRouting2
 
         public string Name { set; get; }
 
+        public string FullName
+        {
+            get { return Resource.FullName + "." + Name; }
+        }
+
         public Resource Resource { get; private set; }
 
         public Type ControllerType { get; private set; }
@@ -38,5 +43,6 @@ namespace RezRouting2
                 return UrlPathHelper.JoinPaths(Resource.Url, Path);
             }
         }
+
     }
 }

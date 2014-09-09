@@ -1,11 +1,4 @@
 ﻿
-
-[ ] Routes should contain reference to route and resource
-
-[ ] Test routes in isolation
-
-[ ] Register routes in correct order, e.g. avoid clashes
-
 [ ] Suggestion: CollectionBuilder should have 2 configure actions, one for collection, one for item?
 
 [ ] Resolve route creation dependency on Resource - does it need access to resource or just a context object?
@@ -14,10 +7,20 @@
 
 [ ] AspNetMvc.BuiltInRouteTypes.Crud
 
-[ ] ControllerScanner - automapping based oncontroller hierarchy
+[ ] AutoResourceMapping - automapping based on controller hierarchy
+
+[ ] Automatic singular CollectionItem name convention should be done outside of builders, e.g. conventions independent of builders
 
 
+[x] Full name on resources
 
+[x] Full name on routes
+
+[x] Register routes in correct order, e.g. avoid clashes
+
+[x] Test routes in isolation
+
+[x] Routes should contain reference to route and resource
 
 [x] End to end route mapping tests with fake http context etc
 
