@@ -26,7 +26,7 @@ namespace RezRouting2
 
         public Resource Build(RouteMappingContext context)
         {
-            var children = ChildBuilders.Select(x => x.Build(context));
+            var children = ChildBuilders.Select(x => x.Build(context)).ToList();
             var urlSegment = GetUrlSegment(context.Options);
             var resource = new Resource(Name, urlSegment, Level, children);
             var routes = from controllerType in controllerTypes
