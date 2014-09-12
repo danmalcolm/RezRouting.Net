@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RezRouting2</RootNamespace>
     <AssemblyName>RezRouting2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,7 +75,7 @@
     <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
     <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="AspNetMvc\ResourceRoute.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\MvcRouteTypeHelper.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\MvcActionRouteType.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRouteTypes.cs" />
     <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="IConfigureSingular.cs" />
     <Compile Include="IdUrlSegment.cs" />
     <Compile Include="IResourceBuilder.cs" />
+    <Compile Include="IRouteType.cs" />
     <Compile Include="IUrlSegment.cs" />
     <Compile Include="Options\CaseStyle.cs" />
     <Compile Include="Options\DefaultIdNameConvention.cs" />

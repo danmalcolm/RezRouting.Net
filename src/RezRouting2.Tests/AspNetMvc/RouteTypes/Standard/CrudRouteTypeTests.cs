@@ -55,7 +55,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
         }
         
         [Fact]
-        public void should_not_map_collection_routes_on_non_collection_resources()
+        public void should_not_map_resource_level_routes_on_different_level_resources()
         {
             var mapper = new RouteMapper();
             mapper.RouteTypes(CrudRouteTypes.All);

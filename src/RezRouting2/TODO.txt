@@ -1,9 +1,6 @@
 ﻿
 Feature:
 
-[ ] RouteTypeBuilders, with common functionality, e.g. map route with this action
-
-[ ] AspNetMvc.BuiltInRouteTypes.Crud
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
@@ -19,6 +16,10 @@ Feature:
 
 [ ] Comments on public API
 
+
+[x] AspNetMvc.BuiltInRouteTypes.Crud
+
+[x] RouteTypeBuilders, with common functionality, e.g. map route with this action
 
 [x] Full name on resources
 

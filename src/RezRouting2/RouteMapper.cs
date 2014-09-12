@@ -8,7 +8,7 @@ namespace RezRouting2
     public class RouteMapper
     {
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
-        private readonly List<RouteType> routeTypes = new List<RouteType>();
+        private readonly List<IRouteType> routeTypes = new List<IRouteType>();
         private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
 
         public void Collection(string name, Action<IConfigureCollection> configure)
@@ -35,12 +35,12 @@ namespace RezRouting2
             return builders.Select(x => x.Build(context));
         }
 
-        public void RouteTypes(params RouteType[] routeTypes)
+        public void RouteTypes(params IRouteType[] routeTypes)
         {
             this.routeTypes.AddRange(routeTypes);
         }
 
-        public void RouteTypes(IEnumerable<RouteType> routeTypes)
+        public void RouteTypes(IEnumerable<IRouteType> routeTypes)
         {
             this.routeTypes.AddRange(routeTypes);
         }

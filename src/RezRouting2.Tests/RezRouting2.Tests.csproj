@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RezRouting2.Tests</RootNamespace>
     <AssemblyName>RezRouting2.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>ea46b79f</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,7 +91,6 @@
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Standard\CrudCollectionRouteTypeTests.cs" />
     <Compile Include="Infrastructure\Assertions\RouteCollectionAssertionExtensions.cs" />
     <Compile Include="Infrastructure\TestHttpContextBuilder.cs" />
     <Compile Include="Infrastructure\TestRequestContextBuilder.cs" />

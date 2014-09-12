@@ -6,13 +6,13 @@ namespace RezRouting2
 {
     public class RouteMappingContext
     {
-        public RouteMappingContext(IEnumerable<RouteType> routeTypes, RouteOptions options)
+        public RouteMappingContext(IEnumerable<IRouteType> routeTypes, RouteOptions options)
         {
             Options = options;
             RouteTypes = routeTypes.ToReadOnlyList();
         }
 
-        public IList<RouteType> RouteTypes { get; private set; }
+        public IList<IRouteType> RouteTypes { get; private set; }
 
         public RouteOptions Options { get; private set; }
     }

@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using RezRouting2.Utility;
 
 namespace RezRouting2.AspNetMvc.RouteTypes.Standard
 {
@@ -9,22 +6,22 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Standard
     {
         static CrudRouteTypes()
         {
-            CollectionIndex = MvcRouteTypeHelper.ActionRouteType("Index", ResourceLevel.Collection, "Index", "GET", "");
-            CollectionNew = MvcRouteTypeHelper.ActionRouteType("New", ResourceLevel.Collection, "New", "GET", "new");
-            CollectionCreate = MvcRouteTypeHelper.ActionRouteType("Create", ResourceLevel.Collection, "Create", "POST", "");
-            CollectionItemShow = MvcRouteTypeHelper.ActionRouteType("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
-            CollectionItemEdit = MvcRouteTypeHelper.ActionRouteType("Edit", ResourceLevel.CollectionItem, "Edit", "GET", "edit");
-            CollectionItemUpdate = MvcRouteTypeHelper.ActionRouteType("Update", ResourceLevel.CollectionItem, "Update", "PUT", "");
-            CollectionItemDelete = MvcRouteTypeHelper.ActionRouteType("Delete", ResourceLevel.CollectionItem, "Delete", "DELETE", "");
-            SingularNew = MvcRouteTypeHelper.ActionRouteType("New", ResourceLevel.Singular, "New", "GET", "new");
-            SingularCreate = MvcRouteTypeHelper.ActionRouteType("Create", ResourceLevel.Singular, "Create", "POST", "");
-            SingularShow = MvcRouteTypeHelper.ActionRouteType("Show", ResourceLevel.Singular, "Show", "GET", "");
-            SingularEdit = MvcRouteTypeHelper.ActionRouteType("Edit", ResourceLevel.Singular, "Edit", "GET", "edit");
-            SingularUpdate = MvcRouteTypeHelper.ActionRouteType("Update", ResourceLevel.Singular, "Update", "PUT", "");
-            SingularDelete = MvcRouteTypeHelper.ActionRouteType("Delete", ResourceLevel.Singular, "Delete", "DELETE", "");
+            CollectionIndex = new MvcActionRouteType("Index", ResourceLevel.Collection, "Index", "GET", "");
+            CollectionNew = new MvcActionRouteType("New", ResourceLevel.Collection, "New", "GET", "new");
+            CollectionCreate = new MvcActionRouteType("Create", ResourceLevel.Collection, "Create", "POST", "");
+            CollectionItemShow = new MvcActionRouteType("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
+            CollectionItemEdit = new MvcActionRouteType("Edit", ResourceLevel.CollectionItem, "Edit", "GET", "edit");
+            CollectionItemUpdate = new MvcActionRouteType("Update", ResourceLevel.CollectionItem, "Update", "PUT", "");
+            CollectionItemDelete = new MvcActionRouteType("Delete", ResourceLevel.CollectionItem, "Delete", "DELETE", "");
+            SingularNew = new MvcActionRouteType("New", ResourceLevel.Singular, "New", "GET", "new");
+            SingularCreate = new MvcActionRouteType("Create", ResourceLevel.Singular, "Create", "POST", "");
+            SingularShow = new MvcActionRouteType("Show", ResourceLevel.Singular, "Show", "GET", "");
+            SingularEdit = new MvcActionRouteType("Edit", ResourceLevel.Singular, "Edit", "GET", "edit");
+            SingularUpdate = new MvcActionRouteType("Update", ResourceLevel.Singular, "Update", "PUT", "");
+            SingularDelete = new MvcActionRouteType("Delete", ResourceLevel.Singular, "Delete", "DELETE", "");
         }
 
-        public static IEnumerable<RouteType> All
+        public static IEnumerable<IRouteType> All
         {
             get
             {
@@ -44,31 +41,30 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Standard
             }
         }
 
-        public static RouteType CollectionIndex { get; private set; }
+        public static IRouteType CollectionIndex { get; private set; }
 
-        public static RouteType CollectionNew { get; private set; }
+        public static IRouteType CollectionNew { get; private set; }
 
-        public static RouteType CollectionCreate { get; private set; }
+        public static IRouteType CollectionCreate { get; private set; }
 
-        public static RouteType CollectionItemShow { get; set; }
+        public static IRouteType CollectionItemShow { get; set; }
 
-        public static RouteType CollectionItemEdit { get; set; }
+        public static IRouteType CollectionItemEdit { get; set; }
 
-        public static RouteType CollectionItemUpdate { get; set; }
+        public static IRouteType CollectionItemUpdate { get; set; }
 
-        public static RouteType CollectionItemDelete { get; set; }
+        public static IRouteType CollectionItemDelete { get; set; }
 
-        public static RouteType SingularNew { get; private set; }
+        public static IRouteType SingularNew { get; private set; }
 
-        public static RouteType SingularCreate { get; private set; }
+        public static IRouteType SingularCreate { get; private set; }
 
-        public static RouteType SingularShow { get; set; }
+        public static IRouteType SingularShow { get; set; }
 
-        public static RouteType SingularEdit { get; set; }
+        public static IRouteType SingularEdit { get; set; }
 
-        public static RouteType SingularUpdate { get; set; }
+        public static IRouteType SingularUpdate { get; set; }
 
-        public static RouteType SingularDelete { get; set; }
-
+        public static IRouteType SingularDelete { get; set; }
     }
 }
