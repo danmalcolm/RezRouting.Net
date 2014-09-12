@@ -91,6 +91,7 @@
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRouteTypeTests.cs" />
+    <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteCollectionAssertionExtensions.cs" />
     <Compile Include="Infrastructure\TestHttpContextBuilder.cs" />
     <Compile Include="Infrastructure\TestRequestContextBuilder.cs" />

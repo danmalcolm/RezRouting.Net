@@ -74,7 +74,6 @@
   <ItemGroup>
     <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
     <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
-    <Compile Include="AspNetMvc\ResourceRoute.cs" />
     <Compile Include="AspNetMvc\RouteTypes\MvcActionRouteType.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRouteTypes.cs" />
     <Compile Include="CollectionItemBuilder.cs" />

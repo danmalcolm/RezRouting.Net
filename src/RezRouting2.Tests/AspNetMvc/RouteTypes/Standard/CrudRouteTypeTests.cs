@@ -12,9 +12,9 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
 {
     public class CrudRouteTypeTests
     {
-        private IList<Route> routes;
+        private static readonly IList<Route> routes;
 
-        public CrudRouteTypeTests()
+        static CrudRouteTypeTests()
         {
             var mapper = new RouteMapper();
             mapper.RouteTypes(CrudRouteTypes.All);
@@ -62,6 +62,13 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
             mapper.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
             var routes = mapper.Build().Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
+        }
+
+        [Theory]
+        [InlineData]
+        public void should_match_requests_to_routes()
+        {
+            
         }
     }
 
