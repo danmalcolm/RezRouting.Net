@@ -1,0 +1,15 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Session.Credentials
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<p>Welcome @ViewContext.HttpContext.User.Identity.Name</p>
+
+<form method="POST" action="@Url.Action("Delete", "Session")">
+    
+    @Html.HttpMethodOverride(HttpVerbs.Delete)
+    
+    <input type="submit" value="Sign Out"/>
+
+</form>

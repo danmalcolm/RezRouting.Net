@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.Demos.Crud.Controllers.Products;
+using RezRouting.Demos.Crud.Controllers.Products.Product;
+using RezRouting.Demos.Crud.Controllers.Session;
+using RezRouting2;
+using RezRouting2.AspNetMvc;
+using RezRouting2.AspNetMvc.RouteTypes.Standard;
 
 namespace RezRouting.Demos.Crud
 {
@@ -13,11 +15,17 @@ namespace RezRouting.Demos.Crud
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
+
+            var mapper = new RouteMapper();
+            mapper.RouteTypes(CrudRouteTypes.All);
+            mapper.Singular("Session", session => session.HandledBy<SessionController>());
+            mapper.Collection("Products", products =>
+            {
+                products.HandledBy<ProductsController>();
+                products.Items(product => product.HandledBy<ProductController>());
+            });
+            new MvcRouteMapper().CreateRoutes(mapper.Build(), RouteTable.Routes);
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - RezRouting CRUD Demo</title>
+    <link rel="stylesheet" href="@Url.Content("~/css/styles.css")">
+</head>
+    <body>
+        <div>
+            @{
+                var userName = @ViewContext.HttpContext.User.Identity.Name;
+            }
+            @userName logged in.
+        </div>
+        @RenderBody()
+    </body>
+</html>
