@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting2.AspNetMvc.RouteTypes.Standard;
+using RezRouting2.Tests.Infrastructure;
 using RezRouting2.Tests.Utility;
 using Xunit;
 using Xunit.Extensions;
@@ -12,21 +13,13 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
 {
     public class CrudRouteTypeTests
     {
-        private static readonly IList<Route> routes;
+        private static readonly IList<Route> Routes;
 
         static CrudRouteTypeTests()
         {
-            var mapper = new RouteMapper();
-            mapper.RouteTypes(CrudRouteTypes.All);
-            mapper.Collection("Products", products =>
-            {
-                products.HandledBy<ProductsController>();
-                products.Items(product => product.HandledBy<ProductController>());
-            });
-            mapper.Singular("Profile", profile => profile.HandledBy<ProfileController>());
-
+            var mapper = TestModel.Configure();
             var resources = mapper.Build();
-            routes = resources.Expand().SelectMany(x => x.Routes).ToList();
+            Routes = resources.Expand().SelectMany(x => x.Routes).ToList();
         }
 
         [Theory]
@@ -46,8 +39,8 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
         public void should_map_route_for_route_type(string fullName, string httpMethod, 
             string url, Type controllerType, string action)
         {
-            routes.Should().ContainSingle(x => x.FullName == fullName);
-            var route = routes.Single(x => x.FullName == fullName);
+            Routes.Should().ContainSingle(x => x.FullName == fullName);
+            var route = Routes.Single(x => x.FullName == fullName);
             route.HttpMethod.Should().Be(httpMethod);
             route.Url.Should().Be(url);
             route.Action.Should().Be(action);
@@ -62,87 +55,6 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
             mapper.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
             var routes = mapper.Build().Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
-        }
-
-        [Theory]
-        [InlineData]
-        public void should_match_requests_to_routes()
-        {
-            
-        }
-    }
-
-    public class ProductsController : Controller
-    {
-        public ActionResult Index()
-        {
-            return Content("");
-        }
-
-        public ActionResult New()
-        {
-            return null;
-        }
-
-        public ActionResult Create(object input)
-        {
-            return null;
-        }
-    }
-
-    public class ProductController : Controller
-    {
-        public ActionResult Show(string id)
-        {
-            return Content("");
-        }
-
-        public ActionResult Edit(string id)
-        {
-            return null;
-        }
-
-        public ActionResult Update(object input)
-        {
-            return null;
-        }
-
-        public ActionResult Delete(string id)
-        {
-            return null;
-        }
-    }
-
-    public class ProfileController : Controller
-    {
-        public ActionResult New()
-        {
-            return null;
-        }
-        
-        public ActionResult Create(object input)
-        {
-            return null;
-        }
-
-        public ActionResult Show()
-        {
-            return null;
-        }
-
-        public ActionResult Edit()
-        {
-            return null;
-        }
-
-        public ActionResult Update(object input)
-        {
-            return null;
-        }
-
-        public ActionResult Delete()
-        {
-            return null;
         }
     }
 }
