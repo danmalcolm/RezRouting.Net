@@ -18,6 +18,8 @@ Feature:
 
 [ ] Comments on public API
 
+[ ] Demo app - add some comments
+
 
 [x] AspNetMvc.BuiltInRouteTypes.Crud
 
