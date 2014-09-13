@@ -4,7 +4,6 @@
     ViewBag.Title = Model.Product.Name + " Details";
 }
 
-<h1>@Model.Product.Name Details</h1>
-
-<p>Added on: @Model.Product.AddedDate</p>
+@Html.DisplayFor(x => x.Product)
+<div><a href="@Url.Action("Edit", new { id = Model.Product.Id })">Edit</a></div>
 

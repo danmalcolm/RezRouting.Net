@@ -1,0 +1,19 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Products.CreateModel
+
+@{
+    ViewBag.Title = "Create Product";
+}
+
+<form method="POST" action="@Url.Action("Create", "Products")">
+    
+    @Html.ValidationSummary()
+
+    <div>@Html.LabelFor(x => x.Input.Name)</div>
+    <div>@Html.TextBoxFor(x => x.Input.Name)</div>
+
+    <div>@Html.LabelFor(x => x.Input.ManufacturerId, "Manufacturer")</div>
+    <div>@Html.DropDownListFor(x => x.Input.ManufacturerId, Model.ManufacturerOptions)</div>
+
+    <input type="submit" value="Create" />
+
+</form>

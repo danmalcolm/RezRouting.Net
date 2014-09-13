@@ -107,7 +107,6 @@
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="DirectoryUrlSegment.cs" />
     <Compile Include="AspNetMvc\RouteTypes\ActionDescriptorExtensions.cs" />
-    <Compile Include="Utility\ArrayExtensions.cs" />
     <Compile Include="Utility\PathSegmentCleaner.cs" />
     <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

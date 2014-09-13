@@ -8,6 +8,12 @@ Feature:
 
 [ ] Add nested resources to CrudRouteTypeTests
 
+[ ] Demo app - add some comments
+
+[ ] Back to standard namespace
+
+[ ] Refactor: Test structure
+
 [ ] Refactor: CollectionBuilder should have 2 configure actions, one for collection, one for item?
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
@@ -18,7 +24,6 @@ Feature:
 
 [ ] Comments on public API
 
-[ ] Demo app - add some comments
 
 
 [x] AspNetMvc.BuiltInRouteTypes.Crud

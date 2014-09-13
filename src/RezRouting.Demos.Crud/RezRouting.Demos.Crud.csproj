@@ -40,6 +40,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -96,15 +105,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Home\HomeModel.cs" />
+    <Compile Include="Controllers\Products\CreateInput.cs" />
+    <Compile Include="Controllers\Products\CreateModel.cs" />
     <Compile Include="Controllers\Products\IndexModel.cs" />
+    <Compile Include="Controllers\Products\Product\EditInput.cs" />
+    <Compile Include="Controllers\Products\Product\EditModel.cs" />
     <Compile Include="Controllers\Products\Product\ProductController.cs" />
     <Compile Include="Controllers\Products\Product\ShowModel.cs" />
     <Compile Include="Controllers\Session\Credentials.cs" />
     <Compile Include="DataAccess\DemoData.cs" />
     <Compile Include="Controllers\Products\ProductsController.cs" />
     <Compile Include="Controllers\Session\SessionController.cs" />
+    <Compile Include="DataAccess\Manufacturer.cs" />
     <Compile Include="DataAccess\Product.cs" />
     <Compile Include="DataAccess\User.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -120,6 +135,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Product\Show.cshtml" />
+    <Content Include="Views\Shared\Alerts.cshtml" />
+    <Content Include="Views\Products\New.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

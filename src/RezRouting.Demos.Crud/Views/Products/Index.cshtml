@@ -4,12 +4,11 @@
     ViewBag.Title = "Products";
 }
 
-<h1>Products</h1>
-
 <ul>
     @foreach (var product in Model.Products)
     {
         <li><a href="@Url.Action("Show", "Product", new { id = product.Id })">@product.Name</a></li>
     }
 </ul>
+<div><a href="@Url.Action("New", "Products")">Add New Product</a></div>
 

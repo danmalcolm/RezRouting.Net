@@ -8,6 +8,8 @@ namespace RezRouting.Demos.Crud.DataAccess
 
         public string Name { get; set; }
 
+        public Manufacturer Manufacturer { get; set; }
+
         public DateTime AddedDate { get; set; }
     }
 }

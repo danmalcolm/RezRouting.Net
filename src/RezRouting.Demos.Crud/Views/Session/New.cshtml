@@ -1,14 +1,12 @@
 ﻿@model RezRouting.Demos.Crud.Controllers.Session.Credentials
 
 @{
-    ViewBag.Title = "Log In";
+    ViewBag.Title = "Sign In";
 }
 
 <form method="POST" action="@Url.Action("Create", "Session")">
 
-    <h1>Log In</h1>
-
-    @Html.ValidationSummary()
+ @Html.ValidationSummary()
 
     <div>@Html.LabelFor(x => x.UserName)</div>
     <div>@Html.TextBoxFor(x => x.UserName)</div>

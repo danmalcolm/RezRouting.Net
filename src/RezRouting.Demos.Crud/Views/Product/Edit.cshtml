@@ -1,0 +1,21 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Products.Product.EditModel
+
+@{
+    ViewBag.Title = "Update Product";
+}
+
+<form method="POST" action="@Url.Action("Update", "Product", new { httpMethod = "PUT"} )">
+    
+    @Html.ValidationSummary()
+    
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Hidden("_method", "PUT")
+    <div>@Html.LabelFor(x => x.Input.Name)</div>
+    <div>@Html.TextBoxFor(x => x.Input.Name)</div>
+
+    <div>@Html.LabelFor(x => x.Input.ManufacturerId, "Manufacturer")</div>
+    <div>@Html.DropDownListFor(x => x.Input.ManufacturerId, Model.ManufacturerOptions)</div>
+
+    <input type="submit" value="Update" />
+
+</form>
