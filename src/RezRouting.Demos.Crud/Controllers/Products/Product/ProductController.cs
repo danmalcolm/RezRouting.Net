@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Demos.Crud.DataAccess;
 
@@ -55,15 +56,12 @@ namespace RezRouting.Demos.Crud.Controllers.Products.Product
             }
 
             var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.ManufacturerId);
-            var product = new DataAccess.Product
-            {
-                Id = DemoData.Products.Count + 1,
-                Name = input.Name,
-                Manufacturer = manufacturer
-            };
-            DemoData.Products.Add(product);
+            var product = DemoData.Products.Single(x => x.Id == input.Id);
+            product.Name = input.Name;
+            product.Manufacturer = manufacturer;
+            product.ModifiedOn = DateTime.Now;
 
-            TempData["info"] = "Product Created";
+            TempData["alert-success"] = "Product Updated";
             return RedirectToAction("Show", new { id = product.Id });
         }
     }

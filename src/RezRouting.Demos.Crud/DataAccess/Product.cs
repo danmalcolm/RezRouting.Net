@@ -10,6 +10,8 @@ namespace RezRouting.Demos.Crud.DataAccess
 
         public Manufacturer Manufacturer { get; set; }
 
-        public DateTime AddedDate { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime ModifiedOn { get; set; }
     }
 }

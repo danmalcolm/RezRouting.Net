@@ -10,6 +10,8 @@ Feature:
 
 [ ] Demo app - add some comments
 
+[ ] Demo app - bootstrap
+
 [ ] Back to standard namespace
 
 [ ] Refactor: Test structure

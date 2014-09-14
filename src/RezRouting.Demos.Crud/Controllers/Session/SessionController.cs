@@ -23,7 +23,7 @@ namespace RezRouting.Demos.Crud.Controllers.Session
                     x => x.UserName == credentials.UserName && x.Password == credentials.Password);
             if (user == null)
             {
-                ModelState.AddModelError("", "Not recognised");
+                ModelState.AddModelError("", "User details not recognised. Please try again.");
                 return DisplayNewView(credentials);
             }
             FormsAuthentication.SetAuthCookie(user.UserName, false);

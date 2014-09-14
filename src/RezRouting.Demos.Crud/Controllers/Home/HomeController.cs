@@ -8,7 +8,7 @@ namespace RezRouting.Demos.Crud.Controllers.Home
     {
         public ActionResult Index()
         {
-            var model = new HomeModel { LatestProducts = DemoData.Products.OrderBy(x => x.AddedDate).Take(3).ToList() };
+            var model = new HomeModel { LatestProducts = DemoData.Products.OrderBy(x => x.CreatedOn).Take(3).ToList() };
             return View(model);
         }
     }

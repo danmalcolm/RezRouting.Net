@@ -9,21 +9,26 @@ namespace RezRouting.Demos.Crud.DataAccess
         static DemoData()
         {
             Manufacturers = Enumerable.Range(1, 5)
-                .Select(x => new Manufacturer {Id = x, Name = "Manufacturer " + x })
+                .Select(x => new Manufacturer { Id = x, Name = "Manufacturer " + x })
                 .ToList();
 
             Products = Enumerable.Range(1, 10)
-                .Select(x => new Product
+                .Select(x =>
                 {
-                    Id = x,
-                    Name = "Product " + x,
-                    Manufacturer = Manufacturers.First(),
-                    AddedDate = DateTime.Now.AddDays(-x)
+                    var date = DateTime.Now.AddDays(-x);
+                    return new Product
+                                 {
+                                     Id = x,
+                                     Name = "Product " + x,
+                                     Manufacturer = Manufacturers.First(),
+                                     CreatedOn = date,
+                                     ModifiedOn = date,
+                                 };
                 })
                 .ToList();
 
-            Users = new[] {"Bob", "Mary", "Jane"}
-                .Select(x => new User {UserName = x, Password = "123456"})
+            Users = new[] { "Bob", "Mary", "Jane" }
+                .Select(x => new User { UserName = x, Password = "123456" })
                 .ToList();
         }
 

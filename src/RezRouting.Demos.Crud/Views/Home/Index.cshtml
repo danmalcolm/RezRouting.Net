@@ -4,13 +4,11 @@
     ViewBag.Title = "Home";
 }
 
-<h1>Hello</h1>
-
 <h2>Latest Products</h2>
 <ul>
     @foreach (var product in Model.LatestProducts)
     {
-        <li><a href="@Url.Action("Show", "Products", new { id = product.Id })">@product.Name</a></li>
+        <li><a href="@Url.Action("Show", "Product", new { id = product.Id })">@product.Name</a></li>
     }
 </ul>
 <p><a href="@Url.Action("Index", "Products")">View All</a></p>

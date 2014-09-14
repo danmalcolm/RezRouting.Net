@@ -1,8 +1,11 @@
 ﻿@{
-    var info = TempData["info"] as string;
-    if (info != null)
+    foreach (var type in new[] { "success", "info", "warning", "danger" })
     {
-        <div class="alert alert-info">@info</div>
+        var message = TempData["alert-" + type] as string;
+        if (message != null)
+        {
+            <div class="alert alert-@type" role="alert">@message</div>
+        }
     }
 }
 

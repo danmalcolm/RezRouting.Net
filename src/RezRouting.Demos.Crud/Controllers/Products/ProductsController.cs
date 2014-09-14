@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Demos.Crud.DataAccess;
 
@@ -42,7 +43,8 @@ namespace RezRouting.Demos.Crud.Controllers.Products
             {
                 Id = DemoData.Products.Count + 1,
                 Name = input.Name,
-                Manufacturer = manufacturer
+                Manufacturer = manufacturer,
+                CreatedOn = DateTime.Now
             };
             DemoData.Products.Add(product);
 

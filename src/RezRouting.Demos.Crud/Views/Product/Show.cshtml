@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = Model.Product.Name + " Details";
 }
-
-@Html.DisplayFor(x => x.Product)
-<div><a href="@Url.Action("Edit", new { id = Model.Product.Id })">Edit</a></div>
+<p>Made by: @Model.Product.Manufacturer.Name</p>
+<p>Added on: @Model.Product.CreatedOn</p>
+<p>Modified on: @Model.Product.ModifiedOn</p>
+<p><a class="btn btn-default" href="@Url.Action("Edit", new { id = Model.Product.Id })">Edit</a></p>
 
