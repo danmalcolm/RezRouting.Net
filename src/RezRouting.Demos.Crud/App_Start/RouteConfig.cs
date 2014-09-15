@@ -5,7 +5,7 @@ using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Session;
 using RezRouting2;
 using RezRouting2.AspNetMvc;
-using RezRouting2.AspNetMvc.RouteTypes.Standard;
+using RezRouting2.AspNetMvc.RouteTypes.Crud;
 
 namespace RezRouting.Demos.Crud
 {

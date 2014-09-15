@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RezRouting2.AspNetMvc.RouteTypes.Standard
+namespace RezRouting2.AspNetMvc.RouteTypes.Crud
 {
     public static class CrudRouteTypes
     {

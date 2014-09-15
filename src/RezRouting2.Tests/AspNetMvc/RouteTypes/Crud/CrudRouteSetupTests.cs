@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting2.AspNetMvc.RouteTypes.Standard;
-using RezRouting2.Tests.Infrastructure;
+using RezRouting2.AspNetMvc.RouteTypes.Crud;
 using RezRouting2.Tests.Utility;
 using Xunit;
 using Xunit.Extensions;
 
-namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
+namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 {
-    public class CrudRouteTypeTests
+    public class CrudRouteSetupTests
     {
         private static readonly IList<Route> Routes;
 
-        static CrudRouteTypeTests()
+        static CrudRouteSetupTests()
         {
-            var mapper = TestModel.Configure();
+            var mapper = TestResourceModel.Configure();
             var resources = mapper.Build();
             Routes = resources.Expand().SelectMany(x => x.Routes).ToList();
         }

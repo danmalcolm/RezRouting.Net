@@ -4,15 +4,15 @@ using RezRouting2.AspNetMvc;
 using RezRouting2.Tests.Infrastructure;
 using Xunit.Extensions;
 
-namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
+namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 {
-    public class CrudRequestToActionMappingTests
+    public class InboundRequestTests
     {
         private static readonly RouteCollection Routes = new RouteCollection();
 
-        static CrudRequestToActionMappingTests()
+        static InboundRequestTests()
         {
-            var mapper = TestModel.Configure();
+            var mapper = TestResourceModel.Configure();
             new MvcRouteMapper().CreateRoutes(mapper.Build(), Routes);
         }
         

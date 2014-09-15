@@ -90,9 +90,9 @@
   <ItemGroup>
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRequestToActionMappingTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Standard\CrudRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Standard\TestModel.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteSetupTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestResourceModel.cs" />
     <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteCollectionAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActionInfo.cs" />

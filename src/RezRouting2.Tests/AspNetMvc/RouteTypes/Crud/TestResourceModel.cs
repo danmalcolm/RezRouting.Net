@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
-using RezRouting2.AspNetMvc.RouteTypes.Standard;
+using RezRouting2.AspNetMvc.RouteTypes.Crud;
 
-namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Standard
+namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 {
-    public static class TestModel
+    public static class TestResourceModel
     {
         public static RouteMapper Configure()
         {
