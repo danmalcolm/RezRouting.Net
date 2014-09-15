@@ -15,7 +15,9 @@
 
 [ ] Demo app - add some comments
 
-[ ] Back to standard namespace
+[ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
+
+[ ] Back to standard namespace, archive old version and force push with reset history to master
 
 [ ] Refactor: Test structure
 

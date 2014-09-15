@@ -24,22 +24,15 @@ namespace RezRouting2.AspNetMvc
         private void CreateRoute(Route model, RouteCollection routes)
         {
             string controller = RouteValueHelper.TrimControllerFromTypeName(model.ControllerType);
-            var defaults = new {controller = controller, action = model.Action};
+            var defaults = new { controller = controller, action = model.Action };
             var constraints = GetConstraints(model);
 
-            var route = new System.Web.Routing.Route(model.Name, new MvcRouteHandler())
-            {
-                Url = model.Url, 
-                Defaults = new RouteValueDictionary(defaults),
-                Constraints = constraints,
-                DataTokens = new RouteValueDictionary {},
-            };
+            var route = routes.MapRoute(model.FullName, model.Url, defaults, constraints);
+            route.Constraints = constraints;
             route.DataTokens["Namespaces"] = new[] {model.ControllerType.Namespace};
             route.DataTokens["UseNamespaceFallback"] = false;
             route.DataTokens["RouteModel"] = model;
             route.DataTokens["Name"] = model.FullName;
-
-            routes.Add(route);
         }
 
         private RouteValueDictionary GetConstraints(Route model)
