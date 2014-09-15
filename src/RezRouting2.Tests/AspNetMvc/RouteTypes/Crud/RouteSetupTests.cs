@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting2.AspNetMvc.RouteTypes.Crud;
+using RezRouting2.Tests.AspNetMvc.RouteTypes.Crud.TestModel;
+using RezRouting2.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Product;
+using RezRouting2.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Products;
+using RezRouting2.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Profile;
 using RezRouting2.Tests.Utility;
 using Xunit;
 using Xunit.Extensions;
@@ -15,7 +19,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 
         static RouteSetupTests()
         {
-            var mapper = TestResourceModel.Configure();
+            var mapper = CrudResourceModel.Configure();
             var resources = mapper.Build();
             Routes = resources.Expand().SelectMany(x => x.Routes).ToList();
         }

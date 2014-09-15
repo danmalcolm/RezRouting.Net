@@ -1,6 +1,7 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting2.AspNetMvc;
+using RezRouting2.Tests.AspNetMvc.RouteTypes.Crud.TestModel;
 using RezRouting2.Tests.Infrastructure;
 using Xunit.Extensions;
 
@@ -12,7 +13,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 
         static InboundRequestTests()
         {
-            var mapper = TestResourceModel.Configure();
+            var mapper = CrudResourceModel.Configure();
             new MvcRouteMapper().CreateRoutes(mapper.Build(), Routes);
         }
         

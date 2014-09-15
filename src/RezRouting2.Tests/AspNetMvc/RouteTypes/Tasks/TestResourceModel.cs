@@ -60,7 +60,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
     {
         public ActionResult Show(string id)
         {
-            return Content("");
+            return null;
         }
 
         public ActionResult Edit(string id)

@@ -75,10 +75,12 @@
     <Compile Include="AspNetMvc\ActionMappingHelper.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
     <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
+    <Compile Include="AspNetMvc\RouteDataTokenKeys.cs" />
     <Compile Include="AspNetMvc\RouteTypes\ActionRouteType.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteTypes.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteScheme.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteType.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\RouteIndex.cs" />
     <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
     <Compile Include="IConfigureCollection.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="DirectoryUrlSegment.cs" />
     <Compile Include="AspNetMvc\RouteTypes\ActionDescriptorExtensions.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\ResourceUrlHelper.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensions.cs" />
     <Compile Include="Utility\PathSegmentCleaner.cs" />
     <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

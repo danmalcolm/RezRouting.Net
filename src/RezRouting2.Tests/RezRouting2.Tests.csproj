@@ -93,7 +93,10 @@
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\CrudResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Products\ProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Product\ProductController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Profile\ProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionItemRouteTypeTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionRouteTypeTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\SingularRouteTypeTests.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />
     <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteDataAssertionExtensions.cs" />

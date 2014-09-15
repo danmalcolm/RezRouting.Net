@@ -1,7 +1,7 @@
 ﻿
-[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
+[ ] URL generation
 
-[ ] Configure inflector overrides
+[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
 
 [ ] Route types should be passed all controllers and return sequence of routes, to allow them to select single controller etc.
 
@@ -14,6 +14,8 @@
 [ ] Support action name override
 
 [ ] Demo app - add some comments
+
+[ ] Comments on public API
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
@@ -29,7 +31,6 @@
 
 [ ] Refactor: Null object pattern for root parent resource
 
-[ ] Comments on public API
 
 
 
