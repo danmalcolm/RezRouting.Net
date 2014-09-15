@@ -36,15 +36,15 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
         [Fact]
         public void should_map_collection_task_edit_routes()
         {
-            collection.ShouldContainRoute("CreateProduct.Edit", typeof(CreateProductController), "Edit", "GET", "Create");
-            collection.ShouldContainRoute("EditProducts.Edit", typeof(EditProductsController), "Edit", "GET", "Edit");
+            collection.ShouldContainRoute("CreateProduct.Edit", typeof(CreateProductController), "Edit", "GET", "create");
+            collection.ShouldContainRoute("EditProducts.Edit", typeof(EditProductsController), "Edit", "GET", "edit");
         }
 
         [Fact]
         public void should_map_collection_task_handle_routes()
         {
-            collection.ShouldContainRoute("CreateProduct.Handle", typeof(CreateProductController), "Handle", "POST", "Create");
-            collection.ShouldContainRoute("EditProducts.Handle", typeof(EditProductsController), "Handle", "POST", "Edit");
+            collection.ShouldContainRoute("CreateProduct.Handle", typeof(CreateProductController), "Handle", "POST", "create");
+            collection.ShouldContainRoute("EditProducts.Handle", typeof(EditProductsController), "Handle", "POST", "edit");
         }
     }
 }

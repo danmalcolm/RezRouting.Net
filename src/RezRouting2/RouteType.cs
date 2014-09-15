@@ -1,4 +1,5 @@
 ﻿using System;
+using RezRouting2.Options;
 
 namespace RezRouting2
 {
@@ -26,8 +27,9 @@ namespace RezRouting2
         /// </summary>
         /// <param name="resource"></param>
         /// <param name="handlerType"></param>
+        /// <param name="pathFormatter"></param>
         /// <returns></returns>
-        public virtual Route BuildRoute(Resource resource, Type handlerType)
+        public virtual Route BuildRoute(Resource resource, Type handlerType, UrlPathFormatter pathFormatter)
         {
             var builder = new RouteBuilder(handlerType);
             configure(resource, handlerType, builder);

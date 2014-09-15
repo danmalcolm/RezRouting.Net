@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />

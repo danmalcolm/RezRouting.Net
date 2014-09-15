@@ -36,15 +36,15 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
         [Fact]
         public void should_map_singular_task_edit_routes()
         {
-            resource.ShouldContainRoute("EditProduct.Edit", typeof(EditProductController), "Edit", "GET", "Edit");
-            resource.ShouldContainRoute("DeleteProduct.Edit", typeof(DeleteProductController), "Edit", "GET", "Delete");
+            resource.ShouldContainRoute("EditProduct.Edit", typeof(EditProductController), "Edit", "GET", "edit");
+            resource.ShouldContainRoute("DeleteProduct.Edit", typeof(DeleteProductController), "Edit", "GET", "delete");
         }
 
         [Fact]
         public void should_map_singular_task_handle_routes()
         {
-            resource.ShouldContainRoute("EditProduct.Handle", typeof(EditProductController), "Handle", "POST", "Edit");
-            resource.ShouldContainRoute("DeleteProduct.Handle", typeof(DeleteProductController), "Handle", "POST", "Delete");
+            resource.ShouldContainRoute("EditProduct.Handle", typeof(EditProductController), "Handle", "POST", "edit");
+            resource.ShouldContainRoute("DeleteProduct.Handle", typeof(DeleteProductController), "Handle", "POST", "delete");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RezRouting2.Options;
 using RezRouting2.Utility;
 
 namespace RezRouting2.AspNetMvc.RouteTypes.Tasks
@@ -24,7 +25,7 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Tasks
 
         public string HttpMethod { get; set; }
         
-        public Route BuildRoute(Resource resource, Type handlerType)
+        public Route BuildRoute(Resource resource, Type handlerType, UrlPathFormatter pathFormatter)
         {
             if (resource.Level == Level)
             {
@@ -32,7 +33,7 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Tasks
                 if (supported)
                 {
                     var builder = new RouteBuilder(handlerType);
-                    var path = GetPath(resource, handlerType);
+                    var path = GetPath(resource, handlerType, pathFormatter);
                     string controllerName = RouteValueHelper.TrimControllerFromTypeName(handlerType);
                     string name = string.Format("{0}.{1}", controllerName, Action);
                     builder.Configure(name, Action, HttpMethod, path);
@@ -42,7 +43,7 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Tasks
             return null;
         }
 
-        private string GetPath(Resource resource, Type controllerType)
+        private string GetPath(Resource resource, Type controllerType, UrlPathFormatter pathFormatter)
         {
             string path = RouteValueHelper.TrimControllerFromTypeName(controllerType);
             var suffixes = GetPossibleResourceNameSuffixes(resource);
@@ -50,6 +51,8 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Tasks
                 .Where(suffix => path.EndsWith(suffix))
                 .Select(suffix => path.Substring(0, path.Length - suffix.Length))
                 .FirstOrDefault() ?? path;
+
+            path = pathFormatter.FormatDirectoryName(path);
 
             return path;
         }

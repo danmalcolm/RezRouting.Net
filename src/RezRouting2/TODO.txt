@@ -1,7 +1,5 @@
 ﻿
-Feature:
-
-[ ] Task routes
+[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
 
 [ ] Configure inflector overrides
 
@@ -32,6 +30,12 @@ Feature:
 [ ] Comments on public API
 
 
+
+[x] Apply path formatting options to route types
+
+[x] Task routes
+
+[x] Task routes demo 
 
 [x] Demo app - bootstrap
 

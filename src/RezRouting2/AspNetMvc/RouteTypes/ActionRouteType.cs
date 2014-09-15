@@ -1,4 +1,5 @@
 using System;
+using RezRouting2.Options;
 
 namespace RezRouting2.AspNetMvc.RouteTypes
 {
@@ -26,15 +27,16 @@ namespace RezRouting2.AspNetMvc.RouteTypes
 
         public string Path { get; set; }
         
-        public Route BuildRoute(Resource resource, Type handlerType)
+        public Route BuildRoute(Resource resource, Type handlerType, UrlPathFormatter pathFormatter)
         {
             if (resource.Level == Level)
             {
                 var supported = ActionMappingHelper.IncludesAction(handlerType, Action);
                 if (supported)
                 {
+                    var path = pathFormatter.FormatDirectoryName(Path);
                     var builder = new RouteBuilder(handlerType);
-                    builder.Configure(Name, Action, HttpMethod, Path);
+                    builder.Configure(Name, Action, HttpMethod, path);
                     return builder.Build();
                 }
             }

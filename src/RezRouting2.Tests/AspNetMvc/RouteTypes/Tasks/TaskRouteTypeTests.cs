@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using RezRouting2.AspNetMvc.RouteTypes.Tasks;
+using RezRouting2.Options;
 using RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks.TestControllers.Products;
 using Xunit;
 
@@ -9,7 +10,8 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
     public class TaskRouteTypeTests
     {
         private readonly Resource collection;
-        private Resource singular;
+        private readonly Resource singular;
+        private readonly UrlPathFormatter pathFormatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.None));
 
         public TaskRouteTypeTests()
         {
@@ -26,7 +28,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
         {
             var routeType = new TaskRouteType("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
 
-            var route = routeType.BuildRoute(collection, typeof (EditProductsController));
+            var route = routeType.BuildRoute(collection, typeof (EditProductsController), pathFormatter);
             
             route.Path.Should().Be("Edit");
         }
@@ -36,9 +38,20 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
         {
             var routeType = new TaskRouteType("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
             
-            var route = routeType.BuildRoute(collection, typeof(CreateProductController));
+            var route = routeType.BuildRoute(collection, typeof(CreateProductController), pathFormatter);
 
             route.Path.Should().Be("Create");
+        }
+
+        [Fact]
+        public void should_format_task_path_using_settings()
+        {
+            var routeType = new TaskRouteType("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
+            var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Lower));
+
+            var route = routeType.BuildRoute(collection, typeof(CreateProductController), formatter);
+
+            route.Path.Should().Be("create");
         }
 
         [Fact]
@@ -46,7 +59,7 @@ namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Tasks
         {
             var routeType = new TaskRouteType("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
 
-            var route = routeType.BuildRoute(singular, typeof(EditProductsController));
+            var route = routeType.BuildRoute(singular, typeof(EditProductsController), pathFormatter);
 
             route.Should().BeNull();
         }
