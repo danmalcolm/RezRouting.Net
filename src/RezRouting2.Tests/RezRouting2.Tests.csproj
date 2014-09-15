@@ -91,10 +91,26 @@
     <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteSetupTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionItemRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\SingularRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\EditProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\CreateProductController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\ListProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\DeleteProductController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\DisplayProductController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\EditProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DisplayProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
+    <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
-    <Compile Include="Infrastructure\Assertions\RouteCollectionAssertionExtensions.cs" />
+    <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteDataAssertionExtensions.cs" />
+    <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteCollectionAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActionInfo.cs" />
     <Compile Include="Infrastructure\TestHttpContextBuilder.cs" />
     <Compile Include="Infrastructure\TestRequestContextBuilder.cs" />
@@ -119,6 +135,7 @@
       <Name>RezRouting2</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

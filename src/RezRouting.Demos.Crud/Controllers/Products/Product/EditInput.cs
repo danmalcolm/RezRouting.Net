@@ -3,7 +3,7 @@
 namespace RezRouting.Demos.Crud.Controllers.Products.Product
 {
     /// <summary>
-    /// The values submitted to create a product
+    /// The values submitted to edit a product
     /// </summary>
     public class EditInput
     {
@@ -13,7 +13,6 @@ namespace RezRouting.Demos.Crud.Controllers.Products.Product
         public int? ManufacturerId { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 5)]
         public string Name { get; set; }
     }
 }

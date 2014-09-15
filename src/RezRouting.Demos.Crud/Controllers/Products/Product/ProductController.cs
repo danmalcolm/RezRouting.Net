@@ -52,7 +52,7 @@ namespace RezRouting.Demos.Crud.Controllers.Products.Product
         {
             if (!ModelState.IsValid)
             {
-                DisplayEditView(input);
+                return DisplayEditView(input);
             }
 
             var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.ManufacturerId);
@@ -63,6 +63,20 @@ namespace RezRouting.Demos.Crud.Controllers.Products.Product
 
             TempData["alert-success"] = "Product Updated";
             return RedirectToAction("Show", new { id = product.Id });
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var product = DemoData.Products.SingleOrDefault(x => x.Id == id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.IsActive = false;
+
+            TempData["alert-success"] = "Product Deleted";
+            return RedirectToAction("Index", "Products");
         }
     }
 }

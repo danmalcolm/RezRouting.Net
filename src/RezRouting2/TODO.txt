@@ -1,6 +1,11 @@
 ﻿
 Feature:
 
+[ ] Task routes
+
+[ ] Configure inflector overrides
+
+[ ] Route types should be passed all controllers and return sequence of routes, to allow them to select single controller etc.
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
@@ -8,9 +13,9 @@ Feature:
 
 [ ] Add nested resources to CrudRouteTypeTests
 
-[ ] Demo app - add some comments
+[ ] Support action name override
 
-[ ] Demo app - bootstrap
+[ ] Demo app - add some comments
 
 [ ] Back to standard namespace
 
@@ -27,6 +32,8 @@ Feature:
 [ ] Comments on public API
 
 
+
+[x] Demo app - bootstrap
 
 [x] AspNetMvc.BuiltInRouteTypes.Crud
 

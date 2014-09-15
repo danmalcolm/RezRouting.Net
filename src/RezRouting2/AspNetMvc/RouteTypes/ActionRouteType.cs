@@ -1,13 +1,13 @@
 using System;
-using System.Linq;
-using System.Web.Mvc;
-using RezRouting2.Utility;
 
 namespace RezRouting2.AspNetMvc.RouteTypes
 {
-    public class MvcActionRouteType : IRouteType
+    /// <summary>
+    /// Creates a route for a specific action on the controller
+    /// </summary>
+    public class ActionRouteType : IRouteType
     {
-        public MvcActionRouteType(string name, ResourceLevel level, string action, string httpMethod, string path)
+        public ActionRouteType(string name, ResourceLevel level, string action, string httpMethod, string path)
         {
             Name = name;
             Level = level;
@@ -30,7 +30,7 @@ namespace RezRouting2.AspNetMvc.RouteTypes
         {
             if (resource.Level == Level)
             {
-                var supported = SupportsAction(handlerType);
+                var supported = ActionMappingHelper.IncludesAction(handlerType, Action);
                 if (supported)
                 {
                     var builder = new RouteBuilder(handlerType);
@@ -39,14 +39,6 @@ namespace RezRouting2.AspNetMvc.RouteTypes
                 }
             }
             return null;
-        }
-
-        private bool SupportsAction(Type handlerType)
-        {
-            var controllerDescriptor = new ReflectedControllerDescriptor(handlerType);
-            var actions = controllerDescriptor.GetCanonicalActions();
-            var supportsAction = actions.Any(x => StringExtensions.EqualsIgnoreCase(x.ActionName, Action));
-            return supportsAction;
         }
     }
 }

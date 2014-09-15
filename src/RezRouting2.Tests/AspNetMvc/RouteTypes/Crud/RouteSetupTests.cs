@@ -9,11 +9,11 @@ using Xunit.Extensions;
 
 namespace RezRouting2.Tests.AspNetMvc.RouteTypes.Crud
 {
-    public class CrudRouteSetupTests
+    public class RouteSetupTests
     {
         private static readonly IList<Route> Routes;
 
-        static CrudRouteSetupTests()
+        static RouteSetupTests()
         {
             var mapper = TestResourceModel.Configure();
             var resources = mapper.Build();

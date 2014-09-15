@@ -23,6 +23,7 @@ namespace RezRouting.Demos.Crud.DataAccess
                                      Manufacturer = Manufacturers.First(),
                                      CreatedOn = date,
                                      ModifiedOn = date,
+                                     IsActive = true
                                  };
                 })
                 .ToList();

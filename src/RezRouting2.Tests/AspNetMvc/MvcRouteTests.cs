@@ -5,6 +5,7 @@ using FluentAssertions;
 using RezRouting2.AspNetMvc;
 using RezRouting2.Tests.Infrastructure;
 using RezRouting2.Tests.Infrastructure.Assertions;
+using RezRouting2.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
 
 namespace RezRouting2.Tests.AspNetMvc

@@ -72,10 +72,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetMvc\ActionMappingHelper.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
     <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\MvcActionRouteType.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\ActionRouteType.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteTypes.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteScheme.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteType.cs" />
     <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
     <Compile Include="IConfigureCollection.cs" />

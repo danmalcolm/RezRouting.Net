@@ -11,7 +11,7 @@ namespace RezRouting.Demos.Crud.Controllers.Products
         {
             var model = new IndexModel
             {
-                Products = DemoData.Products
+                Products = DemoData.Products.Where(x => x.IsActive).ToList()
             };
             return View(model);
         }
@@ -35,7 +35,7 @@ namespace RezRouting.Demos.Crud.Controllers.Products
         {
             if (!ModelState.IsValid)
             {
-                DisplayNewView(input);
+                return DisplayNewView(input);
             }
 
             var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.ManufacturerId);
@@ -44,11 +44,13 @@ namespace RezRouting.Demos.Crud.Controllers.Products
                 Id = DemoData.Products.Count + 1,
                 Name = input.Name,
                 Manufacturer = manufacturer,
-                CreatedOn = DateTime.Now
+                CreatedOn = DateTime.Now,
+                ModifiedOn = DateTime.Now,
+                IsActive = true
             };
             DemoData.Products.Add(product);
 
-            TempData["info"] = "Product Created";
+            TempData["alert-success"] = "Product Created";
             return RedirectToAction("Index");
         }
     }

@@ -1,0 +1,11 @@
+﻿@{
+    foreach (var type in new[] { "success", "info", "warning", "danger" })
+    {
+        var message = TempData["alert-" + type] as string;
+        if (message != null)
+        {
+            <div class="alert alert-@type" role="alert">@message</div>
+        }
+    }
+}
+

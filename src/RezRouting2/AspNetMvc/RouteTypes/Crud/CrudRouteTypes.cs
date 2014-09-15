@@ -6,19 +6,19 @@ namespace RezRouting2.AspNetMvc.RouteTypes.Crud
     {
         static CrudRouteTypes()
         {
-            CollectionIndex = new MvcActionRouteType("Index", ResourceLevel.Collection, "Index", "GET", "");
-            CollectionNew = new MvcActionRouteType("New", ResourceLevel.Collection, "New", "GET", "new");
-            CollectionCreate = new MvcActionRouteType("Create", ResourceLevel.Collection, "Create", "POST", "");
-            CollectionItemShow = new MvcActionRouteType("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
-            CollectionItemEdit = new MvcActionRouteType("Edit", ResourceLevel.CollectionItem, "Edit", "GET", "edit");
-            CollectionItemUpdate = new MvcActionRouteType("Update", ResourceLevel.CollectionItem, "Update", "PUT", "");
-            CollectionItemDelete = new MvcActionRouteType("Delete", ResourceLevel.CollectionItem, "Delete", "DELETE", "");
-            SingularNew = new MvcActionRouteType("New", ResourceLevel.Singular, "New", "GET", "new");
-            SingularCreate = new MvcActionRouteType("Create", ResourceLevel.Singular, "Create", "POST", "");
-            SingularShow = new MvcActionRouteType("Show", ResourceLevel.Singular, "Show", "GET", "");
-            SingularEdit = new MvcActionRouteType("Edit", ResourceLevel.Singular, "Edit", "GET", "edit");
-            SingularUpdate = new MvcActionRouteType("Update", ResourceLevel.Singular, "Update", "PUT", "");
-            SingularDelete = new MvcActionRouteType("Delete", ResourceLevel.Singular, "Delete", "DELETE", "");
+            CollectionIndex = new ActionRouteType("Index", ResourceLevel.Collection, "Index", "GET", "");
+            CollectionNew = new ActionRouteType("New", ResourceLevel.Collection, "New", "GET", "new");
+            CollectionCreate = new ActionRouteType("Create", ResourceLevel.Collection, "Create", "POST", "");
+            CollectionItemShow = new ActionRouteType("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
+            CollectionItemEdit = new ActionRouteType("Edit", ResourceLevel.CollectionItem, "Edit", "GET", "edit");
+            CollectionItemUpdate = new ActionRouteType("Update", ResourceLevel.CollectionItem, "Update", "PUT", "");
+            CollectionItemDelete = new ActionRouteType("Delete", ResourceLevel.CollectionItem, "Delete", "DELETE", "");
+            SingularNew = new ActionRouteType("New", ResourceLevel.Singular, "New", "GET", "new");
+            SingularCreate = new ActionRouteType("Create", ResourceLevel.Singular, "Create", "POST", "");
+            SingularShow = new ActionRouteType("Show", ResourceLevel.Singular, "Show", "GET", "");
+            SingularEdit = new ActionRouteType("Edit", ResourceLevel.Singular, "Edit", "GET", "edit");
+            SingularUpdate = new ActionRouteType("Update", ResourceLevel.Singular, "Update", "PUT", "");
+            SingularDelete = new ActionRouteType("Delete", ResourceLevel.Singular, "Delete", "DELETE", "");
         }
 
         public static IEnumerable<IRouteType> All

@@ -1,16 +1,17 @@
-﻿using System.Web.Routing;
+﻿using System;
 using FluentAssertions;
 
 namespace RezRouting2.Tests.Infrastructure.Assertions
 {
     public static class RouteAssertionExtensions
     {
-        public static void ShouldBeBasedOnRoute(this RouteData routeData, string name)
+        public static void ShouldBeConfiguredAs(this Route route, string name, Type controllerType, string action, string httpMethod, string path)
         {
-            routeData.Should().NotBeNull();
-            routeData.Route.Should().BeOfType<System.Web.Routing.Route>("route should be of type System.Web.Routing.Route");
-            var route = routeData.Route as System.Web.Routing.Route;
-            route.DataTokens["Name"].Should().Be(name);
+            route.Name.Should().Be(name);
+            route.ControllerType.Should().Be(controllerType);
+            route.Action.Should().Be(action);
+            route.HttpMethod.Should().Be(httpMethod);
+            route.Path.Should().Be(path);
         }
     }
 }
