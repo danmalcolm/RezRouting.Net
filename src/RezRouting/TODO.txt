@@ -1,7 +1,8 @@
 ﻿
-[ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
  
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
+
+[ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
 
 [ ] Route types should be passed all controllers and return sequence of routes, to allow them to select single controller etc.
 
@@ -13,7 +14,9 @@
 
 [ ] Support action name override
 
-[ ] Demo app - add some comments
+[ ] Demo app - add some comments, explanations and readme
+
+[ ] Example of using resources to generate breadcrumb navigation in demo apps
 
 [ ] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
 
