@@ -36,7 +36,6 @@ namespace RezRouting
                 // TODO - optimise (create once on construction?)
                 string parentFullName = Parent != null ? Parent.FullName : "";
                 return string.Concat(parentFullName, string.IsNullOrWhiteSpace(parentFullName) ? "" : ".", Name);
-
             }
         }
 
@@ -69,5 +68,20 @@ namespace RezRouting
         public IList<Route> Routes { get; private set; }
 
         public Resource Parent { get; private set; }
+
+        public IEnumerable<Resource> Ancestors
+        {
+            get
+            {
+                if (Parent != null)
+                {
+                    yield return Parent;
+                    foreach (var ancestor in Parent.Ancestors)
+                    {
+                        yield return ancestor;
+                    }
+                }
+            }
+        }
     }
 }

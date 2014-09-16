@@ -1,5 +1,9 @@
-﻿[ ] Url generation using expression trees
+﻿[ ] Include arbitrary data in Route model
 
+[ ] Include arbitrary data in Resource model
+
+[ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
+ 
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
 
 [ ] Route types should be passed all controllers and return sequence of routes, to allow them to select single controller etc.
@@ -13,8 +17,6 @@
 [ ] Support action name override
 
 [ ] Demo app - add some comments
-
-[ ] Resource.Ancestors - all parents
 
 [ ] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
 
@@ -37,7 +39,7 @@
 [ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
 
 
-
+[x] Resource.Ancestors - all parents
 
 [x] Back to standard namespace
 
