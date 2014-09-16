@@ -1,93 +1,53 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web.Routing;
-using RezRouting.Configuration;
-using RezRouting.Model;
-using RezRouting.Utility;
+using RezRouting.Options;
 
 namespace RezRouting
 {
-    /// <summary>
-    /// The entry point for mapping routes for resources within a web application
-    /// </summary>
     public class RouteMapper
     {
-        private readonly RouteConfigurationBuilder configurationBuilder 
-            = new RouteConfigurationBuilder(StandardRouteTypes.Build());
         private readonly List<ResourceBuilder> builders = new List<ResourceBuilder>();
-        
-        /// <summary>
-        /// Customises all routes by mapped by the current RouteMapper by changing 
-        /// shared route configuration options
-        /// </summary>
-        /// <param name="configure"></param>
-        public void Configure(Action<RouteConfigurationBuilder> configure)
+        private readonly List<IRouteType> routeTypes = new List<IRouteType>();
+        private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
+
+        public void Collection(string name, Action<IConfigureCollection> configure)
         {
-            configure(configurationBuilder);
+            AddBuilder(new CollectionBuilder(name), x => configure(x));
         }
 
-        /// <summary>
-        /// Sets up routes for a collection of resources
-        /// </summary>
-        /// <param name="configure"></param>
-        public void Collection(Action<CollectionBuilder> configure)
+        public void Singular(string name, Action<IConfigureSingular> configure)
         {
-            var builder = new CollectionBuilder();
-            configure(builder);
+            AddBuilder(new SingularBuilder(name), x => configure(x));
+        }
+
+        private void AddBuilder<T>(T builder, Action<T> configure)
+            where T : ResourceBuilder,IConfigureResource
+        {
             builders.Add(builder);
-        }
-
-        /// <summary>
-        /// Sets up routes for a singular resource
-        /// </summary>
-        /// <param name="configure"></param>
-        public void Singular(Action<SingularBuilder> configure)
-        {
-            var builder = new SingularBuilder();
             configure(builder);
-            builders.Add(builder);
         }
 
-        /// <summary>
-        /// Maps routes for all configured resources to a new RouteCollection
-        /// </summary>
-        /// <returns>The new RouteCollection</returns>
-        public RouteCollection MapRoutes()
+        public IEnumerable<Resource> Build()
         {
-            return MapRoutes(new RouteCollection());
+            var options = optionsBuilder.Build();
+            var context = new RouteMappingContext(routeTypes, options);
+            return builders.Select(x => x.Build(context));
         }
 
-        /// <summary>
-        /// Maps routes for all configured resources to an existing RouteCollection
-        /// </summary>
-        /// <param name="routes"></param>
-        /// <returns>The original RouteCollection</returns>
-        public RouteCollection MapRoutes(RouteCollection routes)
+        public void RouteTypes(params IRouteType[] routeTypes)
         {
-            var resources = BuildResources();
-            resources.Each(x => x.MapRoutes(routes));
-            return routes;
+            this.routeTypes.AddRange(routeTypes);
         }
 
-        /// <summary>
-        /// Gets a plain text summary containing information about all configured resources
-        /// </summary>
-        /// <returns></returns>
-        public string DebugSummary()
+        public void RouteTypes(IEnumerable<IRouteType> routeTypes)
         {
-            var resources = BuildResources();
-            var summary = new StringBuilder();
-            resources.Each(x => x.DebugSummary(summary, 0));
-            return summary.ToString();
+            this.routeTypes.AddRange(routeTypes);
         }
 
-        private IEnumerable<Resource> BuildResources()
+        public void Options(Action<IConfigureOptions> configure)
         {
-            var configuration = configurationBuilder.Build();
-            var context = new ResourceBuildContext(new string[0], null, configuration);
-            return builders.Select(x => x.Build(configuration, context));
+            configure(optionsBuilder);
         }
     }
 }

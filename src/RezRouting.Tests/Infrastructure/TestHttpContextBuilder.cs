@@ -8,13 +8,10 @@ namespace RezRouting.Tests.Infrastructure
 {
     public static class TestHttpContextBuilder
     {
-        public static HttpContextBase Create(string methodAndPath, NameValueCollection headers = null, NameValueCollection form = null)
+        public static HttpContextBase Create(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)
         {
-            var requestParts = methodAndPath.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (requestParts.Length != 2)
-                throw new ArgumentException("Request should be in the form [METHOD] [PATH], e.g. \"GET /users\"", "methodAndPath");
-            string httpMethod = requestParts[0];
-            string path = requestParts[1];
+            if (httpMethod == null) throw new ArgumentNullException("httpMethod");
+            if (path == null) throw new ArgumentNullException("path");
 
             var uri = new Uri("http://www.tempuri.org" + path, UriKind.Absolute);
             var httpContext = new Mock<HttpContextBase>();

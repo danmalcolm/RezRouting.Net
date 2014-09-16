@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1AEDAAB-A18D-4063-A017-DADC01840D36}</ProjectGuid>
+    <ProjectGuid>{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RezRouting</RootNamespace>
@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,40 +32,38 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\RezRouting.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -74,81 +72,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetMvc\ActionMappingHelper.cs" />
+    <Compile Include="AspNetMvc\MvcRouteMapper.cs" />
+    <Compile Include="AspNetMvc\HttpMethodOrOverrideConstraint.cs" />
+    <Compile Include="AspNetMvc\RouteDataTokenKeys.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\ActionRouteType.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteTypes.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteScheme.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteType.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\RouteIndex.cs" />
+    <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
-    <Compile Include="CollectionLevel.cs" />
-    <Compile Include="Configuration\CaseStyle.cs" />
-    <Compile Include="Configuration\CustomResourceNameConvention.cs" />
-    <Compile Include="Configuration\CustomResourcePathFormatter.cs" />
-    <Compile Include="Configuration\CustomRouteNameConvention.cs" />
-    <Compile Include="Configuration\DefaultIdNameConvention.cs" />
-    <Compile Include="Configuration\DefaultResourceNameConvention.cs" />
-    <Compile Include="Configuration\DefaultResourcePathFormatter.cs" />
-    <Compile Include="Configuration\DefaultRouteNameConvention.cs" />
-    <Compile Include="Configuration\IIdNameConvention.cs" />
-    <Compile Include="Configuration\IResourceNameConvention.cs" />
-    <Compile Include="Configuration\IResourcePathFormatter.cs" />
-    <Compile Include="Configuration\IRouteNameConvention.cs" />
-    <Compile Include="Configuration\ResourcePathSettings.cs" />
-    <Compile Include="Configuration\RouteConfiguration.cs" />
-    <Compile Include="Configuration\CustomRouteSettings.cs" />
-    <Compile Include="Configuration\CustomRouteSettingsBuilder.cs" />
-    <Compile Include="Configuration\RouteType.cs" />
-    <Compile Include="Configuration\StandardRouteTypes.cs" />
-    <Compile Include="Model\RouteUrlProperties.cs" />
-    <Compile Include="ResourceBuildContext.cs" />
-    <Compile Include="ResourceLevel.cs" />
-    <Compile Include="ResourceName.cs" />
-    <Compile Include="UrlHelperExtensions.cs" />
-    <Compile Include="RouteConfigurationBuilder.cs" />
-    <Compile Include="RouteConfigurationException.cs" />
-    <Compile Include="Routing\PathSegmentCleaner.cs" />
-    <Compile Include="Routing\QueryStringValueConstraint.cs" />
-    <Compile Include="StandardHttpMethods.cs" />
-    <Compile Include="Model\Resource.cs" />
-    <Compile Include="Model\ResourceRoute.cs" />
+    <Compile Include="IConfigureCollection.cs" />
+    <Compile Include="IConfigureCollectionItem.cs" />
+    <Compile Include="IConfigureOptions.cs" />
+    <Compile Include="IConfigureResource.cs" />
+    <Compile Include="IConfigureRoute.cs" />
+    <Compile Include="IConfigureSingular.cs" />
+    <Compile Include="IdUrlSegment.cs" />
+    <Compile Include="IResourceBuilder.cs" />
+    <Compile Include="IRouteType.cs" />
+    <Compile Include="IUrlSegment.cs" />
+    <Compile Include="Options\CaseStyle.cs" />
+    <Compile Include="Options\DefaultIdNameConvention.cs" />
+    <Compile Include="Options\IIdNameConvention.cs" />
+    <Compile Include="Options\RouteOptions.cs" />
+    <Compile Include="Options\UrlPathFormatter.cs" />
+    <Compile Include="Options\UrlPathSettings.cs" />
+    <Compile Include="Options\OptionsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.cs" />
     <Compile Include="ResourceBuilder.cs" />
-    <Compile Include="ResourceType.cs" />
+    <Compile Include="ResourceLevel.cs" />
+    <Compile Include="Route.cs" />
+    <Compile Include="RouteBuilder.cs" />
     <Compile Include="RouteMapper.cs" />
-    <Compile Include="Routing\HttpMethodOrOverrideConstraint.cs" />
-    <Compile Include="Routing\ResourceActionRoute.cs" />
-    <Compile Include="Routing\RouteValueHelper.cs" />
+    <Compile Include="RouteMappingContext.cs" />
+    <Compile Include="RouteType.cs" />
     <Compile Include="SingularBuilder.cs" />
-    <Compile Include="Utility\ActionDescriptorExtensions.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\BinaryExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\CachedExpressionCompiler.cs" />
-    <Compile Include="Utility\Expressions\CachedExpressionCompiler.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\ConditionalExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\ConstantExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ControllerActionExpressionHelper.cs" />
-    <Compile Include="Utility\ControllerActionInfo.cs" />
+    <Compile Include="DirectoryUrlSegment.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\ActionDescriptorExtensions.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensions.cs" />
+    <Compile Include="Utility\PathSegmentCleaner.cs" />
+    <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\DefaultExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\ExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\ExpressionFingerprintChain.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\FingerprintingExpressionVisitor.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\HashCodeCombiner.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\Hoisted.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\HoistingExpressionVisitor.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\IndexExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\LambdaExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\MemberExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\MethodCallExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\ParameterExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\TypeBinaryExpressionFingerprint.cs" />
-    <Compile Include="Utility\Expressions\ExpressionUtil\UnaryExpressionFingerprint.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
-    <Compile Include="Utility\RouteValueDictionaryExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Utility\readme.txt" />
+    <Compile Include="Utility\UrlPathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

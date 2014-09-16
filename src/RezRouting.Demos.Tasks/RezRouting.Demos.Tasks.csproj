@@ -176,9 +176,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RezRouting2\RezRouting2.csproj">
+    <ProjectReference Include="..\RezRouting\RezRouting.csproj">
       <Project>{ec46b63d-45d9-472b-8400-12a9cac5bb9e}</Project>
-      <Name>RezRouting2</Name>
+      <Name>RezRouting</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

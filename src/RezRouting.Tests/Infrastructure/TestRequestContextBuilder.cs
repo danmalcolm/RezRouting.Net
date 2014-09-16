@@ -7,7 +7,7 @@ namespace RezRouting.Tests.Infrastructure
     {
         public static RequestContext Create(HttpContextBase httpContext = null)
         {
-            httpContext = httpContext ?? TestHttpContextBuilder.Create("GET /");
+            httpContext = httpContext ?? TestHttpContextBuilder.Create("GET", "/");
 
             var routeData = new RouteData();
             routeData.Values.Add("controller", "test");

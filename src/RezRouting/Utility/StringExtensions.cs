@@ -15,5 +15,13 @@ namespace RezRouting.Utility
         {
             return sequence.Contains(value, StringComparer.InvariantCultureIgnoreCase);
         }
+
+        public static string ToCamelCase(this string value)
+        {
+            if (value == null) throw new ArgumentNullException("value");
+            if (string.IsNullOrWhiteSpace(value)) return value;
+
+            return char.ToLowerInvariant(value[0]) + value.Substring(1);
+        }
     }
 }
