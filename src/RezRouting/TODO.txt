@@ -1,4 +1,4 @@
-﻿[ ] URL generation
+﻿[ ] Url generation using expression trees
 
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
 
@@ -14,11 +14,15 @@
 
 [ ] Demo app - add some comments
 
+[ ] Resource.Ancestors - all parents
+
+[ ] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
+
 [ ] Comments on public API
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
-[ ] Back to standard namespace, archive old version and force push with reset history to master
+[ ] Force push with reset history to master
 
 [ ] Refactor: Test structure
 
@@ -30,8 +34,14 @@
 
 [ ] Refactor: Null object pattern for root parent resource
 
+[ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
 
 
+
+
+[x] Back to standard namespace
+
+[x] URL generation
 
 [x] Apply path formatting options to route types
 
