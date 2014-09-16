@@ -8,6 +8,7 @@ namespace RezRouting
     public abstract class ResourceBuilder : IConfigureResource, IResourceBuilder
     {
         private readonly List<Type> controllerTypes = new List<Type>();
+        private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
 
         protected ResourceBuilder(string name, ResourceLevel level)
         {
@@ -28,7 +29,7 @@ namespace RezRouting
         {
             var children = ChildBuilders.Select(x => x.Build(context)).ToList();
             var urlSegment = GetUrlSegment(context.Options);
-            var resource = new Resource(Name, urlSegment, Level, children);
+            var resource = new Resource(Name, urlSegment, Level, customProperties, children);
             var routes = from controllerType in controllerTypes
                 from routeType in context.RouteTypes
                 let route = routeType.BuildRoute(resource, controllerType, context.Options.PathFormatter)
@@ -65,6 +66,14 @@ namespace RezRouting
         public void HandledBy(Type type)
         {
             controllerTypes.Add(type);
+        }
+
+        public void CustomProperties(IDictionary<string, object> properties)
+        {
+            foreach (var item in properties)
+            {
+                customProperties[item.Key] = item.Value;
+            }
         }
     }
 }

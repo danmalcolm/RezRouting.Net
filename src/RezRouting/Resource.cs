@@ -7,11 +7,12 @@ namespace RezRouting
     {
         private readonly IUrlSegment urlSegment;
 
-        public Resource(string name, IUrlSegment urlSegment, ResourceLevel level, IEnumerable<Resource> children)
+        public Resource(string name, IUrlSegment urlSegment, ResourceLevel level, IDictionary<string,object> customProperties, IEnumerable<Resource> children)
         {
             Name = name;
             this.urlSegment = urlSegment;
             Level = level;
+            CustomProperties = customProperties;
             Children = children.ToReadOnlyList();
             Children.Each(child => child.InitParent(this));
         }
@@ -83,5 +84,11 @@ namespace RezRouting
                 }
             }
         }
+
+        /// <summary>
+        /// Additional data assigned to this Resource - designed for use by application-specific
+        /// extensions to core routing functionality.
+        /// </summary>
+        public IDictionary<string, object> CustomProperties { get; private set; }
     }
 }

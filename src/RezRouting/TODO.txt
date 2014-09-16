@@ -1,5 +1,4 @@
-﻿[ ] Include arbitrary data in Resource model
-
+﻿
 [ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
  
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
@@ -36,6 +35,8 @@
 
 [ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
 
+
+[x] Include arbitrary data in Resource model
 
 [x] Include arbitrary data in Route model
 
