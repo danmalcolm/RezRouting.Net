@@ -26,11 +26,11 @@
   </Target>
 
   <Target Name="Build" DependsOnTargets="Prepare">
-    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);OutputPath=$(BuildDir)"  />
+    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);"  />
   </Target>
 
   <Target Name="RunTests">
-      <xunit Assembly="$(BuildDir)\RezRouting.Tests.dll" />
+      <xunit Assembly="$(SlnDir)\RezRouting.Tests\bin\$(Configuration)\RezRouting.Tests.dll" />
   </Target>
 
   <Target Name="PackageNuGet">
