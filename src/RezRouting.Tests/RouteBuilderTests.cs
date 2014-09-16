@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 using Xunit.Extensions;
@@ -16,7 +17,7 @@ namespace RezRouting.Tests
         }
 
         [Fact]
-        public void should_build_route_with_properties_configured()
+        public void should_build_route_with_core_properties_configured()
         {
             var builder = new RouteBuilder(typeof(TestController));
             builder.Configure("Route1", "Action1", "GET", "test");
@@ -32,6 +33,29 @@ namespace RezRouting.Tests
                 Path = "test"
             }, options => options.ExcludingMissingProperties());
         }
+
+        [Fact]
+        public void custom_properties_should_be_empty_if_not_configured()
+        {
+            var builder = new RouteBuilder(typeof(TestController));
+            builder.Configure("Route1", "Action1", "GET", "test");
+            var route = builder.Build();
+
+            route.CustomProperties.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void should_include_copy_of_items_in_custom_properties_if_specified()
+        {
+            var builder = new RouteBuilder(typeof(TestController));
+            var data = new Dictionary<string, object> { {"key 1", "value 1" }};
+            builder.Configure("Route1", "Action1", "GET", "test", data);
+            var route = builder.Build();
+            
+            route.CustomProperties.ShouldBeEquivalentTo(new Dictionary<string,object> { { "key 1", "value 1"}});
+            route.CustomProperties.Should().NotBeSameAs(data);
+        }
+
 
         [Theory,
         InlineData(null, "Action1", "GET", "test"),

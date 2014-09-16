@@ -14,13 +14,14 @@ namespace RezRouting
         private string httpMethod = null;
         private string path = null;
         private string action = null;
+        private IDictionary<string, object> customProperties;
 
         public RouteBuilder(Type controllerType)
         {
             this.controllerType = controllerType;
         }
 
-        public void Configure(string name, string action, string httpMethod, string path)
+        public void Configure(string name, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (action == null) throw new ArgumentNullException("action");
@@ -31,6 +32,7 @@ namespace RezRouting
             this.action = action;
             this.httpMethod = httpMethod;
             this.path = path;
+            this.customProperties = customProperties;
 
             this.configured = true;
         }
@@ -39,7 +41,11 @@ namespace RezRouting
         {
             if (!configured) return null;
 
-            return new Route(name, controllerType, action, httpMethod, path);
+            var properties = customProperties != null
+                ? new Dictionary<string, object>(customProperties)
+                : new Dictionary<string, object>();
+
+            return new Route(name, controllerType, action, httpMethod, path, properties);
         }
     }
 }

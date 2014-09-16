@@ -1,6 +1,4 @@
-﻿[ ] Include arbitrary data in Route model
-
-[ ] Include arbitrary data in Resource model
+﻿[ ] Include arbitrary data in Resource model
 
 [ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
  
@@ -38,6 +36,8 @@
 
 [ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
 
+
+[x] Include arbitrary data in Route model
 
 [x] Resource.Ancestors - all parents
 

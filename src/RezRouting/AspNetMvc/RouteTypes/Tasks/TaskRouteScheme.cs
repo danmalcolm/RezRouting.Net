@@ -48,7 +48,5 @@ namespace RezRouting.AspNetMvc.RouteTypes.Tasks
                 yield return handleSingularTask;
             }
         }
-
-        
     }
 }

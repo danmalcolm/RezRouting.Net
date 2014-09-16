@@ -1,10 +1,12 @@
-﻿namespace RezRouting
+﻿using System.Collections.Generic;
+
+namespace RezRouting
 {
     /// <summary>
-    /// Sets the properties of a route
+    /// Sets up a route
     /// </summary>
     public interface IConfigureRoute
     {
-        void Configure(string name, string action, string httpMethod, string path);
+        void Configure(string name, string action, string httpMethod, string path, IDictionary<string, object> customProperties = null);
     }
 }
