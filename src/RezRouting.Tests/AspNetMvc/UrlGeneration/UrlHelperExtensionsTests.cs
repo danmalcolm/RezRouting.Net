@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
@@ -27,7 +28,7 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         [Fact]
         public void should_generate_url_specified_by_controller_type_and_action()
         {
-            string url = helper.ResourceUrl(typeof(ProductsController), "index");
+            string url = helper.ResourceUrl(typeof(ProductsController), "index", null);
             url.Should().Be("/products");
         }
 
@@ -48,8 +49,21 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         [Fact]
         public void should_not_generate_url_for_unrecognised_action()
         {
-            string url = helper.ResourceUrl(typeof(ProductsController), "index2");
+            string url = helper.ResourceUrl(typeof(ProductsController), "index2", null);
             url.Should().BeNull();
+        }
+
+        [Fact]
+        public void should_not_break_due_to_ignore_routes_without_data_tokens()
+        {
+            var routes = helper.RouteCollection;
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            var route = routes.Last();
+            routes.Remove(route);
+            routes.Insert(0, route);
+
+            string url = helper.ResourceUrl(typeof(ProductsController), "index", null);
+            url.Should().Be("/products");
         }
     }
 }

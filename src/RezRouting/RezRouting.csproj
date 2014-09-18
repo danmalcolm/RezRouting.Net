@@ -24,6 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +33,9 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -80,7 +84,7 @@
     <Compile Include="AspNetMvc\RouteTypes\Crud\CrudRouteTypes.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteScheme.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteType.cs" />
-    <Compile Include="AspNetMvc\UrlGeneration\RouteIndex.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndex.cs" />
     <Compile Include="CollectionItemBuilder.cs" />
     <Compile Include="CollectionBuilder.cs" />
     <Compile Include="IConfigureCollection.cs" />

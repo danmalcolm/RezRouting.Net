@@ -111,6 +111,8 @@
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\Class1.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsOptimizationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />
     <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
