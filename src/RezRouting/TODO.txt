@@ -1,16 +1,20 @@
-﻿
+﻿[ ] Separate RezRouting.AspNetMvc 
+
+[ ] CollectionBuilder - configure singular item name ItemName
  
-[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes
+[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes?
+    - use *Scheme and add builder-type configuration functionality
+	- pass Scheme to new UseScheme configuration method on RouteMapper
 
-[ ] Url generation using expression trees (separate project as has dependency on MvcFutures)
+[ ] Url generation using expression trees, e.g. AspNetMvc.Futures (separate project as has dependency on MvcFutures)
 
-[ ] Route types should be passed all controllers and return sequence of routes, to allow them to select single controller etc.
+[ ] Resolve ASP.Net MVC binding issues, e.g. referencing correct version
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
-[ ] CollectionBuilder - configure singular item name
-
 [ ] Add nested resources to CrudRouteTypeTests
+
+[ ] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
 
 [ ] Support action name override
 
@@ -25,6 +29,11 @@
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
 [ ] Force push with reset history to master
+
+[ ] Areas support
+
+
+[ ] Demo: Breadcrumb nav, searching on index, base index controllers
 
 [ ] Refactor: Test structure
 
