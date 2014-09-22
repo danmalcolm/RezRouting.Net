@@ -1,6 +1,4 @@
-﻿[ ] Separate RezRouting.AspNetMvc 
-
-[ ] CollectionBuilder - configure singular item name ItemName
+﻿[ ] CollectionBuilder - configure singular item name ItemName
  
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes?
     - use *Scheme and add builder-type configuration functionality
@@ -47,6 +45,8 @@
 
 [ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
 
+
+[x] Separate RezRouting.AspNetMvc 
 
 [x] Include arbitrary data in Resource model
 
