@@ -1,12 +1,12 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.AspNetMvc.RouteTypes.Crud;
+using RezRouting.AspNetMvc.RouteTypes.Tasks;
 using RezRouting.Demos.Tasks.Controllers.Products;
 using RezRouting.Demos.Tasks.Controllers.Products.Product;
 using RezRouting.Demos.Tasks.Controllers.Session;
 using RezRouting;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteTypes.Crud;
-using RezRouting.AspNetMvc.RouteTypes.Tasks;
 
 namespace RezRouting.Demos.Tasks
 {

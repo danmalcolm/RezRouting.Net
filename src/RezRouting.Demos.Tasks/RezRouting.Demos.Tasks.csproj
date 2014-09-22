@@ -176,6 +176,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RezRouting.AspNetMvc\RezRouting.AspNetMvc.csproj">
+      <Project>{7dd4efb8-d7d1-4295-8f27-923a4f8a3285}</Project>
+      <Name>RezRouting.AspNetMvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RezRouting\RezRouting.csproj">
       <Project>{ec46b63d-45d9-472b-8400-12a9cac5bb9e}</Project>
       <Name>RezRouting</Name>

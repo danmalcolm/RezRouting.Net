@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting", "RezRouting\RezRouting.csproj", "{EC46B63D-45D9-472B-8400-12A9CAC5BB9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting.Tests", "RezRouting.Tests\RezRouting.Tests.csproj", "{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}"
@@ -10,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting.Demos.Tasks", "RezRouting.Demos.Tasks\RezRouting.Demos.Tasks.csproj", "{65AB001B-2E57-4A15-BDE5-39CCA93F570B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{8DFAE051-CB45-4C16-B6D9-9B982A7FDBC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RezRouting.AspNetMvc", "RezRouting.AspNetMvc\RezRouting.AspNetMvc.csproj", "{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{65AB001B-2E57-4A15-BDE5-39CCA93F570B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65AB001B-2E57-4A15-BDE5-39CCA93F570B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65AB001B-2E57-4A15-BDE5-39CCA93F570B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

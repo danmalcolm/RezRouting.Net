@@ -1,11 +1,11 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.AspNetMvc.RouteTypes.Crud;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Session;
 using RezRouting;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteTypes.Crud;
 
 namespace RezRouting.Demos.Crud
 {
