@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionMappingHelper.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="MvcRouteMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

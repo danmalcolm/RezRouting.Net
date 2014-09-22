@@ -31,7 +31,7 @@ namespace RezRouting.AspNetMvc.RouteTypes
         {
             if (resource.Level == Level)
             {
-                var supported = ActionMappingHelper.IncludesAction(handlerType, Action);
+                var supported = ActionMappingHelper.SupportsAction(handlerType, Action);
                 if (supported)
                 {
                     var path = pathFormatter.FormatDirectoryName(Path);

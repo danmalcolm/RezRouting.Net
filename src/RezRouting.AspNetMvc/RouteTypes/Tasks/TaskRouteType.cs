@@ -28,7 +28,7 @@ namespace RezRouting.AspNetMvc.RouteTypes.Tasks
         {
             if (resource.Level == Level)
             {
-                var supported = ActionMappingHelper.IncludesAction(handlerType, Action);
+                var supported = ActionMappingHelper.SupportsAction(handlerType, Action);
                 if (supported)
                 {
                     var builder = new RouteBuilder(handlerType);

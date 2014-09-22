@@ -7,11 +7,11 @@ namespace RezRouting.AspNetMvc
 {
     public static class ActionMappingHelper
     {
-        public static bool IncludesAction(Type controllerType, string action)
+        public static bool SupportsAction(Type controllerType, string action)
         {
             var controllerDescriptor = new ReflectedControllerDescriptor(controllerType);
             var actions = controllerDescriptor.GetCanonicalActions();
-            var supportsAction = actions.Any(x => StringExtensions.EqualsIgnoreCase(x.ActionName, action));
+            var supportsAction = actions.Any(x => x.ActionName.EqualsIgnoreCase(action));
             return supportsAction;
         }
     }
