@@ -7,27 +7,37 @@ namespace RezRouting.Tests
 {
     public class ResourceUrlTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
-
+        private readonly RouteMapper mapper = new RouteMapper();
+            
         [Fact]
-        public void top_level_resource_urls_should_be_based_on_directory()
+        public void top_level_singular_urls_should_be_based_on_directory()
         {
-            var singular = new SingularBuilder("Profile").Build(context);
-            singular.Url.Should().Be("profile");
+            mapper.Singular("Profile", x => {});
+            var resource = mapper.Build().Single();
 
-            var collection = new CollectionBuilder("Products").Build(context);
-            collection.Url.Should().Be("products");
+            resource.Url.Should().Be("profile");
         }
 
         [Fact]
-        public void nested_singular_resource_urls_should_include_ancestor_paths()
+        public void top_level_collection_urls_should_be_based_on_directory()
         {
-            var builder = new SingularBuilder("Profile");
-            builder.Singular("User", user =>
+            mapper.Collection("Products", x => { });
+            var collection = mapper.Build().Single();
+            collection.Url.Should().Be("products");
+        }
+        
+        [Fact]
+        public void nested_singular_urls_should_include_ancestor_paths()
+        {
+            mapper.Singular("Profile", profile =>
             {
-                user.Singular("Status", status => { });
+                profile.Singular("User", user =>
+                {
+                    user.Singular("Status", status => {});
+                });
             });
-            var level0 = builder.Build(context);
+
+            var level0 = mapper.Build().Single();
             var level1 = level0.Children.Single();
             var level2 = level1.Children.Single();
 
@@ -38,9 +48,8 @@ namespace RezRouting.Tests
         [Fact]
         public void collection_item_urls_should_combine_parent_path_and_id_parameter()
         {
-            var builder = new CollectionBuilder("Products");
-            builder.Items(x => {});
-            var collection = builder.Build(context);
+            mapper.Collection("Products", x => { });
+            var collection = mapper.Build().Single();
             var item = collection.Children.Single();
             item.Url.Should().Be("products/{id}");
         }
@@ -48,9 +57,12 @@ namespace RezRouting.Tests
         [Fact]
         public void nested_collection_resource_urls_should_include_ancestor_paths()
         {
-            var builder = new SingularBuilder("Profile");
-            builder.Collection("Logins", logins => logins.Items(items => { }));
-            var level0 = builder.Build(context);
+            mapper.Singular("Profile", profile =>
+            {
+                profile.Collection("Logins", logins => {});
+            });
+            
+            var level0 = mapper.Build().Single();
             var collection = level0.Children.Single();
             var collectionItem = collection.Children.Single();
 
@@ -59,16 +71,21 @@ namespace RezRouting.Tests
         }
 
         [Fact]
-        public void child_resources_of_collection_item_should_use_ancestor_id_param_name()
+        public void collection_item_ancestor_resources_should_use_ancestor_id_param_name()
         {
-            var builder = new CollectionBuilder("Products");
-            builder.Items(product => product.Collection("Reviews", reviews => {}));
-            var products = builder.Build(context);
-            var productItem = products.Children.Single();
-            var reviewsItem = productItem.Children.Single().Children.Single();
+            mapper.Collection("Products", products =>
+            {
+                products.Items(product =>
+                {
+                    product.Collection("Reviews", reviews => { });
+                });
+            });
+            var collection = mapper.Build().Single();
+            var collectionItem = collection.Children.Single();
+            var nestedItem = collectionItem.Children.Single().Children.Single();
 
-            productItem.Url.Should().Be("products/{id}");
-            reviewsItem.Url.Should().Be("products/{productId}/reviews/{id}");
+            collectionItem.Url.Should().Be("products/{id}");
+            nestedItem.Url.Should().Be("products/{productId}/reviews/{id}");
         }
     }
 }
