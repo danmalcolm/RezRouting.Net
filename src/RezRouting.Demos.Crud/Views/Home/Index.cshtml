@@ -1,4 +1,6 @@
-﻿@model RezRouting.Demos.Crud.Controllers.Home.HomeModel
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.Crud.Controllers.Products
+@model RezRouting.Demos.Crud.Controllers.Home.HomeModel
 
 @{
     ViewBag.Title = "Home";
@@ -12,4 +14,5 @@
     }
 </ul>
 <p><a href="@Url.Action("Index", "Products")">View All</a></p>
+<p><a href="@Url.ResourceUrl(typeof(ProductsController), "Index", null)">View All</a></p>
 

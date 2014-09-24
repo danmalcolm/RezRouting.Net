@@ -4,8 +4,6 @@
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
-[ ] Add nested resources to CrudRouteTypeTests
-
 [ ] Support action name override
 
 [ ] Demo app - add some comments, explanations and readme

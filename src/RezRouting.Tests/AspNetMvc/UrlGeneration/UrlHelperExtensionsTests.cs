@@ -33,6 +33,20 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         }
 
         [Fact]
+        public void should_generate_full_url_with_host_name()
+        {
+            string url = helper.ResourceUrl(typeof(ProductsController), "index", null, hostName: "www.example.org");
+            url.Should().Be("http://www.example.org/products");
+        }
+
+        [Fact]
+        public void should_generate_full_url_with_host_name_and_protocol()
+        {
+            string url = helper.ResourceUrl(typeof(ProductsController), "index", null, "https", "www.example.org");
+            url.Should().Be("https://www.example.org/products");
+        }
+
+        [Fact]
         public void should_generate_url_specified_by_controller_type_action_and_values()
         {
             string url = helper.ResourceUrl(typeof(ProductController), "Show", new { id = "123" });

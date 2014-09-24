@@ -30,7 +30,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
             return helper.ResourceUrl(controllerType, action, rvd);
         }
 
-        public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, RouteValueDictionary routeValues)
+        public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, RouteValueDictionary routeValues, string protocol = null, string hostName = null)
         {
             const string modelKey = RouteDataTokenKeys.RouteModel;
 
@@ -50,11 +50,10 @@ namespace RezRouting.AspNetMvc.UrlGeneration
                         && r.Action.EqualsIgnoreCase(action));
             }
 
-            if (route != null)
-            {
-                return helper.RouteUrl(route.FullName, routeValues);
-            }
-            return null;
+            if (route == null) return null;
+
+            string url = helper.RouteUrl(route.FullName, routeValues, protocol, hostName);
+            return url;
         }
     }
 }
