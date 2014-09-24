@@ -17,7 +17,6 @@ namespace RezRouting
             Children.Each(child => child.InitParent(this));
         }
 
-        // TODO: sort chicken-and-egg - does Route need resource, or just some of its props
         internal void InitRoutes(IEnumerable<Route> routes)
         {
             Routes = routes.ToReadOnlyList();
@@ -74,7 +73,7 @@ namespace RezRouting
         {
             get
             {
-                if (Parent != null)
+                if (Parent.Level != ResourceLevel.Base)
                 {
                     yield return Parent;
                     foreach (var ancestor in Parent.Ancestors)

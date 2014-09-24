@@ -2,6 +2,6 @@
 {
     public enum ResourceLevel
     {
-        Singular,Collection,CollectionItem
+        Base,Singular,Collection,CollectionItem
     }
 }

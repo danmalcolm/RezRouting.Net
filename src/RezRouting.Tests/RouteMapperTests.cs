@@ -37,6 +37,19 @@ namespace RezRouting.Tests
         }
 
         [Fact]
+        public void should_include_custom_base_path_in_resource_urls()
+        {
+            var mapper = new RouteMapper();
+            mapper.BasePath("api");
+            mapper.Collection("Products", products => { });
+
+            var collection = mapper.Build().Single();
+            collection.Url.Should().Be("api/products");
+            var item = collection.Children.Single();
+            item.Url.Should().Be("api/products/{id}");
+        }
+
+        [Fact]
         public void should_attempt_to_create_route_for_each_resource_and_controller_and_route_type()
         {
             var mapper = new RouteMapper();

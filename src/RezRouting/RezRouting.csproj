@@ -71,6 +71,7 @@
     <Compile Include="Resource.cs" />
     <Compile Include="ResourceBuilder.cs" />
     <Compile Include="ResourceLevel.cs" />
+    <Compile Include="BaseBuilder.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="RouteBuilder.cs" />
     <Compile Include="RouteMapper.cs" />
