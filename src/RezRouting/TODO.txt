@@ -1,6 +1,4 @@
-﻿[ ] Url generation using expression trees, e.g. AspNetMvc.Futures (separate project as has dependency on MvcFutures) - leave to user?
-
-[ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
+﻿[ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 

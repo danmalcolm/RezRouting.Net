@@ -73,7 +73,8 @@ namespace RezRouting
         {
             get
             {
-                if (Parent.Level != ResourceLevel.Base)
+                if (Parent != null 
+                    && Parent.Level != ResourceLevel.Base)
                 {
                     yield return Parent;
                     foreach (var ancestor in Parent.Ancestors)
