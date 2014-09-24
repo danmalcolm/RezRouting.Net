@@ -1,5 +1,4 @@
-﻿[ ] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
- 
+﻿
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes?
     - use *Scheme and add builder-type configuration functionality
 	- pass Scheme to new UseScheme configuration method on RouteMapper
@@ -24,8 +23,7 @@
 
 [ ] Force push with reset history to master (lose first attempt)
 
-[ ] Areas support
-
+[ ] ASP.Net MVC Areas support
 
 [ ] Demo: Breadcrumb nav, searching on index, base index controllers
 
@@ -35,12 +33,12 @@
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
-[ ] Refactor: Automatic singular CollectionItem name convention should be done outside of builders, e.g. conventions independent of builders
 
-[ ] Refactor: Null object pattern for root parent resource
 
-[ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
-    Tough - you have this with singular anyway, though it does happen more with collections, which ar e more common
+
+[x] Refactor: Null object pattern for root parent resource (new base level)
+
+[x] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
 
 [x] CollectionBuilder - configure singular item name ItemName
 
