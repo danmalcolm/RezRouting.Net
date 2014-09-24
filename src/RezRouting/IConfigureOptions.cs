@@ -4,6 +4,10 @@ namespace RezRouting
 {
     public interface IConfigureOptions
     {
+        /// <summary>
+        /// Specifies settings used to format paths within resource and task URLs
+        /// </summary>
+        /// <param name="settings"></param>
         void FormatUrlPaths(UrlPathSettings settings);
 
         /// <summary>
