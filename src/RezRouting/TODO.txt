@@ -1,4 +1,4 @@
-﻿[ ] CollectionBuilder - configure singular item name ItemName
+﻿[ ] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
  
 [ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes?
     - use *Scheme and add builder-type configuration functionality
@@ -6,13 +6,11 @@
 
 [ ] Url generation using expression trees, e.g. AspNetMvc.Futures (separate project as has dependency on MvcFutures)
 
-[ ] Resolve ASP.Net MVC binding issues, e.g. referencing correct version
+[ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
 [ ] Add nested resources to CrudRouteTypeTests
-
-[ ] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
 
 [ ] Support action name override
 
@@ -20,13 +18,11 @@
 
 [ ] Example of using resources to generate breadcrumb navigation in demo apps
 
-[ ] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
-
 [ ] Comments on public API
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
-[ ] Force push with reset history to master
+[ ] Force push with reset history to master (lose first attempt)
 
 [ ] Areas support
 
@@ -44,7 +40,11 @@
 [ ] Refactor: Null object pattern for root parent resource
 
 [ ] Convention: Using singular name for item-level controller namespace can lead to conflict between ns and class name
+    Tough - you have this with singular anyway, though it does happen more with collections, which ar e more common
 
+[x] CollectionBuilder - configure singular item name ItemName
+
+[x] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
 
 [x] Separate RezRouting.AspNetMvc 
 

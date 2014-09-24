@@ -9,9 +9,9 @@ namespace RezRouting
         private readonly CollectionItemBuilder itemBuilder;
         private string urlPath;
 
-        public CollectionBuilder(string name) : base(name, ResourceLevel.Collection)
+        public CollectionBuilder(string name, string itemName = null) : base(name, ResourceLevel.Collection)
         {
-            string itemName = name.Singularize(Plurality.Plural);
+            itemName = itemName ?? name.Singularize();
             itemBuilder = new CollectionItemBuilder(itemName);
             AddChild(itemBuilder, x => {});
         }

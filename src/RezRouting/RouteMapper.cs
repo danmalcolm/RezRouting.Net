@@ -16,6 +16,11 @@ namespace RezRouting
             AddBuilder(new CollectionBuilder(name), x => configure(x));
         }
 
+        public void Collection(string name, string itemName, Action<IConfigureCollection> configure)
+        {
+            AddBuilder(new CollectionBuilder(name, itemName), x => configure(x));
+        }
+
         public void Singular(string name, Action<IConfigureSingular> configure)
         {
             AddBuilder(new SingularBuilder(name), x => configure(x));

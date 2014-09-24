@@ -58,6 +58,18 @@ namespace RezRouting.Tests
         }
 
         [Fact]
+        public void should_use_custom_name_for_child_item_resource_if_specified()
+        {
+            var builder = new CollectionBuilder("Products", "AProduct");
+
+            var collection = builder.Build(context);
+
+            collection.Children.Should().HaveCount(1);
+            var item = collection.Children.Single();
+            item.Name.Should().Be("AProduct");
+        }
+
+        [Fact]
         public void full_name_of_child_item_resource_should_include_parent_collection()
         {
             var builder = new CollectionBuilder("Products");

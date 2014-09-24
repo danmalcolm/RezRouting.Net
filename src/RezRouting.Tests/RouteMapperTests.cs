@@ -24,6 +24,19 @@ namespace RezRouting.Tests
         }
 
         [Fact]
+        public void should_configure_custom_name_for_collection_item()
+        {
+            var mapper = new RouteMapper();
+
+            mapper.Collection("Products", "AProduct", products => { });
+            var resources = mapper.Build().ToList();
+
+            var collection = resources.Single();
+            var item = collection.Children.Single();
+            item.Name.Should().Be("AProduct");
+        }
+
+        [Fact]
         public void should_attempt_to_create_route_for_each_resource_and_controller_and_route_type()
         {
             var mapper = new RouteMapper();

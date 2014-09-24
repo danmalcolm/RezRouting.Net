@@ -58,6 +58,11 @@ namespace RezRouting
             AddChild(new CollectionBuilder(name), x => configure(x));
         }
 
+        public void Collection(string name, string itemName, Action<IConfigureCollection> configure)
+        {
+            AddChild(new CollectionBuilder(name, itemName), x => configure(x));
+        }
+
         public void HandledBy<T>()
         {
             HandledBy(typeof(T));
