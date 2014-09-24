@@ -4,7 +4,6 @@ using RezRouting.AspNetMvc.RouteTypes.Crud;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Session;
-using RezRouting;
 using RezRouting.AspNetMvc;
 
 namespace RezRouting.Demos.Crud
@@ -18,7 +17,9 @@ namespace RezRouting.Demos.Crud
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(CrudRouteTypes.All);
+            var routeTypeBuilder = new CrudRouteTypeBuilder();
+            // TODO - configure some common options
+            mapper.RouteTypes(routeTypeBuilder.Build());
             mapper.Singular("Session", session => session.HandledBy<SessionController>());
             mapper.Collection("Products", products =>
             {

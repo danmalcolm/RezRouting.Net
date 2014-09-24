@@ -77,8 +77,8 @@
     <Compile Include="RouteDataTokenKeys.cs" />
     <Compile Include="RouteTypes\ActionDescriptorExtensions.cs" />
     <Compile Include="RouteTypes\ActionRouteType.cs" />
-    <Compile Include="RouteTypes\Crud\CrudRouteTypes.cs" />
-    <Compile Include="RouteTypes\Tasks\TaskRouteScheme.cs" />
+    <Compile Include="RouteTypes\Crud\CrudRouteTypeBuilder.cs" />
+    <Compile Include="RouteTypes\Tasks\TaskRouteTypeBuilder.cs" />
     <Compile Include="RouteTypes\Tasks\TaskRouteType.cs" />
     <Compile Include="UrlGeneration\RouteModelIndex.cs" />
     <Compile Include="UrlGeneration\UrlHelperExtensions.cs" />

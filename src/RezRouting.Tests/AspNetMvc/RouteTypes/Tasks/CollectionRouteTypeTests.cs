@@ -15,9 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
 
         public CollectionRouteTypeTests()
         {
-            var scheme = new TaskRouteScheme();
+            var scheme = new TaskRouteTypeBuilder();
             mapper = new RouteMapper();
-            mapper.RouteTypes(scheme.RouteTypes);
+            mapper.RouteTypes(scheme.Build());
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();

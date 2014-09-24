@@ -1,9 +1,4 @@
-﻿
-[ ] Standardise terminology for built-in route type schemes, is it TaskRouteScheme or CrudRouteTypes?
-    - use *Scheme and add builder-type configuration functionality
-	- pass Scheme to new UseScheme configuration method on RouteMapper
-
-[ ] Url generation using expression trees, e.g. AspNetMvc.Futures (separate project as has dependency on MvcFutures)
+﻿[ ] Url generation using expression trees, e.g. AspNetMvc.Futures (separate project as has dependency on MvcFutures) - leave to user?
 
 [ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
 
@@ -15,9 +10,9 @@
 
 [ ] Demo app - add some comments, explanations and readme
 
-[ ] Example of using resources to generate breadcrumb navigation in demo apps
-
 [ ] Comments on public API
+
+[ ] Update NuGet
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
@@ -25,7 +20,7 @@
 
 [ ] ASP.Net MVC Areas support
 
-[ ] Demo: Breadcrumb nav, searching on index, base index controllers
+[ ] Demo: Breadcrumb nav, searching on index, separate base controllers
 
 [ ] Refactor: Test structure
 
@@ -35,6 +30,7 @@
 
 
 
+[x] Standardise terminology for built-in route type schemes (builders - will allow tweaks)
 
 [x] Refactor: Null object pattern for root parent resource (new base level)
 

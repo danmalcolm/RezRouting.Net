@@ -12,9 +12,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
 
         public SingularRouteTypeTests()
         {
-            var scheme = new TaskRouteScheme();
+            var scheme = new TaskRouteTypeBuilder();
             var mapper = new RouteMapper();
-            mapper.RouteTypes(scheme.RouteTypes);
+            mapper.RouteTypes(scheme.Build());
             mapper.Singular("Profile", profile =>
             {
                 profile.HandledBy<DisplayProfileController>();

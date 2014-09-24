@@ -8,7 +8,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
         public static RouteMapper Configure()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(CrudRouteTypes.All);
+            mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

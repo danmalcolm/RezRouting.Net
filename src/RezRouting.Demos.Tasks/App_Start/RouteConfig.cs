@@ -19,7 +19,7 @@ namespace RezRouting.Demos.Tasks
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(new TaskRouteScheme().RouteTypes);
+            mapper.RouteTypes(new TaskRouteTypeBuilder().Build());
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();
@@ -32,7 +32,7 @@ namespace RezRouting.Demos.Tasks
 
             // Use CRUD for session for now
             mapper = new RouteMapper();
-            mapper.RouteTypes(CrudRouteTypes.All);
+            mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
             mapper.Singular("Session", session => session.HandledBy<SessionController>());
             new MvcRouteMapper().CreateRoutes(mapper.Build(), RouteTable.Routes);
         }

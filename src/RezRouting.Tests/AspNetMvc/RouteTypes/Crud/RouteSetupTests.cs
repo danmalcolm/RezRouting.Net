@@ -53,7 +53,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Crud
         public void should_not_map_resource_level_routes_on_different_level_resources()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(CrudRouteTypes.All);
+            mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
             mapper.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
             var routes = mapper.Build().Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
