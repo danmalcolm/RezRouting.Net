@@ -1,11 +1,21 @@
 # <a id="top"></a>RezRouting.Net
 
-A library that sets up ASP.Net MVC routes using resource-oriented URLs - similar to Ruby on Rails' built-in [Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default):
+RezRouting sets up routes in ASP.Net web applications based on a flexible resource-oriented structure.
 
-- Simple configuration API, convention-based naming and smart action discovery - map a resource's routes in one line of code
-- Clean URLs, with all the formatting options you need (lowercase, uppercase (surely not!), dashed, underscored)
-- Support for singular resources, collections and various nested combinations, e.g. /photos/27229/comments
+Features and benefits:
+
+- ASP.Net MVC support (ASP.Net Web API coming soon!)
+- Clean URLs, with a range of formatting options (lowercase, dashed, underscored etc.)
+- Suitable for both user-facing web applications and APIs designed for machine-to-machine communication
+- Support for singular resources, collections and various nested combinations, e.g. /products/27229/reviews
 - Partition actions for a resource into separate controllers - no more bloated controllers and SRP violations
+- Built-in CRUD routing scheme - similar to Ruby on Rails' [Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default)
+- Built-in task-centric routing scheme - a flexible scheme for more complex applications
+- An extensible route building mechanism that allows you to set up your own routing conventions
+
+
+
+See [Thinking Resourcefully](#background) in the WIKI for further details on using a resource-centric URL structure.
 
 ## Contents
  - [Introduction](#intro)
@@ -23,14 +33,16 @@ A library that sets up ASP.Net MVC routes using resource-oriented URLs - similar
 
 ## <a id="intro"></a>Introduction
 
-RezRouting.Net provides a simple API for setting up resource-oriented routes in an ASP.Net MVC web application. Here's some example code that you'd run at startup to map routes for an /albums collection resource, which, in turn contains a nested photos collection:
+ASP.Net web application frameworks like ASP.Net MVC and ASP.Net Web API offer a very simple route structure out-of-the-box. This doesn't scale well to more complex applications - it doesn't set a pattern for managing a hierarchy of resources. In addition, the controller-per-resource results in a large number of unrelated action methods on the same controller, resulting in bloated controllers.
+
+RezRouting.Net provides a simple API for setting up resource-oriented routes in ASP.Net web applications. Here's some example code that you'd run at startup to map routes for an /albums collection resource, which, in turn contains a nested products collection:
 
 ```C#
 var mapper = new RouteMapper();
-mapper.Collection(albums =>
+mapper.Collection(products =>
 {
-  albums.HandledBy<AlbumsController>();
-  albums.Collection(photos => photos.HandledBy<PhotosController>());
+  products.HandledBy<AlbumsController>();
+  products.Collection(products => products.HandledBy<productsController>());
 });
 // Add to the application's RouteCollection
 mapper.MapRoutes(RouteTable.Routes);
@@ -41,51 +53,49 @@ This would map web requests (based on HTTP method and URL path) to action method
 - `GET /albums` displays a list of albums - AlbumsController.Index action
 - `GET /albums/123` display an individual album - AlbumsController.Show action
 - `POST /albums` creates a new album - AlbumsController.Create action
-- `GET /albums/123/photos` displays photos in an individual album - PhotosController.Show action
-- `DELETE /albums/123/photos/456` removes photo 456 from album 123 - PhotosController.Delete action
+- `GET /albums/123/products` displays products in an individual album - productsController.Show action
+- `DELETE /albums/123/products/456` removes product 456 from album 123 - productsController.Delete action
 
 Setting up routes like this manually is tedious and error-prone. Let RezRouting do the work for you.
 
-RezRouting was inspired by [Ruby on Rails RESTful Routing](http://guides.rubyonrails.org/routing.htmlrouting) and its ASP.Net MVC port [Restful Routing](http://restfulrouting.com/). RezRouting's default routes are structured in the same way as those created by Ruby on Rails out-of-the box. See [Background - Thinking Resourcefully](#background) below for further background on this type of URL structure or skip ahead to [getting started](#getting-started)
+RezRouting was inspired by [Ruby on Rails Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default) and its ASP.Net MVC port [Restful Routing](http://restfulrouting.com/). RezRouting's built-in CRUD routing scheme structures routes are structured in the same way as those created by Ruby on Rails out-of-the box. See [Background - Thinking Resourcefully](#background) below for further background on this type of URL structure or skip ahead to [getting started](#getting-started)
 
 ## <a id="background"></a>Background - Thinking Resourcefully
 
-This section is intended for users new to the concept of REST, resources and routes - you can skim this section or skip ahead to [getting started](#getting-started) if you already _get_ resourceful URLs and why you might want to use them (ha ha - PRs to remove dubious humour always accepted).
+This section is intended for users new to the concept of REST, resources and routes - you can skim this section or skip ahead to [getting started](#getting-started) if you already _GET_ (cough) resourceful URLs and why you might want to use them.
 
-Forget the theoretical discussions about [REST](http://en.wikipedia.org/wiki/Representational_state_transfer) for now. From a purely practical point of view, structuring your URLs and controllers / actions in terms of your application's resources and the actions available on them fits a surprisingly wide range of scenarios. From an aesthetic point of view, the URLs look quite nice.
+[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) is an architectural style that defines an approach to or machine-to-machine communication. From a purely practical point of view, structuring your URLs and controllers / actions in terms of your application's resources and the actions available on them fits a surprisingly wide range of scenarios. From an aesthetic point of view, the URLs look quite nice.
 
-Put simply, a resource is a "thing" within your web application, a product, a photo album, a photo etc. A "resourceful" approach to structuring your application involves uses existing web architecture and conventions to allow users to access and perform actions on these things.
+Put simply, a resource is a "thing" within your web application, a product, a product album, a product etc. It covers a range, from abstract concepts, a message /lakescoder/status/454604724755390464, a business entity /contracts. A "resourceful" approach to structuring your application involves using the web's document-oriented architecture to provide access to and perform actions on these things.
 
-- Firstly, an application's resources are accessed using logically structured URL paths that represent the resources and the relationships between them. URLs like /users/phoebe, /users/phoebe/edit and /users/phoebe/albums are resourceful. URLs like "/scripts/albums.php?uid=2777&aid=36888" or "/index.cfm?fuseaction=albums..." are not... This replicates the web's document oriented structure our collection /users and resources /users/phoebe are like folders and HTML documents made available by a web server.
+An application's resources are accessed using logically structured URL paths that represent the resources and the relationships between them. URLs like /users/phoebe, /users/phoebe/edit and /users/phoebe/albums are resourceful. URLs like "/scripts/albums.php?uid=2777&aid=36888" or "/index.cfm?fuseaction=albums..." are not... This replicates the web's document oriented structure our collection /users and resources /users/phoebe are like folders and HTML documents made available by a web server.
 
-- Secondly, the actions that a user can perform upon these resources are based around HTTP methods (again we're using an existing web mechanisms). HTTP methods are based on the web's document oriented roots, but they work quite well for resources in your application too. `GET /users/phoebe/albumns` displays an HTML page containing a list of a user's photos, `POST /users/phoebe/photos` adds a new photo, `PUT /users/phoebe/photos/123` updates a specific photo.
+So, how are resourceful URLs structured? Let's look at some examples of resource-oriented URLs.
 
-So, how are resourceful URLs structured?
+The following route URLs would be set up to display or provide access to a resource:
 
-Imagine a simple web application used to maintain a list of photos. A resource-oriented URL / controller structure would display photo information using the URL _/photos_, routing requests to actions on a _PhotosController_ controller. Different URLs and HTTP methods would be used to access different controller actions. The URLs for the common CRUD (create, read, update and delete) actions and the way in which they relate to controller actions are displayed below.
+- GET /products - display the products resource collection
+- GET /products?q=coffee - filter a collection of product resources
+- GET /products/1234 - display an individual item within the products resource collection
+- GET /products/1234/reviews - display the reviews belonging to a product resource (a collection of nested below an item within the products resource collection)
+- GET /profile - display a singular profile resource, containing details of the currently signed-in user
+- GET /profile/sessions - display a history of the currently signed-in user's recent sessions (a resource collection nested within a singular resource)
 
-|HTTP Verb|URL Path           |Controller#Action|Purpose|
-|---------|------------------ |-----------------|-------------|
-|GET      |/photos            |photos#index     |Display a list of all photos |
-|GET	  |/photos/new        |photos#new       |Display form for creating a new item |
-|POST	  |/photos	          |photos#create    |Create a new photo |
-|GET	  |/photos/{id}	      |photos#show	    |Display a specific photo |
-|GET	  |/photos/{id}/edit  |photos#edit	    |Display for for editing specific item |
-|PUT	  |/photos/{id}	      |photos#update	|update a specific photo |
-|DELETE	  |/photos/{id}	      |photos#destroy	|delete a specific photo|
+In the context of a user-facing web application, these URLs would provide access to web pages containing HTML content representing the resource. In an API designed for machine-to-machine communication, the resource data would be made available in a data format like JSON or XML.
 
-Don't be put off too much by the restrictions that this CRUD structure might enforce. A complex system can still be modelled around resourceful URLs.
+RezRouting is structured around 3 levels or types of resources:
 
-Resources come in 2 types, based on plurality:
+- A _singular_ resource refers to a single "thing" or entity in your application. Singular resources are often implicitly identified by the user's authentication status, e.g. a URL like /profile identifies the profile associated with the currently authenticated user. /shopping-cart might identify the list of items added to a basket tied to a user's session on an e-commerce site.
+- A _collection_ resource contains multiple "things" or entities. The collection itself might have child resources. Named in the plural, collections look like a directory in the URL, e.g. /products. 
+- A _collection item_ - Both the collection itself and the items within it are resources in their own right. Collection items are nested within their parent collection and identified by an identifier within the URL, /products.
 
-- A _singular_ resource refers to a single "thing" or entity in your application. Singular resources have a URL like /session
-- A _collection_ resource contains multiple "things" or entities. Both the collection itself and the items within it are resources in their own right. The collection itself has a URL like /users. Individual resources within a collection have an identifier within the URL, e.g. /users/2920 or /users/phoebe.
+NOTE: RezRouting explicitly separates collection from collection items - each have their own set of controllers and routes. A number of design
 
-Often, resources are structured within others. If our simple photo application was structured around photo albums, we might make an albums resource available at _/albums_, with photos nested beneath.
+Often, resources are structured within others, using a range of combinations of singular / collection item resources. If our simple product application was structured around product albums, we might make an albums resource available at _/albums_, with products nested beneath.
 
-GET /albums/123 - show details of album with ID 123
-GET /albums/123/photos - show list of photos in album 123
-GET /albums/123/photos/new - add details of a new photo to add to album 123
+GET /products/123 - show details of album with ID 123
+GET /products/123/reviews - show list of products in album 123
+GET /albums/123/products/new - add details of a new product to add to album 123
 
 The same structure works well in other scenarios. A sequence of screens used to input details of an order into a CRM might be structured as follows:
 
@@ -95,6 +105,33 @@ GET  /orders/123/customer/edit - edit the customer details for order (which has 
 GET  /orders/123/shipping/edit - edit the shipping address
 PUT  /orders/123/shipping/edit - save the shipping address
 GET  /orders/123/payments/new - enter details of a new payment to record against the order
+
+As well as providing access to resource representations, resource-centric routes can also be used to perform actions on resources.
+
+Here are a few examples of route URLs that might be set up for a simple CRUD-based web application:
+
+- GET /products/new - display a form used to create a new resource in the products collection
+- POST /products - add an item to the products collection (the /products/new form is set to POST to this URL)
+- GET /products/1234/edit - display a form used to edit an individual item within the collection
+- PUT /products/1234 - update an item in the products resource collection (based on data in the /products/1234/edit form)
+- GET /sessions/new - display a form used to sign in to a web site - at the time of writing Twitter uses this URL for it's sign-in form
+- POST /sessions - authenticate and create a new session - as above, Twitter's sign-in form POSTs to /sessions
+
+For a more complex user-facing web application, a task-based URL structure offers more flexibility when the operations available don't match CRUD semantics:
+
+- GET /products/1234/publish - task screen, used to initiate the publish task of a product resource
+- POST /products/1234/publish - perform the publish task (using the details specified in the  /products/1234/publish form)
+- GET /products/1234/archive - task screen, used to initiate archiving of a product resource
+- POST /products/1234/archive - performs the archive task (using the details specified in the  /products/1234/publish form)
+- GET /products/bulk-create - task screen used to add multiple items to the products resource collection
+- POST /products/bulk-create - performs the bulk-create task
+- GET /products/reviews/approve - task screen used for bulk management of reviews added to all products
+- POST /products/reviews/approve - performs the approve task based on form data submitted
+
+Although the use of verbs in URLs isn't recommended for machine-to-machine REST services (Google it!), they are highly appropriate to user-facing web applications. Generally, you should forget about REST in the context of user-facing web apps - well, apart from stealing the idea about how you should structure your resources.
+
+
+
 
 ## <a id="getting-started"></a>Getting Started
 
@@ -111,24 +148,13 @@ Once you have RezRouting referenced, you need to configure your routes at applic
 Routes are initialised using an instance of the RouteMapper class as follows:
 
 ```C#
-var mapper = new RouteMapper();
-mapper.Collection(albums =>
-{
-  mapper.HandledBy<AlbumsController>();
-  mapper.Collection(photos => photos.HandledBy<PhotosController>());
-});
-// Add to the application's RouteCollection
-mapper.MapRoutes(RouteTable.Routes);
+
 ```
 We first create an instance of RouteMapper, RezRouting's entry point for defining resource routes within our application.
-
-The first line defines a new collection resource called "Albums" (the name is based on the controller name). This resource is configured within the lambda statement. We first tell RezRouting which controller(s) to use. Within the Albums configuration delegate, we define another collection resource (Photos), which will be nested within the Albums resource.
 
 Finally, the MapRoutes method is called, passing the current application's RouteCollection.
 
 The following routes are now available in the application:
-
-TODO - screen grab from Glimpse or similar, once we have a demo app up and running.
 
 ## <a id="#common-resource-configuration"></a> Common Resource Configuration
 
@@ -146,13 +172,13 @@ The standard collection routes are as follows:
 
 |Route  |HTTP Verb|URL Path           |Controller Action        |Purpose|
 |-------|---------|-------------------|-------------------------|-------------|
-|Index  |GET      |/albums            |AlbumsController.Index   |Display a list of all photos |
+|Index  |GET      |/albums            |AlbumsController.Index   |Display a list of all products |
 |New    |GET      |/albums/new        |AlbumsController.New     |Display form for creating a new item |
-|Create |POST     |/albums	          |AlbumsController.Create  |Create a new photo |
-|Show   |GET      |/albums/{id}	      |AlbumsController.Show	|Display a specific photo |
+|Create |POST     |/albums	          |AlbumsController.Create  |Create a new product |
+|Show   |GET      |/albums/{id}	      |AlbumsController.Show	|Display a specific product |
 |Edit   |GET      |/albums/{id}/edit  |AlbumsController.Edit	|Display for for editing specific item |
-|Update |PUT      |/albums/{id}	      |AlbumsController.Update	|update a specific photo |
-|Delete |DELETE   |/albums/{id}	      |AlbumsController.Destroy	|delete a specific photo|
+|Update |PUT      |/albums/{id}	      |AlbumsController.Update	|update a specific product |
+|Delete |DELETE   |/albums/{id}	      |AlbumsController.Destroy	|delete a specific product|
 
 Note that the collection is a resource in itself, as well as the resources within it. Index, New and Create apply to the collection itself. Routes that have an id in the URL reference individual items within the collection (Show, Edit, Update and Delete)
 
@@ -228,19 +254,19 @@ Routes for nested resources are configured in the same way as top-level resource
 mapper.Collection(albums =>
 {
   albums.HandledBy<AlbumsController>();
-  albums.Collection(photos => photos.HandledBy<PhotosController>());
+  albums.Collection(products => products.HandledBy<productsController>());
 });
 ```
 
 |Route  |Route Name           |HTTP Verb|URL Path                           |Controller Action        |Purpose|
 |-------|---------------------|---------|-----------------------------------|-------------------------|-------------|
-|Index  |Albums.Photos.Index  |GET      |/albums/{albumId}/photos           |AlbumsController.Index   |Display a list of all photos |
-|New    |Albums.Photos.New    |GET      |/albums/{albumId}/photos/new       |AlbumsController.New     |Display form for creating a new item |
-|Create |Albums.Photos.Create |POST     |/albums/{albumId}/photos	        |AlbumsController.Create  |Create a new photo |
-|Show   |Albums.Photos.Show   |GET      |/albums/{albumId}/photos/{id}	    |AlbumsController.Show	  |Display a specific photo |
-|Edit   |Albums.Photos.Edit   |GET      |/albums/{albumId}/photos/{id}/edit |AlbumsController.Edit	  |Display for for editing specific item |
-|Update |Albums.Photos.Update |PUT      |/albums/{albumId}/photos/{id}	    |AlbumsController.Update  |update a specific photo |
-|Delete |Albums.Photos.Delete |DELETE   |/albums/{albumId}/photos/{id}	    |AlbumsController.Destroy |delete a specific photo|
+|Index  |Albums.products.Index  |GET      |/albums/{albumId}/products           |AlbumsController.Index   |Display a list of all products |
+|New    |Albums.products.New    |GET      |/albums/{albumId}/products/new       |AlbumsController.New     |Display form for creating a new item |
+|Create |Albums.products.Create |POST     |/albums/{albumId}/products	        |AlbumsController.Create  |Create a new product |
+|Show   |Albums.products.Show   |GET      |/albums/{albumId}/products/{id}	    |AlbumsController.Show	  |Display a specific product |
+|Edit   |Albums.products.Edit   |GET      |/albums/{albumId}/products/{id}/edit |AlbumsController.Edit	  |Display for for editing specific item |
+|Update |Albums.products.Update |PUT      |/albums/{albumId}/products/{id}	    |AlbumsController.Update  |update a specific product |
+|Delete |Albums.products.Delete |DELETE   |/albums/{albumId}/products/{id}	    |AlbumsController.Destroy |delete a specific product|
 
 The routes names and URLs paths are based on the nested resource hierarchy. Note that the id of the parent resource within the route URL uses a name that relates child to parent.
 
@@ -254,7 +280,7 @@ public class AlbumsController
     public ActionResult Show(int id) { // ... }
 }
 
-public class PhotosController
+public class productsController
 {
     public ActionResult Index(int albumId) { // ... }
 
