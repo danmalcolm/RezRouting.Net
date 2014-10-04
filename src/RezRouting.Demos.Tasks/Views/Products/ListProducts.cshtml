@@ -1,0 +1,29 @@
+﻿@model RezRouting.Demos.Tasks.Controllers.Products.DisplayModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Manufacturer</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td><a href="@Url.Action("Show", "ShowProduct", new { id = product.Id })">@product.Id</a></td>
+                <td>@product.Name</td>
+                <td>@product.Manufacturer.Name</td>
+                <td>@product.CreatedOn</td>
+                <td>@product.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>
+<div><a class="btn btn-default" href="@Url.Action("Edit", "CreateProduct")">Add New Product</a></div>
+

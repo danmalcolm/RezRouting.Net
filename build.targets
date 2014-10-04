@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Full" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ItemGroup>
+    <XUnitTasksPath Include="$(SlnDir)\packages\xunit*\lib\net20\xunit.runner.msbuild.dll" />
+  </ItemGroup>
+  <UsingTask AssemblyFile="@(XUnitTasksPath)" TaskName="Xunit.Runner.MSBuild.xunit"/>
+  
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <PackageDir>$(RootDir)\package</PackageDir>
+    <BuildDir>$(RootDir)\build</BuildDir>
+    <SlnDir>$(RootDir)\src</SlnDir>
+    <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
+    <MainCsProjDir>$(SlnDir)\RezRouting</MainCsProjDir>
+    <NuSpecPath>$(SlnDir)\RezRouting.nuspec</NuSpecPath>
+    <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
+  </PropertyGroup>
+
+  <Target Name="Full" DependsOnTargets="Build;RunTests;PackageNuGet" />
+
+  <Target Name="Prepare">
+    <RemoveDir Directories="$(BuildDir);$(PackageDir)" />
+    <MakeDir Directories="$(BuildDir);$(PackageDir)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Prepare">
+    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);"  />
+  </Target>
+
+  <Target Name="RunTests">
+      <xunit Assembly="$(SlnDir)\RezRouting.Tests\bin\$(Configuration)\RezRouting.Tests.dll" />
+  </Target>
+
+  <Target Name="PackageNuGet">
+    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(MainCsProjDir)\RezRouting.csproj -Prop Configuration=$(Configuration)" />
+    <OnError ExecuteTargets="RestorePackagesConfigFile" />
+  </Target>
+
+  <Target Name="HidePackagesConfigFile" BeforeTargets="PackageNuGet">
+    <!-- rename packages.config to prevent NuGet pack from including dependencies in our package -->
+    <Move SourceFiles="$(MainCsProjDir)\packages.config" DestinationFiles="$(MainCsProjDir)\_packages.config" />
+  </Target>
+  
+  <Target Name="RestorePackagesConfigFile" AfterTargets="PackageNuGet">
+    <Move SourceFiles="$(MainCsProjDir)\_packages.config" DestinationFiles="$(MainCsProjDir)\packages.config" />
+  </Target>
+
+</Project>

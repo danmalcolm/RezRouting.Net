@@ -1,0 +1,16 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Products.Product.ShowModel
+
+@{
+    ViewBag.Title = Model.Product.Name + " Details";
+}
+<p>Made by: @Model.Product.Manufacturer.Name</p>
+<p>Added on: @Model.Product.CreatedOn</p>
+<p>Modified on: @Model.Product.ModifiedOn</p>
+<div>
+    <a class="btn btn-default" href="@Url.Action("Edit", new { id = Model.Product.Id })">Edit</a>
+    <form style="display:inline" method="POST" action="@Url.Action("Delete", "Product")" >
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <input class="btn btn-danger" type="submit" value="Delete" />
+    </form>
+</div>
+

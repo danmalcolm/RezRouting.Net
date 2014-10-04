@@ -1,0 +1,121 @@
+﻿[ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
+
+[ ] AutoResourceMapping - automapping based on controller hierarchy
+
+[ ] Support action name override
+
+[ ] Demo app - add some comments, explanations and readme
+
+[ ] Comments on public API
+
+[ ] Update NuGet
+
+[ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
+
+[ ] Force push with reset history to master (lose first attempt)
+
+[ ] ASP.Net MVC Areas support
+
+[ ] Demo: Breadcrumb nav, searching on index, separate base controllers
+
+[ ] Refactor: Test structure
+
+[ ] Refactor: CollectionBuilder should have 2 configure actions, one for collection, one for item?
+
+[ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
+
+
+
+[x] Standardise terminology for built-in route type schemes (builders - will allow tweaks)
+
+[x] Refactor: Null object pattern for root parent resource (new base level)
+
+[x] Add basepath to RouteMapper, e.g. /api or /admin - similar - could add special Root or Base resource.
+
+[x] CollectionBuilder - configure singular item name ItemName
+
+[x] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
+
+[x] Separate RezRouting.AspNetMvc 
+
+[x] Include arbitrary data in Resource model
+
+[x] Include arbitrary data in Route model
+
+[x] Resource.Ancestors - all parents
+
+[x] Back to standard namespace
+
+[x] URL generation
+
+[x] Apply path formatting options to route types
+
+[x] Task routes
+
+[x] Task routes demo 
+
+[x] Demo app - bootstrap
+
+[x] AspNetMvc.BuiltInRouteTypes.Crud
+
+[x] RouteTypeBuilders, with common functionality, e.g. map route with this action
+
+[x] Full name on resources
+
+[x] Full name on routes
+
+[x] Register routes in correct order, e.g. avoid clashes
+
+[x] Test routes in isolation
+
+[x] Routes should contain reference to route and resource
+
+[x] End to end route mapping tests with fake http context etc
+
+[x] Configure types handling routes - HandledBy
+
+[x] Introduce RouteTypes 
+
+[x] Add Routes to Resource model
+
+[x] Collection item structure
+
+[x] Share code between collection and singular
+
+[x] Customize URLPath
+
+[x] New UrlSegment to encapsulate differences in behaviour, e.g. straight directory name, id etc.
+
+[x] Resource UrlPath
+
+[x] Collection id param configuration
+
+[x] Configuring items twice should not create 2 child resources
+
+[x] Warning as error
+
+[x] Nested collections, should use different id for ancestors
+
+[x] CollectionItem name should be singular name version
+
+[x] UrlPath correct term for singular / collection builders. DirectoryPath instead?
+
+[x] Collection id param as ancestor configuration
+
+[x] RouteMapper entry point as in RezRouting
+
+[x] Full routebuilder configuration (methods, actionnames etc)
+
+[x] Actually create the MVC routes
+
+[x] Route urls
+
+[x] RouteBuilder, add single Configure method, more concise than setting props?
+
+[x] Extract IXConfigurator from XBuilder (IBuilder is IConfigurator without the Build method)
+
+[x] Add options, e.g. path formatting etc
+
+[x] Path formatting options
+
+[x] Id name convention
