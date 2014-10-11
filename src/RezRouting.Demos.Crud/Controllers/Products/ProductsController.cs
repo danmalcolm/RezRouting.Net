@@ -9,7 +9,7 @@ namespace RezRouting.Demos.Crud.Controllers.Products
     {
         public ActionResult Index()
         {
-            var model = new IndexModel
+            var model = new ProductsIndexModel
             {
                 Products = DemoData.Products.Where(x => x.IsActive).ToList()
             };

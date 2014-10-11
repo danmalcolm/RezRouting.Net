@@ -8,36 +8,51 @@ namespace RezRouting.Demos.Crud.DataAccess
     {
         static DemoData()
         {
-            Manufacturers = Enumerable.Range(1, 5)
-                .Select(x => new Manufacturer { Id = x, Name = "Manufacturer " + x })
+            Users = new[] { "Bob", "Mary", "Jane", "Jim" }
+                .Select(userName => new User { UserName = userName, Password = "123456" })
                 .ToList();
 
-            Products = Enumerable.Range(1, 10)
-                .Select(x =>
+            Manufacturers = (from manufacturerId in Enumerable.Range(1, 5)
+                select new Manufacturer
                 {
-                    var date = DateTime.Now.AddDays(-x);
-                    return new Product
-                                 {
-                                     Id = x,
-                                     Name = "Product " + x,
-                                     Manufacturer = Manufacturers.First(),
-                                     CreatedOn = date,
-                                     ModifiedOn = date,
-                                     IsActive = true
-                                 };
+                    Id = manufacturerId, 
+                    Name = "Manufacturer " + manufacturerId
                 })
                 .ToList();
 
-            Users = new[] { "Bob", "Mary", "Jane" }
-                .Select(x => new User { UserName = x, Password = "123456" })
+            Products = (from productId in Enumerable.Range(1, 10)
+                select new Product
+                {
+                    Id = productId,
+                    Name = "Product " + productId,
+                    Manufacturer = Manufacturers.First(),
+                    CreatedOn = DateTime.Now.AddDays(-14).AddDays(-productId),
+                    ModifiedOn = DateTime.Now.AddDays(-14).AddDays(-productId),
+                    IsActive = true
+                }).ToList();
+
+            Reviews = (from product in Products
+                from reviewNumber in Enumerable.Range(1, 10)
+                let good = reviewNumber % 2 == 0
+                select new Review
+                {
+                    Id = (product.Id - 1) * 10 + reviewNumber,
+                    Product = product,
+                    ReviewDate = product.CreatedOn.AddHours(reviewNumber),
+                    Comments = (good ? "It's good " : "I don't like it") + TestDataHelper.Lorem,
+                    Score = good ? 10 : 2,
+                    UserName = Users[(reviewNumber % 4)].UserName
+                })
                 .ToList();
+            
         }
 
         public static List<Manufacturer> Manufacturers { get; set; }
 
         public static List<Product> Products { get; set; }
 
-        public static List<User> Users { get; set; }
+        public static List<Review> Reviews { get; set; }
 
+        public static List<User> Users { get; set; }
     }
 }

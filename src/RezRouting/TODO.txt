@@ -1,4 +1,6 @@
-﻿[ ] Resolve ASP.Net assembly binding issues, e.g. referencing correct version or just go with MVC4 + binding redirect
+﻿[ ] ASP.Net MVC Areas support
+
+[ ] ResourceUrl<T> helper variation
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
 
@@ -8,15 +10,9 @@
 
 [ ] Comments on public API
 
-[ ] Update NuGet
+[ ] Update NuGet / build (and MVC assembly binding issues)
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
-
-[ ] Force push with reset history to master (lose first attempt)
-
-[ ] ASP.Net MVC Areas support
-
-[ ] Demo: Breadcrumb nav, searching on index, separate base controllers
 
 [ ] Refactor: Test structure
 
@@ -24,7 +20,12 @@
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
+[ ] Advanced Demo: Breadcrumb nav, searching on index, separate base controllers
 
+
+
+
+[x] Force push with reset history to master (lose first attempt)
 
 [x] Standardise terminology for built-in route type schemes (builders - will allow tweaks)
 

@@ -14,9 +14,14 @@ namespace RezRouting.Demos.Crud.Controllers.Products.Product
             {
                 return HttpNotFound();
             }
-            var model = new ShowModel
+            var reviews = DemoData.Reviews.Where(x => x.Product == product)
+                .OrderByDescending(x => x.ReviewDate)
+                .Take(3)
+                .ToList();
+            var model = new ProductDetailsModel
             {
-                Product = product
+                Product = product,
+                Reviews = reviews
             };
             return View(model);
         }

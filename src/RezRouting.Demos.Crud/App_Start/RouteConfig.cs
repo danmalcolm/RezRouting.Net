@@ -4,6 +4,8 @@ using RezRouting.AspNetMvc.RouteTypes.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
+using RezRouting.Demos.Crud.Controllers.Products.Product.Reviews;
+using RezRouting.Demos.Crud.Controllers.Products.Product.Reviews.Review;
 using RezRouting.Demos.Crud.Controllers.Session;
 using RezRouting.AspNetMvc;
 
@@ -24,7 +26,15 @@ namespace RezRouting.Demos.Crud
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
-                products.Items(product => product.HandledBy<ProductController>());
+                products.Items(product =>
+                {
+                    product.HandledBy<ProductController>();
+                    product.Collection("Reviews", reviews =>
+                    {
+                        reviews.HandledBy<ReviewsController>();
+                        reviews.Items(review => review.HandledBy<ReviewController>());
+                    });
+                });
             });
             new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
             UrlHelperExtensions.IndexRoutes(routes);

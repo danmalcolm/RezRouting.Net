@@ -125,17 +125,23 @@
     <Compile Include="Controllers\Home\HomeModel.cs" />
     <Compile Include="Controllers\Products\CreateInput.cs" />
     <Compile Include="Controllers\Products\CreateModel.cs" />
-    <Compile Include="Controllers\Products\IndexModel.cs" />
+    <Compile Include="Controllers\Products\ProductsIndexModel.cs" />
     <Compile Include="Controllers\Products\Product\EditInput.cs" />
     <Compile Include="Controllers\Products\Product\EditModel.cs" />
     <Compile Include="Controllers\Products\Product\ProductController.cs" />
-    <Compile Include="Controllers\Products\Product\ShowModel.cs" />
+    <Compile Include="Controllers\Products\Product\Reviews\ReviewsController.cs" />
+    <Compile Include="Controllers\Products\Product\Reviews\ReviewsIndexModel.cs" />
+    <Compile Include="Controllers\Products\Product\Reviews\Review\ReviewDetailsModel.cs" />
+    <Compile Include="Controllers\Products\Product\Reviews\Review\ReviewsController.cs" />
+    <Compile Include="Controllers\Products\Product\ProductDetailsModel.cs" />
     <Compile Include="Controllers\Session\Credentials.cs" />
     <Compile Include="DataAccess\DemoData.cs" />
     <Compile Include="Controllers\Products\ProductsController.cs" />
     <Compile Include="Controllers\Session\SessionController.cs" />
     <Compile Include="DataAccess\Manufacturer.cs" />
     <Compile Include="DataAccess\Product.cs" />
+    <Compile Include="DataAccess\Review.cs" />
+    <Compile Include="DataAccess\TestDataHelper.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -158,6 +164,8 @@
     <Content Include="Views\Products\New.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Review\Show.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

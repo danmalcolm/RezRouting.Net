@@ -1,0 +1,11 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Products.Product.Reviews.Review.ReviewDetailsModel
+@{
+    ViewBag.Title = Model.Review.Product.Name + " Review by " + Model.Review.UserName;
+}
+
+<p>Review Date: @Model.Review.ReviewDate</p>
+<p>Score: @Model.Review.Score</p>
+<div class="well">
+    @Model.Review.Comments
+</div>
+
