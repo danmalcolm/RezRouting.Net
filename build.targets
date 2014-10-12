@@ -13,8 +13,8 @@
     <BuildDir>$(RootDir)\build</BuildDir>
     <SlnDir>$(RootDir)\src</SlnDir>
     <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
-    <MainCsProjDir>$(SlnDir)\RezRouting</MainCsProjDir>
-    <NuSpecPath>$(SlnDir)\RezRouting.nuspec</NuSpecPath>
+    <MainCsProjDir>$(SlnDir)\RezRouting.AspNetMvc</MainCsProjDir>
+    <NuSpecPath>$(SlnDir)\RezRouting.AspNetMvc.nuspec</NuSpecPath>
     <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
   </PropertyGroup>
 
@@ -34,7 +34,7 @@
   </Target>
 
   <Target Name="PackageNuGet">
-    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(MainCsProjDir)\RezRouting.csproj -Prop Configuration=$(Configuration)" />
+    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(MainCsProjDir)\RezRouting.AspNetMvc.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
     <OnError ExecuteTargets="RestorePackagesConfigFile" />
   </Target>
 

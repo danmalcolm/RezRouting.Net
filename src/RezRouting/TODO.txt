@@ -1,5 +1,9 @@
 ﻿[ ] ASP.Net MVC Areas support
 
+[ ] Back to MVC 5.2.0.0
+
+[ ] Separate support for MVC 4
+
 [ ] ResourceUrl<T> helper variation
 
 [ ] AutoResourceMapping - automapping based on controller hierarchy
