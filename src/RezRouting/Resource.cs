@@ -3,6 +3,9 @@ using RezRouting.Utility;
 
 namespace RezRouting
 {
+    /// <summary>
+    /// A model of resource configured 
+    /// </summary>
     public class Resource
     {
         private readonly IUrlSegment urlSegment;
@@ -28,8 +31,15 @@ namespace RezRouting
             Parent = parent;
         }
 
+        /// <summary>
+        /// The name of the resource
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The full unique name of the resource based on the names of the resource
+        /// and its ancestors
+        /// </summary>
         public string FullName
         {
             get {
@@ -39,6 +49,10 @@ namespace RezRouting
             }
         }
 
+        /// <summary>
+        /// The URL used to identify this resource within the URL of a route belonging
+        /// directly to this resource
+        /// </summary>
         public string Url
         {
             get
@@ -50,6 +64,10 @@ namespace RezRouting
             }
         }
 
+        /// <summary>
+        /// The URL used to identify this resource within the URL of a route belonging
+        /// to a descendnt of this resource
+        /// </summary>
         public string UrlAsAncestor
         {
             get
@@ -61,14 +79,29 @@ namespace RezRouting
             }
         }
 
+        /// <summary>
+        /// The level of this resource
+        /// </summary>
         public ResourceLevel Level { get; private set; }
 
+        /// <summary>
+        /// A collection of child resources that belong to this resource
+        /// </summary>
         public IList<Resource> Children { get; private set; }
 
+        /// <summary>
+        /// The routes that have been configured for this resource
+        /// </summary>
         public IList<Route> Routes { get; private set; }
 
+        /// <summary>
+        /// The parent of this resource
+        /// </summary>
         public Resource Parent { get; private set; }
 
+        /// <summary>
+        /// Gets all ancestors, starting from this resource's immediate parent
+        /// </summary>
         public IEnumerable<Resource> Ancestors
         {
             get

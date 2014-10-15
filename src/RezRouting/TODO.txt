@@ -1,20 +1,29 @@
-﻿[ ] ASP.Net MVC Areas support
+﻿[ ] Rename RouteMapper to... ResourcesBuilder
 
-[ ] Back to MVC 5.2.0.0
+[ ] Improve MVC route registration API - last route registration step is a bit long-winded 
+* Use factory method for each framework, e.g. MvcResourceModelBuilder.Create - creates a RouteMapper that is set up to map MVC routes on build
+* ResourcesBuilder.Build() executes the actions and returns the ResourceModel
+
+[ ] Custom GET, PUT and POST actions at resource level for CRUD
+
+[ ] Rename BaseBuilder to RootBuilder
+[ ] ASP.Net MVC Areas support
+
+[ ] Introduce ResourceModel class - better to pass this around than a collection of resources?
 
 [ ] Separate support for MVC 4
 
 [ ] ResourceUrl<T> helper variation
 
-[ ] AutoResourceMapping - automapping based on controller hierarchy
-
 [ ] Support action name override
-
-[ ] Demo app - add some comments, explanations and readme
 
 [ ] Comments on public API
 
-[ ] Update NuGet / build (and MVC assembly binding issues)
+[ ] AutoResourceMapping - automapping based on controller hierarchy
+
+[ ] Demo app - add some comments, explanations and readme
+
+[ ] * route, e.g. all actions on a resource's controllers
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
@@ -28,6 +37,9 @@
 
 
 
+[x] Update NuGet / build (and MVC assembly binding issues)
+
+[x] Back to MVC 5.2.0.0
 
 [x] Force push with reset history to master (lose first attempt)
 

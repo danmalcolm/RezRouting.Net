@@ -2,6 +2,9 @@
 
 namespace RezRouting
 {
+    /// <summary>
+    /// Configures common options that apply when setting up routes
+    /// </summary>
     public interface IConfigureOptions
     {
         /// <summary>

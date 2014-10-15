@@ -5,6 +5,9 @@ using RezRouting.Options;
 
 namespace RezRouting
 {
+    /// <summary>
+    /// Base class for configuring resource types
+    /// </summary>
     public abstract class ResourceBuilder : IConfigureResource, IResourceBuilder
     {
         private readonly List<Type> controllerTypes = new List<Type>();

@@ -1,5 +1,8 @@
 ﻿namespace RezRouting
 {
+    /// <summary>
+    /// An element within a resource URL that contains the id of a resource
+    /// </summary>
     public class IdUrlSegment : IUrlSegment
     {
         public IdUrlSegment(string idName, string idNameAsAncestor)
