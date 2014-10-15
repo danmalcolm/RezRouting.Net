@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
@@ -28,12 +29,13 @@ namespace RezRouting.Tests
             {
                 profile.Singular("User", user => {});
             });
-            var resources = mapper.Build().ToList();
-            collection = resources.Single(x => x.Name == "Products");
+            var model = mapper.Build();
+
+            collection = model.Resources.Single(x => x.Name == "Products");
             item = collection.Children.Single(x => x.Name == "Product");
             nestedCollection = item.Children.Single(x => x.Name == "Reviews");
             nestedCollectionItem = nestedCollection.Children.Single(x => x.Name == "Review");
-            singular = resources.Single(x => x.Name == "Profile");
+            singular = model.Resources.Single(x => x.Name == "Profile");
             nestedSingular = singular.Children.Single(x => x.Name == "User");
         }
 

@@ -16,11 +16,11 @@ namespace RezRouting.Tests
             
             mapper.Collection("Products", products => {});
             mapper.Singular("Profile", profile => {});
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
 
-            resources.Should().HaveCount(2);
-            resources.Should().Contain(x => x.Name == "Products" && x.Level == ResourceLevel.Collection);
-            resources.Should().Contain(x => x.Name == "Profile" && x.Level == ResourceLevel.Singular);
+            model.Resources.Should().HaveCount(2);
+            model.Resources.Should().Contain(x => x.Name == "Products" && x.Level == ResourceLevel.Collection);
+            model.Resources.Should().Contain(x => x.Name == "Profile" && x.Level == ResourceLevel.Singular);
         }
 
         [Fact]
@@ -29,9 +29,9 @@ namespace RezRouting.Tests
             var mapper = new RouteMapper();
 
             mapper.Collection("Products", "AProduct", products => { });
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
 
-            var collection = resources.Single();
+            var collection = model.Resources.Single();
             var item = collection.Children.Single();
             item.Name.Should().Be("AProduct");
         }
@@ -43,7 +43,8 @@ namespace RezRouting.Tests
             mapper.BasePath("api");
             mapper.Collection("Products", products => { });
 
-            var collection = mapper.Build().Single();
+            var model = mapper.Build();
+            var collection = model.Resources.Single();
             collection.Url.Should().Be("api/products");
             var item = collection.Children.Single();
             item.Url.Should().Be("api/products/{id}");
@@ -76,9 +77,9 @@ namespace RezRouting.Tests
                     actualAttempts.Add(Tuple.Create(resource, type, "RouteType2"));
                 });
             mapper.RouteTypes(routeType1, routeType2);
-            var resources = mapper.Build().ToList();
-            
-            var resource1 = resources.Single();
+            var model = mapper.Build();
+
+            var resource1 = model.Resources.Single();
             var resource2 = resource1.Children.Single();
             var expectedAttempts = new List<Tuple<Resource, Type, string>>()
             {
@@ -121,9 +122,9 @@ namespace RezRouting.Tests
                     }
                 });
             mapper.RouteTypes(routeType1, routeType2);
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
 
-            var resource1 = resources.Single();
+            var resource1 = model.Resources.Single();
             var resource2 = resource1.Children.Single();
             resource1.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route1"});
             resource2.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route2" });
@@ -139,8 +140,9 @@ namespace RezRouting.Tests
             mapper.RouteTypes(routeType1);
             mapper.Collection("FineProducts", products => products.HandledBy<TestController1>());
             mapper.Options(options => options.FormatUrlPaths(new UrlPathSettings(caseStyle:CaseStyle.Upper, wordSeparator: "_")));
+            var model = mapper.Build();
 
-            var routeUrl = mapper.Build().Single().Routes.Single().Url;
+            var routeUrl = model.Resources.Single().Routes.Single().Url;
             routeUrl.Should().Be("FINE_PRODUCTS/action1");
         }
 
@@ -154,8 +156,9 @@ namespace RezRouting.Tests
             mapper.RouteTypes(routeType1);
             mapper.Collection("Products", products => products.Items(product => product.HandledBy<TestController1>()));
             mapper.Options(options => options.CustomiseIdNames(new DefaultIdNameConvention("code", true)));
+            var model = mapper.Build();
 
-            var resourceUrl = mapper.Build().Single().Children.Single(x => x.Level == ResourceLevel.CollectionItem).Url;
+            var resourceUrl = model.Resources.Single().Children.Single(x => x.Level == ResourceLevel.CollectionItem).Url;
             resourceUrl.Should().Be("products/{productCode}");
         }
 

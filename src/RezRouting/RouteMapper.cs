@@ -49,12 +49,12 @@ namespace RezRouting
             baseBuilder.UrlPath(path);
         }
 
-        public IEnumerable<Resource> Build()
+        public ResourcesModel Build()
         {
             var options = optionsBuilder.Build();
             var context = new RouteMappingContext(routeTypes, options);
             var rootResource = baseBuilder.Build(context);
-            return rootResource.Children;
+            return new ResourcesModel(rootResource.Children);
         }
     }
 }

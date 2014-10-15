@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
@@ -24,8 +25,7 @@ namespace RezRouting.Tests.AspNetMvc
             mapper.Collection("Products", products => products.HandledBy<TestController>());
 
             var routes = new RouteCollection();
-            var resources = mapper.Build().ToList();
-            new MvcRouteMapper().CreateRoutes(resources, routes);
+            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
 
             var route = routes.Cast<System.Web.Routing.Route>().Single();
             route.DataTokens["Name"].Should().Be("Products.Route1");
@@ -55,9 +55,9 @@ namespace RezRouting.Tests.AspNetMvc
                 });
             });
             var routes = new RouteCollection();
-            var resources = mapper.Build().ToList();
-            new MvcRouteMapper().CreateRoutes(resources, routes);
-            var expectedRouteNames = resources.Expand().Select(resource => resource.FullName + ".Route1");
+            var model = mapper.Build();
+            new MvcRouteMapper().CreateRoutes(model, routes);
+            var expectedRouteNames = model.Resources.Expand().Select(resource => resource.FullName + ".Route1");
             routes.Cast<System.Web.Routing.Route>().Select(x => x.DataTokens["Name"])
                 .ShouldBeEquivalentTo(expectedRouteNames);
         }
@@ -70,11 +70,11 @@ namespace RezRouting.Tests.AspNetMvc
             mapper.Collection("Products", products => products.HandledBy<TestController>());
 
             var routes = new RouteCollection();
-            var resources = mapper.Build().ToList();
-            new MvcRouteMapper().CreateRoutes(resources, routes);
+            var model = mapper.Build();
+            new MvcRouteMapper().CreateRoutes(model, routes);
 
             var route = routes.Cast<System.Web.Routing.Route>().Single();
-            route.DataTokens["RouteModel"].Should().Be(resources.First().Routes.First());
+            route.DataTokens["RouteModel"].Should().Be(model.Resources.First().Routes.First());
         }
 
         [Fact]
@@ -96,8 +96,8 @@ namespace RezRouting.Tests.AspNetMvc
                 });
             });
             var routes = new RouteCollection();
-            var resources = mapper.Build().ToList();
-            new MvcRouteMapper().CreateRoutes(resources, routes);
+            var model = mapper.Build();
+            new MvcRouteMapper().CreateRoutes(model, routes);
             var expectedRouteNames = new[]
             {
                 "Products.Route1", "Products.Route2", "Products.Product.Route1", "Products.Product.Route2",

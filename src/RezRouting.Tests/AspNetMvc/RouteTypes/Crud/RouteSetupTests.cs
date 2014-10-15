@@ -20,8 +20,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Crud
         static RouteSetupTests()
         {
             var mapper = CrudResourceModel.Configure();
-            var resources = mapper.Build();
-            Routes = resources.Expand().SelectMany(x => x.Routes).ToList();
+            var model = mapper.Build();
+            Routes = model.Resources.Expand().SelectMany(x => x.Routes).ToList();
         }
 
         [Theory]
@@ -55,7 +55,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Crud
             var mapper = new RouteMapper();
             mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
             mapper.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
-            var routes = mapper.Build().Expand().SelectMany(x => x.Routes);
+            var model = mapper.Build();
+            var routes = model.Resources.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
         }
     }

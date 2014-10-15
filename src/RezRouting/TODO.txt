@@ -1,15 +1,12 @@
-﻿[ ] Rename RouteMapper to... ResourcesBuilder
-
-[ ] Improve MVC route registration API - last route registration step is a bit long-winded 
-* Use factory method for each framework, e.g. MvcResourceModelBuilder.Create - creates a RouteMapper that is set up to map MVC routes on build
-* ResourcesBuilder.Build() executes the actions and returns the ResourceModel
+﻿[ ] Improve MVC (and future frameworks') route registration API - last route registration step is a bit long-winded 
+* Use factory method for each framework, e.g. MvcRouteMapper.Create - creates a RouteMapper that is set up to map MVC routes on build
+* .Build() executes the actions and returns the ResourceModel
 
 [ ] Custom GET, PUT and POST actions at resource level for CRUD
 
 [ ] Rename BaseBuilder to RootBuilder
-[ ] ASP.Net MVC Areas support
 
-[ ] Introduce ResourceModel class - better to pass this around than a collection of resources?
+[ ] ASP.Net MVC Areas support
 
 [ ] Separate support for MVC 4
 
@@ -36,6 +33,10 @@
 [ ] Advanced Demo: Breadcrumb nav, searching on index, separate base controllers
 
 
+
+
+
+[x] Introduce ResourcesModel class - better to pass this around than a collection of resources?
 
 [x] Update NuGet / build (and MVC assembly binding issues)
 

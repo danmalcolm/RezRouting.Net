@@ -24,7 +24,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
                     product.HandledBy<EditProductController>();
                 });
             });
-            resource = mapper.Build().Single().Children.Single();
+            var model = mapper.Build();
+            resource = model.Resources.Single().Children.Single();
         }
 
         [Fact]

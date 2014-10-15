@@ -15,7 +15,8 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var mapper = new RouteMapper();
             mapper.Collection("Products", products => {});
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
+            var resources = model.Resources;
             collection = resources.Single(x => x.Name == "Products");
         }
 

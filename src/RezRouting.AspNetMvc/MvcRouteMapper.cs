@@ -8,9 +8,9 @@ namespace RezRouting.AspNetMvc
 {
     public class MvcRouteMapper
     {
-        public void CreateRoutes(IEnumerable<Resource> resources, RouteCollection routes)
+        public void CreateRoutes(ResourcesModel model, RouteCollection routes)
         {
-            foreach (var route in GetRoutes(resources))
+            foreach (var route in GetRoutes(model.Resources))
             {
                 CreateRoute(route, routes);
             }

@@ -18,9 +18,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
             var routeMapper = new RouteMapper();
             routeMapper.Collection("Products", products => {});
             routeMapper.Singular("Profile", profile => {});
-            var resources = routeMapper.Build();
-            collection = resources.Single(x => x.Name == "Products");
-            singular = resources.Single(x => x.Name == "Profile");
+            var model = routeMapper.Build();
+            collection = model.Resources.Single(x => x.Name == "Products");
+            singular = model.Resources.Single(x => x.Name == "Profile");
         }
 
         [Fact]

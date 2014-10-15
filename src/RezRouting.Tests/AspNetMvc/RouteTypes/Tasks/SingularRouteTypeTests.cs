@@ -21,7 +21,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteTypes.Tasks
                 profile.HandledBy<DeleteProfileController>();
                 profile.HandledBy<EditProfileController>();
             });
-            resource = mapper.Build().Single();
+            var model = mapper.Build();
+            resource = model.Resources.Single();
         }
 
         [Fact]

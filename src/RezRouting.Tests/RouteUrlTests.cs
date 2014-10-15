@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -32,11 +33,11 @@ namespace RezRouting.Tests
                 });
             });
 
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
 
-            var level1Singular = resources.Single(x => x.Level == ResourceLevel.Singular);
+            var level1Singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
             var level2Singular = level1Singular.Children.Single();
-            var level1Collection = resources.Single(x => x.Level == ResourceLevel.Collection);
+            var level1Collection = model.Resources.Single(x => x.Level == ResourceLevel.Collection);
             var level1Item = level1Collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
             var level2Collection = level1Item.Children.Single();
             var level2Item = level2Collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
@@ -64,10 +65,10 @@ namespace RezRouting.Tests
                 products.Items(product => product.HandledBy<TestController>());
             });
 
-            var resources = mapper.Build().ToList();
+            var model = mapper.Build();
 
-            var singular = resources.Single(x => x.Level == ResourceLevel.Singular);
-            var collection = resources.Single(x => x.Level == ResourceLevel.Collection);
+            var singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
+            var collection = model.Resources.Single(x => x.Level == ResourceLevel.Collection);
             var collectionItem = collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
 
             singular.Routes.Single().Url.Should().Be(singular.Url);
