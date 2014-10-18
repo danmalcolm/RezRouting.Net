@@ -90,7 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\MvcRouteMapperTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteCreatorTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
@@ -112,7 +113,7 @@
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
-    <Compile Include="AspNetMvc\UrlGeneration\Class1.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndexTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsOptimizationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />
     <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />

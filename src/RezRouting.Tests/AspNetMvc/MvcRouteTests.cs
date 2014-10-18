@@ -4,7 +4,6 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Tests.Infrastructure;
-using RezRouting.Tests.Infrastructure.Assertions;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
 
@@ -28,7 +27,7 @@ namespace RezRouting.Tests.AspNetMvc
             mapper.RouteTypes(show, edit, update, delete);
             mapper.Singular("Profile", profile => profile.HandledBy<ProfileController>());
             routes = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
+            mapper.MapMvcRoutes(routes);
         }
 
         [Fact]

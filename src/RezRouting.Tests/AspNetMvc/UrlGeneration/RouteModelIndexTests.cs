@@ -16,10 +16,10 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         public void should_index_routes()
         {
             var mapper = CrudResourceModel.Configure();
-            var routeCollection = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routeCollection);
+            var routes = new RouteCollection();
+            mapper.MapMvcRoutes(routes);
 
-            var index = new RouteModelIndex(routeCollection);
+            var index = new RouteModelIndex(routes);
 
             var routeModel = index.Get(typeof (ProductsController), "Index");
             routeModel.FullName.Should().Be("Products.Index");

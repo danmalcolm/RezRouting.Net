@@ -1,6 +1,4 @@
-﻿[ ] Improve MVC (and future frameworks') route registration API - last route registration step is a bit long-winded 
-* Use factory method for each framework, e.g. MvcRouteMapper.Create - creates a RouteMapper that is set up to map MVC routes on build
-* .Build() executes the actions and returns the ResourceModel
+﻿[ ] Improve MVC (and future frameworks') route registration API - simple extension method
 
 [ ] Custom GET, PUT and POST actions at resource level for CRUD
 

@@ -6,18 +6,18 @@ using System.Web.Routing;
 namespace RezRouting.AspNetMvc.UrlGeneration
 {
     /// <summary>
-    /// Stores a list of MVC Routes created by RezRouting, indexed by controller type
-    /// and action
+    /// Stores a collection of routes, indexed by controller type and action for
+    /// rapid retrieval during URL generation
     /// </summary>
     public class RouteModelIndex
     {
-        private Dictionary<ControllerActionKey, Route> routesByKey;
+        private readonly Dictionary<ControllerActionKey, Route> routesByKey;
         
         public RouteModelIndex(RouteCollection routes)
         {
             const string modelKey = RouteDataTokenKeys.RouteModel;
 
-            this.routesByKey = (from route in routes.OfType<System.Web.Routing.Route>()
+            routesByKey = (from route in routes.OfType<System.Web.Routing.Route>()
                      let model = route.DataTokens != null ? route.DataTokens[modelKey] as Route : null
                      where model != null
                      let key = new ControllerActionKey(model.ControllerType, model.Action)

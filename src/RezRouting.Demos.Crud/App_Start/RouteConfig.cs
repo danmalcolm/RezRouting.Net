@@ -36,7 +36,7 @@ namespace RezRouting.Demos.Crud
                     });
                 });
             });
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
+            mapper.MapMvcRoutes(routes);
             UrlHelperExtensions.IndexRoutes(routes);
         }
     }

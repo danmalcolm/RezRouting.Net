@@ -6,7 +6,10 @@ using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
 {
-    public class MvcRouteMapper
+    /// <summary>
+    /// Adds routes to RouteCollection based on resources and routes in a ResourcesModel
+    /// </summary>
+    public class MvcRouteCreator
     {
         public void CreateRoutes(ResourcesModel model, RouteCollection routes)
         {
@@ -25,7 +28,7 @@ namespace RezRouting.AspNetMvc
         {
             string controller = RouteValueHelper.TrimControllerFromTypeName(model.ControllerType);
             var defaults = new { controller = controller, action = model.Action };
-            var constraints = GetConstraints(model);
+            var constraints = CreateConstraints(model);
 
             var route = routes.MapRoute(model.FullName, model.Url, defaults, constraints);
             route.Constraints = constraints;
@@ -35,7 +38,7 @@ namespace RezRouting.AspNetMvc
             route.DataTokens["Name"] = model.FullName;
         }
 
-        private RouteValueDictionary GetConstraints(Route model)
+        private RouteValueDictionary CreateConstraints(Route model)
         {
             string httpMethod = model.HttpMethod;
             var constraints = new RouteValueDictionary();

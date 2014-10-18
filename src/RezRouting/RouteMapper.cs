@@ -49,7 +49,7 @@ namespace RezRouting
             baseBuilder.UrlPath(path);
         }
 
-        public ResourcesModel Build()
+        public virtual ResourcesModel Build()
         {
             var options = optionsBuilder.Build();
             var context = new RouteMappingContext(routeTypes, options);

@@ -21,7 +21,7 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var context = TestRequestContextBuilder.Create();
             var mapper = CrudResourceModel.Configure();
             var routes = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
+            new MvcRouteCreator().CreateRoutes(mapper.Build(), routes);
             helper = new UrlHelper(context, routes);
         }
 

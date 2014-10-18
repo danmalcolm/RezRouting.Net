@@ -55,7 +55,8 @@
     </Compile>
     <Compile Include="ActionMappingHelper.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
-    <Compile Include="MvcRouteMapper.cs" />
+    <Compile Include="MvcRouteCreator.cs" />
+    <Compile Include="MvcRouteMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteDataTokenKeys.cs" />
     <Compile Include="RouteTypes\ActionDescriptorExtensions.cs" />

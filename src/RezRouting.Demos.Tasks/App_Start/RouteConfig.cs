@@ -28,13 +28,13 @@ namespace RezRouting.Demos.Tasks
                 products.Items(product => product.HandledBy<DeleteProductController>());
                 products.Items(product => product.HandledBy<EditProductController>());
             });
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
+            mapper.MapMvcRoutes(routes);
 
             // Use CRUD for session for now
             mapper = new RouteMapper();
             mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
             mapper.Singular("Session", session => session.HandledBy<SessionController>());
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), routes);
+            mapper.MapMvcRoutes(routes);
         }
     }
 }

@@ -24,11 +24,11 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var mapper = CrudResourceModel.Configure();
             
             var collection1 = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), collection1);
+            mapper.MapMvcRoutes(collection1);
             helper = new UrlHelper(context, collection1);
 
             var collection2 = new RouteCollection();
-            new MvcRouteMapper().CreateRoutes(mapper.Build(), collection2);
+            mapper.MapMvcRoutes(collection2);
             helperUsingIndexedRoutes = new UrlHelper(context, collection2);
 
             UrlHelperExtensions.IndexRoutes(collection2);
@@ -49,7 +49,7 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         }
 
         [Fact]
-        public void should_generate_same_urls_as_non_optimized_helper()
+        public void helper_using_index_should_generate_same_urls_as_helper_without_index()
         {
             EnsureUrlsMatch(typeof(ProductsController), "Index");
             EnsureUrlsMatch(typeof(ProductController), "Show", new { id = "123" });
