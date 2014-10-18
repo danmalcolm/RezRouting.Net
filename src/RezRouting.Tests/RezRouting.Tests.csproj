@@ -129,6 +129,7 @@
     <Compile Include="ResourceHierarchyTests.cs" />
     <Compile Include="ResourceUrlTests.cs" />
     <Compile Include="RouteBuilderTests.cs" />
+    <Compile Include="RouteMapperOptionsTests.cs" />
     <Compile Include="RouteMapperTests.cs" />
     <Compile Include="RouteTypeTests.cs" />
     <Compile Include="RouteUrlTests.cs" />

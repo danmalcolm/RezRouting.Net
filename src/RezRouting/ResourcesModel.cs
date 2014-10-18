@@ -4,9 +4,9 @@ using RezRouting.Utility;
 namespace RezRouting
 {
     /// <summary>
-    /// A semantic model containing resources configured during mapping of resources and routes.
-    /// This is used internally, but is also suitable for application-specific extensions
-    /// based on resources and routes that have been set up.
+    /// Contains models representing the resources and routes configured by RouteMapper. This is 
+    /// used internally but can also be used for any application-specific functionality that is
+    /// based on the applications resources and routes.
     /// </summary>
     public class ResourcesModel
     {

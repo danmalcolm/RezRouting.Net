@@ -4,15 +4,13 @@
 
 [ ] Custom GET, PUT and POST actions at resource level for CRUD
 
-[ ] Rename BaseBuilder to RootBuilder
-
 [ ] ASP.Net MVC Areas support
 
 [ ] Separate support for MVC 4
 
 [ ] ResourceUrl<T> helper variation
 
-[ ] Support action name override
+[ ] Support action name override when scanning for supported actions
 
 [ ] Comments on public API
 
