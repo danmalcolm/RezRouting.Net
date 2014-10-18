@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using RezRouting.Options;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -22,28 +21,16 @@ namespace RezRouting.Tests
             model.Resources.Should().Contain(x => x.Name == "Products" && x.Level == ResourceLevel.Collection);
             model.Resources.Should().Contain(x => x.Name == "Profile" && x.Level == ResourceLevel.Singular);
         }
-
-        [Fact]
-        public void should_configure_custom_name_for_collection_item()
-        {
-            var mapper = new RouteMapper();
-
-            mapper.Collection("Products", "AProduct", products => { });
-            var model = mapper.Build();
-
-            var collection = model.Resources.Single();
-            var item = collection.Children.Single();
-            item.Name.Should().Be("AProduct");
-        }
-
+        
         [Fact]
         public void should_include_custom_base_path_in_resource_urls()
         {
             var mapper = new RouteMapper();
-            mapper.BasePath("api");
             mapper.Collection("Products", products => { });
 
+            mapper.BasePath("api");
             var model = mapper.Build();
+
             var collection = model.Resources.Single();
             collection.Url.Should().Be("api/products");
             var item = collection.Children.Single();
