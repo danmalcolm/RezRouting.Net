@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using RezRouting.Tests.Utility;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -23,7 +24,7 @@ namespace RezRouting.Tests
         }
         
         [Fact]
-        public void should_include_custom_base_path_in_resource_urls()
+        public void should_include_base_path_in_all_resource_urls()
         {
             var mapper = new RouteMapper();
             mapper.Collection("Products", products => { });
@@ -31,10 +32,21 @@ namespace RezRouting.Tests
             mapper.BasePath("api");
             var model = mapper.Build();
 
-            var collection = model.Resources.Single();
-            collection.Url.Should().Be("api/products");
-            var item = collection.Children.Single();
-            item.Url.Should().Be("api/products/{id}");
+            var urls = model.AllResources().Select(x => x.Url);
+            urls.Should().BeEquivalentTo("api/products", "api/products/{id}");
+        }
+
+        [Fact]
+        public void should_include_base_name_in_full_resource_names()
+        {
+            var mapper = new RouteMapper();
+            mapper.Collection("Products", products => { });
+
+            mapper.BaseName("Api");
+            var model = mapper.Build();
+
+            var fullNames = model.AllResources().Select(x => x.FullName);
+            fullNames.Should().BeEquivalentTo("Api.Products", "Api.Products.Product");
         }
 
         [Fact]

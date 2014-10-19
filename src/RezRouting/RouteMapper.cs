@@ -41,7 +41,8 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// Sets a base path, within which all resource URLs will be nested
+        /// Sets a base path for resource URLs. All URLs will be nested below the specified
+        /// path.
         /// </summary>
         /// <param name="path"></param>
         public void BasePath(string path)
@@ -49,6 +50,16 @@ namespace RezRouting
             baseBuilder.UrlPath(path);
         }
 
+        /// <summary>
+        /// Sets a base name for resources. The specified name will be included in the
+        /// full names of all resources and routes mapped by this RouteMapper.
+        /// </summary>
+        /// <param name="name"></param>
+        public void BaseName(string name)
+        {
+            baseBuilder.SetName(name);
+        }
+        
         public virtual ResourcesModel Build()
         {
             var options = optionsBuilder.Build();

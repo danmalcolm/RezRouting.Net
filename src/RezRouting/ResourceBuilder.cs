@@ -20,7 +20,7 @@ namespace RezRouting
             ChildBuilders = new List<IResourceBuilder>();
         }
 
-        protected string Name { get; private set; }
+        protected string Name { get; set; }
 
         protected ResourceLevel Level { get; private set; }
         

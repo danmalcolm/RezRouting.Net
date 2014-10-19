@@ -1,24 +1,32 @@
-﻿[ ] Improve MVC (and future frameworks') route registration API - simple extension method
-
-[ ] Custom GET, PUT and POST actions at resource level for CRUD
-
-[ ] ASP.Net MVC Areas support
-
-[ ] Separate support for MVC 4
+﻿[ ] ASP.Net MVC Areas support
 
 [ ] ResourceUrl<T> helper variation
+
+[ ] Custom GET, PUT and POST actions at resource level for CRUD
 
 [ ] Support action name override when scanning for supported actions
 
 [ ] Comments on public API
 
-[ ] AutoResourceMapping - automapping based on controller hierarchy
+[ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
 [ ] Demo app - add some comments, explanations and readme
 
-[ ] * route, e.g. all actions on a resource's controllers
+[ ] * routes, e.g. all action methods on a resource's controllers, attributes?
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
+
+[ ] Separate support for MVC 4
+
+[ ] Publish to nuget
+
+[ ] Validate path URLs at configuration time for valid characters
+
+[ ] When mapping MVC routes, check if name is already used and throw 
+
+[ ] Management of collection / singular resource at root level
+
+[ ] Refactor: More elegant management of base resource name and URL
 
 [ ] Refactor: Test structure
 
@@ -26,11 +34,12 @@
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
-[ ] Advanced Demo: Breadcrumb nav, searching on index, separate base controllers
+[ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
 
 
 
+[x] Improve MVC (and future frameworks') route registration API - simple extension method
 
 [x] Introduce ResourcesModel class - better to pass this around than a collection of resources?
 
