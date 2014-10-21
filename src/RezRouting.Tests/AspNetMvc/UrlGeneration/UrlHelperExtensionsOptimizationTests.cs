@@ -41,10 +41,12 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         }
 
         [Fact]
-        public void should_use_indexed_route_when_action_specified_as_lowercase()
+        public void should_use_indexed_route_ignoring_case_used_for_action()
         {
             string url1 = helperUsingIndexedRoutes.ResourceUrl(typeof(ProductsController), "index", null);
-            url1.Should().Be("/products");
+            string url2 = helperUsingIndexedRoutes.ResourceUrl(typeof(ProductsController), "Index", null);
+
+            url1.Should().Be(url2);
         }
 
         [Fact]

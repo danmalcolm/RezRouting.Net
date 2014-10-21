@@ -33,6 +33,13 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         }
 
         [Fact]
+        public void should_generate_url_specified_by_controller_type_as_type_parameter()
+        {
+            string url = helper.ResourceUrl<ProductsController>("Index", null);
+            url.Should().Be("/products");
+        }
+
+        [Fact]
         public void should_generate_full_url_with_host_name()
         {
             string url = helper.ResourceUrl(typeof(ProductsController), "index", null, hostName: "www.example.org");

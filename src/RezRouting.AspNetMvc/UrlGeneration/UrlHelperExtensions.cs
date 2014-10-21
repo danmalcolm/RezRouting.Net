@@ -29,7 +29,22 @@ namespace RezRouting.AspNetMvc.UrlGeneration
             var index = new RouteModelIndex(routes);
             Indexes.TryAdd(routes, index);
         }
-        
+
+        /// <summary>
+        /// Generates a fully qualified URL for a resource route based on the specified 
+        /// controller type, action and route values. Only routes created by RezRouting
+        /// are supported.
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="action"></param>
+        /// <param name="routeValues"></param>
+        /// <returns></returns>
+        public static string ResourceUrl<TController>(this UrlHelper helper, string action, object routeValues)
+            where TController : Controller
+        {
+            return helper.ResourceUrl(typeof (TController), action, routeValues);
+        }
+
         /// <summary>
         /// Generates a fully qualified URL for a resource route based on the specified 
         /// controller type, action and route values. Only routes created by RezRouting
