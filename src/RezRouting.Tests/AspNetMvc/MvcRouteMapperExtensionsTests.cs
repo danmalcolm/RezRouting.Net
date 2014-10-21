@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.Tests.Utility;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc
@@ -29,6 +28,20 @@ namespace RezRouting.Tests.AspNetMvc
                 .Select(x => x.DataTokens["RouteModel"] as Route)
                 .Select(x => x.FullName)
                 .ShouldBeEquivalentTo(new[] { "Products.Route1", "Products.Route2" });
+        }
+
+        [Fact]
+        public void when_mapping_MVC_routes_should_map_routes_for_area_specified()
+        {
+            var mapper = CreateRouteMapper();
+            mapper.Collection("Products", products => products.HandledBy<TestController>());
+
+            var routes = new RouteCollection();
+            mapper.MapMvcRoutes(routes, area: "Area1");
+
+            routes.Cast<System.Web.Routing.Route>()
+                .Select(x => x.DataTokens[RouteDataTokenKeys.Area] as string)
+                .ShouldBeEquivalentTo(new[] { "Area1", "Area1" });
         }
 
         [Fact]

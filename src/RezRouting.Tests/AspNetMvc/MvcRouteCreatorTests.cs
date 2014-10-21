@@ -107,6 +107,25 @@ namespace RezRouting.Tests.AspNetMvc
                 .Should().Equal(expectedRouteNames);
         }
 
+        [Fact]
+        public void should_include_area_when_mapping_area_routes()
+        {
+            var mapper = new RouteMapper();
+            mapper.RouteTypes(routeType1);
+            mapper.Collection("Products", products =>
+            {
+                products.HandledBy<TestController>();
+                products.Items(product => product.HandledBy<TestController>());
+            });
+
+            var routes = new RouteCollection();
+            mapper.MapMvcRoutes(routes, area: "Area1");
+
+            routes.Cast<System.Web.Routing.Route>()
+                .Select(x => x.DataTokens[RouteDataTokenKeys.Area] as string)
+                .Should().OnlyContain(x => Equals(x, "Area1"));
+        }
+
         public class TestController : Controller
         {
             public ActionResult Action1()

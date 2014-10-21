@@ -113,6 +113,8 @@
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\AreaUrlGenerationTests.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\BuiltInUrlGenerationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndexTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsOptimizationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />

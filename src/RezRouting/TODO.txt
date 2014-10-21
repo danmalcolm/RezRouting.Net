@@ -1,8 +1,7 @@
-﻿[ ] ASP.Net MVC Areas support
-
+﻿
 [ ] ResourceUrl<T> helper variation
 
-[ ] Custom GET, PUT and POST actions at resource level for CRUD
+[ ] Custom GET, PUT and POST actions for any resource
 
 [ ] Support action name override when scanning for supported actions
 
@@ -37,7 +36,7 @@
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
 
-
+[x] ASP.Net MVC Areas support
 
 [x] Improve MVC (and future frameworks') route registration API - simple extension method
 
