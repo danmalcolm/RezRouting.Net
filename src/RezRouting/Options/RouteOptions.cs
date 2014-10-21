@@ -1,5 +1,8 @@
 namespace RezRouting.Options
 {
+    /// <summary>
+    /// Options applied during route creation
+    /// </summary>
     public class RouteOptions
     {
         public RouteOptions(UrlPathFormatter pathFormatter, IIdNameConvention idNameConvention)

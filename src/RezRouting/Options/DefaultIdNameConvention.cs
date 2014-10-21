@@ -2,6 +2,9 @@
 
 namespace RezRouting.Options
 {
+    /// <summary>
+    /// Built-in strategy used to generate id component within route URLs
+    /// </summary>
     public class DefaultIdNameConvention : IIdNameConvention
     {
         private readonly bool fullNameForCurrent;

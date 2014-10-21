@@ -9,9 +9,9 @@ namespace RezRouting.Options
     public class UrlPathSettings
     {
         /// <summary>
-        /// Creates a new instance of ResourcePathSettings
+        /// Creates a new instance of UrlPathSettings
         /// </summary>
-        /// <param name="caseStyle"></param>
+        /// <param name="caseStyle">The CaseStyle to be used</param>
         /// <param name="wordSeparator">A string added between "camel humps" in the resource name, e.g. "PurchaseOrders" => "purchase-orders". 
         /// Note that only numbers, letters, "-" and "_" may be used</param>
         public UrlPathSettings(CaseStyle caseStyle = CaseStyle.Lower, string wordSeparator = null)
@@ -26,8 +26,15 @@ namespace RezRouting.Options
             WordSeparator = wordSeparator;
         }
 
+        /// <summary>
+        /// The CaseStyle to be used
+        /// </summary>
         public CaseStyle CaseStyle { get; private set; }
 
+        /// <summary>
+        /// A string added between "camel humps" in the resource name, e.g. "PurchaseOrders" => "purchase-orders". 
+        /// Note that only numbers, letters, "-" and "_" may be used
+        /// </summary>
         public string WordSeparator { get; private set; }
 
         public override string ToString()

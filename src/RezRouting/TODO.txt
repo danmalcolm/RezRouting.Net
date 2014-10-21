@@ -1,21 +1,9 @@
-﻿
-[ ] ResourceUrl<T> helper variation
-
-[ ] Custom GET, PUT and POST actions for any resource
-
-[ ] Support action name override when scanning for supported actions
+﻿First
+-----
 
 [ ] Comments on public API
 
-[ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
-
-[ ] Demo app - add some comments, explanations and readme
-
-[ ] * routes, e.g. all action methods on a resource's controllers, attributes?
-
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
-
-[ ] Separate support for MVC 4
 
 [ ] Publish to nuget
 
@@ -23,18 +11,39 @@
 
 [ ] When mapping MVC routes, check if name is already used and throw 
 
-[ ] Management of collection / singular resource at root level
 
-[ ] Refactor: More elegant management of base resource name and URL
+
+
+Next
+----
+
+[ ] Custom GET, PUT and POST actions for any resource
+
+[ ] Support action name override when scanning for supported actions
+
+[ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
+
+[ ] Demo app - add some comments, explanations and readme
+
+[ ] * routes, e.g. all action methods on a resource's controllers, attributes?
+
+[ ] Separate support for MVC 4
+
+[ ] Management of collection / singular resource at root level, e.g. /dave
 
 [ ] Refactor: Test structure
-
-[ ] Refactor: CollectionBuilder should have 2 configure actions, one for collection, one for item?
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
+[ ] Refactor: More elegant management of base resource name and URL
+
+
+Done
+----
+
+[X] ResourceUrl<T> helper variation
 
 [x] ASP.Net MVC Areas support
 

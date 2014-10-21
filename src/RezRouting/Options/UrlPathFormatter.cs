@@ -3,6 +3,9 @@ using RezRouting.Utility;
 
 namespace RezRouting.Options
 {
+    /// <summary>
+    /// Formats path segments within route URLs
+    /// </summary>
     public class UrlPathFormatter
     {
         private readonly UrlPathSettings settings;

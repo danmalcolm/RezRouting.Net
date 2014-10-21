@@ -7,14 +7,16 @@
     public interface IIdNameConvention
     {
         /// <summary>
-        /// Gets the key for the id of the current resource for which route is being mapped
+        /// Gets the key for the id of the resource within the URL of a route that belongs
+        /// directly to the resource
         /// </summary>
         /// <param name="resourceName"></param>
         /// <returns></returns>
         string GetIdName(string resourceName);
 
         /// <summary>
-        /// Gets the key for the id of an ancestor resource within a nested route
+        /// Gets the key for the id of the resource within the URL of a route that belongs
+        /// to a descendant of the resource
         /// </summary>
         /// <param name="resourceName"></param>
         /// <returns></returns>

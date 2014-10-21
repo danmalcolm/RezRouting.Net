@@ -5,6 +5,17 @@
     /// </summary>
     public enum CaseStyle
     {
-        None,Lower,Upper
+        /// <summary>
+        /// No case change
+        /// </summary>
+        None,
+        /// <summary>
+        /// Value converted to lower case
+        /// </summary>
+        Lower,
+        /// <summary>
+        /// Value converted to upper case
+        /// </summary>
+        Upper
     }
 }
