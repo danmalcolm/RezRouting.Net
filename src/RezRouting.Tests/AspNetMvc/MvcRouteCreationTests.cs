@@ -8,33 +8,19 @@ using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc
 {
-    public class MvcRouteCreatorTests
+    public class MvcRouteCreationTests
     {
-        private readonly RouteType routeType1 = new RouteType("RouteType1",
+        private readonly RouteType action1RouteType = new RouteType("RouteType1",
             (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
 
         private readonly RouteType routeType2 = new RouteType("RouteType2",
             (resource, type, route) => route.Configure("Route2", "Action2", "GET", "action2"));
 
         [Fact]
-        public void should_add_name_to_route_based_on_full_name_of_resource()
-        {
-            var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1);
-            mapper.Collection("Products", products => products.HandledBy<TestController>());
-
-            var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
-
-            var route = routes.Cast<System.Web.Routing.Route>().Single();
-            route.DataTokens["Name"].Should().Be("Products.Route1");
-        }
-
-        [Fact]
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1);
+            mapper.RouteTypes(action1RouteType);
             mapper.Singular("Profile", profile =>
             {
                 profile.HandledBy<TestController>();
@@ -64,10 +50,24 @@ namespace RezRouting.Tests.AspNetMvc
         }
 
         [Fact]
+        public void should_name_route_based_on_full_name_of_resource()
+        {
+            var mapper = new RouteMapper();
+            mapper.RouteTypes(action1RouteType);
+            mapper.Collection("Products", products => products.HandledBy<TestController>());
+
+            var routes = new RouteCollection();
+            mapper.MapMvcRoutes(routes);
+
+            var route = routes.Cast<System.Web.Routing.Route>().Single();
+            routes["Products.Route1"].Should().BeSameAs(route);
+        }
+
+        [Fact]
         public void should_add_route_model_to_route()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1);
+            mapper.RouteTypes(action1RouteType);
             mapper.Collection("Products", products => products.HandledBy<TestController>());
             var routes = new RouteCollection();
             ResourcesModel model = null;
@@ -82,7 +82,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_map_collection_routes_before_item_routes()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1, routeType2);
+            mapper.RouteTypes(action1RouteType, routeType2);
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();
@@ -111,7 +111,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_include_area_when_mapping_area_routes()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1);
+            mapper.RouteTypes(action1RouteType);
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();

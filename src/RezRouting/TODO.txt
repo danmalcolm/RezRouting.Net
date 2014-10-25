@@ -1,6 +1,8 @@
 ﻿First
 -----
 
+[ ] Custom GET, PUT and POST actions for any resource
+
 [ ] Comments on public API
 
 [ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
@@ -9,15 +11,12 @@
 
 [ ] Validate path URLs at configuration time for valid characters
 
-[ ] When mapping MVC routes, check if name is already used and throw 
+[ ] When mapping MVC routes, check if name is already used and throw with informative exception
 
-
-
+[ ] Performance - repeated use of actiondescriptors etc.
 
 Next
 ----
-
-[ ] Custom GET, PUT and POST actions for any resource
 
 [ ] Support action name override when scanning for supported actions
 

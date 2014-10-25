@@ -4,7 +4,7 @@ using RezRouting.Options;
 namespace RezRouting.AspNetMvc.RouteTypes
 {
     /// <summary>
-    /// Creates a route for a specific action on the controller
+    /// Creates a route for a specific action on a controller
     /// </summary>
     public class ActionRouteType : IRouteType
     {

@@ -46,9 +46,10 @@ namespace RezRouting.AspNetMvc.UrlGeneration
                 this.action = action.ToLowerInvariant();
             }
 
-            public bool Equals(ControllerActionKey other)
+            private bool Equals(ControllerActionKey other)
             {
-                return controllerType.Equals(other.controllerType) && string.Equals(action, other.action);
+                return controllerType == other.controllerType
+                    && string.Equals(action, other.action);
             }
 
             public override bool Equals(object obj)

@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\MvcRouteCreatorTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
