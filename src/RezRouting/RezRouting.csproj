@@ -83,6 +83,7 @@
     <Compile Include="RouteType.cs" />
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="DirectoryUrlSegment.cs" />
+    <Compile Include="Utility\DictionaryExtensions.cs" />
     <Compile Include="Utility\PathSegmentCleaner.cs" />
     <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

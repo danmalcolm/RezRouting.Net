@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Utility;
@@ -7,6 +8,9 @@ namespace RezRouting.AspNetMvc
 {
     internal static class ActionMappingHelper
     {
+        private static readonly Dictionary<Type, ControllerInfo> ControllerDescriptors
+            = new Dictionary<Type, ControllerInfo>();
+
         /// <summary>
         /// Indicates whether an ASP.Net MVC controller supports the specified
         /// action
@@ -16,14 +20,14 @@ namespace RezRouting.AspNetMvc
         /// <returns></returns>
         public static bool SupportsAction(Type controllerType, string actionName)
         {
-            var controllerDescriptor = new ReflectedControllerDescriptor(controllerType);
-            var actions = controllerDescriptor.GetCanonicalActions();
-            var supportsAction = actions.Any(action =>
-            {
-                string name = GetActionNameOverride(action) ?? action.ActionName;
-                return name.EqualsIgnoreCase(actionName);
-            });
-            return supportsAction;
+            var controllerDescriptor = GetControllerDescriptor(controllerType);
+            return controllerDescriptor.SupportsAction(actionName);
+        }
+
+        private static ControllerInfo GetControllerDescriptor(Type controllerType)
+        {
+            return ControllerDescriptors.GetOrAdd(controllerType, () =>
+                new ControllerInfo(new ReflectedControllerDescriptor(controllerType)));
         }
 
         /// <summary>
@@ -37,6 +41,23 @@ namespace RezRouting.AspNetMvc
             string name = action.GetCustomAttributes(typeof (ActionNameAttribute), true)
                 .OfType<ActionNameAttribute>().Select(x => x.Name).FirstOrDefault();
             return name;
+        }
+
+        private class ControllerInfo
+        {
+            private readonly HashSet<string> actionNames; 
+
+            public ControllerInfo(ControllerDescriptor descriptor)
+            {
+                var names = descriptor.GetCanonicalActions().Select(
+                    action => GetActionNameOverride(action) ?? action.ActionName);
+                this.actionNames = new HashSet<string>(names,StringComparer.OrdinalIgnoreCase);
+            }
+
+            public bool SupportsAction(string actionName)
+            {
+                return actionNames.Contains(actionName);
+            }
         }
     }
 }

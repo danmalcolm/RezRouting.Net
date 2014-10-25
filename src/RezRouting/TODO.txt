@@ -1,6 +1,10 @@
 ﻿First
 -----
 
+[ ] Bug: If resource name ends with number NRE occurs
+
+[ ] Bug: Word separator should be_inserted_between letters and numbers
+
 [ ] Custom GET, PUT and POST actions for any resource
 
 [ ] Comments on public API
