@@ -29,10 +29,13 @@ namespace RezRouting.Tests.Infrastructure.Performance
             }
             watch.Stop();
             var result = new ProfileResult(watch.Elapsed.TotalMilliseconds, iterations);
-            
-            Console.Write(description);
-            Console.WriteLine(" Time Elapsed {0} ms - Average time per iteration {1} ms", result.TotalMilliseconds, result.MeanIterationTime);
 
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine(description);
+            Console.WriteLine(" Time Elapsed {0} ms ({1} iterations)", result.TotalMilliseconds, iterations);
+            Console.WriteLine(" Average time per iteration {0} ms", result.MeanIterationTime);
+            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine("");
             return result;
         }
     }

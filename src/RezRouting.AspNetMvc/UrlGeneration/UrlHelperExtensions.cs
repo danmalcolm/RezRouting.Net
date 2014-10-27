@@ -31,6 +31,14 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         }
 
         /// <summary>
+        /// Resets indexes stored for RouteCollections indexed via IndexRoutes method
+        /// </summary>
+        public static void ClearIndexedRoutes()
+        {
+            Indexes.Clear();
+        }
+
+        /// <summary>
         /// Generates a fully qualified URL for a resource route based on the specified 
         /// controller type, action and route values. Only routes created by RezRouting
         /// are supported.

@@ -56,7 +56,7 @@ namespace RezRouting.Tests
             var item = collection.Children.Single();
             item.Name.Should().Be("Product");
         }
-
+        
         [Fact]
         public void should_use_custom_name_for_child_item_resource_if_specified()
         {

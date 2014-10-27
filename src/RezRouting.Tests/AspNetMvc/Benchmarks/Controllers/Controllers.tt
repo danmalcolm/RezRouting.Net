@@ -1,0 +1,55 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+namespace RezRouting.Tests.AspNetMvc.Benchmarks.Controllers 
+{
+<# 
+	const string names = @"abyssinians,accelerators,accordions,accounts,baboons,backbones,badges,badgers,cabbages,cabinets,cakes,calculators,daffodils,daisies,dancers,dashboards,eagles,ears,earthquakes,elephants,faces,facilities,facts,factories,garages,gardens,ghosts,giraffes,halibuts,hamburgers,hammers,hamsters,icicles,insects,invoices,jaguars,jeeps,jewels,jokes,kangaroos,kayaks,kettles,kittens,languages,larches,lawyers,lobsters,machines,magazines,managers,mandolins,napkins,needles,noodles,nuts,occupations,offences,offices,operas,packages,packets,pancakes,papers,queens,questions,quilts,quinces,rabbits,radiators,radishes,rainbows,sailors,salamanders,sardines,sausages,tables,tadpoles,taxis,teachers,umbrellas,uncles,underpants,units,valleys,values,vans,wallets,waterfalls,waves,weeds,xylophones,yachts,yaks,yards,years,yams,zebras,zephyrs,zippers,zoos";
+	var resourceNames = names.Split(',')
+		.Select(name => char.ToUpper(name[0]) + name.Substring(1))
+		.ToList();
+#>
+    public class DemoData 
+	{
+		public static IEnumerable<Tuple<string,Type>> Resources 
+		{
+			get
+			{
+<# for (int i = 0; i < resourceNames.Count; i++) 
+{ 
+	string resourceName = resourceNames[i];
+	string controllerName = resourceName + "Controller"; #>
+				yield return Tuple.Create("<#=resourceName#>", typeof(<#=controllerName#>));		
+<#}#>				
+			}
+		}
+
+	}
+	
+
+<#	for (int i = 0; i < resourceNames.Count; i++) { 
+		string resourceName = resourceNames[i];
+		string controllerName = resourceName + "Controller"; #>
+
+	public class <#=controllerName#> : Controller
+	{
+<# for (int actionNumber = 1; actionNumber <= 5; actionNumber++) 
+{
+	string actionName = string.Format("Action{0}", actionNumber);
+#>
+		public ActionResult <#=actionName#>()
+		{
+			return Content("<#=resourceName#>.<#=actionName#>");
+		}
+
+<# } #>
+	}
+<# } #>
+}

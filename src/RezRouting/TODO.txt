@@ -5,11 +5,11 @@
 
 [ ] Bug: Word separator should be_inserted_between letters and numbers
 
+[ ] Bug: NRE if inflector can't guess singular - default to <CollectionName>Item?
+
 [ ] Custom GET, PUT and POST actions for any resource
 
 [ ] Comments on public API
-
-[ ] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
 [ ] Publish to nuget
 
@@ -45,6 +45,8 @@ Next
 
 Done
 ----
+
+[X] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 
 [X] ResourceUrl<T> helper variation
 

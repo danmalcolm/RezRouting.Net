@@ -90,10 +90,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\Benchmarks\BenchmarkTests.cs" />
+    <Compile Include="AspNetMvc\Benchmarks\Controllers\Controllers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controllers.tt</DependentUpon>
+    </Compile>
+    <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
-    <Compile Include="AspNetMvc\RouteMappingPerformanceTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\CrudResourceModel.cs" />
@@ -143,6 +149,10 @@
     <Compile Include="Utility\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AspNetMvc\Benchmarks\Controllers\Controllers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controllers.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +164,9 @@
       <Project>{ec46b63d-45d9-472b-8400-12a9cac5bb9e}</Project>
       <Name>RezRouting</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

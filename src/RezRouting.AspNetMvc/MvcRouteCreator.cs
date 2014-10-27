@@ -27,9 +27,14 @@ namespace RezRouting.AspNetMvc
         private void CreateRoute(Route model, RouteCollection routes, string area)
         {
             string controller = RouteValueHelper.TrimControllerFromTypeName(model.ControllerType);
-            var defaults = new { controller = controller, action = model.Action };
             var constraints = CreateConstraints(model);
-            var route = routes.MapRoute(model.FullName, model.Url, defaults, constraints);
+
+            var route = new ResourceRoute(model.Url, new MvcRouteHandler())
+            {
+                Defaults = new RouteValueDictionary {{"controller", controller}, {"action", model.Action}},
+                Constraints = constraints,
+                DataTokens = new RouteValueDictionary()
+            };
 
             route.DataTokens[RouteDataTokenKeys.Namespaces] = new[] {model.ControllerType.Namespace};
             route.DataTokens[RouteDataTokenKeys.UseNamespaceFallback] = false;
@@ -39,6 +44,7 @@ namespace RezRouting.AspNetMvc
             {
                 route.DataTokens[RouteDataTokenKeys.Area] = area;
             }
+            routes.Add(model.FullName, route);
         }
 
         private RouteValueDictionary CreateConstraints(Route model)

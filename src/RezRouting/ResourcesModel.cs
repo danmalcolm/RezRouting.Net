@@ -16,7 +16,8 @@ namespace RezRouting
         }
 
         /// <summary>
-        /// A collection of Resource representing the resources configured
+        /// A collection of objects representing the resource and routes
+        /// configured
         /// </summary>
         public IList<Resource> Resources { get; private set; }  
     }
