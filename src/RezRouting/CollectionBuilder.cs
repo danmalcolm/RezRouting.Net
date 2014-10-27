@@ -11,7 +11,9 @@ namespace RezRouting
 
         public CollectionBuilder(string name, string itemName = null) : base(name, ResourceLevel.Collection)
         {
-            itemName = itemName ?? name.Singularize();
+            if (name == null) throw new ArgumentNullException("name");
+
+            itemName = itemName ?? name.Singularize() ?? string.Format("{0}Item", name);
             itemBuilder = new CollectionItemBuilder(itemName);
             AddChild(itemBuilder, x => {});
         }

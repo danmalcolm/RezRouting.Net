@@ -1,11 +1,7 @@
 ﻿First
 -----
 
-[ ] Bug: If resource name ends with number NRE occurs
-
 [ ] Bug: Word separator should be_inserted_between letters and numbers
-
-[ ] Bug: NRE if inflector can't guess singular - default to <CollectionName>Item?
 
 [ ] Custom GET, PUT and POST actions for any resource
 
@@ -17,7 +13,6 @@
 
 [ ] When mapping MVC routes, check if name is already used and throw with informative exception
 
-[ ] Performance - repeated use of actiondescriptors etc.
 
 Next
 ----
@@ -34,6 +29,8 @@ Next
 
 [ ] Management of collection / singular resource at root level, e.g. /dave
 
+[ ] Clean up cached actiondescriptors used during MVC route creation
+
 [ ] Refactor: Test structure
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
@@ -45,6 +42,11 @@ Next
 
 Done
 ----
+[X] Performance - repeated use of actiondescriptors etc.
+
+[X] Bug: If resource name ends with number NRE occurs
+
+[X] Bug: NRE if inflector can't guess singular - default to <CollectionName>Item?
 
 [X] Basic performance test, determine impact of large number of routes on inbound / outbound URL-mapping
 

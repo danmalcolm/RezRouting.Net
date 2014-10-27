@@ -56,7 +56,19 @@ namespace RezRouting.Tests
             var item = collection.Children.Single();
             item.Name.Should().Be("Product");
         }
-        
+
+        [Fact]
+        public void child_item_resource_name_should_be_based_on_collection_name_and_item_if_name_cannot_be_singularised()
+        {
+            var builder = new CollectionBuilder("Hamburgera");
+
+            var collection = builder.Build(context);
+
+            collection.Children.Should().HaveCount(1);
+            var item = collection.Children.Single();
+            item.Name.Should().Be("HamburgeraItem");
+        }
+
         [Fact]
         public void should_use_custom_name_for_child_item_resource_if_specified()
         {
