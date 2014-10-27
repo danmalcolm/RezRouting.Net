@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 namespace RezRouting.Tests.AspNetMvc.Benchmarks.Controllers 
 {
+    /// <summary>
+    /// Demo data used to set up a large RouteCollection (code-generated)
+    /// </summary>
     public class DemoData 
 	{
 		public static IEnumerable<Tuple<string,Type>> Resources 

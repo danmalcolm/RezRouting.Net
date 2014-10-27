@@ -6,7 +6,6 @@
 <#@ output extension=".cs" #>
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 namespace RezRouting.Tests.AspNetMvc.Benchmarks.Controllers 
 {
@@ -16,6 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks.Controllers
 		.Select(name => char.ToUpper(name[0]) + name.Substring(1))
 		.ToList();
 #>
+    /// <summary>
+    /// Demo data used to set up a large RouteCollection (code-generated)
+    /// </summary>
     public class DemoData 
 	{
 		public static IEnumerable<Tuple<string,Type>> Resources 
