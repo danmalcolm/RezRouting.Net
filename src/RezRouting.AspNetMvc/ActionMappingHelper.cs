@@ -6,10 +6,15 @@ using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
 {
-    internal static class ActionMappingHelper
+    public static class ActionMappingHelper
     {
-        private static readonly Dictionary<Type, ControllerActions> ControllerDescriptors
+        private static readonly Dictionary<Type, ControllerActions> ControllerActionsCache
             = new Dictionary<Type, ControllerActions>();
+
+        public static void ResetCache()
+        {
+            ControllerActionsCache.Clear();
+        }
 
         /// <summary>
         /// Indicates whether an ASP.Net MVC controller supports the specified
@@ -26,7 +31,7 @@ namespace RezRouting.AspNetMvc
 
         private static ControllerActions GetControllerDescriptor(Type controllerType)
         {
-            return ControllerDescriptors.GetOrAdd(controllerType, 
+            return ControllerActionsCache.GetOrAdd(controllerType, 
                 () => ControllerActions.Create(controllerType));
         }
 

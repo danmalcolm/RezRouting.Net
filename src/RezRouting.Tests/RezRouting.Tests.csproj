@@ -91,10 +91,10 @@
   <ItemGroup>
     <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
     <Compile Include="AspNetMvc\Benchmarks\BenchmarkTests.cs" />
-    <Compile Include="AspNetMvc\Benchmarks\Controllers\Controllers.cs">
+    <Compile Include="AspNetMvc\Benchmarks\Controllers\DemoData.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Controllers.tt</DependentUpon>
+      <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
@@ -149,9 +149,9 @@
     <Compile Include="Utility\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AspNetMvc\Benchmarks\Controllers\Controllers.tt">
+    <None Include="AspNetMvc\Benchmarks\Controllers\DemoData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Controllers.cs</LastGenOutput>
+      <LastGenOutput>DemoData.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

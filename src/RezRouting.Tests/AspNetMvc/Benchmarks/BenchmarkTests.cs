@@ -20,7 +20,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
     /// at present. Switch from internal to public visibility to include these
     /// tests.
     /// </summary>
-    internal class BenchMarkTests : IDisposable
+    public class BenchMarkTests : IDisposable
     {
         [Fact]
         public void test_model_should_contain_routes()
@@ -201,6 +201,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         
         public void Dispose()
         {
+            ActionMappingHelper.ResetCache();
             UrlHelperExtensions.ClearIndexedRoutes();
         }
     }
