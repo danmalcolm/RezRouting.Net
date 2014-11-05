@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utility\WordFormatterTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
@@ -104,7 +105,7 @@
     <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\CrudResourceModel.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Products\ProductsController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Product\ProductController.cs" />
+    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Products\Product\ProductController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Profile\ProfileController.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionItemRouteTypeTests.cs" />
     <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionRouteTypeTests.cs" />

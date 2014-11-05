@@ -90,6 +90,7 @@
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\UrlPathHelper.cs" />
+    <Compile Include="Utility\WordFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TODO.txt" />

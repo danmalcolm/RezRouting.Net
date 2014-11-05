@@ -23,7 +23,7 @@ namespace RezRouting.Options
 
             if (settings.WordSeparator != "")
             {
-                result = Regex.Replace(result, "([a-z])(?=[A-Z])", "$1" + settings.WordSeparator);
+                result = WordFormatter.ExpandCamelHumps(result, settings.WordSeparator);
             }
             switch (settings.CaseStyle)
             {
@@ -36,5 +36,5 @@ namespace RezRouting.Options
             }
             return result;
         }
-    }
+   }
 }
