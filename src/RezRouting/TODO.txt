@@ -1,9 +1,8 @@
 ﻿First
 -----
 
-[ ] Bug: Word separator should be_inserted_between letters and numbers
 
-[ ] Custom GET, PUT and POST actions for any resource
+[ ] Custom routes for any resource, not just based on RouteTypes
 
 [ ] Comments on public API
 
@@ -17,7 +16,6 @@
 Next
 ----
 
-[ ] Support action name override when scanning for supported actions
 
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
@@ -28,8 +26,6 @@ Next
 [ ] Separate support for MVC 4
 
 [ ] Management of collection / singular resource at root level, e.g. /dave
-
-[ ] Clean up cached actiondescriptors used during MVC route creation
 
 [ ] Refactor: Test structure
 
@@ -42,6 +38,13 @@ Next
 
 Done
 ----
+
+[x] Bug: Word separator should be_inserted_between letters and numbers
+
+[x] Support action name override when scanning for supported actions
+
+[X] Clean up cached actiondescriptors used during MVC route creation
+
 [X] Performance - repeated use of actiondescriptors etc.
 
 [X] Bug: If resource name ends with number NRE occurs

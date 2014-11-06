@@ -34,7 +34,7 @@ namespace RezRouting
             var urlSegment = GetUrlSegment(context.Options);
             var resource = new Resource(Name, urlSegment, Level, customProperties, children);
             var routes = from controllerType in controllerTypes
-                from routeType in                   context.RouteTypes
+                from routeType in context.RouteTypes
                 let route = routeType.BuildRoute(resource, controllerType, context.Options.PathFormatter)
                 where route != null
                 select route;
