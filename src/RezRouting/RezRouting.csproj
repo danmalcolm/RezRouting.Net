@@ -84,13 +84,13 @@
     <Compile Include="SingularBuilder.cs" />
     <Compile Include="DirectoryUrlSegment.cs" />
     <Compile Include="Utility\DictionaryExtensions.cs" />
+    <Compile Include="Utility\PascalCaseStringHelper.cs" />
     <Compile Include="Utility\PathSegmentCleaner.cs" />
     <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\UrlPathHelper.cs" />
-    <Compile Include="Utility\WordFormatter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TODO.txt" />

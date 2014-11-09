@@ -23,7 +23,7 @@ namespace RezRouting.Options
 
             if (settings.WordSeparator != "")
             {
-                result = WordFormatter.ExpandCamelHumps(result, settings.WordSeparator);
+                result = PascalCaseStringHelper.SeparateWords(result, settings.WordSeparator);
             }
             switch (settings.CaseStyle)
             {

@@ -1,18 +1,17 @@
 ﻿using FluentAssertions;
-using RezRouting.Options;
 using RezRouting.Utility;
 using Xunit.Extensions;
 
 namespace RezRouting.Tests.Utility
 {
-    public class WordFormatterTests
+    public class PascalCaseStringHelperTests
     {
         [Theory]
         [InlineData("PurchaseOrders", "Purchase-Orders")]
         [InlineData("purchaseOrders", "purchase-Orders")]
         public void ShouldSeparateWords(string value, string expected)
         {
-            string result = WordFormatter.ExpandCamelHumps(value, "-");
+            string result = PascalCaseStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         }
@@ -26,7 +25,7 @@ namespace RezRouting.Tests.Utility
         [InlineData("Unlimited222", "Unlimited-222")]
         public void ShouldSeparateNumbers(string value, string expected)
         {
-            string result = WordFormatter.ExpandCamelHumps(value, "-");
+            string result = PascalCaseStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         }
@@ -46,7 +45,7 @@ namespace RezRouting.Tests.Utility
         [InlineData("UKAllStars", "UK-All-Stars")]
         public void ShouldSeparateAcronymsFromWordsOrNumbers(string value, string expected)
         {
-            string result = WordFormatter.ExpandCamelHumps(value, "-");
+            string result = PascalCaseStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         } 
