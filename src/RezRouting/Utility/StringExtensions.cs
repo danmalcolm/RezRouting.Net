@@ -16,6 +16,11 @@ namespace RezRouting.Utility
             return sequence.Contains(value, StringComparer.InvariantCultureIgnoreCase);
         }
 
+        public static bool StartsWithIgnoreCase(this string value, string other)
+        {
+            return value.StartsWith(other, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         public static string ToCamelCase(this string value)
         {
             if (value == null) throw new ArgumentNullException("value");

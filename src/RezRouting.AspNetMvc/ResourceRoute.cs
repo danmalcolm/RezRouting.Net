@@ -1,28 +1,48 @@
 ﻿using System.Globalization;
+using System.Web;
 using System.Web.Routing;
+using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
 {
     // Based on v. useful tips here: http://samsaffron.com/archive/2011/10/13/optimising-asp-net-mvc3-routing
 
     /// <summary>
-    /// Route implementation for resource routes, containing optimisation based on
-    /// resource route structure - this prevents the parsing and tokenisation of routes
+    /// Route implementation for resource routes, includes optimisation of in-bound
+    /// route identification.
     /// </summary>
     public class ResourceRoute : System.Web.Routing.Route
     {
-        private readonly string neededOnTheLeft;
+        private readonly string start;
 
         public ResourceRoute(string url, IRouteHandler handler) : base(url, handler)
         {
             int index = url.IndexOf('{');
-            neededOnTheLeft = "~/" + (index >= 0 ? url.Substring(0, index) : url).TrimEnd('/');
+            start = index >= 0 
+                ? "~/" + url.Substring(0, index).TrimEnd('/') 
+                : null;
         }
 
-        public override RouteData GetRouteData(System.Web.HttpContextBase httpContext)
+        /// <summary>
+        /// Optimised implementation that skips the parsing and tokenisation for URLs
+        /// that do not begin with the start of the route URL (initial directory segment(s)
+        /// before the first ID parameter)
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <returns></returns>
+        public override RouteData GetRouteData(HttpContextBase httpContext)
         {
-            if (!httpContext.Request.AppRelativeCurrentExecutionFilePath.StartsWith(neededOnTheLeft, true, CultureInfo.InvariantCulture)) return null;
+            if (start != null && !MatchesStart(httpContext))
+            {
+                return null;
+            }
             return base.GetRouteData(httpContext);
+        }
+
+        private bool MatchesStart(HttpContextBase httpContext)
+        {
+            string path = httpContext.Request.AppRelativeCurrentExecutionFilePath;
+            return path.StartsWithIgnoreCase(start);
         }
     }
 }
