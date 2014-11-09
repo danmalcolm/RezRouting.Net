@@ -2,11 +2,11 @@
 
 namespace RezRouting.Utility
 {
-    public class PascalCaseStringHelper
+    public class IntercappedStringHelper
     {
         private static readonly Regex SeparatorRegex;
 
-        static PascalCaseStringHelper()
+        static IntercappedStringHelper()
         {
             const string pattern = @"
                 (?<!^) # Not start

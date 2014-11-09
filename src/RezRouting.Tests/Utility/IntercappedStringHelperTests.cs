@@ -4,14 +4,14 @@ using Xunit.Extensions;
 
 namespace RezRouting.Tests.Utility
 {
-    public class PascalCaseStringHelperTests
+    public class IntercappedStringHelperTests
     {
         [Theory]
         [InlineData("PurchaseOrders", "Purchase-Orders")]
         [InlineData("purchaseOrders", "purchase-Orders")]
         public void ShouldSeparateWords(string value, string expected)
         {
-            string result = PascalCaseStringHelper.SeparateWords(value, "-");
+            string result = IntercappedStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         }
@@ -25,7 +25,7 @@ namespace RezRouting.Tests.Utility
         [InlineData("Unlimited222", "Unlimited-222")]
         public void ShouldSeparateNumbers(string value, string expected)
         {
-            string result = PascalCaseStringHelper.SeparateWords(value, "-");
+            string result = IntercappedStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         }
@@ -45,7 +45,7 @@ namespace RezRouting.Tests.Utility
         [InlineData("UKAllStars", "UK-All-Stars")]
         public void ShouldSeparateAcronymsFromWordsOrNumbers(string value, string expected)
         {
-            string result = PascalCaseStringHelper.SeparateWords(value, "-");
+            string result = IntercappedStringHelper.SeparateWords(value, "-");
 
             result.Should().Be(expected);
         } 
