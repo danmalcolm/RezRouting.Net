@@ -10,10 +10,14 @@ namespace RezRouting.AspNetMvc
     public static class MvcRouteMapperExtensions
     {
         /// <summary>
-        /// Creates routes within the specified RouteCollection based on the resources 
-        /// and routes configured within the RouteMapper. Optionally, a custom action 
-        /// can be specified, which provides access to the ResourcesModel instance
-        /// that is built by the RouteMapper when creating the routes.
+        /// <para>
+        /// Creates ASP.Net MVC routes within the specified RouteCollection based on the resources 
+        /// and routes configured by this RouteMapper. Optionally, a custom action can be specified,
+        /// which provides access to the ResourcesModel that is created by the RouteMapper.
+        /// </para> 
+        /// <para>
+        /// This is a convenience method that is equivalent to the following: <c> new MvcRouteCreator().CreateRoutes(mapper.Build(), routes, area)</c>.
+        /// </para>
         /// </summary>
         /// <param name="mapper"></param>
         /// <param name="routes"></param>

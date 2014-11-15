@@ -59,6 +59,7 @@
     <Compile Include="MvcRouteMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceRoute.cs" />
+    <Compile Include="RouteValidator.cs" />
     <Compile Include="RouteDataTokenKeys.cs" />
     <Compile Include="RouteTypes\ActionRouteType.cs" />
     <Compile Include="RouteTypes\Crud\CrudRouteTypeBuilder.cs" />

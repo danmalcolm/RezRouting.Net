@@ -78,6 +78,7 @@
     <Compile Include="ResourcesModel.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="RouteBuilder.cs" />
+    <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="RouteMapper.cs" />
     <Compile Include="RouteMappingContext.cs" />
     <Compile Include="RouteType.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />
+    <Compile Include="Utility\TextUtility.cs" />
     <Compile Include="Utility\UrlPathHelper.cs" />
   </ItemGroup>
   <ItemGroup>

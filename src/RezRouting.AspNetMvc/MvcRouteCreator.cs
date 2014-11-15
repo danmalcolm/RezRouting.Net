@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RezRouting.Utility;
@@ -13,7 +14,11 @@ namespace RezRouting.AspNetMvc
     {
         public void CreateRoutes(ResourcesModel model, RouteCollection routes, string area)
         {
-            foreach (var route in GetRoutes(model.Resources))
+            var routeModels = GetRoutes(model.Resources).ToList();
+
+            new RouteValidator().ThrowIfInvalid(routeModels, routes);
+            
+            foreach (var route in routeModels)
             {
                 CreateRoute(route, routes, area);
             }
