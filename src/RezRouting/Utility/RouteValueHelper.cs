@@ -7,10 +7,9 @@ namespace RezRouting.Utility
         public static string TrimControllerFromTypeName(Type controllerType)
         {
             string value = controllerType.Name;
-            int index = value.LastIndexOf("Controller", StringComparison.InvariantCultureIgnoreCase);
-            if (index != -1)
+            if (value.EndsWith("controller", StringComparison.InvariantCultureIgnoreCase))
             {
-                value = value.Substring(0, index);
+                value = value.Substring(0, value.Length - 10);
             }
             return value;
         }
