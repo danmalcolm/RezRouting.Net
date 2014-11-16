@@ -16,11 +16,10 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
 {
     /// <summary>
     /// Contains tests used to give indication of execution times - currently 
-    /// used only for manual execution and verification in development environment 
-    /// at present. Switch from internal to public visibility to include these
-    /// tests.
+    /// used only for manual execution and verification in development environment.
+    /// Switch from internal to public visibility to include these tests in test run.
     /// </summary>
-    public class BenchMarkTests : IDisposable
+    internal class BenchMarkTests : IDisposable
     {
         [Fact]
         public void test_model_should_contain_routes()
