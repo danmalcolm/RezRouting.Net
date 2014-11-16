@@ -128,6 +128,32 @@ namespace RezRouting.Tests
             resource1.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route1"});
             resource2.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route2" });
         }
+
+        [Fact]
+        public void should_include_routes_specified_on_resource_before_routes_specified_by_route_types()
+        {
+            var mapper = new RouteMapper();
+            mapper.Collection("Products", products =>
+            {
+                products.HandledBy<TestController1>();
+                products.Route("Route2", typeof(TestController2), "Action2", "GET", "action2");
+            });
+
+            var routeType1 = new RouteType("RouteType1",
+                (resource, type, route) =>
+                {
+                    if (type == typeof(TestController1))
+                    {
+                        route.Configure("Route1", "Action1", "GET", "action1");
+                    }
+                });
+            mapper.RouteTypes(routeType1);
+            var model = mapper.Build();
+
+            var resource1 = model.Resources.Single();
+            resource1.Routes.Select(x => x.Name).Should().Equal("Route2", "Route1");
+
+        }
         
         public class TestController1
         {

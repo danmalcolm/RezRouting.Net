@@ -12,6 +12,7 @@ namespace RezRouting
     {
         private readonly List<Type> controllerTypes = new List<Type>();
         private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
+        private readonly List<Route> routes = new List<Route>();
 
         protected ResourceBuilder(string name, ResourceLevel level)
         {
@@ -33,13 +34,13 @@ namespace RezRouting
             var children = ChildBuilders.Select(x => x.Build(context)).ToList();
             var urlSegment = GetUrlSegment(context.Options);
             var resource = new Resource(Name, urlSegment, Level, customProperties, children);
-            var routes = from controllerType in controllerTypes
+            var sharedRoutes = from controllerType in controllerTypes
                 from routeType in context.RouteTypes
                 let route = routeType.BuildRoute(resource, controllerType, context.Options.PathFormatter)
                 where route != null
                 select route;
 
-            resource.InitRoutes(routes);
+            resource.InitRoutes(routes.Concat(sharedRoutes));
 
             return resource;
         }
@@ -82,6 +83,12 @@ namespace RezRouting
             {
                 customProperties[item.Key] = item.Value;
             }
+        }
+
+        public void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null)
+        {
+            var route = new Route(name, controllerType, action, httpMethod, path, customProperties ?? new Dictionary<string, object>());
+            routes.Add(route);
         }
     }
 }

@@ -95,32 +95,5 @@ namespace RezRouting.Tests
             child.Name.Should().Be("Logins");
             child.Parent.Should().Be(resource);
         }
-
-        [Fact]
-        public void custom_properties_should_be_empty_if_none_configured()
-        {
-            var builder = new SingularBuilder("Profile");
-
-            var resource = builder.Build(context);
-
-            resource.CustomProperties.Should().BeEmpty();
-        }
-
-        [Fact]
-        public void should_include_all_custom_properties_added_in_resource()
-        {
-            var builder = new SingularBuilder("Profile");
-
-            builder.CustomProperties(new Dictionary<string, object> { { "key1", "value1" } });
-            builder.CustomProperties(new Dictionary<string, object> { { "key2", "value2" } });
-            var resource = builder.Build(context);
-
-            var expectedData = new Dictionary<string, object>
-            {
-                { "key1", "value1" }, 
-                { "key2", "value2" }
-            };
-            resource.CustomProperties.Should().Equal(expectedData);
-        }
     }
 }

@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
+    <Compile Include="ResourceBuilderTests.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />

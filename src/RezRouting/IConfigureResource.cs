@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RezRouting
 {
@@ -41,6 +42,8 @@ namespace RezRouting
         /// to the current resource. More than one type can be added by calling the method
         /// multiple times.
         void HandledBy(Type type);
+
+        void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null);
     }
 
     
