@@ -17,7 +17,7 @@ namespace RezRouting.Options
         public UrlPathSettings(CaseStyle caseStyle = CaseStyle.Lower, string wordSeparator = null)
         {
             wordSeparator = wordSeparator ?? "";
-            if (PathSegmentCleaner.IsValid(wordSeparator))
+            if (!PathSegmentCleaner.IsValid(wordSeparator))
             {
                 throw new ArgumentException("Characters within the separator are not valid for use within a URL path. Only numbers, letters, - and _ may be used", "wordSeparator");
             }

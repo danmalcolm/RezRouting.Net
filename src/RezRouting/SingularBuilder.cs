@@ -1,4 +1,6 @@
-﻿using RezRouting.Options;
+﻿using System;
+using RezRouting.Options;
+using RezRouting.Utility;
 
 namespace RezRouting
 {
@@ -13,6 +15,11 @@ namespace RezRouting
 
         public void UrlPath(string path)
         {
+            if (path == null) throw new ArgumentNullException("path");
+            if (!PathSegmentCleaner.IsValid(path))
+            {
+                throw new ArgumentException("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.", "path");
+            }
             urlPath = path;
         }
 

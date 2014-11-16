@@ -11,7 +11,7 @@ namespace RezRouting.Utility
 
         public static bool IsValid(string value)
         {
-            return InvalidCharactersRegex.IsMatch(value);
+            return !InvalidCharactersRegex.IsMatch(value);
         }
 
         public static string Clean(string segment)

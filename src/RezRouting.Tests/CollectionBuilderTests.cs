@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using RezRouting.Options;
 using RezRouting.Tests.Utility;
@@ -179,5 +180,18 @@ namespace RezRouting.Tests
 
             resource.Url.Should().Be("myproducts");
         }
+
+        [Fact]
+        public void should_throw_if_custom_url_path_invalid()
+        {
+            var builder = new CollectionBuilder("Products");
+
+            Action action = () => builder.UrlPath("prod*()ucts");
+            action.ShouldThrow<ArgumentException>()
+                .WithMessage("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.*")
+                .Which.ParamName.Should().Be("path");
+
+        }
+
     }
 }

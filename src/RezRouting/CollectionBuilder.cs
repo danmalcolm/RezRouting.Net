@@ -20,11 +20,19 @@ namespace RezRouting
 
         public void Items(Action<CollectionItemBuilder> configure)
         {
+            if (configure == null) throw new ArgumentNullException("configure");
+
             configure(itemBuilder);
         }
 
         public void UrlPath(string path)
         {
+            if (path == null) throw new ArgumentNullException("path");
+            if (!PathSegmentCleaner.IsValid(path))
+            {
+                throw new ArgumentException("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.", "path");
+            }
+
             urlPath = path;
         }
 

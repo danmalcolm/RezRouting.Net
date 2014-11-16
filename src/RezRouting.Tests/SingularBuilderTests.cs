@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Options;
@@ -41,6 +42,18 @@ namespace RezRouting.Tests
             var resource = builder.Build(context);
 
             resource.Url.Should().Be("myprofile");
+        }
+
+        [Fact]
+        public void should_throw_if_custom_url_path_invalid()
+        {
+            var builder = new SingularBuilder("Profile");
+
+            Action action = () => builder.UrlPath("mypr*()ofile");
+            action.ShouldThrow<ArgumentException>()
+                .WithMessage("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.*")
+                .Which.ParamName.Should().Be("path");
+
         }
 
         [Fact]
