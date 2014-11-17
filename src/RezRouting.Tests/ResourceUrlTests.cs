@@ -7,7 +7,6 @@ namespace RezRouting.Tests
 {
     public class ResourceUrlTests
     {
-
         private ResourcesModel BuildResources(Action<RouteMapper> configure)
         {
             var mapper = new RouteMapper();

@@ -15,13 +15,13 @@ namespace RezRouting.Tests.AspNetMvc
 
         public MvcRouteTests()
         {
-            var show = new RouteType("Show",
+            var show = new TestRouteType("Show",
                 (resource, type, route) => route.Configure("Show", "Show", "GET", ""));
-            var edit = new RouteType("Edit",
+            var edit = new TestRouteType("Edit",
                 (resource, type, route) => route.Configure("Edit", "Edit", "GET", "edit"));
-            var update = new RouteType("Update",
+            var update = new TestRouteType("Update",
                 (resource, type, route) => route.Configure("Update", "Update", "PUT", ""));
-            var delete = new RouteType("Update",
+            var delete = new TestRouteType("Update",
                 (resource, type, route) => route.Configure("Delete", "Delete", "DELETE", ""));
             var mapper = new RouteMapper();
             mapper.RouteTypes(show, edit, update, delete);

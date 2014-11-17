@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Options;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -14,7 +15,7 @@ namespace RezRouting.Tests
         {
             Resource mappedResource;
             Type mappedHandlerType;
-            var routeType = new RouteType("RouteType1", (resource, type, route) =>
+            var routeType = new TestRouteType("RouteType1", (resource, type, route) =>
             {
                 mappedResource = resource;
                 mappedHandlerType = type;

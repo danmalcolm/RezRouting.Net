@@ -96,6 +96,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ResourceExtensions.cs" />
+    <Compile Include="Infrastructure\TestRouteType.cs" />
     <Compile Include="ResourceBuilderTests.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
@@ -148,7 +150,6 @@
     <Compile Include="RouteTypeTests.cs" />
     <Compile Include="RouteUrlTests.cs" />
     <Compile Include="SingularBuilderTests.cs" />
-    <Compile Include="Utility\ResourceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AspNetMvc\Benchmarks\Controllers\DemoData.tt">

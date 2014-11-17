@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Options;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -11,7 +12,7 @@ namespace RezRouting.Tests
     {
         private static RouteMapper CreateRouteMapper()
         {
-            var routeType1 = new RouteType("RouteType1",
+            var routeType1 = new TestRouteType("RouteType1",
                 (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
 
             var mapper = new RouteMapper();

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Utility;
 using Xunit;
 
@@ -11,10 +12,10 @@ namespace RezRouting.Tests.AspNetMvc
 {
     public class MvcRouteCreationTests
     {
-        private readonly RouteType action1RouteType = new RouteType("RouteType1",
+        private readonly TestRouteType action1RouteType = new TestRouteType("RouteType1",
             (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
 
-        private readonly RouteType routeType2 = new RouteType("RouteType2",
+        private readonly TestRouteType routeType2 = new TestRouteType("RouteType2",
             (resource, type, route) => route.Configure("Route2", "Action2", "GET", "action2"));
 
         [Fact]

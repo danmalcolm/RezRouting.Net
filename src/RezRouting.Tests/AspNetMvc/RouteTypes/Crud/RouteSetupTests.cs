@@ -7,6 +7,7 @@ using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel;
 using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Product;
 using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Products;
 using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Profile;
+using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Utility;
 using Xunit;
 using Xunit.Extensions;

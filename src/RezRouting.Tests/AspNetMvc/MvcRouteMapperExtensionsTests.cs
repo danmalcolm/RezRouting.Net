@@ -3,16 +3,17 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc
 {
     public class MvcRouteMapperExtensionsTests
     {
-        private readonly RouteType routeType1 = new RouteType("RouteType1",
+        private readonly TestRouteType routeType1 = new TestRouteType("RouteType1",
             (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
 
-        private readonly RouteType routeType2 = new RouteType("RouteType2",
+        private readonly TestRouteType routeType2 = new TestRouteType("RouteType2",
             (resource, type, route) => route.Configure("Route2", "Action2", "GET", "action2"));
 
         [Fact]

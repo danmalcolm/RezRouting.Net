@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.Options;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -11,11 +12,11 @@ namespace RezRouting.Tests
     {
         private RouteMappingContext CreateContext()
         {
-            return new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
+            return new RouteMappingContext(Enumerable.Empty<TestRouteType>(), new OptionsBuilder().Build());
         }
 
         [Fact]
-        public void custom_properties_should_be_empty_if_none_configured()
+        public void custom_properties_on_resource_should_be_empty_if_none_configured()
         {
             var context = CreateContext();
             var builder = new SingularBuilder("Profile");
@@ -25,7 +26,7 @@ namespace RezRouting.Tests
         }
 
         [Fact]
-        public void should_combine_all_custom_properties_within_resource()
+        public void should_combine_all_custom_properties_configured_on_resource()
         {
             var context = CreateContext();
             var builder = new SingularBuilder("Profile");

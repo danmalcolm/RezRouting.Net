@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -10,7 +11,7 @@ namespace RezRouting.Tests
         [Fact]
         public void route_urls_should_include_parent_resource_url()
         {
-            var routeType = new RouteType("RouteType1", 
+            var routeType = new TestRouteType("RouteType1", 
                 (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
             var mapper = new RouteMapper();
             mapper.RouteTypes(routeType);
@@ -53,7 +54,7 @@ namespace RezRouting.Tests
         [Fact]
         public void route_urls_for_routes_with_empty_path_should_match_parent_resource_url()
         {
-            var routeType = new RouteType("RouteType2",
+            var routeType = new TestRouteType("RouteType2",
                 (resource, type, route) => route.Configure("Route1", "Action1", "GET", ""));
 
             var mapper = new RouteMapper();

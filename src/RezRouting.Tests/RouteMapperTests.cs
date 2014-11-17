@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Utility;
 using Xunit;
 
@@ -65,12 +66,12 @@ namespace RezRouting.Tests
             });
             var actualAttempts = new List<Tuple<Resource, Type,string>>();
             
-            var routeType1 = new RouteType("RouteType1",
+            var routeType1 = new TestRouteType("RouteType1",
                 (resource, type, route) =>
                 {
                     actualAttempts.Add(Tuple.Create(resource, type, "RouteType1"));
                 });
-            var routeType2 = new RouteType("RouteType2",
+            var routeType2 = new TestRouteType("RouteType2",
                 (resource, type, route) =>
                 {
                     actualAttempts.Add(Tuple.Create(resource, type, "RouteType2"));
@@ -104,7 +105,7 @@ namespace RezRouting.Tests
                 products.Items(product => product.HandledBy<TestController2>());
             });
 
-            var routeType1 = new RouteType("RouteType1",
+            var routeType1 = new TestRouteType("RouteType1",
                 (resource, type, route) =>
                 {
                     if (type == typeof (TestController1))
@@ -112,7 +113,7 @@ namespace RezRouting.Tests
                         route.Configure("Route1", "Action1", "GET", "action1");
                     }
                 });
-            var routeType2 = new RouteType("RouteType2",
+            var routeType2 = new TestRouteType("RouteType2",
                 (resource, type, route) =>
                 {
                     if (type == typeof(TestController2))
@@ -139,7 +140,7 @@ namespace RezRouting.Tests
                 products.Route("Route2", typeof(TestController2), "Action2", "GET", "action2");
             });
 
-            var routeType1 = new RouteType("RouteType1",
+            var routeType1 = new TestRouteType("RouteType1",
                 (resource, type, route) =>
                 {
                     if (type == typeof(TestController1))

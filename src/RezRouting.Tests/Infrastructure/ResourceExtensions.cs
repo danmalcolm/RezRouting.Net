@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace RezRouting.Tests.Utility
+namespace RezRouting.Tests.Infrastructure
 {
     public static class ResourceExtensions
     {
-
         /// <summary>
         /// Returns all resources in the specified ResourcesModel by combining top level resources
         /// and their descendants
@@ -23,7 +22,7 @@ namespace RezRouting.Tests.Utility
         /// <returns></returns>
         public static IEnumerable<Resource> Expand(this IEnumerable<Resource> resources)
         {
-            return resources.SelectMany(resource => new [] { resource }.Concat(resource.Children.Expand()));
+            return resources.SelectMany(resource => new [] { resource }.Concat(Expand((IEnumerable<Resource>) resource.Children)));
         }
 
         /// <summary>

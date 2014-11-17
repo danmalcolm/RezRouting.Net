@@ -1,16 +1,16 @@
 ﻿using System;
 using RezRouting.Options;
 
-namespace RezRouting
+namespace RezRouting.Tests.Infrastructure
 {
     /// <summary>
     /// Simple route type implementation that sets up via a custom function
     /// </summary>
-    public class RouteType : IRouteType
+    public class TestRouteType : IRouteType
     {
         private readonly Action<Resource, Type, IConfigureRoute> configure;
 
-        public RouteType(string name, Action<Resource,Type,IConfigureRoute> configure)
+        public TestRouteType(string name, Action<Resource,Type,IConfigureRoute> configure)
         {
             this.configure = configure;
             Name = name;

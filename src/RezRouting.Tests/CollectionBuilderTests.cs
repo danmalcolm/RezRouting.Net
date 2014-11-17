@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Options;
+using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Utility;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace RezRouting.Tests
 {
     public class CollectionBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<RouteType>(), new OptionsBuilder().Build());
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<TestRouteType>(), new OptionsBuilder().Build());
 
         [Fact]
         public void should_build_collection_resource()
@@ -190,8 +191,6 @@ namespace RezRouting.Tests
             action.ShouldThrow<ArgumentException>()
                 .WithMessage("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.*")
                 .Which.ParamName.Should().Be("path");
-
         }
-
     }
 }
