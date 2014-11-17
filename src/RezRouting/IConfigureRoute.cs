@@ -8,7 +8,7 @@ namespace RezRouting
     public interface IConfigureRoute
     {
         /// <summary>
-        /// Sets up a route based on the specified options
+        /// Configures a route based on the specified options
         /// </summary>
         /// <param name="name"></param>
         /// <param name="action"></param>

@@ -61,7 +61,7 @@
     <Compile Include="IConfigureSingular.cs" />
     <Compile Include="IdUrlSegment.cs" />
     <Compile Include="IResourceBuilder.cs" />
-    <Compile Include="IRouteType.cs" />
+    <Compile Include="IRouteConvention.cs" />
     <Compile Include="IUrlSegment.cs" />
     <Compile Include="Options\CaseStyle.cs" />
     <Compile Include="Options\DefaultIdNameConvention.cs" />

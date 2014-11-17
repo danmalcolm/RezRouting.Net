@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace RezRouting
 {
     /// <summary>
-    /// Configures an individual resource 
+    /// Configures a Resource model, allowing routes, child resources and other
+    /// options to be specified
     /// </summary>
     public interface IConfigureResource
     {
@@ -43,8 +44,15 @@ namespace RezRouting
         /// multiple times.
         void HandledBy(Type type);
 
+        /// <summary>
+        /// Adds a route to the current resource
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="controllerType"></param>
+        /// <param name="action"></param>
+        /// <param name="httpMethod"></param>
+        /// <param name="path"></param>
+        /// <param name="customProperties"></param>
         void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null);
     }
-
-    
 }

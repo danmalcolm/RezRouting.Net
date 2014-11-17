@@ -5,24 +5,23 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Tests.Infrastructure;
-using RezRouting.Tests.Utility;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc
 {
     public class MvcRouteCreationTests
     {
-        private readonly TestRouteType action1RouteType = new TestRouteType("RouteType1",
-            (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
+        private readonly TestRouteConvention convention1 = new TestRouteConvention
+            ("Route1", "Action1", "GET", "action1");
 
-        private readonly TestRouteType routeType2 = new TestRouteType("RouteType2",
-            (resource, type, route) => route.Configure("Route2", "Action2", "GET", "action2"));
+        private readonly TestRouteConvention convention2 = new TestRouteConvention
+            ("Route2", "Action2", "GET", "action2");
 
         [Fact]
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType);
+            mapper.RouteConventions(convention1);
             mapper.Singular("Profile", profile =>
             {
                 profile.HandledBy<TestController>();
@@ -55,7 +54,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_name_route_based_on_full_name_of_resource()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType);
+            mapper.RouteConventions(convention1);
             mapper.Collection("Products", products => products.HandledBy<TestController>());
 
             var routes = new RouteCollection();
@@ -69,7 +68,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_throw_if_route_names_are_not_unique()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType, action1RouteType);
+            mapper.RouteConventions(convention1, convention1);
             mapper.Collection("Products", products => products.HandledBy<TestController>());
 
             Action action = () => mapper.MapMvcRoutes(new RouteCollection());
@@ -84,7 +83,7 @@ Products.Route1 - (defined on resources Products and Products)
         public void should_throw_if_route_names_already_in_use()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType);
+            mapper.RouteConventions(convention1);
             mapper.Collection("Products", products => products.HandledBy<TestController>());
             var routes = new RouteCollection();
             routes.MapRoute("Products.Route1", "url");
@@ -101,7 +100,7 @@ Products.Route1 - (defined on resource Products)
         public void should_add_route_model_to_route()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType);
+            mapper.RouteConventions(convention1);
             mapper.Collection("Products", products => products.HandledBy<TestController>());
             var routes = new RouteCollection();
             ResourcesModel model = null;
@@ -116,7 +115,7 @@ Products.Route1 - (defined on resource Products)
         public void should_map_collection_routes_before_item_routes()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType, routeType2);
+            mapper.RouteConventions(convention1, convention2);
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();
@@ -145,7 +144,7 @@ Products.Route1 - (defined on resource Products)
         public void should_include_area_when_mapping_area_routes()
         {
             var mapper = new RouteMapper();
-            mapper.RouteTypes(action1RouteType);
+            mapper.RouteConventions(convention1);
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();

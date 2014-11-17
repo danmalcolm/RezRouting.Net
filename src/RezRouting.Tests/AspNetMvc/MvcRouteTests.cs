@@ -15,17 +15,14 @@ namespace RezRouting.Tests.AspNetMvc
 
         public MvcRouteTests()
         {
-            var show = new TestRouteType("Show",
-                (resource, type, route) => route.Configure("Show", "Show", "GET", ""));
-            var edit = new TestRouteType("Edit",
-                (resource, type, route) => route.Configure("Edit", "Edit", "GET", "edit"));
-            var update = new TestRouteType("Update",
-                (resource, type, route) => route.Configure("Update", "Update", "PUT", ""));
-            var delete = new TestRouteType("Update",
-                (resource, type, route) => route.Configure("Delete", "Delete", "DELETE", ""));
             var mapper = new RouteMapper();
-            mapper.RouteTypes(show, edit, update, delete);
-            mapper.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+            mapper.Singular("Profile", profile =>
+            {
+                profile.Route("Show", typeof(ProfileController), "Show", "GET", "");
+                profile.Route("Edit", typeof(ProfileController), "Edit", "GET", "edit");
+                profile.Route("Update", typeof(ProfileController), "Update", "PUT", "");
+                profile.Route("Delete", typeof(ProfileController), "Delete", "DELETE", "");
+            });
             routes = new RouteCollection();
             mapper.MapMvcRoutes(routes);
         }

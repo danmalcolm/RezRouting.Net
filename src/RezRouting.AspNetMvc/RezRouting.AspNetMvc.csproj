@@ -61,10 +61,10 @@
     <Compile Include="ResourceRoute.cs" />
     <Compile Include="RouteValidator.cs" />
     <Compile Include="RouteDataTokenKeys.cs" />
-    <Compile Include="RouteTypes\ActionRouteType.cs" />
-    <Compile Include="RouteTypes\Crud\CrudRouteTypeBuilder.cs" />
-    <Compile Include="RouteTypes\Tasks\TaskRouteTypeBuilder.cs" />
-    <Compile Include="RouteTypes\Tasks\TaskRouteType.cs" />
+    <Compile Include="RouteConventions\ActionRouteConvention.cs" />
+    <Compile Include="RouteConventions\Crud\CrudRouteConventionBuilder.cs" />
+    <Compile Include="RouteConventions\Tasks\TaskRouteConventionBuilder.cs" />
+    <Compile Include="RouteConventions\Tasks\TaskRouteConvention.cs" />
     <Compile Include="UrlGeneration\RouteModelIndex.cs" />
     <Compile Include="UrlGeneration\UrlHelperExtensions.cs" />
   </ItemGroup>

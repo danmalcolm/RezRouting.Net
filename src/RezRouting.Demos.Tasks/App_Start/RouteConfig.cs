@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using RezRouting.AspNetMvc.RouteTypes.Crud;
-using RezRouting.AspNetMvc.RouteTypes.Tasks;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Demos.Tasks.Controllers.Products;
 using RezRouting.Demos.Tasks.Controllers.Products.Product;
 using RezRouting.Demos.Tasks.Controllers.Session;
@@ -19,7 +19,7 @@ namespace RezRouting.Demos.Tasks
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(new TaskRouteTypeBuilder().Build());
+            mapper.RouteConventions(new TaskRouteConventionBuilder().Build());
             mapper.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();
@@ -32,7 +32,7 @@ namespace RezRouting.Demos.Tasks
 
             // Use CRUD for session for now
             mapper = new RouteMapper();
-            mapper.RouteTypes(new CrudRouteTypeBuilder().Build());
+            mapper.RouteConventions(new CrudRouteConventionBuilder().Build());
             mapper.Singular("Session", session => session.HandledBy<SessionController>());
             mapper.MapMvcRoutes(routes);
         }

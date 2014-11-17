@@ -34,13 +34,12 @@ namespace RezRouting
             var children = ChildBuilders.Select(x => x.Build(context)).ToList();
             var urlSegment = GetUrlSegment(context.Options);
             var resource = new Resource(Name, urlSegment, Level, customProperties, children);
-            var sharedRoutes = from controllerType in controllerTypes
-                from routeType in context.RouteTypes
-                let route = routeType.BuildRoute(resource, controllerType, context.Options.PathFormatter)
-                where route != null
+            var conventionRoutes = from convention in context.RouteConventions
+                from route in convention.Create(resource, controllerTypes, context.Options.PathFormatter)
                 select route;
 
-            resource.InitRoutes(routes.Concat(sharedRoutes));
+            var allRoutes = routes.Concat(conventionRoutes);
+            resource.InitRoutes(allRoutes);
 
             return resource;
         }

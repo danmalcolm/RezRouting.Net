@@ -7,7 +7,7 @@ namespace RezRouting
     public class RouteMapper
     {
         private readonly BaseBuilder baseBuilder = new BaseBuilder();
-        private readonly List<IRouteType> routeTypes = new List<IRouteType>();
+        private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
         private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
 
         public void Collection(string name, Action<IConfigureCollection> configure)
@@ -25,14 +25,14 @@ namespace RezRouting
             baseBuilder.Singular(name, configure);
         }
 
-        public void RouteTypes(params IRouteType[] routeTypes)
+        public void RouteConventions(params IRouteConvention[] conventions)
         {
-            this.routeTypes.AddRange(routeTypes);
+            this.routeConventions.AddRange(conventions);
         }
 
-        public void RouteTypes(IEnumerable<IRouteType> routeTypes)
+        public void RouteConventions(IEnumerable<IRouteConvention> conventions)
         {
-            this.routeTypes.AddRange(routeTypes);
+            this.routeConventions.AddRange(conventions);
         }
 
         public void Options(Action<IConfigureOptions> configure)
@@ -63,7 +63,7 @@ namespace RezRouting
         public virtual ResourcesModel Build()
         {
             var options = optionsBuilder.Build();
-            var context = new RouteMappingContext(routeTypes, options);
+            var context = new RouteMappingContext(routeConventions, options);
             var rootResource = baseBuilder.Build(context);
             return new ResourcesModel(rootResource.Children);
         }

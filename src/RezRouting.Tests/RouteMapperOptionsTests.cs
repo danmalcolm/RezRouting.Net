@@ -12,11 +12,10 @@ namespace RezRouting.Tests
     {
         private static RouteMapper CreateRouteMapper()
         {
-            var routeType1 = new TestRouteType("RouteType1",
-                (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
+            var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType1);
+            mapper.RouteConventions(convention);
             return mapper;
         }
 

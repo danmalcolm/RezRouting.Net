@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using RezRouting.AspNetMvc.RouteTypes.Crud;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
@@ -20,8 +20,8 @@ namespace RezRouting.Demos.Crud
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
             var mapper = new RouteMapper();
-            var routeTypeBuilder = new CrudRouteTypeBuilder();
-            mapper.RouteTypes(routeTypeBuilder.Build());
+            var conventions = new CrudRouteConventionBuilder();
+            mapper.RouteConventions(conventions.Build());
             mapper.Singular("Session", session => session.HandledBy<SessionController>());
             mapper.Collection("Products", products =>
             {

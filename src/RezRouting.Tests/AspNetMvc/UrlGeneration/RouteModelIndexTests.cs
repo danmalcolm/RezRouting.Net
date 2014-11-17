@@ -3,9 +3,9 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.UrlGeneration;
-using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel;
-using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Product;
-using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel.Controllers.Products;
+using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
+using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Product;
+using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Products;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc.UrlGeneration

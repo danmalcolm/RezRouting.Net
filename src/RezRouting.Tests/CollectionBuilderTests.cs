@@ -10,7 +10,7 @@ namespace RezRouting.Tests
 {
     public class CollectionBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<TestRouteType>(), new OptionsBuilder().Build());
+        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<IRouteConvention>(), new OptionsBuilder().Build());
 
         [Fact]
         public void should_build_collection_resource()

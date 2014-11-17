@@ -11,10 +11,9 @@ namespace RezRouting.Tests
         [Fact]
         public void route_urls_should_include_parent_resource_url()
         {
-            var routeType = new TestRouteType("RouteType1", 
-                (resource, type, route) => route.Configure("Route1", "Action1", "GET", "action1"));
+            var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType);
+            mapper.RouteConventions(convention);
             mapper.Singular("Profile", profile =>
             {
                 profile.HandledBy<TestController>();
@@ -54,11 +53,10 @@ namespace RezRouting.Tests
         [Fact]
         public void route_urls_for_routes_with_empty_path_should_match_parent_resource_url()
         {
-            var routeType = new TestRouteType("RouteType2",
-                (resource, type, route) => route.Configure("Route1", "Action1", "GET", ""));
+            var convention = new TestRouteConvention("Route1", "Action1", "GET", "");
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeType);
+            mapper.RouteConventions(convention);
             mapper.Singular("Profile", profile => profile.HandledBy<TestController>());
             mapper.Collection("Products", products =>
             {

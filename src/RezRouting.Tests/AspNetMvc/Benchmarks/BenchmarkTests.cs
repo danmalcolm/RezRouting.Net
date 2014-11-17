@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteTypes;
+using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Tests.AspNetMvc.Benchmarks.Controllers;
 using RezRouting.Tests.Infrastructure;
@@ -158,14 +158,14 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
 
         private static RouteMapper Configure()
         {
-            var routeTypes = Enumerable.Range(1, 10)
+            var conventions = Enumerable.Range(1, 10)
                 .Select(n => "Action" + n)
-                .Select(name => new ActionRouteType
+                .Select(name => new ActionRouteConvention
                     (name, ResourceLevel.Collection, name, "GET", name))
                 .ToList();
 
             var mapper = new RouteMapper();
-            mapper.RouteTypes(routeTypes);
+            mapper.RouteConventions(conventions);
 
             DemoData.Resources.Each(resourceInfo =>
             {

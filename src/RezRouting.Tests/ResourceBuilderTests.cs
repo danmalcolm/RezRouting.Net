@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.Options;
-using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests
@@ -12,7 +11,7 @@ namespace RezRouting.Tests
     {
         private RouteMappingContext CreateContext()
         {
-            return new RouteMappingContext(Enumerable.Empty<TestRouteType>(), new OptionsBuilder().Build());
+            return new RouteMappingContext(Enumerable.Empty<IRouteConvention>(), new OptionsBuilder().Build());
         }
 
         [Fact]

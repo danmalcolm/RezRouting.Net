@@ -2,7 +2,7 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.Tests.AspNetMvc.RouteTypes.Crud.TestModel;
+using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 

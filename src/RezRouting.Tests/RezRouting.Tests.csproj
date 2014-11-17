@@ -89,7 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetMvc\ActionRouteTypeTests.cs" />
+    <Compile Include="AspNetMvc\ActionRouteConventionTests.cs" />
     <Compile Include="AspNetMvc\Benchmarks\BenchmarkTests.cs" />
     <Compile Include="AspNetMvc\Benchmarks\Controllers\DemoData.cs">
       <AutoGen>True</AutoGen>
@@ -97,33 +97,33 @@
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ResourceExtensions.cs" />
-    <Compile Include="Infrastructure\TestRouteType.cs" />
+    <Compile Include="Infrastructure\TestRouteConvention.cs" />
     <Compile Include="ResourceBuilderTests.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\InboundRequestTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\RouteSetupTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\CrudResourceModel.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Products\ProductsController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Products\Product\ProductController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Crud\TestModel\Controllers\Profile\ProfileController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionItemRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\CollectionRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\SingularRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TaskRouteTypeTests.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\EditProductsController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\CreateProductController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\ListProductsController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\DeleteProductController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\DisplayProductController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Products\Product\EditProfileController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DisplayProfileController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\EditProfileController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
-    <Compile Include="AspNetMvc\RouteTypes\Tasks\TestResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\InboundRequestTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\RouteSetupTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\CrudResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Products\ProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Products\Product\ProductController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Profile\ProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\CollectionItemRouteConventionTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\CollectionRouteConventionTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\SingularRouteConventionTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TaskRouteConventionTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\EditProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\CreateProductController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\ListProductsController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\Product\DeleteProductController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\Product\DisplayProductController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Products\Product\EditProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Profile\DisplayProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Profile\EditProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Tasks\TestResourceModel.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\AreaUrlGenerationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\BuiltInUrlGenerationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndexTests.cs" />
@@ -147,7 +147,6 @@
     <Compile Include="RouteBuilderTests.cs" />
     <Compile Include="RouteMapperOptionsTests.cs" />
     <Compile Include="RouteMapperTests.cs" />
-    <Compile Include="RouteTypeTests.cs" />
     <Compile Include="RouteUrlTests.cs" />
     <Compile Include="SingularBuilderTests.cs" />
   </ItemGroup>

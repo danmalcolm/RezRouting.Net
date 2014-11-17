@@ -123,5 +123,10 @@ namespace RezRouting
         /// extensions to core routing functionality.
         /// </summary>
         public IDictionary<string, object> CustomProperties { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("FullName: {0}, Level: {1}", FullName, Level);
+        }
     }
 }
