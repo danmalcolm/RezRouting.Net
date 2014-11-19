@@ -6,14 +6,22 @@ namespace RezRouting
 {
     public class Route
     {
-        public Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string, object> customProperties)
+        public Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string, object> customProperties = null)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (controllerType == null) throw new ArgumentNullException("controllerType");
+            if (action == null) throw new ArgumentNullException("action");
+            if (httpMethod == null) throw new ArgumentNullException("httpMethod");
+            if (path == null) throw new ArgumentNullException("path");
+            
             Name = name;
             ControllerType = controllerType;
             Action = action;
             HttpMethod = httpMethod;
             Path = path;
-            CustomProperties = customProperties;
+            CustomProperties = customProperties != null
+                ? new Dictionary<string, object>(customProperties)
+                : new Dictionary<string, object>(); ;
         }
 
         internal void InitResource(Resource resource)

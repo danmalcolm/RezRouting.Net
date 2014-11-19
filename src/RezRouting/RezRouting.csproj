@@ -57,7 +57,6 @@
     <Compile Include="IConfigureCollectionItem.cs" />
     <Compile Include="IConfigureOptions.cs" />
     <Compile Include="IConfigureResource.cs" />
-    <Compile Include="IConfigureRoute.cs" />
     <Compile Include="IConfigureSingular.cs" />
     <Compile Include="IdUrlSegment.cs" />
     <Compile Include="IResourceBuilder.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="BaseBuilder.cs" />
     <Compile Include="ResourcesModel.cs" />
     <Compile Include="Route.cs" />
-    <Compile Include="RouteBuilder.cs" />
     <Compile Include="RouteConfigurationException.cs" />
     <Compile Include="RouteMapper.cs" />
     <Compile Include="RouteMappingContext.cs" />

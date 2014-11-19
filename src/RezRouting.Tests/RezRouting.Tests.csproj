@@ -144,7 +144,7 @@
     <Compile Include="CollectionBuilderTests.cs" />
     <Compile Include="ResourceHierarchyTests.cs" />
     <Compile Include="ResourceUrlTests.cs" />
-    <Compile Include="RouteBuilderTests.cs" />
+    <Compile Include="RouteTests.cs" />
     <Compile Include="RouteMapperOptionsTests.cs" />
     <Compile Include="RouteMapperTests.cs" />
     <Compile Include="RouteUrlTests.cs" />

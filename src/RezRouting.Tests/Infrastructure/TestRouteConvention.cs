@@ -30,7 +30,7 @@ namespace RezRouting.Tests.Infrastructure
         {
             return controllerTypes
                 .Where(type => filter(resource, type))
-                .Select(x => RouteBuilder.Create(name, x, action, httpMethod, path));
+                .Select(x => new Route(name, x, action, httpMethod, path, null));
         }
     }
 }

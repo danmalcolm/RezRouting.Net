@@ -36,7 +36,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
                 return from controllerType in controllerTypes
                     where ActionMappingHelper.SupportsAction(controllerType, Action)
                     let path = pathFormatter.FormatDirectoryName(Path)
-                    select RouteBuilder.Create(Name, controllerType, Action, HttpMethod, path);
+                    select new Route(Name, controllerType, Action, HttpMethod, path, null);
             }
             return Enumerable.Empty<Route>();
         }
