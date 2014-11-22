@@ -7,12 +7,17 @@ namespace RezRouting.AspNetMvc.UrlGeneration
 {
     /// <summary>
     /// Stores a collection of routes, indexed by controller type and action for
-    /// rapid retrieval during URL generation
+    /// rapid retrieval during URL generation. Only routes created by RezRouting
+    /// are included.
     /// </summary>
     public class RouteModelIndex
     {
         private readonly Dictionary<ControllerActionKey, Route> routesByKey;
         
+        /// <summary>
+        /// Creates a new RouteModelIndex
+        /// </summary>
+        /// <param name="routes"></param>
         public RouteModelIndex(RouteCollection routes)
         {
             const string modelKey = RouteDataTokenKeys.RouteModel;
@@ -27,6 +32,12 @@ namespace RezRouting.AspNetMvc.UrlGeneration
                 .ToDictionary(g => g.Key, g => g.First());
         }
 
+        /// <summary>
+        /// Gets the RezRouting route for the specified controller type and action
+        /// </summary>
+        /// <param name="controllerType"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public Route Get(Type controllerType, string action)
         {
             var key = new ControllerActionKey(controllerType, action);

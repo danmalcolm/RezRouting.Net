@@ -155,7 +155,7 @@ Products.Route1 - (defined on resource Products)
             mapper.MapMvcRoutes(routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
-                .Select(x => x.DataTokens[RouteDataTokenKeys.Area] as string)
+                .Select(x => x.DataTokens["area"] as string)
                 .Should().OnlyContain(x => Equals(x, "Area1"));
         }
 

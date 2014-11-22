@@ -6,6 +6,9 @@ using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc.RouteConventions.Tasks
 {
+    /// <summary>
+    /// Route convention used to create a task-oriented route
+    /// </summary>
     public class TaskRouteConvention : IRouteConvention
     {
         public TaskRouteConvention(string name, ResourceLevel level, string action, string httpMethod)
@@ -16,14 +19,27 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
             HttpMethod = httpMethod;
         }
 
+        /// <summary>
+        /// Name of the route
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The level of Resource to which this convention applies
+        /// </summary>
         public ResourceLevel Level { get; set; }
 
+        /// <summary>
+        /// The name of the action that the route is mapped to
+        /// </summary>
         public string Action { get; set; }
 
+        /// <summary>
+        /// The HTTP method used in requests for this route
+        /// </summary>
         public string HttpMethod { get; set; }
         
+        /// <inheritdoc />
         public IEnumerable<Route> Create(Resource resource, IEnumerable<Type> controllerTypes, UrlPathFormatter pathFormatter)
         {
             if (resource.Level == Level)

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RezRouting.Utility;
@@ -8,10 +7,16 @@ using RezRouting.Utility;
 namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Adds routes to RouteCollection based on resources and routes in a ResourcesModel
+    /// Adds routes to RouteCollection based on routes within a ResourcesModel
     /// </summary>
     public class MvcRouteCreator
     {
+        /// <summary>
+        /// Creates the routes within a ResourcesModel within the specified RouteCollection
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="routes"></param>
+        /// <param name="area">The name of the area - if null, no area will be configured</param>
         public void CreateRoutes(ResourcesModel model, RouteCollection routes, string area)
         {
             var routeModels = GetRoutes(model.Resources).ToList();

@@ -1,9 +1,9 @@
 ﻿namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Contains constants for keys used when configuring route information
+    /// Contains constants for keys used with a routes's RouteData collection 
     /// </summary>
-    public class RouteDataTokenKeys
+    internal class RouteDataTokenKeys
     {
         public const string UseNamespaceFallback = "UseNamespaceFallback";
         public const string Namespaces = "Namespaces";

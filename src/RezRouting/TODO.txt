@@ -1,21 +1,18 @@
 ﻿First
 -----
 
+[ ] Rename Resource.Url prop to UriTemplate?
 
-[ ] Custom routes for any resource, not just based on RouteTypes
+[ ] Introduce IHandlerDescriptor to replace controller type and action - more framework neutral - not everything uses controller classes?
 
 [ ] Comments on public API
 
 [ ] Publish to nuget
 
-[ ] Validate path URLs at configuration time for valid characters
-
-[ ] When mapping MVC routes, check if name is already used and throw with informative exception
-
+[ ] Wiki
 
 Next
 ----
-
 
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
@@ -38,6 +35,11 @@ Next
 
 Done
 ----
+[X] Custom routes for any resource, not just based on RouteConventions
+
+[X] Validate path URLs at configuration time for valid characters
+
+[X] When mapping MVC routes, check if name is already used and throw with informative exception
 
 [x] Bug: Word separator should be_inserted_between letters and numbers
 
@@ -97,9 +99,9 @@ Done
 
 [x] Demo app - bootstrap
 
-[x] AspNetMvc.BuiltInRouteTypes.Crud
+[x] AspNetMvc.BuiltInRouteConventions.Crud
 
-[x] RouteTypeBuilders, with common functionality, e.g. map route with this action
+[x] RouteConventionBuilders, with common functionality, e.g. map route with this action
 
 [x] Full name on resources
 
@@ -115,7 +117,7 @@ Done
 
 [x] Configure types handling routes - HandledBy
 
-[x] Introduce RouteTypes 
+[x] Introduce RouteConventions 
 
 [x] Add Routes to Resource model
 

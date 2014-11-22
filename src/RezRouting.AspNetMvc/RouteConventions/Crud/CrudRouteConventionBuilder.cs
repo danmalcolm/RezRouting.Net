@@ -8,6 +8,10 @@ namespace RezRouting.AspNetMvc.RouteConventions.Crud
     /// </summary>
     public class CrudRouteConventionBuilder
     {
+        /// <summary>
+        /// Creates the individual route conventions
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IRouteConvention> Build()
         {
             var collectionIndex = new ActionRouteConvention("Index", ResourceLevel.Collection, "Index", "GET", "");

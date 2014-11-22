@@ -6,11 +6,17 @@ using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
 {
+    /// <summary>
+    /// Helper class for mapping controller actions
+    /// </summary>
     public static class ActionMappingHelper
     {
         private static readonly Dictionary<Type, ControllerActions> ControllerActionsCache
             = new Dictionary<Type, ControllerActions>();
 
+        /// <summary>
+        /// Clears any data stored while inspecting controller types
+        /// </summary>
         public static void ResetCache()
         {
             ControllerActionsCache.Clear();

@@ -6,15 +6,15 @@ using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
 {
-    public class RouteValidator
+    internal class RouteValidator
     {
         public void ThrowIfInvalid(List<Route> routeModels, RouteCollection routes)
         {
-            EnsureUniqueRouteNames(routeModels, routes);
+            EnsureUniqueRouteNames(routeModels);
             EnsureRouteNamesNotInUse(routeModels, routes);
         }
 
-        private void EnsureUniqueRouteNames(List<Route> routeModels, RouteCollection routes)
+        private void EnsureUniqueRouteNames(List<Route> routeModels)
         {
             var routesWithNonUniqueNames = routeModels
                 .GroupBy(x => x.FullName)

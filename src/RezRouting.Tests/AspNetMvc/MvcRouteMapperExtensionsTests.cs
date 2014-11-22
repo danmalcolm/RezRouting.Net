@@ -32,7 +32,7 @@ namespace RezRouting.Tests.AspNetMvc
             mapper.MapMvcRoutes(routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
-                .Select(x => x.DataTokens[RouteDataTokenKeys.Area] as string)
+                .Select(x => x.DataTokens["area"] as string)
                 .ShouldBeEquivalentTo(new[] { "Area1", "Area1" });
         }
 

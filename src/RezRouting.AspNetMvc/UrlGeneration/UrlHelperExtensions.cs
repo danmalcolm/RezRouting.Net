@@ -21,7 +21,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         /// collection. This optimisation can be used when there is a guarantee that the
         /// routes in the collection will not change after they have first been set up 
         /// (in practice, there are few scenarios where a RouteCollection is modified
-        /// again after initialisation at start-up). 
+        /// following initialisation at start-up). 
         /// </summary>
         /// <param name="routes"></param>
         public static void IndexRoutes(RouteCollection routes)

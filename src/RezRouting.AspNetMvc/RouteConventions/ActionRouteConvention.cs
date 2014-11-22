@@ -6,7 +6,7 @@ using RezRouting.Options;
 namespace RezRouting.AspNetMvc.RouteConventions
 {
     /// <summary>
-    /// Creates a route for a specific action on a controller
+    /// Creates a route for resource based on a specific action on a controller
     /// </summary>
     public class ActionRouteConvention : IRouteConvention
     {

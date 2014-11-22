@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Web;
+﻿using System.Web;
 using System.Web.Routing;
 using RezRouting.Utility;
 
@@ -8,13 +7,18 @@ namespace RezRouting.AspNetMvc
     // Based on v. useful tips here: http://samsaffron.com/archive/2011/10/13/optimising-asp-net-mvc3-routing
 
     /// <summary>
-    /// Route implementation for resource routes, includes optimisation of in-bound
-    /// route identification.
+    /// Route implementation used for resource routes configured by RezRouting, includes 
+    /// optimised in-bound route identification logic.
     /// </summary>
     public class ResourceRoute : System.Web.Routing.Route
     {
         private readonly string start;
 
+        /// <summary>
+        /// Creates a ResourceRoute
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="handler"></param>
         public ResourceRoute(string url, IRouteHandler handler) : base(url, handler)
         {
             int index = url.IndexOf('{');
