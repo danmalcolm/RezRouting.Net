@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
@@ -11,9 +12,9 @@ namespace RezRouting.Tests.AspNetMvc
 {
     public class MvcRouteTests
     {
-        private readonly RouteCollection routes;
+        private static readonly RouteCollection Routes;
 
-        public MvcRouteTests()
+        static MvcRouteTests()
         {
             var mapper = new RouteMapper();
             mapper.Singular("Profile", profile =>
@@ -23,8 +24,15 @@ namespace RezRouting.Tests.AspNetMvc
                 profile.Route("Update", typeof(ProfileController), "Update", "PUT", "");
                 profile.Route("Delete", typeof(ProfileController), "Delete", "DELETE", "");
             });
-            routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
+            Routes = new RouteCollection();
+            mapper.MapMvcRoutes(Routes);
+        }
+
+        private RouteData GetRouteData(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)
+        {
+            var httpContext = TestHttpContextBuilder.Create(httpMethod, path, headers, form);
+            var routeData = Routes.GetRouteData(httpContext);
+            return routeData;
         }
 
         [Fact]
@@ -84,13 +92,6 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var routeData = GetRouteData("PATCH", "/profile");
             routeData.Should().BeNull();
-        }
-        
-        private RouteData GetRouteData(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)
-        {
-            var httpContext = TestHttpContextBuilder.Create(httpMethod, path, headers, form);
-            var routeData = routes.GetRouteData(httpContext);
-            return routeData;
         }
         
         private class ProfileController

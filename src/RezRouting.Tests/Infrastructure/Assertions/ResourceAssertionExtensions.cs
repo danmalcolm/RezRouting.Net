@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using RezRouting.Resources;
 
 namespace RezRouting.Tests.Infrastructure.Assertions
 {

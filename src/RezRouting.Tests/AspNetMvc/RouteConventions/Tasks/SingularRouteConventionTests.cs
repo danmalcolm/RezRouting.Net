@@ -1,5 +1,7 @@
 using System.Linq;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Profile;
 using RezRouting.Tests.Infrastructure.Assertions;
 using Xunit;

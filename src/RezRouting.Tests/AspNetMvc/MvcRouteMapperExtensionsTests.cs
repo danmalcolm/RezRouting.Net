@@ -3,7 +3,10 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 using Xunit;
+using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.Tests.AspNetMvc
 {

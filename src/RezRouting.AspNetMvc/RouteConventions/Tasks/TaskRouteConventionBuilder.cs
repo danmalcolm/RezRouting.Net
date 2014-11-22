@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc.RouteConventions.Tasks
 {

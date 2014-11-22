@@ -2,6 +2,7 @@
 using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
+using RezRouting.Configuration;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Products.Product.Reviews;

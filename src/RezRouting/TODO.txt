@@ -1,11 +1,10 @@
-﻿First
+﻿First - Final tweaks to API to minimise change
 -----
 
-[ ] Rename Resource.Url prop to UriTemplate?
+[ ] Introduce IHandlerDescriptor to replace controller type and action - more framework neutral 
+- not everything uses controller classes, e.g. functional style for newer frameworks
 
-[ ] Introduce IHandlerDescriptor to replace controller type and action - more framework neutral - not everything uses controller classes?
-
-[ ] Comments on public API
+[ ] Variation on entry point, e.g. var base = RezConfiguration.Root("/"); base.Coll
 
 [ ] Publish to nuget
 
@@ -32,9 +31,15 @@ Next
 
 [ ] Refactor: More elegant management of base resource name and URL
 
+[ ] MVC tests slow (5-6s) mocking? Create Fake HttpContextBase impl?
 
 Done
 ----
+
+[X] Separate namespaces for Configuration and Resources - easier to understand project structure and roles?
+
+[X] Comments on public API
+
 [X] Custom routes for any resource, not just based on RouteConventions
 
 [X] Validate path URLs at configuration time for valid characters

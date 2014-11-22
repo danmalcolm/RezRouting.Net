@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Text;
 using System.Web.Routing;
+using RezRouting.Configuration;
 using RezRouting.Utility;
+using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.AspNetMvc
 {

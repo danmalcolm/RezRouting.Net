@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using RezRouting.Resources;
 
 namespace RezRouting.Tests.Infrastructure
 {

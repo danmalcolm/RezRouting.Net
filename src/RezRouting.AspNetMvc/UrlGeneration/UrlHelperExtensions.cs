@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RezRouting.Utility;
+using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.AspNetMvc.UrlGeneration
 {

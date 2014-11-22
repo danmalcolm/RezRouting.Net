@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Products;
 using RezRouting.Tests.Infrastructure.Assertions;
 using Xunit;

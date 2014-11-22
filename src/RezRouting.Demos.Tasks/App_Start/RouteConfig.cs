@@ -2,6 +2,7 @@
 using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
+using RezRouting.Configuration;
 using RezRouting.Demos.Tasks.Controllers.Products;
 using RezRouting.Demos.Tasks.Controllers.Products.Product;
 using RezRouting.Demos.Tasks.Controllers.Session;

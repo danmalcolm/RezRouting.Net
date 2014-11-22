@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RezRouting.Options;
+using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
+using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc.RouteConventions
 {

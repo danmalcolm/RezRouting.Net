@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
+using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.AspNetMvc.UrlGeneration
 {

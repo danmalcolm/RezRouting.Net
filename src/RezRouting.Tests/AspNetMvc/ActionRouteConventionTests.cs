@@ -2,7 +2,9 @@
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions;
-using RezRouting.Options;
+using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
+using RezRouting.Resources;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc

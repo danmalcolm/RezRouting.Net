@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Product;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Products;

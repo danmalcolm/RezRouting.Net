@@ -6,6 +6,8 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.UrlGeneration;
+using RezRouting.Configuration;
+using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.Benchmarks.Controllers;
 using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Infrastructure.Performance;

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.Configuration;
 
 namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
