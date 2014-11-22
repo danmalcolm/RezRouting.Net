@@ -4,12 +4,20 @@ using RezRouting.Utility;
 namespace RezRouting
 {
     /// <summary>
-    /// A model of resource configured 
+    /// Models the properties of a resource within an application's route configuration
     /// </summary>
     public class Resource
     {
         private readonly IUrlSegment urlSegment;
 
+        /// <summary>
+        /// Creates a Resource
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="urlSegment"></param>
+        /// <param name="level"></param>
+        /// <param name="customProperties"></param>
+        /// <param name="children"></param>
         public Resource(string name, IUrlSegment urlSegment, ResourceLevel level, IDictionary<string,object> customProperties, IEnumerable<Resource> children)
         {
             Name = name;
@@ -124,6 +132,7 @@ namespace RezRouting
         /// </summary>
         public IDictionary<string, object> CustomProperties { get; private set; }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return string.Format("FullName: {0}, Level: {1}", FullName, Level);

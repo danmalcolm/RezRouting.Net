@@ -4,12 +4,15 @@ using RezRouting.Utility;
 namespace RezRouting
 {
     /// <summary>
-    /// Contains models representing the resources and routes configured by RouteMapper. This is 
-    /// used internally but can also be used for any application-specific functionality that is
-    /// based on the applications resources and routes.
+    /// Contains models representing the Resources and Routes configured for the application.
+    /// Used internally but can also be used for any application-specific functionality.
     /// </summary>
     public class ResourcesModel
     {
+        /// <summary>
+        /// Creates a ResourceModel
+        /// </summary>
+        /// <param name="resources"></param>
         public ResourcesModel(IEnumerable<Resource> resources)
         {
             Resources = resources.ToReadOnlyList();

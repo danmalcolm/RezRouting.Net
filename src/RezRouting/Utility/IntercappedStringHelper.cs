@@ -2,6 +2,9 @@
 
 namespace RezRouting.Utility
 {
+    /// <summary>
+    /// Formats "intercapped" string values
+    /// </summary>
     public class IntercappedStringHelper
     {
         private static readonly Regex SeparatorRegex;
@@ -21,6 +24,13 @@ namespace RezRouting.Utility
             SeparatorRegex = new Regex(pattern, RegexOptions.IgnorePatternWhitespace);
         }
 
+        /// <summary>
+        /// Separates words within an "intercapped" string helper with the specified
+        /// separator
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
         public static string SeparateWords(string value, string separator)
         {
             return SeparatorRegex.Replace(value, separator + "$1");

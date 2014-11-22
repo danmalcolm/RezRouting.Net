@@ -10,11 +10,20 @@ namespace RezRouting.Options
     {
         private readonly UrlPathSettings settings;
 
+        /// <summary>
+        /// Creates a UrlPathFormatter
+        /// </summary>
+        /// <param name="settings"></param>
         public UrlPathFormatter(UrlPathSettings settings = null)
         {
             this.settings = settings ?? new UrlPathSettings(CaseStyle.Lower, "");
         }
 
+        /// <summary>
+        /// Formats a directory name based on the supplied name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public string FormatDirectoryName(string name)
         {
             string result = name;

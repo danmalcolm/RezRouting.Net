@@ -36,7 +36,8 @@ namespace RezRouting.Options
         /// Note that only numbers, letters, "-" and "_" may be used
         /// </summary>
         public string WordSeparator { get; private set; }
-
+        
+        /// <inheritdoc />
         public override string ToString()
         {
             return string.Format("CaseStyle: {0}, WordSeparator: {1}", CaseStyle, WordSeparator);

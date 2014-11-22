@@ -6,8 +6,15 @@
     /// </summary>
     public interface IUrlSegment
     {
+        /// <summary>
+        /// The path with the URL template
+        /// </summary>
         string Path { get; }
 
+        /// <summary>
+        /// Path within the URL template when generating a URL for a child resource
+        /// (there is a variation between the id name)
+        /// </summary>
         string PathAsAncestor { get; }
     }
 }

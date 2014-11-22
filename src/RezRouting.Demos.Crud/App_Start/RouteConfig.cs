@@ -37,6 +37,8 @@ namespace RezRouting.Demos.Crud
                 });
             });
             mapper.MapMvcRoutes(routes);
+
+            // Allow RezRouting helper to generate URLs (much) more quickly
             UrlHelperExtensions.IndexRoutes(routes);
         }
     }

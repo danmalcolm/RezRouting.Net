@@ -12,7 +12,7 @@ namespace RezRouting.Options
         private readonly string idNamePascal;
 
         /// <summary>
-        /// 
+        /// Creates a new DefaultIdNameConvention
         /// </summary>
         /// <param name="idName">Sets the name of the identifier parameter, e.g. "id"</param>
         /// <param name="fullNameForCurrent">Determines whether full name is used within routes at the current 
@@ -24,11 +24,13 @@ namespace RezRouting.Options
             this.idNamePascal = this.idName.Pascalize();
         }
 
+        /// <inheritdoc />
         public string GetIdName(string resourceName)
         {
             return fullNameForCurrent ? FullIdName(resourceName) : idName;
         }
 
+        /// <inheritdoc />
         public string GetIdNameAsAncestor(string resourceName)
         {
             return FullIdName(resourceName);

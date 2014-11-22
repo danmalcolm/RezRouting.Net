@@ -5,7 +5,7 @@ namespace RezRouting.Options
     /// <summary>
     /// Configures settings applied to a resource's routes when they are mapped
     /// </summary>
-    public class OptionsBuilder : IConfigureOptions
+    public class OptionsBuilder : IConfigureOptions, IOptionsBuilder
     {
         private UrlPathFormatter resourcePathFormatter = new UrlPathFormatter();
         private IIdNameConvention idNameConvention = new DefaultIdNameConvention();
@@ -30,6 +30,7 @@ namespace RezRouting.Options
             idNameConvention = convention;
         }
 
+        /// <inheritdoc />
         public RouteOptions Build()
         {
             return new RouteOptions(resourcePathFormatter, idNameConvention);

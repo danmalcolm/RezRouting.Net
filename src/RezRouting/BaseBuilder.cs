@@ -10,21 +10,33 @@ namespace RezRouting
     {
         private string urlPath;
 
+        /// <summary>
+        /// Creates a BaseBuilder
+        /// </summary>
         public BaseBuilder()
             : base("", ResourceLevel.Base)
         {
         }
 
+        /// <summary>
+        /// Sets the name of the resource
+        /// </summary>
+        /// <param name="name"></param>
         public void SetName(string name)
         {
             Name = name;
         }
 
+        /// <summary>
+        /// Sets the name
+        /// </summary>
+        /// <param name="path"></param>
         public void UrlPath(string path)
         {
             urlPath = path;
         }
 
+        /// <inheritdoc />
         protected override IUrlSegment GetUrlSegment(RouteOptions options)
         {
             string path = urlPath ?? "";

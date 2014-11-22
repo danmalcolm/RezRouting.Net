@@ -54,5 +54,11 @@ namespace RezRouting
         /// <param name="path"></param>
         /// <param name="customProperties"></param>
         void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null);
+
+        /// <summary>
+        /// Sets custom properties stored on the resource being configured - intended for use by application-specific functionality and extensions)
+        /// </summary>
+        /// <param name="properties"></param>
+        void CustomProperties(IDictionary<string, object> properties);
     }
 }

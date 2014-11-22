@@ -19,7 +19,9 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         /// UrlHelperExtensions for faster route URL generation. This method is designed 
         /// to be called after all routes used by the application have been added to the
         /// collection. This optimisation can be used when there is a guarantee that the
-        /// routes in the collection will not change after they have first been set up. 
+        /// routes in the collection will not change after they have first been set up 
+        /// (in practice, there are few scenarios where a RouteCollection is modified
+        /// again after initialisation at start-up). 
         /// </summary>
         /// <param name="routes"></param>
         public static void IndexRoutes(RouteCollection routes)
@@ -72,7 +74,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         /// <summary>
         /// Generates a fully qualified URL for a resource route based on the specified 
         /// controller type, action, route values, protocol and host name. Only routes 
-        /// created by RezRouting are supported.
+        /// added to the RouteCollection by RezRouting are supported.
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="controllerType"></param>
@@ -83,7 +85,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         /// <returns></returns>
         public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, RouteValueDictionary routeValues, string protocol = null, string hostName = null)
         {
-            const string modelKey = RouteDataTokenKeys.RouteModel;
+            const string key = RouteDataTokenKeys.RouteModel;
 
             Route route;
             RouteModelIndex index;
@@ -94,8 +96,8 @@ namespace RezRouting.AspNetMvc.UrlGeneration
             else
             {
                 route = helper.RouteCollection.OfType<System.Web.Routing.Route>()
-                    .Where(r => r.DataTokens != null && r.DataTokens.ContainsKey(modelKey))
-                    .Select(r => r.DataTokens[modelKey] as Route)
+                    .Where(r => r.DataTokens != null && r.DataTokens.ContainsKey(key))
+                    .Select(r => r.DataTokens[key] as Route)
                     .FirstOrDefault(r => r != null
                         && r.ControllerType == controllerType
                         && r.Action.EqualsIgnoreCase(action));

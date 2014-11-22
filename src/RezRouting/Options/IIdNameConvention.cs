@@ -1,8 +1,8 @@
 ﻿namespace RezRouting.Options
 {
     /// <summary>
-    /// Formats the name of the route value placeholder for the id of a collection item in
-    /// a route URL.
+    /// Formats the name of the id parameter placeholder for URL template of a collection item level
+    /// Resource, based on the name of the Resource
     /// </summary>
     public interface IIdNameConvention
     {
