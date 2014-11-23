@@ -60,7 +60,7 @@
     <Compile Include="ActionMappingHelper.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="MvcRouteCreator.cs" />
-    <Compile Include="MvcRouteMapperExtensions.cs" />
+    <Compile Include="MvcResourceBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceRoute.cs" />
     <Compile Include="RouteValidator.cs" />

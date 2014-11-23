@@ -7,24 +7,24 @@ using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Pro
 
 namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel
 {
-    public static class CrudResourceModel
+    public static class TestCrudResourceModel
     {
-        public static RouteMapper Configure(Action<RouteMapper> customise = null)
+        public static ResourcesBuilder Configure(Action<ResourcesBuilder> customise = null)
         {
-            var mapper = new RouteMapper();
+            var builder = new ResourcesBuilder();
             if (customise != null)
             {
-                customise(mapper);
+                customise(builder);
             }
-            mapper.RouteConventions(new CrudRouteConventionBuilder().Build());
-            mapper.Collection("Products", products =>
+            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product => product.HandledBy<ProductController>());
             });
-            mapper.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+            builder.Singular("Profile", profile => profile.HandledBy<ProfileController>());
 
-            return mapper;
+            return builder;
         }
     }
 }

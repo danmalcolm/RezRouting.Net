@@ -15,15 +15,15 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public SingularRouteConventionTests()
         {
             var scheme = new TaskRouteConventionBuilder();
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(scheme.Build());
-            mapper.Singular("Profile", profile =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(scheme.Build());
+            builder.Singular("Profile", profile =>
             {
                 profile.HandledBy<DisplayProfileController>();
                 profile.HandledBy<DeleteProfileController>();
                 profile.HandledBy<EditProfileController>();
             });
-            var model = mapper.Build();
+            var model = builder.Build();
             resource = model.Resources.Single();
         }
 

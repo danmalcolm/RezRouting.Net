@@ -19,9 +19,9 @@ namespace RezRouting.Demos.Tasks
 
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(new TaskRouteConventionBuilder().Build());
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(new TaskRouteConventionBuilder().Build());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();
                 products.HandledBy<CreateProductController>();
@@ -29,13 +29,13 @@ namespace RezRouting.Demos.Tasks
                 products.Items(product => product.HandledBy<DeleteProductController>());
                 products.Items(product => product.HandledBy<EditProductController>());
             });
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
 
             // Use CRUD for session for now
-            mapper = new RouteMapper();
-            mapper.RouteConventions(new CrudRouteConventionBuilder().Build());
-            mapper.Singular("Session", session => session.HandledBy<SessionController>());
-            mapper.MapMvcRoutes(routes);
+            builder = new ResourcesBuilder();
+            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            builder.Singular("Session", session => session.HandledBy<SessionController>());
+            builder.MapMvcRoutes(routes);
         }
     }
 }

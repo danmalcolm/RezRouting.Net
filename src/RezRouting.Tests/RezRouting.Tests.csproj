@@ -99,11 +99,11 @@
     <Compile Include="Configuration\CollectionBuilderTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathFormatterTests.cs" />
-    <Compile Include="Configuration\ResourceBuilderTests.cs" />
+    <Compile Include="Configuration\ResourceBuilderBaseTests.cs" />
     <Compile Include="Configuration\ResourceHierarchyTests.cs" />
     <Compile Include="Configuration\ResourceUrlTests.cs" />
-    <Compile Include="Configuration\RouteMapperOptionsTests.cs" />
-    <Compile Include="Configuration\RouteMapperTests.cs" />
+    <Compile Include="Configuration\ResourceBuilderOptionConfigurationTests.cs" />
+    <Compile Include="Configuration\ResourceBuilderTests.cs" />
     <Compile Include="Configuration\RouteTests.cs" />
     <Compile Include="Configuration\RouteUrlTests.cs" />
     <Compile Include="Configuration\SingularBuilderTests.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\RouteSetupTests.cs" />
-    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\CrudResourceModel.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\TestCrudResourceModel.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Products\ProductsController.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Products\Product\ProductController.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\TestModel\Controllers\Profile\ProfileController.cs" />

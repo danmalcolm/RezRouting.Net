@@ -75,7 +75,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_use_custom_name_for_child_item_resource_if_specified()
         {
-            var builder = new CollectionBuilder("Products", "AProduct");
+            var builder = new CollectionBuilder("Products");
+
+            builder.ItemName("AProduct");
 
             var collection = builder.Build(context);
 

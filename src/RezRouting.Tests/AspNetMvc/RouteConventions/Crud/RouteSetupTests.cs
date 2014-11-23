@@ -22,8 +22,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
 
         static RouteSetupTests()
         {
-            var mapper = CrudResourceModel.Configure();
-            var model = mapper.Build();
+            var builder = TestCrudResourceModel.Configure();
+            var model = builder.Build();
             Routes = model.Resources.Expand().SelectMany(x => x.Routes).ToList();
         }
 
@@ -55,10 +55,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         [Fact]
         public void should_not_map_resource_level_routes_on_different_level_resources()
         {
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(new CrudRouteConventionBuilder().Build());
-            mapper.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
-            var model = mapper.Build();
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            builder.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
+            var model = builder.Build();
             var routes = model.Resources.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
         }

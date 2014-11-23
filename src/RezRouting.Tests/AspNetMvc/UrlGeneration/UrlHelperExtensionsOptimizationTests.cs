@@ -20,14 +20,14 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         public UrlHelperExtensionsOptimizationTests()
         {
             var context = TestRequestContextBuilder.Create();
-            var mapper = CrudResourceModel.Configure();
+            var builder = TestCrudResourceModel.Configure();
             
             var collection1 = new RouteCollection();
-            mapper.MapMvcRoutes(collection1);
+            builder.MapMvcRoutes(collection1);
             helper = new UrlHelper(context, collection1);
 
             var collection2 = new RouteCollection();
-            mapper.MapMvcRoutes(collection2);
+            builder.MapMvcRoutes(collection2);
             helperUsingIndexedRoutes = new UrlHelper(context, collection2);
 
             UrlHelperExtensions.IndexRoutes(collection2);

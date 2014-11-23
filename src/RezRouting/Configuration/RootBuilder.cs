@@ -4,32 +4,23 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Used by RouteMapper to configure the root level resource within 
-    /// the resource hierarchy
+    /// Configures the base-level resource within a resource hierarchy belonging to 
+    /// an application or section of an application
     /// </summary>
-    public class BaseBuilder : ResourceBuilder
+    public class RootBuilder : ResourceBuilderBase
     {
         private string urlPath;
 
         /// <summary>
-        /// Creates a BaseBuilder
+        /// Creates a RootBuilder
         /// </summary>
-        public BaseBuilder()
+        public RootBuilder()
             : base("", ResourceLevel.Base)
         {
         }
 
         /// <summary>
-        /// Sets the name of the resource
-        /// </summary>
-        /// <param name="name"></param>
-        public void SetName(string name)
-        {
-            Name = name;
-        }
-
-        /// <summary>
-        /// Sets the name
+        /// Sets the base URL path
         /// </summary>
         /// <param name="path"></param>
         public void UrlPath(string path)

@@ -6,41 +6,26 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Entry point used to set up resource routes for an application, or part
-    /// of an application
+    /// RezRouting's main entry-point for resource configuration. Configures resource hierarchy 
+    /// and routes for an application (or part of an application). 
     /// </summary>
-    public class RouteMapper
+    public class ResourcesBuilder : IConfigureChildren
     {
-        private readonly BaseBuilder baseBuilder = new BaseBuilder();
+        private readonly RootBuilder rootBuilder = new RootBuilder();
         private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
         private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
 
         /// <summary>
-        /// Configures a resource collection
+        /// Configures a collection-level Resource
         /// </summary>
         /// <param name="name">The name of the collection, used in route name and (by default)
         /// in URLs.</param>
         /// <param name="configure">Action used to perform further configuration of the resource and its routes</param>
         public void Collection(string name, Action<IConfigureCollection> configure)
         {
-            baseBuilder.Collection(name, configure);
+            rootBuilder.Collection(name, configure);
         }
-
-        /// <summary>
-        /// Configures a resource collection - including specification of the name of child
-        /// item resources
-        /// </summary>
-        /// <param name="name">The name of the collection, used in route name and (by default)
-        /// in URLs.</param>
-        /// <param name="itemName">Specifies explicitly the name used for item resources within
-        /// this collection - by default the item name is based on a singular version of the 
-        /// collection name</param>
-        /// <param name="configure">Action used to perform further configuration of the resource and its routes</param>
-        public void Collection(string name, string itemName, Action<IConfigureCollection> configure)
-        {
-            baseBuilder.Collection(name, itemName, configure);
-        }
-
+        
         /// <summary>
         /// Configures a singular resource
         /// </summary>
@@ -49,12 +34,12 @@ namespace RezRouting.Configuration
         /// <param name="configure">Action used to perform further configuration of the resource and its routes</param>
         public void Singular(string name, Action<IConfigureSingular> configure)
         {
-            baseBuilder.Singular(name, configure);
+            rootBuilder.Singular(name, configure);
         }
 
         /// <summary>
         /// Sets shared conventions used to generate routes for all resources configured by 
-        /// this RouteMapper
+        /// this ResourcesBuilder
         /// </summary>
         /// <param name="conventions"></param>
         public void RouteConventions(params IRouteConvention[] conventions)
@@ -64,7 +49,7 @@ namespace RezRouting.Configuration
 
         /// <summary>
         /// Sets shared conventions used to generate routes for all resources configured by 
-        /// this RouteMapper
+        /// this ResourcesBuilder
         /// </summary>
         /// <param name="conventions"></param>
         public void RouteConventions(IEnumerable<IRouteConvention> conventions)
@@ -73,8 +58,8 @@ namespace RezRouting.Configuration
         }
 
         /// <summary>
-        /// Sets options used that control the way in which routes are configured by this
-        /// RouteMapper
+        /// Sets options that control the way in which routes are configured by this
+        /// ResourcesBuilder
         /// </summary>
         /// <param name="configure"></param>
         public void Options(Action<IConfigureOptions> configure)
@@ -83,31 +68,33 @@ namespace RezRouting.Configuration
         }
 
         /// <summary>
-        /// Sets a base path for resource URLs. All URLs will be nested below the specified
-        /// path.
+        /// Sets a base path for resource route URLs. All resource route URLs will be nested 
+        /// below the specified path. 
         /// </summary>
         /// <param name="path"></param>
         public void BasePath(string path)
         {
-            baseBuilder.UrlPath(path);
+            rootBuilder.UrlPath(path);
         }
 
         /// <summary>
         /// Sets a base name for resources. The specified name will be included in the
-        /// full names of all resources and routes mapped by this RouteMapper.
+        /// full names of all resources and routes mapped by this ResourcesBuilder. If more
+        /// than one set of resource routes are being configured, it is recommended
+        /// that a unique base name is used for each to prevent naming clashes.
         /// </summary>
         /// <param name="name"></param>
         public void BaseName(string name)
         {
-            baseBuilder.SetName(name);
+            rootBuilder.ChangeName(name);
         }
         
         /// <inheritdoc />
-        public virtual ResourcesModel Build()
+        public ResourcesModel Build()
         {
             var options = optionsBuilder.Build();
             var context = new RouteMappingContext(routeConventions, options);
-            var rootResource = baseBuilder.Build(context);
+            var rootResource = rootBuilder.Build(context);
             return new ResourcesModel(rootResource.Children);
         }
     }

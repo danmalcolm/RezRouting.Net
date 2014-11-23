@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using System.Web.Mvc;
-using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.Resources;
@@ -12,21 +10,20 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
     public class CollectionRouteConventionTests
     {
-        private readonly RouteMapper mapper;
-        private Resource collection;
+        private readonly Resource collection;
 
         public CollectionRouteConventionTests()
         {
             var conventionBuilder = new TaskRouteConventionBuilder();
-            mapper = new RouteMapper();
-            mapper.RouteConventions(conventionBuilder.Build());
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(conventionBuilder.Build());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();
                 products.HandledBy<CreateProductController>();
                 products.HandledBy<EditProductsController>();
             });
-            var model = mapper.Build();
+            var model = builder.Build();
             collection = model.Resources.Single();
         }
 

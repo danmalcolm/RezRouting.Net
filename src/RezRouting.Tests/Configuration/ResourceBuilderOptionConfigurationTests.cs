@@ -8,25 +8,25 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class RouteMapperOptionsTests
+    public class ResourceBuilderOptionConfigurationTests
     {
-        private static RouteMapper CreateRouteMapper()
+        private static ResourcesBuilder CreateBuilder()
         {
             var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
 
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(convention);
-            return mapper;
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(convention);
+            return builder;
         }
 
         [Fact]
         public void should_customise_url_formatting_using_options()
         {
-            var mapper = CreateRouteMapper();
+            var builder = CreateBuilder();
 
-            mapper.Collection("FineProducts", products => products.HandledBy<TestController1>());
-            mapper.Options(options => options.FormatUrlPaths(new UrlPathSettings(caseStyle:CaseStyle.Upper, wordSeparator: "_")));
-            var model = mapper.Build();
+            builder.Collection("FineProducts", products => products.HandledBy<TestController1>());
+            builder.Options(options => options.FormatUrlPaths(new UrlPathSettings(caseStyle:CaseStyle.Upper, wordSeparator: "_")));
+            var model = builder.Build();
 
             var routeUrl = model.Resources.Single().Routes.Single().Url;
             routeUrl.Should().Be("FINE_PRODUCTS/action1");
@@ -35,10 +35,10 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_id_names_using_options()
         {
-            var mapper = CreateRouteMapper();
-            mapper.Collection("Products", products => products.Items(product => product.HandledBy<TestController1>()));
-            mapper.Options(options => options.CustomiseIdNames(new DefaultIdNameConvention("code", true)));
-            var model = mapper.Build();
+            var builder = CreateBuilder();
+            builder.Collection("Products", products => products.Items(product => product.HandledBy<TestController1>()));
+            builder.Options(options => options.CustomiseIdNames(new DefaultIdNameConvention("code", true)));
+            var model = builder.Build();
 
             var resourceUrl = model.Resources.Single().Children.Single(x => x.Level == ResourceLevel.CollectionItem).Url;
             resourceUrl.Should().Be("products/{productCode}");

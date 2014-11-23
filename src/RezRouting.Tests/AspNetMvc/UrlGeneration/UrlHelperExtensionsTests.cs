@@ -19,9 +19,9 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         public UrlHelperExtensionsTests()
         {
             var context = TestRequestContextBuilder.Create();
-            var mapper = CrudResourceModel.Configure();
+            var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
             helper = new UrlHelper(context, routes);
         }
 

@@ -16,19 +16,19 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             var context = TestRequestContextBuilder.Create();
             var routes = new RouteCollection();
-            var area1RouteMapper = CrudResourceModel.Configure(a =>
+            var area1Builder = TestCrudResourceModel.Configure(a =>
             {
                 a.BaseName("Area1");
                 a.BasePath("area1");
             });
-            area1RouteMapper.MapMvcRoutes(routes, area: "Area1");
+            area1Builder.MapMvcRoutes(routes, area: "Area1");
 
-            var area2RouteMapper = CrudResourceModel.Configure(a =>
+            var area2Builder = TestCrudResourceModel.Configure(a =>
             {
                 a.BaseName("Area2");
                 a.BasePath("area2");
             });
-            area2RouteMapper.MapMvcRoutes(routes, area: "Area2");
+            area2Builder.MapMvcRoutes(routes, area: "Area2");
 
             helper = new UrlHelper(context, routes);
         }

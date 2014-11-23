@@ -20,11 +20,11 @@ namespace RezRouting.Demos.Crud
 
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
-            var mapper = new RouteMapper();
+            var builder = new ResourcesBuilder();
             var conventions = new CrudRouteConventionBuilder();
-            mapper.RouteConventions(conventions.Build());
-            mapper.Singular("Session", session => session.HandledBy<SessionController>());
-            mapper.Collection("Products", products =>
+            builder.RouteConventions(conventions.Build());
+            builder.Singular("Session", session => session.HandledBy<SessionController>());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product =>
@@ -37,9 +37,9 @@ namespace RezRouting.Demos.Crud
                     });
                 });
             });
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
 
-            // Allow RezRouting helper to generate URLs (much) more quickly
+            // Allow RezRouting to generate URLs (much) more quickly
             UrlHelperExtensions.IndexRoutes(routes);
         }
     }

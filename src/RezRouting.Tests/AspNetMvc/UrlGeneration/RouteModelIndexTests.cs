@@ -15,9 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         [Fact]
         public void should_index_routes()
         {
-            var mapper = CrudResourceModel.Configure();
+            var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
 
             var index = new RouteModelIndex(routes);
 

@@ -14,10 +14,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public CollectionItemRouteConventionTests()
         {
-            var builder = new TaskRouteConventionBuilder();
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(builder.Build());
-            mapper.Collection("Products", products =>
+            var taskConventions = new TaskRouteConventionBuilder();
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(taskConventions.Build());
+            builder.Collection("Products", products =>
             {
                 products.Items(product =>
                 {
@@ -26,7 +26,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
                     product.HandledBy<EditProductController>();
                 });
             });
-            var model = mapper.Build();
+            var model = builder.Build();
             resource = model.Resources.Single().Children.Single();
         }
 

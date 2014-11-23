@@ -17,10 +17,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public TaskRouteConventionTests()
         {
-            var routeMapper = new RouteMapper();
-            routeMapper.Collection("Products", products => {});
-            routeMapper.Singular("Profile", profile => {});
-            var model = routeMapper.Build();
+            var builder = new ResourcesBuilder();
+            builder.Collection("Products", products => {});
+            builder.Singular("Profile", profile => {});
+            var model = builder.Build();
             collection = model.Resources.Single(x => x.Name == "Products");
             singular = model.Resources.Single(x => x.Name == "Profile");
         }

@@ -6,9 +6,9 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures and creates collection-level Resources
+    /// Configures and creates a collection-level Resources
     /// </summary>
-    public class CollectionBuilder : ResourceBuilder, IConfigureCollection
+    public class CollectionBuilder : ResourceBuilderBase, IConfigureCollection
     {
         private readonly CollectionItemBuilder itemBuilder;
         private string urlPath;
@@ -17,14 +17,19 @@ namespace RezRouting.Configuration
         /// Creates a new CollectionBuilder
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="itemName"></param>
-        public CollectionBuilder(string name, string itemName = null) : base(name, ResourceLevel.Collection)
+        public CollectionBuilder(string name) : base(name, ResourceLevel.Collection)
         {
             if (name == null) throw new ArgumentNullException("name");
 
-            itemName = itemName ?? name.Singularize() ?? string.Format("{0}Item", name);
+            string itemName = name.Singularize() ?? string.Format("{0}Item", name);
             itemBuilder = new CollectionItemBuilder(itemName);
             AddChild(itemBuilder, x => {});
+        }
+
+        /// <inheritdoc />
+        public void ItemName(string name)
+        {
+            itemBuilder.ChangeName(name);
         }
 
         /// <inheritdoc />

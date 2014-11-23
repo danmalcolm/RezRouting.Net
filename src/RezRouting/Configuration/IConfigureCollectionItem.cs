@@ -3,7 +3,7 @@
     /// <summary>
     /// Configures a collection item resource
     /// </summary>
-    public interface IConfigureCollectionItem : IConfigureResource
+    public interface IConfigureCollectionItem : IConfigureResource, IConfigureChildren
     {
         /// <summary>
         /// Sets the name of the identifier parameter used in route URLs for

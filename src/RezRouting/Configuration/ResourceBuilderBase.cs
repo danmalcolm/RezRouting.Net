@@ -9,18 +9,18 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Base class used to configure and create Resources
     /// </summary>
-    public abstract class ResourceBuilder : IConfigureResource, IResourceBuilder
+    public abstract class ResourceBuilderBase : IConfigureResource, IResourceBuilder
     {
         private readonly List<Type> controllerTypes = new List<Type>();
         private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
         private readonly List<Route> routes = new List<Route>();
 
         /// <summary>
-        /// Creates a ResourceBuilder
+        /// Creates a ResourceBuilderBase
         /// </summary>
         /// <param name="name"></param>
         /// <param name="level"></param>
-        protected ResourceBuilder(string name, ResourceLevel level)
+        protected ResourceBuilderBase(string name, ResourceLevel level)
         {
             Level = level;
             Name = name;
@@ -91,12 +91,6 @@ namespace RezRouting.Configuration
         }
 
         /// <inheritdoc />
-        public void Collection(string name, string itemName, Action<IConfigureCollection> configure)
-        {
-            AddChild(new CollectionBuilder(name, itemName), x => configure(x));
-        }
-
-        /// <inheritdoc />
         public void HandledBy<T>()
         {
             HandledBy(typeof(T));
@@ -122,6 +116,15 @@ namespace RezRouting.Configuration
         {
             var route = new Route(name, controllerType, action, httpMethod, path, customProperties ?? new Dictionary<string, object>());
             routes.Add(route);
+        }
+
+        /// <summary>
+        /// Changes the name of the resource
+        /// </summary>
+        /// <param name="name"></param>
+        internal protected void ChangeName(string name)
+        {
+            Name = name;
         }
     }
 }

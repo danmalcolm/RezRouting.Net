@@ -4,9 +4,9 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures and creates cResources at collection item level
+    /// Configures and creates a collection item-level Resources
     /// </summary>
-    public class CollectionItemBuilder : ResourceBuilder, IConfigureCollectionItem
+    public class CollectionItemBuilder : ResourceBuilderBase, IConfigureCollectionItem
     {
         private string customIdName;
         private string customIdNameAsAncestor;

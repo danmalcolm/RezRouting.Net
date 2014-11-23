@@ -13,14 +13,14 @@ namespace RezRouting.Tests.Configuration
         public void route_urls_should_include_parent_resource_url()
         {
             var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(convention);
-            mapper.Singular("Profile", profile =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(convention);
+            builder.Singular("Profile", profile =>
             {
                 profile.HandledBy<TestController>();
                 profile.Singular("User", user => user.HandledBy<TestController>());
             });
-            mapper.Collection("Products", products =>
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();
                 products.Items(product =>
@@ -34,7 +34,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var model = mapper.Build();
+            var model = builder.Build();
 
             var level1Singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
             var level2Singular = level1Singular.Children.Single();
@@ -56,16 +56,16 @@ namespace RezRouting.Tests.Configuration
         {
             var convention = new TestRouteConvention("Route1", "Action1", "GET", "");
 
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(convention);
-            mapper.Singular("Profile", profile => profile.HandledBy<TestController>());
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(convention);
+            builder.Singular("Profile", profile => profile.HandledBy<TestController>());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController>();
                 products.Items(product => product.HandledBy<TestController>());
             });
 
-            var model = mapper.Build();
+            var model = builder.Build();
 
             var singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
             var collection = model.Resources.Single(x => x.Level == ResourceLevel.Collection);

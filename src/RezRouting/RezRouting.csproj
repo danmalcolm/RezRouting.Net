@@ -50,7 +50,8 @@
     <Compile Include="..\SharedAssemblyVersion.cs">
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Configuration\BaseBuilder.cs" />
+    <Compile Include="Configuration\IConfigureChildren.cs" />
+    <Compile Include="Configuration\RootBuilder.cs" />
     <Compile Include="Configuration\CollectionBuilder.cs" />
     <Compile Include="Configuration\CollectionItemBuilder.cs" />
     <Compile Include="Configuration\IConfigureCollection.cs" />
@@ -69,9 +70,9 @@
     <Compile Include="Configuration\Options\RouteOptions.cs" />
     <Compile Include="Configuration\Options\UrlPathFormatter.cs" />
     <Compile Include="Configuration\Options\UrlPathSettings.cs" />
-    <Compile Include="Configuration\ResourceBuilder.cs" />
+    <Compile Include="Configuration\ResourceBuilderBase.cs" />
     <Compile Include="Configuration\RouteConfigurationException.cs" />
-    <Compile Include="Configuration\RouteMapper.cs" />
+    <Compile Include="Configuration\ResourcesBuilder.cs" />
     <Compile Include="Configuration\RouteMappingContext.cs" />
     <Compile Include="Configuration\SingularBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

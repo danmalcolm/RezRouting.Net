@@ -1,10 +1,8 @@
 ﻿First - Final tweaks to API to minimise change
 -----
 
-[ ] Introduce IHandlerDescriptor to replace controller type and action - more framework neutral 
+[ ] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral 
 - not everything uses controller classes, e.g. functional style for newer frameworks
-
-[ ] Variation on entry point, e.g. var base = RezConfiguration.Root("/"); base.Coll
 
 [ ] Publish to nuget
 
@@ -21,20 +19,19 @@ Next
 
 [ ] Separate support for MVC 4
 
-[ ] Management of collection / singular resource at root level, e.g. /dave
-
 [ ] Refactor: Test structure
 
 [ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
-[ ] Refactor: More elegant management of base resource name and URL
-
 [ ] MVC tests slow (5-6s) mocking? Create Fake HttpContextBase impl?
+
 
 Done
 ----
+
+[X] Change entry point name, e.g. resource builder
 
 [X] Separate namespaces for Configuration and Resources - easier to understand project structure and roles?
 

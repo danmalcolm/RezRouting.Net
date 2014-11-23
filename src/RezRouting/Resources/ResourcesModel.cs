@@ -4,8 +4,9 @@ using RezRouting.Utility;
 namespace RezRouting.Resources
 {
     /// <summary>
-    /// Contains models representing the Resources and Routes configured for the application.
-    /// Used internally but can also be used for any application-specific functionality.
+    /// Contains models representing the Resources and Routes configured for an application
+    /// (or part of an application). Used internally but also available for use by any 
+    /// application-specific functionality.
     /// </summary>
     public class ResourcesModel
     {
@@ -19,8 +20,7 @@ namespace RezRouting.Resources
         }
 
         /// <summary>
-        /// A collection of objects representing the resource and routes
-        /// configured
+        /// A collection containing the top-level Resources within the hierarchy
         /// </summary>
         public IList<Resource> Resources { get; private set; }  
     }

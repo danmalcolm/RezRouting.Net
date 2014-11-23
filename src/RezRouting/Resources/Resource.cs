@@ -5,7 +5,8 @@ using RezRouting.Utility;
 namespace RezRouting.Resources
 {
     /// <summary>
-    /// Models the properties of a resource within an application's route configuration
+    /// An individual resource that has been configured for an application (or part 
+    /// of an application).
     /// </summary>
     public class Resource
     {
@@ -75,7 +76,7 @@ namespace RezRouting.Resources
 
         /// <summary>
         /// The URL used to identify this resource within the URL of a route belonging
-        /// to a descendnt of this resource
+        /// to a descendant of this resource
         /// </summary>
         public string UrlAsAncestor
         {

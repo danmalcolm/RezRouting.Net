@@ -17,19 +17,19 @@ namespace RezRouting.Tests.Configuration
 
         public ResourceHierarchyTests()
         {
-            var mapper = new RouteMapper();
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.Collection("Products", products =>
             {
                 products.Items(product => product.Collection("Reviews", reviews =>
                 {
 
                 }));
             });
-            mapper.Singular("Profile", profile =>
+            builder.Singular("Profile", profile =>
             {
                 profile.Singular("User", user => {});
             });
-            var model = mapper.Build();
+            var model = builder.Build();
 
             collection = model.Resources.Single(x => x.Name == "Products");
             item = collection.Children.Single(x => x.Name == "Product");

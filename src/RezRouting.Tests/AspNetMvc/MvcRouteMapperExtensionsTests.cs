@@ -10,15 +10,15 @@ using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.Tests.AspNetMvc
 {
-    public class MvcRouteMapperExtensionsTests
+    public class MvcResourceBuilderExtensionsTests
     {
         [Fact]
         public void when_mapping_MVC_routes_should_map_routes_based_on_resources_model()
         {
-            var mapper = CreateRouteMapper();
+            var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["RouteModel"] as Route)
@@ -29,10 +29,10 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void when_mapping_MVC_routes_should_map_routes_for_area_specified()
         {
-            var mapper = CreateRouteMapper();
+            var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes, area: "Area1");
+            builder.MapMvcRoutes(routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["area"] as string)
@@ -42,25 +42,25 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void when_mapping_MVC_routes_should_execute_action_with_model_used_to_create_routes()
         {
-            var mapper = CreateRouteMapper();
+            var builder = CreateBuilder();
 
             ResourcesModel model = null;
-            mapper.MapMvcRoutes(new RouteCollection(), modelAction: x => model = x);
+            builder.MapMvcRoutes(new RouteCollection(), modelAction: x => model = x);
 
             model.Should().NotBeNull();
             model.Resources.Should().HaveCount(1);
             model.Resources.Should().ContainSingle(x => x.Name == "Products");
         }
         
-        private RouteMapper CreateRouteMapper()
+        private ResourcesBuilder CreateBuilder()
         {
-            var mapper = new RouteMapper();
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.Collection("Products", products =>
             {
                 products.Route("Route1", typeof(TestController), "Action1", "GET", "action1");
                 products.Route("Route2", typeof(TestController), "Action2", "GET", "action2");
             });
-            return mapper;
+            return builder;
         }
 
         public class TestController : Controller

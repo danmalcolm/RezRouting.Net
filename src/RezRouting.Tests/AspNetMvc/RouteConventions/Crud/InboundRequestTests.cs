@@ -13,8 +13,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
 
         static InboundRequestTests()
         {
-            var mapper = CrudResourceModel.Configure();
-            mapper.MapMvcRoutes(Routes);
+            var builder = TestCrudResourceModel.Configure();
+            builder.MapMvcRoutes(Routes);
         }
         
         [Theory]

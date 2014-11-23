@@ -158,7 +158,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             });
         }
 
-        private static RouteMapper Configure()
+        private static ResourcesBuilder Configure()
         {
             var conventions = Enumerable.Range(1, 10)
                 .Select(n => "Action" + n)
@@ -166,29 +166,29 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
                     (name, ResourceLevel.Collection, name, "GET", name))
                 .ToList();
 
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(conventions);
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(conventions);
 
             DemoData.Resources.Each(resourceInfo =>
             {
                 string name = resourceInfo.Item1;
-                mapper.Collection(name, c => c.HandledBy(resourceInfo.Item2));
+                builder.Collection(name, c => c.HandledBy(resourceInfo.Item2));
             });
-            return mapper;
+            return builder;
         }
 
         private static ResourcesModel BuildModel()
         {
-            var mapper = Configure();
-            var model = mapper.Build();
+            var builder = Configure();
+            var model = builder.Build();
             return model;
         }
 
         private static RouteCollection MapRoutes()
         {
-            var mapper = Configure();
+            var builder = Configure();
             var routes = new RouteCollection();
-            mapper.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(routes);
             return routes;
         }
 

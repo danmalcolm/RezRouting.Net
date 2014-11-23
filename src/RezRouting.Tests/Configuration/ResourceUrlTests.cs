@@ -9,19 +9,19 @@ namespace RezRouting.Tests.Configuration
 {
     public class ResourceUrlTests
     {
-        private ResourcesModel BuildResources(Action<RouteMapper> configure)
+        private ResourcesModel BuildResources(Action<ResourcesBuilder> configure)
         {
-            var mapper = new RouteMapper();
-            configure(mapper);
-            var model = mapper.Build();
+            var builder = new ResourcesBuilder();
+            configure(builder);
+            var model = builder.Build();
             return model;
         }
 
         [Fact]
         public void top_level_singular_urls_should_be_based_on_directory()
         {
-            var model = BuildResources(mapper => 
-                mapper.Singular("Profile", x => {})
+            var model = BuildResources(builder => 
+                builder.Singular("Profile", x => {})
             );
 
             var resource = model.Resources.Single();
@@ -31,8 +31,8 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void top_level_collection_urls_should_be_based_on_directory()
         {
-            var model = BuildResources(mapper => 
-                mapper.Collection("Products", x => { })
+            var model = BuildResources(builder => 
+                builder.Collection("Products", x => { })
             );
 
             var collection = model.Resources.Single();
@@ -42,9 +42,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void nested_singular_urls_should_include_ancestor_paths()
         {
-            var model = BuildResources(mapper =>
+            var model = BuildResources(builder =>
             {
-                mapper.Singular("Profile", profile =>
+                builder.Singular("Profile", profile =>
                 {
                     profile.Singular("User", user =>
                     {
@@ -64,8 +64,8 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void collection_item_urls_should_combine_parent_path_and_id_parameter()
         {
-            var model = BuildResources(mapper =>
-                mapper.Collection("Products", x => { })
+            var model = BuildResources(builder =>
+                builder.Collection("Products", x => { })
             ); 
             var collection = model.Resources.Single();
             var item = collection.Children.Single();
@@ -75,9 +75,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void nested_collection_resource_urls_should_include_ancestor_paths()
         {
-            var model = BuildResources(mapper =>
+            var model = BuildResources(builder =>
             {
-                mapper.Singular("Profile", profile =>
+                builder.Singular("Profile", profile =>
                 {
                     profile.Collection("Logins", logins => { });
                 });
@@ -94,9 +94,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void collection_item_ancestor_resources_should_use_ancestor_id_param_name()
         {
-            var model = BuildResources(mapper =>
+            var model = BuildResources(builder =>
             {
-                mapper.Collection("Products", products =>
+                builder.Collection("Products", products =>
                 {
                     products.Items(product =>
                     {

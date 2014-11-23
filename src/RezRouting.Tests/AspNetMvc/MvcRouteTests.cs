@@ -16,8 +16,8 @@ namespace RezRouting.Tests.AspNetMvc
 
         static MvcRouteTests()
         {
-            var mapper = new RouteMapper();
-            mapper.Singular("Profile", profile =>
+            var builder = new ResourcesBuilder();
+            builder.Singular("Profile", profile =>
             {
                 profile.Route("Show", typeof(ProfileController), "Show", "GET", "");
                 profile.Route("Edit", typeof(ProfileController), "Edit", "GET", "edit");
@@ -25,7 +25,7 @@ namespace RezRouting.Tests.AspNetMvc
                 profile.Route("Delete", typeof(ProfileController), "Delete", "DELETE", "");
             });
             Routes = new RouteCollection();
-            mapper.MapMvcRoutes(Routes);
+            builder.MapMvcRoutes(Routes);
         }
 
         private RouteData GetRouteData(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)

@@ -8,7 +8,7 @@ namespace RezRouting.Configuration
     /// <summary>
     /// Configures a singular-level Resource
     /// </summary>
-    public class SingularBuilder : ResourceBuilder, IConfigureSingular
+    public class SingularBuilder : ResourceBuilderBase, IConfigureSingular
     {
         private string urlPath;
 

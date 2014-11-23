@@ -6,18 +6,18 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
     public static class TestResourceModel
     {
-        public static RouteMapper Configure()
+        public static ResourcesBuilder Configure()
         {
-            var mapper = new RouteMapper();
-            mapper.RouteConventions(new CrudRouteConventionBuilder().Build());
-            mapper.Collection("Products", products =>
+            var builder = new ResourcesBuilder();
+            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product => product.HandledBy<ProductController>());
             });
-            mapper.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+            builder.Singular("Profile", profile => profile.HandledBy<ProfileController>());
 
-            return mapper;
+            return builder;
         }
     }
 

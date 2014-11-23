@@ -1,9 +1,9 @@
 ﻿namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures a singular resource
+    /// Configures a singular-level resource
     /// </summary>
-    public interface IConfigureSingular : IConfigureResource
+    public interface IConfigureSingular : IConfigureResource, IConfigureChildren
     {
         /// <summary>
         /// Sets a custom path within the URL that identifies this resource.

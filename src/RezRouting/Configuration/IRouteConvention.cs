@@ -10,8 +10,8 @@ namespace RezRouting.Configuration
     /// IRouteConvention are expected to inspect each resource and create any Routes
     /// that apply to the resource, allowing common types of route to be set up 
     /// according to shared conventions. An example of logic handled by a convention is
-    /// "create an edit route for all CollectionItem resources that have a controller 
-    /// that includes an Edit action method."
+    /// "create an index route for all Collection resources that have a controller 
+    /// with an Index action method."
     /// </summary>
     public interface IRouteConvention
     {
