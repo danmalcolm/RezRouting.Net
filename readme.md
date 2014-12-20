@@ -1,25 +1,24 @@
 # <a id="top"></a>RezRouting.Net
 
-RezRouting configures routes for ASP.Net web applications using clean resource-oriented URLs.
+RezRouting configures routes for ASP.Net web applications using clean resource-oriented URLs. See [Thinking Resourcefully](#background) in the WIKI for further details on using a resource-centric URL structure.
 
-ASP.Net web application frameworks like ASP.Net MVC and ASP.Net Web API have a very simple "flat" route structure by default, which doesn't suit complex applications or support a nested hierarchy of objects. 
+ASP.Net web application frameworks like ASP.Net MVC and ASP.Net Web API have a very simple "flat" route structure by default, which doesn't suit complex applications or support a hierarchical route structure. Setting up complex routes manually is also tedious and error-prone. 
 
 Enter RezRouting.Net! RezRouting.Net provides a simple API for setting up resource-oriented routes.
 
 - ASP.Net MVC support (ASP.Net Web API coming soon!)
-- Clean URLs, with a range of formatting options (lowercase, dashed, underscored etc.)
+- Cool URLs, with a range of formatting options (lowercase, dashed, underscored etc.)
 - Suitable for both user-facing web applications and machine-to-machine APIs
-- Create routes for singular resources, collection resources and various nested combinations, e.g. /products/27229/reviews
-- Partition actions for a resource into separate controllers - no more bloated controllers handling all sorts of unrelated actions!
-- Built-in CRUD routing conventions - similar to Ruby on Rails' [Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default)
-- Built-in task-centric routing conventions - a flexible scheme for more complex applications
+- Create routes for singular resources(e.g. /session), collection and item resources (e.g. /users, /users/phoebe) and various nested combinations (e.g. /users/phoebe/reviews)
+- Partition actions for a resource into separate controllers - no more bloated controllers!
+- Routing convention for CRUD (create, read, update, delete) - similar to Ruby on Rails' [Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default)
+- Another routing convention for task-centric URLs - a flexible scheme for more complex applications
 - An extensible route building mechanism that allows you to set up your own routing conventions
 - Optimised helper methods for URL generation
 
-RezRouting was inspired by [Ruby on Rails Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default) and its ASP.Net MVC port [Restful Routing](http://restfulrouting.com/). See [Background - Thinking Resourcefully](#background) below for further background on resource-oriented URLs or skip ahead to [getting started](#getting-started) to find out more.
 
 ## Example
-The following route configuration (from an ASP.Net MVC demo) sets up routes to handle singing in and CRUD (create, read, update, delete) operations for products and reviews:
+The following route configuration (from an ASP.Net MVC demo) sets up CRUD (create, read, update, delete)routes to handle singing in and managing a collection of products and reviews:
 
 ```C#
 var builder = new ResourcesBuilder();
@@ -42,7 +41,9 @@ builder.Collection("Products", products =>
 builder.MapMvcRoutes(routes);
 ```
 
-This would create the following routes within the application's RouteCollection:
+RezRouting configuration involves defining the structure of your application's resources, the routes that each resource supports and the controllers that handle the routes. Here, we're using a convention that looks for CRUD-focussed controller actions and creates routes for those that are supported by a resource's controllers. 
+
+This creates the following routes in the application's RouteCollection:
 
 |Route                           |HTTP Method & URL Template          | Action method / purpose  |
 |--------------------------------|--------------------------------------|--------------------------|
@@ -64,10 +65,15 @@ This would create the following routes within the application's RouteCollection:
 |Products.Product.Reviews.Update |PUT /products/{id}/edit               |ReviewController.New    |
 |Products.Product.Reviews.Delete |DELETE /products/{id}/edit            |ReviewController.New    |
 
-See [Thinking Resourcefully](#background) in the WIKI for further details on using a resource-centric URL structure.
 
-Setting up routes like this manually is tedious and error-prone. RezRouting allows you to define the structure of your application in terms of resources. It then identifies the types of route supported by each resource's controllers and registers the routes in a consistent format.
+## Where Next?
+The above example is just scratching the surface.
 
+Download the source and try out the demos.
+
+Read the WIKI for full background and documentation.
+
+RezRouting was inspired by [Ruby on Rails Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default) and its ASP.Net MVC port [Restful Routing](http://restfulrouting.com/). 
 
 ##<a id="author">Author</a>
 Dan Malcolm [@lakescoder](http://twitter.com/lakescoder) - [blog](http://www.danmalcolm.com)

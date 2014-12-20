@@ -11,6 +11,8 @@
 Next
 ----
 
+[ ] Have a single route that uses the resource model internally to map to controller and action - size of model should not impact 
+
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
 [ ] Demo app - add some comments, explanations and readme
@@ -25,8 +27,7 @@ Next
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
-[ ] MVC tests slow (5-6s) mocking? Create Fake HttpContextBase impl?
-
+[ ] MVC tests slow (5-6s) - due to mocks? Create Fake HttpContextBase impl?
 
 Done
 ----

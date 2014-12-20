@@ -25,7 +25,7 @@ namespace RezRouting.Utility
         }
 
         /// <summary>
-        /// Separates words within an "intercapped" string helper with the specified
+        /// Separates words within an "intercapped" string with the specified
         /// separator
         /// </summary>
         /// <param name="value"></param>
