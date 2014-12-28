@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
@@ -16,12 +15,12 @@ namespace RezRouting.Configuration
     public interface IRouteConvention
     {
         /// <summary>
-        /// Creates routes that apply to a resource based on the supplied controller types
+        /// Creates routes that apply to a resource based on the supplied handlers
         /// </summary>
         /// <param name="resource"></param>
-        /// <param name="controllerTypes"></param>
+        /// <param name="handlers"></param>
         /// <param name="pathFormatter"></param>
         /// <returns></returns>
-        IEnumerable<Route> Create(Resource resource, IEnumerable<Type> controllerTypes, UrlPathFormatter pathFormatter);
+        IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter);
     }
 }

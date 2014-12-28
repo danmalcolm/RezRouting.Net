@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RezRouting.Resources;
 
 namespace RezRouting.Configuration
 {
@@ -9,28 +10,21 @@ namespace RezRouting.Configuration
     public interface IConfigureResource
     {
         /// <summary>
-        /// Adds a type of controller or handler responsible for handling routes belonging
-        /// to the current resource. More than one type can be added by calling the method
-        /// multiple times.
+        /// Adds a component that handles one or more of a resource's routes. When route conventions
+        /// are in use, they will inspect a resource's handlers to determine which routes are supported. 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        void HandledBy<T>();
-
-        /// Adds a type of controller or handler responsible for handling routes belonging
-        /// to the current resource. More than one type can be added by calling the method
-        /// multiple times.
-        void HandledBy(Type type);
+        /// <param name="handler"></param>
+        void HandledBy(IResourceHandler handler);
 
         /// <summary>
         /// Adds a route to the current resource
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="controllerType"></param>
-        /// <param name="action"></param>
+        /// <param name="handler"></param>
         /// <param name="httpMethod"></param>
         /// <param name="path"></param>
         /// <param name="customProperties"></param>
-        void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null);
+        void Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null);
 
         /// <summary>
         /// Sets custom properties stored on the resource being configured - intended for use by application-specific functionality and extensions)

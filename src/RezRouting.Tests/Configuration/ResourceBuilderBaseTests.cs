@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using Xunit;
@@ -49,21 +50,19 @@ namespace RezRouting.Tests.Configuration
             var context = CreateContext();
             var builder = new SingularBuilder("Profile");
 
-            builder.Route("Edit", typeof(TestController), "Edit", "GET", "edit");
-            builder.Route("Update", typeof(TestController), "Update", "PUT", "");
+            builder.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit");
+            builder.Route("Update", new MvcAction(typeof(TestController), "Update"), "PUT", "");
 
             var resource = builder.Build(context);
             resource.Routes.Select(x => x.Name).Should().Equal("Edit", "Update");
 
             var editRoute = resource.Routes.Single(x => x.Name == "Edit");
-            editRoute.ControllerType.Should().Be(typeof (TestController));
-            editRoute.Action.Should().Be("Edit");
+            editRoute.Handler.Should().Be(new MvcAction(typeof (TestController), "Edit"));
             editRoute.HttpMethod.Should().Be("GET");
             editRoute.Path.Should().Be("edit");
 
             var updateRoute = resource.Routes.Single(x => x.Name == "Update");
-            updateRoute.ControllerType.Should().Be(typeof(TestController));
-            updateRoute.Action.Should().Be("Update");
+            updateRoute.Handler.Should().Be(new MvcAction(typeof(TestController), "Update"));
             updateRoute.HttpMethod.Should().Be("PUT");
             updateRoute.Path.Should().Be("");
         }
@@ -74,7 +73,7 @@ namespace RezRouting.Tests.Configuration
             var context = CreateContext();
             var builder = new SingularBuilder("Profile");
 
-            builder.Route("Edit", typeof(TestController), "Edit", "GET", "edit");
+            builder.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit");
             var resource = builder.Build(context);
 
             var editRoute = resource.Routes.Single(x => x.Name == "Edit");
@@ -87,7 +86,7 @@ namespace RezRouting.Tests.Configuration
             var context = CreateContext();
             var builder = new SingularBuilder("Profile");
 
-            builder.Route("Edit", typeof(TestController), "Edit", "GET", "edit", new Dictionary<string, object> {{"key1", "value1"}});
+            builder.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit", new Dictionary<string, object> { { "key1", "value1" } });
             var resource = builder.Build(context);
             
             var editRoute = resource.Routes.Single(x => x.Name == "Edit");

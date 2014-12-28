@@ -1,0 +1,17 @@
+﻿using System;
+using FluentAssertions;
+using RezRouting.Resources;
+
+namespace RezRouting.Tests.Infrastructure.Assertions.AspNetMvc
+{
+    public static class RouteAssertionExtensions
+    {
+        public static void ShouldBeConfiguredAs(this Route route, string name, IRouteHandler handler, string httpMethod, string path)
+        {
+            route.Name.Should().Be(name);
+            route.Handler.Should().Be(handler);
+            route.HttpMethod.Should().Be(httpMethod);
+            route.Path.Should().Be(path);
+        }
+    }
+}

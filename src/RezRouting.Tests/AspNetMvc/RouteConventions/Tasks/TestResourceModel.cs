@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
 

@@ -57,8 +57,8 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = new ResourcesBuilder();
             builder.Collection("Products", products =>
             {
-                products.Route("Route1", typeof(TestController), "Action1", "GET", "action1");
-                products.Route("Route2", typeof(TestController), "Action2", "GET", "action2");
+                products.Route("Route1", new MvcAction(typeof(TestController), "Action1"), "GET", "action1");
+                products.Route("Route2", new MvcAction(typeof(TestController), "Action2"), "GET", "action2");
             });
             return builder;
         }

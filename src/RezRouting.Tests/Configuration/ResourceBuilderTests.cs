@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -52,7 +54,7 @@ namespace RezRouting.Tests.Configuration
         }
 
         [Fact]
-        public void should_attempt_to_create_route_for_each_resource_and_convention()
+        public void should_allow_each_convention_to_create_routes_for_each_resource_with_configured_handlers()
         {
             var builder = new ResourcesBuilder();
             builder.Collection("Products", products =>
@@ -82,7 +84,9 @@ namespace RezRouting.Tests.Configuration
                 Tuple.Create(convention1, collection, "TestController1,TestController2"),
                 Tuple.Create(convention2, collection, "TestController1,TestController2")
             };
-            actualAttempts.ShouldAllBeEquivalentTo(expectedAttempts);
+            actualAttempts
+                .Where(x => x.Item2 == collection || x.Item2 == collectionItem)
+                .ShouldAllBeEquivalentTo(expectedAttempts);
         }
 
         public class RecordingRouteConvention : IRouteConvention
@@ -94,13 +98,11 @@ namespace RezRouting.Tests.Configuration
                 this.actualAttempts = actualAttempts;
             }
 
-            public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<Type> controllerTypes, UrlPathFormatter pathFormatter)
+            public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
             {
-                if (controllerTypes.Any())
-                {
-                    string typeNames = string.Join(",", controllerTypes.Select(x => x.Name));
-                    actualAttempts.Add(Tuple.Create(this, resource, typeNames));
-                }
+                var controllerTypes = handlers.Cast<MvcController>().Select(x => x.ControllerType);
+                string typeNames = string.Join(",", controllerTypes.Select(x => x.Name));
+                actualAttempts.Add(Tuple.Create(this, resource, typeNames));
                 yield break;
             }
         }
@@ -116,9 +118,9 @@ namespace RezRouting.Tests.Configuration
             });
 
             var convention1 = new TestRouteConvention("Route1", "Action1", "GET", "action1",
-                (r,t) => t == typeof (TestController1));
+                (r,t) => r.Name == "Products");
             var convention2 = new TestRouteConvention("Route2", "Action2", "GET", "action2",
-                (r,t) => t == typeof (TestController2));
+                (r,t) => r.Name == "Product");
             builder.RouteConventions(convention1, convention2);
             var model = builder.Build();
 
@@ -135,7 +137,7 @@ namespace RezRouting.Tests.Configuration
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
-                products.Route("Route2", typeof(TestController2), "Action2", "GET", "action2");
+                products.Route("Route2", new MvcAction(typeof(TestController2), "Action2"), "GET", "action2");
             });
 
             var convention1 = new TestRouteConvention("Route1", "Action1", "GET", "action1");
@@ -146,12 +148,12 @@ namespace RezRouting.Tests.Configuration
             resource1.Routes.Select(x => x.Name).Should().Equal("Route2", "Route1");
         }
         
-        public class TestController1
+        public class TestController1 : Controller
         {
             
         }
 
-        public class TestController2
+        public class TestController2 : Controller
         {
 
         }

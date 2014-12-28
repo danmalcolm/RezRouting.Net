@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Web.Mvc;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -45,7 +47,7 @@ namespace RezRouting.Tests.Configuration
         }
 
 
-        public class TestController1
+        public class TestController1 : Controller
         {
             
         }

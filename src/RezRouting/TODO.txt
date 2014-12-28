@@ -1,17 +1,14 @@
 ﻿First - Final tweaks to API to minimise change
 -----
 
-[ ] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral 
-- not everything uses controller classes, e.g. functional style for newer frameworks
-
 [ ] Publish to nuget
 
 [ ] Wiki
 
+[ ] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation
+
 Next
 ----
-
-[ ] Have a single route that uses the resource model internally to map to controller and action - size of model should not impact 
 
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
@@ -27,10 +24,23 @@ Next
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
-[ ] MVC tests slow (5-6s) - due to mocks? Create Fake HttpContextBase impl?
+[ ] MVC tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
+
+[ ] Detect clashes between id param names within hierarchy, e.g. if same name used by ancestor
+
+[ ] Global conventions applied to all resources, e.g. comments. 
+
+[ ] Customise id param of parent resource for specific route, e.g. adding comments route might change productId to parentObjectId
+
+[ ] Additional custom RouteData in routes
+
+[ ] Consider using a single MVC route based on entire resources model? Better support for large number of resources and faster inbound/outbound resolution of routes at end of colleciton
+
 
 Done
 ----
+[x] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral 
+- not everything uses controller classes, e.g. functional style for newer frameworks
 
 [X] Change entry point name, e.g. resource builder
 

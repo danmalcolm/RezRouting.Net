@@ -20,10 +20,10 @@ namespace RezRouting.Tests.Configuration
             var builder = new ResourcesBuilder();
             builder.Collection("Products", products =>
             {
-                products.Items(product => product.Collection("Reviews", reviews =>
+                products.Items(product =>
                 {
-
-                }));
+                    product.Collection("Reviews", reviews => { });
+                });
             });
             builder.Singular("Profile", profile =>
             {

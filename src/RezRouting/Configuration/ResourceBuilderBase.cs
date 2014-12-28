@@ -11,7 +11,7 @@ namespace RezRouting.Configuration
     /// </summary>
     public abstract class ResourceBuilderBase : IConfigureResource, IResourceBuilder
     {
-        private readonly List<Type> controllerTypes = new List<Type>();
+        private readonly List<IResourceHandler> handlers = new List<IResourceHandler>();
         private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
         private readonly List<Route> routes = new List<Route>();
 
@@ -56,7 +56,7 @@ namespace RezRouting.Configuration
             var urlSegment = GetUrlSegment(context.Options);
             var resource = new Resource(Name, urlSegment, Level, customProperties, children);
             var conventionRoutes = from convention in context.RouteConventions
-                from route in convention.Create(resource, controllerTypes, context.Options.PathFormatter)
+                from route in convention.Create(resource, handlers, context.Options.PathFormatter)
                 select route;
 
             var allRoutes = routes.Concat(conventionRoutes);
@@ -91,15 +91,9 @@ namespace RezRouting.Configuration
         }
 
         /// <inheritdoc />
-        public void HandledBy<T>()
+        public void HandledBy(IResourceHandler handler)
         {
-            HandledBy(typeof(T));
-        }
-
-        /// <inheritdoc />
-        public void HandledBy(Type type)
-        {
-            controllerTypes.Add(type);
+            handlers.Add(handler);
         }
 
         /// <inheritdoc />
@@ -112,9 +106,9 @@ namespace RezRouting.Configuration
         }
 
         /// <inheritdoc />
-        public void Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string,object> customProperties = null)
+        public void Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null)
         {
-            var route = new Route(name, controllerType, action, httpMethod, path, customProperties ?? new Dictionary<string, object>());
+            var route = new Route(name, handler, httpMethod, path, customProperties ?? new Dictionary<string, object>());
             routes.Add(route);
         }
 

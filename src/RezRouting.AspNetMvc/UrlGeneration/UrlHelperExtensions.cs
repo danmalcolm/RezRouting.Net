@@ -99,9 +99,10 @@ namespace RezRouting.AspNetMvc.UrlGeneration
                 route = helper.RouteCollection.OfType<System.Web.Routing.Route>()
                     .Where(r => r.DataTokens != null && r.DataTokens.ContainsKey(key))
                     .Select(r => r.DataTokens[key] as Route)
-                    .FirstOrDefault(r => r != null
-                        && r.ControllerType == controllerType
-                        && r.Action.EqualsIgnoreCase(action));
+                    .FirstOrDefault(h => h != null
+                        && h.Handler is MvcAction
+                        && ((MvcAction)h.Handler).ControllerType == controllerType
+                        && ((MvcAction)h.Handler).ActionName.EqualsIgnoreCase(action));
             }
 
             if (route == null) return null;

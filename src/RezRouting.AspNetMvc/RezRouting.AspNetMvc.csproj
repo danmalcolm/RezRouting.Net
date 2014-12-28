@@ -59,6 +59,9 @@
     </Compile>
     <Compile Include="ActionMappingHelper.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
+    <Compile Include="ConfigureResourceExtensions.cs" />
+    <Compile Include="MvcAction.cs" />
+    <Compile Include="MvcController.cs" />
     <Compile Include="MvcRouteCreator.cs" />
     <Compile Include="MvcResourceBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

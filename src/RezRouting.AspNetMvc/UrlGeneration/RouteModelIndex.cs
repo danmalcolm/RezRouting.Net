@@ -26,7 +26,9 @@ namespace RezRouting.AspNetMvc.UrlGeneration
             routesByKey = (from route in routes.OfType<System.Web.Routing.Route>()
                      let model = route.DataTokens != null ? route.DataTokens[modelKey] as Route : null
                      where model != null
-                     let key = new ControllerActionKey(model.ControllerType, model.Action)
+                     let handler = model.Handler as MvcAction
+                     where handler != null
+                     let key = new ControllerActionKey(handler.ControllerType, handler.ActionName)
                      group model by key
                          into grouped
                          select grouped)

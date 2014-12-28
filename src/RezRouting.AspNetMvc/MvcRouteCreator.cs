@@ -38,25 +38,34 @@ namespace RezRouting.AspNetMvc
 
         private void CreateRoute(Route model, RouteCollection routes, string area)
         {
-            string controller = RouteValueHelper.TrimControllerFromTypeName(model.ControllerType);
-            var constraints = CreateConstraints(model);
-
-            var route = new ResourceRoute(model.Url, new MvcRouteHandler())
+            var handler = model.Handler as MvcAction;
+            if (handler != null)
             {
-                Defaults = new RouteValueDictionary {{"controller", controller}, {"action", model.Action}},
-                Constraints = constraints,
-                DataTokens = new RouteValueDictionary()
-            };
+                var controllerType = handler.ControllerType;
+                string controller = RouteValueHelper.TrimControllerFromTypeName(controllerType);
+                var constraints = CreateConstraints(model);
 
-            route.DataTokens[RouteDataTokenKeys.Namespaces] = new[] {model.ControllerType.Namespace};
-            route.DataTokens[RouteDataTokenKeys.UseNamespaceFallback] = false;
-            route.DataTokens[RouteDataTokenKeys.RouteModel] = model;
-            route.DataTokens["Name"] = model.FullName;
-            if (area != null)
-            {
-                route.DataTokens[RouteDataTokenKeys.Area] = area;
+                var route = new ResourceRoute(model.Url, new MvcRouteHandler())
+                {
+                    Defaults = new RouteValueDictionary
+                    {
+                        { "controller", controller }, 
+                        { "action", handler.ActionName }
+                    },
+                    Constraints = constraints,
+                    DataTokens = new RouteValueDictionary()
+                };
+
+                route.DataTokens[RouteDataTokenKeys.Namespaces] = new[] { controllerType.Namespace };
+                route.DataTokens[RouteDataTokenKeys.UseNamespaceFallback] = false;
+                route.DataTokens[RouteDataTokenKeys.RouteModel] = model;
+                route.DataTokens["Name"] = model.FullName;
+                if (area != null)
+                {
+                    route.DataTokens[RouteDataTokenKeys.Area] = area;
+                }
+                routes.Add(model.FullName, route);         
             }
-            routes.Add(model.FullName, route);
         }
 
         private RouteValueDictionary CreateConstraints(Route model)

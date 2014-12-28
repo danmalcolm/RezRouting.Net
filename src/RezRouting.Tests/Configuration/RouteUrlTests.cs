@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Web.Mvc;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
@@ -76,7 +78,7 @@ namespace RezRouting.Tests.Configuration
             collectionItem.Routes.Single().Url.Should().Be(collectionItem.Url);
         }
 
-        private class TestController
+        private class TestController : Controller
         {
 
         }

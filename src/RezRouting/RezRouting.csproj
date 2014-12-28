@@ -51,6 +51,7 @@
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Configuration\IConfigureChildren.cs" />
+    <Compile Include="Configuration\IResourceHandler.cs" />
     <Compile Include="Configuration\RootBuilder.cs" />
     <Compile Include="Configuration\CollectionBuilder.cs" />
     <Compile Include="Configuration\CollectionItemBuilder.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\DirectoryUrlSegment.cs" />
     <Compile Include="Resources\IdUrlSegment.cs" />
+    <Compile Include="Resources\IRouteHandler.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\ResourceLevel.cs" />
     <Compile Include="Resources\ResourcesModel.cs" />

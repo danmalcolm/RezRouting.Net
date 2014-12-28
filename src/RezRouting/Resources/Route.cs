@@ -5,7 +5,9 @@ using RezRouting.Utility;
 namespace RezRouting.Resources
 {
     /// <summary>
-    /// Represents a route belonging to a Resource
+    /// Represents a route belonging to a Resource. A route maps a URL path and other
+    /// properties of an HTTP request (such as the HTTP method) to the handler 
+    /// responsible for executing the request.
     /// </summary>
     public class Route
     {
@@ -13,22 +15,18 @@ namespace RezRouting.Resources
         /// Creates a Route
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="controllerType"></param>
-        /// <param name="action"></param>
         /// <param name="httpMethod"></param>
         /// <param name="path"></param>
         /// <param name="customProperties"></param>
-        public Route(string name, Type controllerType, string action, string httpMethod, string path, IDictionary<string, object> customProperties = null)
+        public Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string, object> customProperties = null)
         {
             if (name == null) throw new ArgumentNullException("name");
-            if (controllerType == null) throw new ArgumentNullException("controllerType");
-            if (action == null) throw new ArgumentNullException("action");
+            if (handler == null) throw new ArgumentNullException("handler");
             if (httpMethod == null) throw new ArgumentNullException("httpMethod");
             if (path == null) throw new ArgumentNullException("path");
             
             Name = name;
-            ControllerType = controllerType;
-            Action = action;
+            Handler = handler;
             HttpMethod = httpMethod;
             Path = path;
             CustomProperties = customProperties != null
@@ -60,14 +58,9 @@ namespace RezRouting.Resources
         public Resource Resource { get; private set; }
 
         /// <summary>
-        /// The controller that handles this Route
+        /// The handler that handles this Route
         /// </summary>
-        public Type ControllerType { get; private set; }
-        
-        /// <summary>
-        /// The name of the controller action that handles this Route
-        /// </summary>
-        public string Action { get; private set; }
+        public IRouteHandler Handler { get; private set; }
         
         /// <summary>
         /// The HTTP method for requests that will be handled by this Route

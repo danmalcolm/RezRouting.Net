@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
@@ -31,7 +32,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
 
             var route = convention
-                .Create(collection, new [] { typeof (EditProductsController) }, pathFormatter)
+                .Create(collection, new[] { MvcController.Create<EditProductsController>() }, pathFormatter)
                 .Single();
             
             route.Path.Should().Be("Edit");
@@ -43,7 +44,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
             
             var route = convention
-                .Create(collection, new [] { typeof(CreateProductController) }, pathFormatter)
+                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, pathFormatter)
                 .Single();
 
             route.Path.Should().Be("Create");
@@ -56,7 +57,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Lower));
 
             var route = convention
-                .Create(collection, new [] { typeof(CreateProductController) }, formatter)
+                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, formatter)
                 .Single();
 
             route.Path.Should().Be("create");
@@ -68,7 +69,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
 
             var routes = convention
-                .Create(singular, new [] { typeof(EditProductsController) }, pathFormatter);
+                .Create(singular, new [] { MvcController.Create<EditProductsController>() }, pathFormatter);
 
             routes.Should().BeEmpty();
         }

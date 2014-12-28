@@ -1,9 +1,11 @@
 ﻿using System.Linq;
+using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Products;
 using RezRouting.Tests.Infrastructure.Assertions;
+using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
@@ -30,21 +32,21 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         [Fact]
         public void should_map_collection_display_route()
         {
-            collection.ShouldContainRoute("Index", typeof(ListProductsController), "Index", "GET", "");
+            collection.ShouldContainMvcRoute("Index", typeof(ListProductsController), "Index", "GET", "");
         }
 
         [Fact]
         public void should_map_collection_task_edit_routes()
         {
-            collection.ShouldContainRoute("CreateProduct.Edit", typeof(CreateProductController), "Edit", "GET", "create");
-            collection.ShouldContainRoute("EditProducts.Edit", typeof(EditProductsController), "Edit", "GET", "edit");
+            collection.ShouldContainMvcRoute("CreateProduct.Edit", typeof(CreateProductController), "Edit", "GET", "create");
+            collection.ShouldContainMvcRoute("EditProducts.Edit", typeof(EditProductsController), "Edit", "GET", "edit");
         }
 
         [Fact]
         public void should_map_collection_task_handle_routes()
         {
-            collection.ShouldContainRoute("CreateProduct.Handle", typeof(CreateProductController), "Handle", "POST", "create");
-            collection.ShouldContainRoute("EditProducts.Handle", typeof(EditProductsController), "Handle", "POST", "edit");
+            collection.ShouldContainMvcRoute("CreateProduct.Handle", typeof(CreateProductController), "Handle", "POST", "create");
+            collection.ShouldContainMvcRoute("EditProducts.Handle", typeof(EditProductsController), "Handle", "POST", "edit");
         }
     }
 }

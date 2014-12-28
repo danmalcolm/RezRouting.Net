@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
 using RezRouting.Resources;
@@ -48,8 +49,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
             var route = Routes.Single(x => x.FullName == fullName);
             route.HttpMethod.Should().Be(httpMethod);
             route.Url.Should().Be(url);
-            route.Action.Should().Be(action);
-            route.ControllerType.Should().Be(controllerType);
+            route.Handler.Should().Be(new MvcAction(controllerType, action));
         }
         
         [Fact]
@@ -57,7 +57,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         {
             var builder = new ResourcesBuilder();
             builder.RouteConventions(new CrudRouteConventionBuilder().Build());
-            builder.Collection("Products", products => products.Items(product => product.HandledBy<ProductsController>()));
+            builder.Collection("Products", products =>
+            {
+                products.Items(product => product.HandledBy<ProductsController>());
+            });
             var model = builder.Build();
             var routes = model.Resources.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();

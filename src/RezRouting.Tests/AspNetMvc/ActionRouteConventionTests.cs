@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
+using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
@@ -29,7 +30,7 @@ namespace RezRouting.Tests.AspNetMvc
             var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Upper, "_"));
             
             var route = convention
-                .Create(collection, new [] { typeof (TestController) }, formatter)
+                .Create(collection, new [] { new MvcController(typeof(TestController)) }, formatter)
                 .Single();
 
             route.Path.Should().Be("FUNKY_ACTION");
@@ -42,7 +43,7 @@ namespace RezRouting.Tests.AspNetMvc
             var convention = new ActionRouteConvention("FunkyAction", ResourceLevel.Collection, "UnknownAction", "GET", "FunkyAction");
             
             var routes = convention
-                .Create(collection, new[] { typeof(TestController) }, new UrlPathFormatter());
+                .Create(collection, new[] { new MvcController(typeof(TestController)) }, new UrlPathFormatter());
 
             routes.Should().BeEmpty();
         }
@@ -54,11 +55,11 @@ namespace RezRouting.Tests.AspNetMvc
             var convention = new ActionRouteConvention("FunkyAction", ResourceLevel.Collection, "FunkyAction", "GET", "Action1");
 
             var route = convention
-                .Create(collection, new[] { typeof(TestControllerWithActionNameAttribute) }, new UrlPathFormatter())
+                .Create(collection, new[] { new MvcController(typeof(TestControllerWithActionNameAttribute)) }, new UrlPathFormatter())
                 .Single();
 
             route.Should().NotBeNull();
-            route.Action.Should().Be("FunkyAction");
+            route.Handler.Should().Be(new MvcAction(typeof (TestControllerWithActionNameAttribute), "FunkyAction"));
         }
     }
 

@@ -1,19 +1,18 @@
 ﻿namespace RezRouting.Configuration
 {
     /// <summary>
-    /// An individual element within a resource URL. Different types of segments
-    /// are combined to form a resource URL.
+    /// An individual element within a resource's URL template. Different types of 
+    /// IUrlSegment are combined to form a complete URL template.
     /// </summary>
     public interface IUrlSegment
     {
         /// <summary>
-        /// The path with the URL template
+        /// Path within the URL template when generating a URL belonging to a resource
         /// </summary>
         string Path { get; }
 
         /// <summary>
-        /// Path within the URL template when generating a URL for a child resource
-        /// (there is a variation between the id name)
+        /// Path within the URL template when generating a URL belonging to a child resource.
         /// </summary>
         string PathAsAncestor { get; }
     }

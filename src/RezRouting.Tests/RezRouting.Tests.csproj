@@ -96,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
+    <Compile Include="AspNetMvc\ConfigureResourceExtensionsTests.cs" />
     <Compile Include="Configuration\CollectionBuilderTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathFormatterTests.cs" />
@@ -107,6 +108,8 @@
     <Compile Include="Configuration\RouteTests.cs" />
     <Compile Include="Configuration\RouteUrlTests.cs" />
     <Compile Include="Configuration\SingularBuilderTests.cs" />
+    <Compile Include="Infrastructure\Assertions\AspNetMvc\ResourceAssertionExtensions.cs" />
+    <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ResourceExtensions.cs" />
     <Compile Include="Infrastructure\TestRouteConvention.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
@@ -139,8 +142,6 @@
     <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndexTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsOptimizationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />
-    <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />
-    <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteDataAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteCollectionAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ControllerActionInfo.cs" />
