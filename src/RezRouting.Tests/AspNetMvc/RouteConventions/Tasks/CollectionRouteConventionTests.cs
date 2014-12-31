@@ -4,7 +4,6 @@ using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Products;
-using RezRouting.Tests.Infrastructure.Assertions;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
 
@@ -16,9 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public CollectionRouteConventionTests()
         {
-            var conventionBuilder = new TaskRouteConventionBuilder();
+            var taskConventions = new TaskRouteConventions();
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(conventionBuilder.Build());
+            builder.IncludeRouteConventions(taskConventions);
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();

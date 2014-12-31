@@ -10,7 +10,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public static ResourcesBuilder Configure()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            var crudConventions = new CrudRouteConventions();
+            builder.IncludeRouteConventions(crudConventions);
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

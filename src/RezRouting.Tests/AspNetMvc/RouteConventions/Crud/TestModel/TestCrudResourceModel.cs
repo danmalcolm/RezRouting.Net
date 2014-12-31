@@ -17,7 +17,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel
             {
                 customise(builder);
             }
-            builder.RouteConventions(new CrudRouteConventionBuilder().Build());
+            var crudConventions = new CrudRouteConventions();
+            builder.IncludeRouteConventions(crudConventions);
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

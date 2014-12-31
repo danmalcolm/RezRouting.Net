@@ -5,28 +5,19 @@ using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
-using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
     public class ResourceBuilderOptionConfigurationTests
     {
-        private static ResourcesBuilder CreateBuilder()
-        {
-            var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
-
-            var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention);
-            return builder;
-        }
-
         [Fact]
         public void should_customise_url_formatting_using_options()
         {
-            var builder = CreateBuilder();
+            var builder = new ResourcesBuilder();
 
-            builder.Collection("FineProducts", products => products.HandledBy<TestController1>());
+            builder.Collection("FineProducts", products =>
+                products.Route("Route2", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             builder.Options(options => options.FormatUrlPaths(new UrlPathSettings(caseStyle:CaseStyle.Upper, wordSeparator: "_")));
             var model = builder.Build();
 
@@ -37,8 +28,8 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_id_names_using_options()
         {
-            var builder = CreateBuilder();
-            builder.Collection("Products", products => products.Items(product => product.HandledBy<TestController1>()));
+            var builder = new ResourcesBuilder();
+            builder.Collection("Products", products => products.Items(product => product.HandledBy<TestController>()));
             builder.Options(options => options.CustomiseIdNames(new DefaultIdNameConvention("code", true)));
             var model = builder.Build();
 
@@ -47,9 +38,12 @@ namespace RezRouting.Tests.Configuration
         }
 
 
-        public class TestController1 : Controller
+        public class TestController : Controller
         {
-            
+            public ActionResult Action1()
+            {
+                return null;
+            }
         }
     }
 

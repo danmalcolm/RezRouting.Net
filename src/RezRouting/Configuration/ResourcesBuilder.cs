@@ -38,22 +38,13 @@ namespace RezRouting.Configuration
         }
 
         /// <summary>
-        /// Sets shared conventions used to generate routes for all resources configured by 
-        /// this ResourcesBuilder
+        /// Adds one or more route conventions from a route convention scheme that will be 
+        /// used to generate routes for all resources configured by this ResourcesBuilder
         /// </summary>
-        /// <param name="conventions"></param>
-        public void RouteConventions(params IRouteConvention[] conventions)
+        /// <param name="scheme"></param>
+        public void IncludeRouteConventions(IRouteConventionScheme scheme)
         {
-            this.routeConventions.AddRange(conventions);
-        }
-
-        /// <summary>
-        /// Sets shared conventions used to generate routes for all resources configured by 
-        /// this ResourcesBuilder
-        /// </summary>
-        /// <param name="conventions"></param>
-        public void RouteConventions(IEnumerable<IRouteConvention> conventions)
-        {
+            var conventions = scheme.GetConventions();
             this.routeConventions.AddRange(conventions);
         }
 
@@ -89,7 +80,10 @@ namespace RezRouting.Configuration
             rootBuilder.ChangeName(name);
         }
         
-        /// <inheritdoc />
+        /// <summary>
+        /// Creates a ResourcesModel
+        /// </summary>
+        /// <returns></returns>
         public ResourcesModel Build()
         {
             var options = optionsBuilder.Build();

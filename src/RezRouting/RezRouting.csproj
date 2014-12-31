@@ -52,6 +52,7 @@
     </Compile>
     <Compile Include="Configuration\IConfigureChildren.cs" />
     <Compile Include="Configuration\IResourceHandler.cs" />
+    <Compile Include="Configuration\IRouteConventionScheme.cs" />
     <Compile Include="Configuration\RootBuilder.cs" />
     <Compile Include="Configuration\CollectionBuilder.cs" />
     <Compile Include="Configuration\CollectionItemBuilder.cs" />

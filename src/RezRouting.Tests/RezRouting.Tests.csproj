@@ -96,7 +96,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
+    <Compile Include="AspNetMvc\Benchmarks\TestRouteConventions.cs" />
     <Compile Include="AspNetMvc\ConfigureResourceExtensionsTests.cs" />
+    <Compile Include="AspNetMvc\MvcActionTests.cs" />
     <Compile Include="Configuration\CollectionBuilderTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathFormatterTests.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Infrastructure\Assertions\AspNetMvc\ResourceAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ResourceExtensions.cs" />
+    <Compile Include="Infrastructure\TestRouteConventionScheme.cs" />
     <Compile Include="Infrastructure\TestRouteConvention.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />

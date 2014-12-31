@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Resources;
@@ -20,8 +21,7 @@ namespace RezRouting.Tests.Configuration
             route.ShouldBeEquivalentTo(new
             {
                 Name = "Route1", 
-                ControllerType = typeof(TestController),
-                Action = "Action1",
+                Handler = new MvcAction(typeof(TestController), "Action1"),
                 HttpMethod = "GET",
                 Path = "test"
             }, options => options.ExcludingMissingProperties());
@@ -45,7 +45,7 @@ namespace RezRouting.Tests.Configuration
             route.CustomProperties.Should().NotBeSameAs(data);
         }
         
-        private class TestController
+        private class TestController : Controller
         {
             
         }

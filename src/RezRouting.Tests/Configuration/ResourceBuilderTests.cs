@@ -54,7 +54,7 @@ namespace RezRouting.Tests.Configuration
         }
 
         [Fact]
-        public void should_allow_each_convention_to_create_routes_for_each_resource_with_configured_handlers()
+        public void should_apply_each_convention_for_each_resource_and_configured_handlers()
         {
             var builder = new ResourcesBuilder();
             builder.Collection("Products", products =>
@@ -67,17 +67,17 @@ namespace RezRouting.Tests.Configuration
                     product.HandledBy<TestController2>();
                 });
             });
-            var actualAttempts = new List<Tuple<RecordingRouteConvention, Resource, string>>();
-
-            var convention1 = new RecordingRouteConvention(actualAttempts);
-            var convention2 = new RecordingRouteConvention(actualAttempts);
-            builder.RouteConventions(convention1, convention2);
+            var actualAttempts = new List<Tuple<TestRouteConvention, Resource, string>>();
+            var convention1 = new TestRouteConvention(actualAttempts);
+            var convention2 = new TestRouteConvention(actualAttempts);
+            var conventions = new TestRouteConventionScheme(convention1, convention2);
+            builder.IncludeRouteConventions(conventions);
 
             var model = builder.Build();
 
             var collection = model.Resources.Single();
             var collectionItem = collection.Children.Single();
-            var expectedAttempts = new List<Tuple<RecordingRouteConvention, Resource, string>>()
+            var expectedAttempts = new List<Tuple<TestRouteConvention, Resource, string>>()
             {
                 Tuple.Create(convention1, collectionItem, "TestController1,TestController2"),
                 Tuple.Create(convention2, collectionItem, "TestController1,TestController2"),
@@ -89,11 +89,11 @@ namespace RezRouting.Tests.Configuration
                 .ShouldAllBeEquivalentTo(expectedAttempts);
         }
 
-        public class RecordingRouteConvention : IRouteConvention
+        public class TestRouteConvention : IRouteConvention
         {
-            private readonly List<Tuple<RecordingRouteConvention, Resource, string>> actualAttempts;
+            private readonly List<Tuple<TestRouteConvention, Resource, string>> actualAttempts;
 
-            public RecordingRouteConvention(List<Tuple<RecordingRouteConvention, Resource, string>> actualAttempts)
+            public TestRouteConvention(List<Tuple<TestRouteConvention, Resource, string>> actualAttempts)
             {
                 this.actualAttempts = actualAttempts;
             }
@@ -107,6 +107,7 @@ namespace RezRouting.Tests.Configuration
             }
         }
 
+
         [Fact]
         public void should_create_routes_specified_by_each_convention()
         {
@@ -117,11 +118,12 @@ namespace RezRouting.Tests.Configuration
                 products.Items(product => product.HandledBy<TestController2>());
             });
 
-            var convention1 = new TestRouteConvention("Route1", "Action1", "GET", "action1",
+            var convention1 = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1",
                 (r,t) => r.Name == "Products");
-            var convention2 = new TestRouteConvention("Route2", "Action2", "GET", "action2",
+            var convention2 = new Infrastructure.TestRouteConvention("Route2", "Action2", "GET", "action2",
                 (r,t) => r.Name == "Product");
-            builder.RouteConventions(convention1, convention2);
+            var conventions = new TestRouteConventionScheme(convention1, convention2);
+            builder.IncludeRouteConventions(conventions);
             var model = builder.Build();
 
             var resource1 = model.Resources.Single();
@@ -140,8 +142,9 @@ namespace RezRouting.Tests.Configuration
                 products.Route("Route2", new MvcAction(typeof(TestController2), "Action2"), "GET", "action2");
             });
 
-            var convention1 = new TestRouteConvention("Route1", "Action1", "GET", "action1");
-            builder.RouteConventions(convention1);
+            var convention = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1");
+            var conventions = new TestRouteConventionScheme(convention);
+            builder.IncludeRouteConventions(conventions);
             var model = builder.Build();
 
             var resource1 = model.Resources.Single();

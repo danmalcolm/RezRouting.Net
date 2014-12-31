@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Web.Mvc;
 using RezRouting.Resources;
 using RezRouting.Utility;
 
@@ -9,6 +11,27 @@ namespace RezRouting.AspNetMvc
     /// </summary>
     public class MvcAction : IRouteHandler
     {
+        /// <summary>
+        /// Creates an instance of MvcAction based on the specified expression
+        /// </summary>
+        /// <typeparam name="TController"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static MvcAction For<TController>(Expression<Action<TController>> action)
+            where TController : Controller
+        {
+            var controllerType = typeof (TController);
+            var callExpression = action.Body as MethodCallExpression;
+            if (callExpression == null 
+                || callExpression.Object == null 
+                || callExpression.Object.NodeType != ExpressionType.Parameter)
+            {
+                throw new ArgumentException("A direct controller action method call should be specified", "action");
+            }
+            string actionName = callExpression.Method.Name;
+            return new MvcAction(controllerType, actionName);
+        }
+
         public MvcAction(Type controllerType, string actionName)
         {
             if (controllerType == null) throw new ArgumentNullException("controllerType");

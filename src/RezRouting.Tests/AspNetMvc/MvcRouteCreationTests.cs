@@ -22,23 +22,26 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
+            var handler = MvcAction.For((TestController c) => c.Action1());
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1);
             builder.Singular("Profile", profile =>
             {
-                profile.HandledBy<TestController>();
-                profile.Singular("User", user => user.HandledBy<TestController>());
+                profile.Route("Route1", handler, "GET", "action1");
+                profile.Singular("User", user => user.Route("Route1", handler, "GET", "action1"));
             });
             builder.Collection("Products", products =>
             {
-                products.HandledBy<TestController>();
+                products.Route("Route1", handler, "GET", "action1");
                 products.Items(product =>
                 {
-                    product.HandledBy<TestController>();
+                    product.Route("Route1", handler, "GET", "action1");
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<TestController>();
-                        reviews.Items(review => review.HandledBy<TestController>());
+                        reviews.Route("Route1", handler, "GET", "action1");
+                        reviews.Items(review =>
+                        {
+                            review.Route("Route1", handler, "GET", "action1");
+                        });
                     });
                 });
             });
@@ -56,8 +59,9 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_name_route_based_on_full_name_of_resource()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1);
-            builder.Collection("Products", products => products.HandledBy<TestController>());
+            builder.Collection("Products",
+                products => products.Route("Route1", MvcAction.For((TestController c) => c.Action1()),
+                    "GET", "action1"));
 
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
@@ -70,8 +74,11 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_throw_if_route_names_are_not_unique()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1, convention1);
-            builder.Collection("Products", products => products.HandledBy<TestController>());
+            builder.Collection("Products", products =>
+            {
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+            });
 
             Action action = () => builder.MapMvcRoutes(new RouteCollection());
             const string expectedMessage =
@@ -85,8 +92,8 @@ Products.Route1 - (defined on resources Products and Products)
         public void should_throw_if_route_names_already_in_use()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1);
-            builder.Collection("Products", products => products.HandledBy<TestController>());
+            builder.Collection("Products", products => 
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
             routes.MapRoute("Products.Route1", "url");
             
@@ -102,8 +109,8 @@ Products.Route1 - (defined on resource Products)
         public void should_add_route_model_to_route()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1);
-            builder.Collection("Products", products => products.HandledBy<TestController>());
+            builder.Collection("Products", products => 
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
             ResourcesModel model = null;
 
@@ -117,17 +124,23 @@ Products.Route1 - (defined on resource Products)
         public void should_map_collection_routes_before_item_routes()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1, convention2);
             builder.Collection("Products", products =>
             {
-                products.HandledBy<TestController>();
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                products.Route("Route2", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
                 products.Items(product =>
                 {
-                    product.HandledBy<TestController>();
+                    product.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                    product.Route("Route2", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<TestController>();
-                        reviews.Items(review => review.HandledBy<TestController>());
+                        reviews.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                        reviews.Route("Route2", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
+                        reviews.Items(review =>
+                        {
+                            review.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                            review.Route("Route2", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
+                        });
                     });
                 });
             });
@@ -146,10 +159,9 @@ Products.Route1 - (defined on resource Products)
         public void should_include_area_when_mapping_area_routes()
         {
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention1);
             builder.Collection("Products", products =>
             {
-                products.HandledBy<TestController>();
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
                 products.Items(product => product.HandledBy<TestController>());
             });
 

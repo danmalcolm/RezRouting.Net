@@ -46,9 +46,9 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         {
             if (resource.Level == Level)
             {
-                foreach (var controller in handlers.OfType<MvcController>())
+                foreach (var mvcController in handlers.OfType<MvcController>())
                 {
-                    var controllerType = controller.ControllerType;
+                    var controllerType = mvcController.ControllerType;
                     var supported = ActionMappingHelper.SupportsAction(controllerType, Action);
                     if (supported)
                     {

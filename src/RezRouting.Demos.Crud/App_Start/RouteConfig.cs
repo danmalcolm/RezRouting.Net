@@ -21,8 +21,8 @@ namespace RezRouting.Demos.Crud
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
             var builder = new ResourcesBuilder();
-            var conventions = new CrudRouteConventionBuilder();
-            builder.RouteConventions(conventions.Build());
+            var crudConventions = new CrudRouteConventions();
+            builder.IncludeRouteConventions(crudConventions);
             builder.Singular("Session", session => session.HandledBy<SessionController>());
             builder.Collection("Products", products =>
             {

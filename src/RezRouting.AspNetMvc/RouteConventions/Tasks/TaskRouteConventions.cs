@@ -7,9 +7,9 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
     /// <summary>
     /// Creates IRouteConventions used to map resource display and task routes
     /// </summary>
-    public class TaskRouteConventionBuilder
+    public class TaskRouteConventions : IRouteConventionScheme
     {
-        public IEnumerable<IRouteConvention> Build()
+        public IEnumerable<IRouteConvention> GetConventions()
         {
             var displayCollection = new ActionRouteConvention("Index", ResourceLevel.Collection, "Index", "GET", "");
             var editCollectionTask = new TaskRouteConvention("EditCollectionTask", ResourceLevel.Collection, "Edit", "GET");

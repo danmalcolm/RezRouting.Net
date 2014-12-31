@@ -6,7 +6,7 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures and creates a collection-level Resources
+    /// Configures and creates a collection-level Resource
     /// </summary>
     public class CollectionBuilder : ResourceBuilderBase, IConfigureCollection
     {

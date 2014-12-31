@@ -21,7 +21,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
     /// used only for manual execution and verification in development environment.
     /// Switch from internal to public visibility to include these tests in test run.
     /// </summary>
-    internal class BenchMarkTests : IDisposable
+    public class BenchMarkTests : IDisposable
     {
         [Fact]
         public void test_model_should_contain_routes()
@@ -29,7 +29,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             var model = BuildModel();
 
             model.Resources.Count.Should().Be(100);
-            model.Resources.SelectMany(x => x.Routes).Count().Should().Be(500);
+            model.Resources.SelectMany(x => x.Routes).Count().Should().Be(1000);
         }
 
         [Fact]
@@ -158,35 +158,37 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             });
         }
 
-        private static ResourcesBuilder Configure()
+        private static ResourcesBuilder ConfigureResources()
         {
-            var conventions = Enumerable.Range(1, 10)
-                .Select(n => "Action" + n)
-                .Select(name => new ActionRouteConvention
-                    (name, ResourceLevel.Collection, name, "GET", name))
-                .ToList();
-
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(conventions);
-
             DemoData.Resources.Each(resourceInfo =>
             {
-                string name = resourceInfo.Item1;
-                builder.Collection(name, c => c.HandledBy(resourceInfo.Item2));
+                string resourceName = resourceInfo.Item1;
+                var controllerType = resourceInfo.Item2;
+                builder.Collection(resourceName, collection =>
+                {
+                    // Add 10 routes (Action1 .. Action10)
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        string actionName = "Action" + i;
+                        string path = actionName.ToLowerInvariant();
+                        collection.Route(actionName, new MvcAction(controllerType, actionName), "GET", path);
+                    }
+                });
             });
             return builder;
         }
 
         private static ResourcesModel BuildModel()
         {
-            var builder = Configure();
+            var builder = ConfigureResources();
             var model = builder.Build();
             return model;
         }
 
         private static RouteCollection MapRoutes()
         {
-            var builder = Configure();
+            var builder = ConfigureResources();
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
             return routes;

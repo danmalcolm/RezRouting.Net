@@ -4,7 +4,6 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Resources;
-using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
@@ -14,24 +13,28 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_should_include_parent_resource_url()
         {
-            var convention = new TestRouteConvention("Route1", "Action1", "GET", "action1");
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention);
             builder.Singular("Profile", profile =>
             {
-                profile.HandledBy<TestController>();
-                profile.Singular("User", user => user.HandledBy<TestController>());
+                profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                profile.Singular("User", user =>
+                {
+                    user.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                });
             });
             builder.Collection("Products", products =>
             {
-                products.HandledBy<TestController>();
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
                 products.Items(product =>
                 {
-                    product.HandledBy<TestController>();
+                    product.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<TestController>();
-                        reviews.Items(review => review.HandledBy<TestController>());
+                        reviews.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
+                        reviews.Items(review =>
+                        {
+                            review.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");                        
+                        });
                     });
                 });
             });
@@ -56,15 +59,18 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_for_routes_with_empty_path_should_match_parent_resource_url()
         {
-            var convention = new TestRouteConvention("Route1", "Action1", "GET", "");
-
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(convention);
-            builder.Singular("Profile", profile => profile.HandledBy<TestController>());
+            builder.Singular("Profile", profile =>
+            {
+                profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "");
+            });
             builder.Collection("Products", products =>
             {
-                products.HandledBy<TestController>();
-                products.Items(product => product.HandledBy<TestController>());
+                products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "");
+                products.Items(product =>
+                {
+                    product.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "");
+                });
             });
 
             var model = builder.Build();
@@ -78,10 +84,12 @@ namespace RezRouting.Tests.Configuration
             collectionItem.Routes.Single().Url.Should().Be(collectionItem.Url);
         }
 
-        private class TestController : Controller
+        public class TestController : Controller
         {
-
+            public ActionResult Action1()
+            {
+                return null;
+            }
         }
-
     }
 }

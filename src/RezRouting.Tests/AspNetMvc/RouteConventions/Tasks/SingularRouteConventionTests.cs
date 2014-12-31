@@ -4,7 +4,6 @@ using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Profile;
-using RezRouting.Tests.Infrastructure.Assertions;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
 
@@ -16,9 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public SingularRouteConventionTests()
         {
-            var scheme = new TaskRouteConventionBuilder();
             var builder = new ResourcesBuilder();
-            builder.RouteConventions(scheme.Build());
+            var taskConventions = new TaskRouteConventions();
+            builder.IncludeRouteConventions(taskConventions);
             builder.Singular("Profile", profile =>
             {
                 profile.HandledBy<DisplayProfileController>();

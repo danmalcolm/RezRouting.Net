@@ -8,13 +8,13 @@ namespace RezRouting.AspNetMvc.RouteConventions.Crud
     /// Creates IRouteConventions used to map basic Create, Read, Update
     /// and Delete actions for all types of resource
     /// </summary>
-    public class CrudRouteConventionBuilder
+    public class CrudRouteConventions : IRouteConventionScheme
     {
         /// <summary>
         /// Creates the individual route conventions
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IRouteConvention> Build()
+        public IEnumerable<IRouteConvention> GetConventions()
         {
             var collectionIndex = new ActionRouteConvention("Index", ResourceLevel.Collection, "Index", "GET", "");
             var collectionNew = new ActionRouteConvention("New", ResourceLevel.Collection, "New", "GET", "new");
