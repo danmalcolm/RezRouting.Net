@@ -1,24 +1,23 @@
 # <a id="top"></a>RezRouting.Net
 
-RezRouting configures routes for ASP.Net web applications using clean resource-oriented URLs. See [Thinking Resourcefully](#background) in the WIKI for further details on using a resource-centric URL structure.
+RezRouting.Net configures routes for ASP.Net web applications using clean [resource-oriented](wiki/2.-Thinking-Resourcefully) URLs. 
 
-ASP.Net web application frameworks like ASP.Net MVC and ASP.Net Web API have a very simple "flat" route structure by default, which doesn't suit complex applications or support a hierarchical route structure. Setting up complex routes manually is also tedious and error-prone. 
+ASP.Net web application frameworks like ASP.Net MVC and ASP.Net Web API have a very simple "flat" route structure by default, which doesn't suit complex applications or support a hierarchical route structure. Route setup can get clunky in larger applications and many applications would benefit from consistently structured routes with clean URLs.
 
-Enter RezRouting.Net! RezRouting.Net provides a simple API for setting up resource-oriented routes.
+Enter RezRouting.Net! 
 
 - ASP.Net MVC support (ASP.Net Web API coming soon!)
-- Cool URLs, with a range of formatting options (lowercase, dashed, underscored etc.)
+- Nice URLs
 - Suitable for both user-facing web applications and machine-to-machine APIs
-- Create routes for singular resources(e.g. /session), collection and item resources (e.g. /users, /users/phoebe) and various nested combinations (e.g. /users/phoebe/reviews)
+- Create routes for singular resources (e.g. /session), collection and item resources (e.g. /users, /users/phoebe) and various nested combinations (e.g. /users/phoebe/reviews)
 - Partition actions for a resource into separate controllers - no more bloated controllers!
 - Routing convention for CRUD (create, read, update, delete) - similar to Ruby on Rails' [Resource Routing](http://guides.rubyonrails.org/routing.html#resource-routing-the-rails-default)
-- Another routing convention for task-centric URLs - a flexible scheme for more complex applications
+- Another routing convention for task-centric URLs - a flexible scheme for more complex user-facing web applications
 - An extensible route building mechanism that allows you to set up your own routing conventions
 - Optimised helper methods for URL generation
 
-
 ## Example
-The following route configuration (from an ASP.Net MVC demo) sets up CRUD (create, read, update, delete)routes to handle singing in and managing a collection of products and reviews:
+The following route configuration (from the [ASP.Net MVC CRUD demo](https://github.com/danmalcolm/RezRouting.Net/tree/master/src/RezRouting.Demos.Crud)) sets up CRUD (create, read, update, delete)routes to handle singing in and managing a collection of products and reviews:
 
 ```C#
 var builder = new ResourcesBuilder();

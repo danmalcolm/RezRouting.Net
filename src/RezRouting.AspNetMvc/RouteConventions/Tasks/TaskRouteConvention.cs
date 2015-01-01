@@ -13,10 +13,10 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
     /// </summary>
     public class TaskRouteConvention : IRouteConvention
     {
-        public TaskRouteConvention(string name, ResourceLevel level, string action, string httpMethod)
+        public TaskRouteConvention(string name, ResourceType type, string action, string httpMethod)
         {
             Name = name;
-            Level = level;
+            Type = type;
             Action = action;
             HttpMethod = httpMethod;
         }
@@ -27,9 +27,9 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         public string Name { get; set; }
 
         /// <summary>
-        /// The level of Resource to which this convention applies
+        /// The type of Resource to which this convention applies
         /// </summary>
-        public ResourceLevel Level { get; set; }
+        public ResourceType Type { get; set; }
 
         /// <summary>
         /// The name of the action that the route is mapped to
@@ -44,7 +44,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         /// <inheritdoc />
         public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
         {
-            if (resource.Level == Level)
+            if (resource.Type == Type)
             {
                 foreach (var mvcController in handlers.OfType<MvcController>())
                 {
@@ -80,7 +80,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         private IEnumerable<string> GetPossibleResourceNameSuffixes(Resource resource)
         {
             yield return resource.Name;
-            if (resource.Level == ResourceLevel.Collection)
+            if (resource.Type == ResourceType.Collection)
             {
                 // Allow some flexibility of controller names used for collection tasks, e.g. NewProduct / NewProducts
                 // both apply to the collection resource

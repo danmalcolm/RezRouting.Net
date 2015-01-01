@@ -1,7 +1,7 @@
 ﻿namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures a singular-level resource
+    /// Configures a singulartype resource
     /// </summary>
     public interface IConfigureSingular : IConfigureResource, IConfigureChildren
     {

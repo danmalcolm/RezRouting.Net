@@ -17,7 +17,7 @@ namespace RezRouting.Tests.Configuration
 
         public ResourceHierarchyTests()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
             builder.Collection("Products", products =>
             {
                 products.Items(product =>

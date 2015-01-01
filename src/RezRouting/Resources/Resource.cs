@@ -17,14 +17,14 @@ namespace RezRouting.Resources
         /// </summary>
         /// <param name="name"></param>
         /// <param name="urlSegment"></param>
-        /// <param name="level"></param>
+        /// <param name="type"></param>
         /// <param name="customProperties"></param>
         /// <param name="children"></param>
-        public Resource(string name, IUrlSegment urlSegment, ResourceLevel level, IDictionary<string,object> customProperties, IEnumerable<Resource> children)
+        public Resource(string name, IUrlSegment urlSegment, ResourceType type, IDictionary<string,object> customProperties, IEnumerable<Resource> children)
         {
             Name = name;
             this.urlSegment = urlSegment;
-            Level = level;
+            Type = type;
             CustomProperties = customProperties;
             Children = children.ToReadOnlyList();
             Children.Each(child => child.InitParent(this));
@@ -90,9 +90,9 @@ namespace RezRouting.Resources
         }
 
         /// <summary>
-        /// The level of this resource
+        /// The type of this resource
         /// </summary>
-        public ResourceLevel Level { get; private set; }
+        public ResourceType Type { get; private set; }
 
         /// <summary>
         /// A collection of child resources that belong to this resource
@@ -117,7 +117,7 @@ namespace RezRouting.Resources
             get
             {
                 if (Parent != null 
-                    && Parent.Level != ResourceLevel.Base)
+                    && Parent.Type != ResourceType.Base)
                 {
                     yield return Parent;
                     foreach (var ancestor in Parent.Ancestors)
@@ -137,7 +137,7 @@ namespace RezRouting.Resources
         /// <inheritdoc />
         public override string ToString()
         {
-            return string.Format("FullName: {0}, Level: {1}", FullName, Level);
+            return string.Format("FullName: {0}, type: {1}", FullName, Type);
         }
     }
 }

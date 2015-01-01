@@ -14,7 +14,7 @@ namespace RezRouting.Tests.AspNetMvc
     {
         public Resource CreateCollectionResource()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products => {});
             var model = builder.Build();
             var resources = model.Resources;
@@ -26,7 +26,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_format_path_using_options()
         {
             var collection = CreateCollectionResource();
-            var convention = new ActionRouteConvention("FunkyAction", ResourceLevel.Collection, "FunkyAction", "GET", "FunkyAction");
+            var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "FunkyAction");
             var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Upper, "_"));
             
             var route = convention
@@ -40,7 +40,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_not_build_route_if_action_not_supported()
         {
             var collection = CreateCollectionResource();
-            var convention = new ActionRouteConvention("FunkyAction", ResourceLevel.Collection, "UnknownAction", "GET", "FunkyAction");
+            var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "UnknownAction", "GET", "FunkyAction");
             
             var routes = convention
                 .Create(collection, new[] { new MvcController(typeof(TestController)) }, new UrlPathFormatter());
@@ -52,7 +52,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_build_route_when_required_action_name_set_via_ActionNameAttribute()
         {
             var collection = CreateCollectionResource();
-            var convention = new ActionRouteConvention("FunkyAction", ResourceLevel.Collection, "FunkyAction", "GET", "Action1");
+            var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "Action1");
 
             var route = convention
                 .Create(collection, new[] { new MvcController(typeof(TestControllerWithActionNameAttribute)) }, new UrlPathFormatter())

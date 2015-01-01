@@ -6,7 +6,7 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures and creates a collection-level Resource
+    /// Configures and creates a collectiontype Resource
     /// </summary>
     public class CollectionBuilder : ResourceBuilderBase, IConfigureCollection
     {
@@ -17,7 +17,7 @@ namespace RezRouting.Configuration
         /// Creates a new CollectionBuilder
         /// </summary>
         /// <param name="name"></param>
-        public CollectionBuilder(string name) : base(name, ResourceLevel.Collection)
+        public CollectionBuilder(string name) : base(name, ResourceType.Collection)
         {
             if (name == null) throw new ArgumentNullException("name");
 

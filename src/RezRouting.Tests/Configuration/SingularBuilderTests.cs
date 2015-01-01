@@ -20,7 +20,7 @@ namespace RezRouting.Tests.Configuration
             var resource = builder.Build(context);
 
             resource.Should().NotBeNull();
-            resource.Level.Should().Be(ResourceLevel.Singular);
+            resource.Type.Should().Be(ResourceType.Singular);
             resource.Name.Should().Be("Profile");
         }
 
@@ -75,7 +75,7 @@ namespace RezRouting.Tests.Configuration
             resource.Children.Should().HaveCount(1);
             var child = resource.Children.Single();
             child.Should().NotBeNull();
-            child.Level.Should().Be(ResourceLevel.Singular);
+            child.Type.Should().Be(ResourceType.Singular);
             child.Name.Should().Be("User");
             child.Parent.Should().Be(resource);
         }
@@ -91,7 +91,7 @@ namespace RezRouting.Tests.Configuration
             resource.Children.Should().HaveCount(1);
             var child = resource.Children.Single();
             child.Should().NotBeNull();
-            child.Level.Should().Be(ResourceLevel.Collection);
+            child.Type.Should().Be(ResourceType.Collection);
             child.Name.Should().Be("Logins");
             child.Parent.Should().Be(resource);
         }

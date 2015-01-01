@@ -9,17 +9,17 @@ using Route = RezRouting.Resources.Route;
 namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Adds routes to RouteCollection based on routes within a ResourcesModel
+    /// Adds routes to RouteCollection based on routes within a ResourceGraphModel
     /// </summary>
     public class MvcRouteCreator
     {
         /// <summary>
-        /// Creates the routes within a ResourcesModel within the specified RouteCollection
+        /// Creates the routes within a ResourceGraphModel within the specified RouteCollection
         /// </summary>
         /// <param name="model"></param>
         /// <param name="routes"></param>
         /// <param name="area">The name of the area - if null, no area will be configured</param>
-        public void CreateRoutes(ResourcesModel model, RouteCollection routes, string area)
+        public void CreateRoutes(ResourceGraphModel model, RouteCollection routes, string area)
         {
             var routeModels = GetRoutes(model.Resources).ToList();
 

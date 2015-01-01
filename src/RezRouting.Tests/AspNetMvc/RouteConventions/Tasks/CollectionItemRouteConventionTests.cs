@@ -17,8 +17,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public CollectionItemRouteConventionTests()
         {
             var taskConventions = new TaskRouteConventions();
-            var builder = new ResourcesBuilder();
-            builder.IncludeRouteConventions(taskConventions);
+            var builder = new ResourceGraphBuilder();
+            builder.ApplyRouteConventions(taskConventions);
             builder.Collection("Products", products =>
             {
                 products.Items(product =>

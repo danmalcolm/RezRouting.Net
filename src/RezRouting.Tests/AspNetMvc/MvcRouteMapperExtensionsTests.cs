@@ -44,7 +44,7 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var builder = CreateBuilder();
 
-            ResourcesModel model = null;
+            ResourceGraphModel model = null;
             builder.MapMvcRoutes(new RouteCollection(), modelAction: x => model = x);
 
             model.Should().NotBeNull();
@@ -52,9 +52,9 @@ namespace RezRouting.Tests.AspNetMvc
             model.Resources.Should().ContainSingle(x => x.Name == "Products");
         }
         
-        private ResourcesBuilder CreateBuilder()
+        private ResourceGraphBuilder CreateBuilder()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", new MvcAction(typeof(TestController), "Action1"), "GET", "action1");

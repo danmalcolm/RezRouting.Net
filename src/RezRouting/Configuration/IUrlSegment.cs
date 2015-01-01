@@ -12,7 +12,7 @@
         string Path { get; }
 
         /// <summary>
-        /// Path within the URL template when generating a URL belonging to a child resource.
+        /// Path within the URL template when generating a URL for a descendant resource.
         /// </summary>
         string PathAsAncestor { get; }
     }

@@ -11,17 +11,17 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
     {
         public IEnumerable<IRouteConvention> GetConventions()
         {
-            var displayCollection = new ActionRouteConvention("Index", ResourceLevel.Collection, "Index", "GET", "");
-            var editCollectionTask = new TaskRouteConvention("EditCollectionTask", ResourceLevel.Collection, "Edit", "GET");
-            var handleCollectionTask = new TaskRouteConvention("HandleCollectionTask", ResourceLevel.Collection, "Handle", "POST");
+            var displayCollection = new ActionRouteConvention("Index", ResourceType.Collection, "Index", "GET", "");
+            var editCollectionTask = new TaskRouteConvention("EditCollectionTask", ResourceType.Collection, "Edit", "GET");
+            var handleCollectionTask = new TaskRouteConvention("HandleCollectionTask", ResourceType.Collection, "Handle", "POST");
 
-            var displayCollectionItem = new ActionRouteConvention("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
-            var editCollectionItemTask = new TaskRouteConvention("EditCollectionItemTask", ResourceLevel.CollectionItem, "Edit", "GET");
-            var handleCollectionItemTask = new TaskRouteConvention("HandleCollectionItemTask", ResourceLevel.CollectionItem, "Handle", "POST");
+            var displayCollectionItem = new ActionRouteConvention("Show", ResourceType.CollectionItem, "Show", "GET", "");
+            var editCollectionItemTask = new TaskRouteConvention("EditCollectionItemTask", ResourceType.CollectionItem, "Edit", "GET");
+            var handleCollectionItemTask = new TaskRouteConvention("HandleCollectionItemTask", ResourceType.CollectionItem, "Handle", "POST");
 
-            var displaySingular = new ActionRouteConvention("Show", ResourceLevel.Singular, "Show", "GET", "");
-            var editSingularTask = new TaskRouteConvention("EditSingularTask", ResourceLevel.Singular, "Edit", "GET");
-            var handleSingularTask = new TaskRouteConvention("HandleCollectionTask", ResourceLevel.Singular, "Handle", "POST");
+            var displaySingular = new ActionRouteConvention("Show", ResourceType.Singular, "Show", "GET", "");
+            var editSingularTask = new TaskRouteConvention("EditSingularTask", ResourceType.Singular, "Edit", "GET");
+            var handleSingularTask = new TaskRouteConvention("HandleCollectionTask", ResourceType.Singular, "Handle", "POST");
 
             yield return displayCollection;
             yield return editCollectionTask;

@@ -18,7 +18,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public TaskRouteConventionTests()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
             var model = builder.Build();
@@ -29,7 +29,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         [Fact]
         public void should_trim_resource_name_from_path()
         {
-            var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
+            var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
 
             var route = convention
                 .Create(collection, new[] { MvcController.Create<EditProductsController>() }, pathFormatter)
@@ -41,7 +41,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         [Fact]
         public void should_trim_singular_version_of_collection_resource_name_from_path()
         {
-            var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
+            var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
             
             var route = convention
                 .Create(collection, new [] { MvcController.Create<CreateProductController>() }, pathFormatter)
@@ -53,7 +53,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         [Fact]
         public void should_format_task_path_using_settings()
         {
-            var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
+            var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
             var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Lower));
 
             var route = convention
@@ -66,7 +66,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         [Fact]
         public void should_not_create_route_for_resource_with_different_level()
         {
-            var convention = new TaskRouteConvention("CollectionEdit", ResourceLevel.Collection, "Edit", "GET");
+            var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
 
             var routes = convention
                 .Create(singular, new [] { MvcController.Create<EditProductsController>() }, pathFormatter);

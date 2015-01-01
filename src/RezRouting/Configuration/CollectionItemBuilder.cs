@@ -4,7 +4,7 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures and creates a collection item-level Resources
+    /// Configures and creates a collection item resource
     /// </summary>
     public class CollectionItemBuilder : ResourceBuilderBase, IConfigureCollectionItem
     {
@@ -16,7 +16,7 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <param name="name"></param>
         public CollectionItemBuilder(string name)
-            : base(name, ResourceLevel.CollectionItem)
+            : base(name, ResourceType.CollectionItem)
         {
         }
 

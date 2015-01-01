@@ -15,7 +15,7 @@ namespace RezRouting.Configuration
         /// Creates a RootBuilder
         /// </summary>
         public RootBuilder()
-            : base("", ResourceLevel.Base)
+            : base("", ResourceType.Base)
         {
         }
 

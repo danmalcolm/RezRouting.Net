@@ -1,9 +1,9 @@
 ﻿namespace RezRouting.Resources
 {
     /// <summary>
-    /// Represents level of a Resource
+    /// Represents type of Resource
     /// </summary>
-    public enum ResourceLevel
+    public enum ResourceType
     {
         /// <summary>
         /// The root resource within an application, or section of an application

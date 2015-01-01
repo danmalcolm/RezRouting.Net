@@ -16,21 +16,21 @@ namespace RezRouting.AspNetMvc.RouteConventions.Crud
         /// <returns></returns>
         public IEnumerable<IRouteConvention> GetConventions()
         {
-            var collectionIndex = new ActionRouteConvention("Index", ResourceLevel.Collection, "Index", "GET", "");
-            var collectionNew = new ActionRouteConvention("New", ResourceLevel.Collection, "New", "GET", "new");
-            var collectionCreate = new ActionRouteConvention("Create", ResourceLevel.Collection, "Create", "POST", "");
+            var collectionIndex = new ActionRouteConvention("Index", ResourceType.Collection, "Index", "GET", "");
+            var collectionNew = new ActionRouteConvention("New", ResourceType.Collection, "New", "GET", "new");
+            var collectionCreate = new ActionRouteConvention("Create", ResourceType.Collection, "Create", "POST", "");
             
-            var collectionItemShow = new ActionRouteConvention("Show", ResourceLevel.CollectionItem, "Show", "GET", "");
-            var collectionItemEdit = new ActionRouteConvention("Edit", ResourceLevel.CollectionItem, "Edit", "GET", "edit");
-            var collectionItemUpdate = new ActionRouteConvention("Update", ResourceLevel.CollectionItem, "Update", "PUT", "");
-            var collectionItemDelete = new ActionRouteConvention("Delete", ResourceLevel.CollectionItem, "Delete", "DELETE", "");
+            var collectionItemShow = new ActionRouteConvention("Show", ResourceType.CollectionItem, "Show", "GET", "");
+            var collectionItemEdit = new ActionRouteConvention("Edit", ResourceType.CollectionItem, "Edit", "GET", "edit");
+            var collectionItemUpdate = new ActionRouteConvention("Update", ResourceType.CollectionItem, "Update", "PUT", "");
+            var collectionItemDelete = new ActionRouteConvention("Delete", ResourceType.CollectionItem, "Delete", "DELETE", "");
             
-            var singularNew = new ActionRouteConvention("New", ResourceLevel.Singular, "New", "GET", "new");
-            var singularCreate = new ActionRouteConvention("Create", ResourceLevel.Singular, "Create", "POST", "");
-            var singularShow = new ActionRouteConvention("Show", ResourceLevel.Singular, "Show", "GET", "");
-            var singularEdit = new ActionRouteConvention("Edit", ResourceLevel.Singular, "Edit", "GET", "edit");
-            var singularUpdate = new ActionRouteConvention("Update", ResourceLevel.Singular, "Update", "PUT", "");
-            var singularDelete = new ActionRouteConvention("Delete", ResourceLevel.Singular, "Delete", "DELETE", "");
+            var singularNew = new ActionRouteConvention("New", ResourceType.Singular, "New", "GET", "new");
+            var singularCreate = new ActionRouteConvention("Create", ResourceType.Singular, "Create", "POST", "");
+            var singularShow = new ActionRouteConvention("Show", ResourceType.Singular, "Show", "GET", "");
+            var singularEdit = new ActionRouteConvention("Edit", ResourceType.Singular, "Edit", "GET", "edit");
+            var singularUpdate = new ActionRouteConvention("Update", ResourceType.Singular, "Update", "PUT", "");
+            var singularDelete = new ActionRouteConvention("Delete", ResourceType.Singular, "Delete", "DELETE", "");
             
             yield return collectionIndex;
             yield return collectionNew;

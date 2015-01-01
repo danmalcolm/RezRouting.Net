@@ -3,7 +3,7 @@
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Creates a set of IRouteConventions for configuring routes based on a specific pattern or scheme
+    /// Creates a set of IRouteConventions for configuring routes based on a specific pattern
     /// </summary>
     public interface IRouteConventionScheme
     {

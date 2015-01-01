@@ -13,7 +13,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_should_include_parent_resource_url()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
             builder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
@@ -41,12 +41,12 @@ namespace RezRouting.Tests.Configuration
 
             var model = builder.Build();
 
-            var level1Singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
+            var level1Singular = model.Resources.Single(x => x.Type == ResourceType.Singular);
             var level2Singular = level1Singular.Children.Single();
-            var level1Collection = model.Resources.Single(x => x.Level == ResourceLevel.Collection);
-            var level1Item = level1Collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
+            var level1Collection = model.Resources.Single(x => x.Type == ResourceType.Collection);
+            var level1Item = level1Collection.Children.Single(x => x.Type == ResourceType.CollectionItem);
             var level2Collection = level1Item.Children.Single();
-            var level2Item = level2Collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
+            var level2Item = level2Collection.Children.Single(x => x.Type == ResourceType.CollectionItem);
 
             level1Singular.Routes.Single().Url.Should().Be("profile/action1");
             level2Singular.Routes.Single().Url.Should().Be("profile/user/action1");
@@ -59,7 +59,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_for_routes_with_empty_path_should_match_parent_resource_url()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
             builder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "");
@@ -75,9 +75,9 @@ namespace RezRouting.Tests.Configuration
 
             var model = builder.Build();
 
-            var singular = model.Resources.Single(x => x.Level == ResourceLevel.Singular);
-            var collection = model.Resources.Single(x => x.Level == ResourceLevel.Collection);
-            var collectionItem = collection.Children.Single(x => x.Level == ResourceLevel.CollectionItem);
+            var singular = model.Resources.Single(x => x.Type == ResourceType.Singular);
+            var collection = model.Resources.Single(x => x.Type == ResourceType.Collection);
+            var collectionItem = collection.Children.Single(x => x.Type == ResourceType.CollectionItem);
 
             singular.Routes.Single().Url.Should().Be(singular.Url);
             collection.Routes.Single().Url.Should().Be(collection.Url);

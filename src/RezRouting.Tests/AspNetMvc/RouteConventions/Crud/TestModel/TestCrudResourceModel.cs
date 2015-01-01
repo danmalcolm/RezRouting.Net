@@ -10,15 +10,15 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel
 {
     public static class TestCrudResourceModel
     {
-        public static ResourcesBuilder Configure(Action<ResourcesBuilder> customise = null)
+        public static ResourceGraphBuilder Configure(Action<ResourceGraphBuilder> customise = null)
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             if (customise != null)
             {
                 customise(builder);
             }
             var crudConventions = new CrudRouteConventions();
-            builder.IncludeRouteConventions(crudConventions);
+            builder.ApplyRouteConventions(crudConventions);
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

@@ -16,7 +16,7 @@ namespace RezRouting.Configuration.Options
         /// </summary>
         /// <param name="idName">Sets the name of the identifier parameter, e.g. "id"</param>
         /// <param name="fullNameForCurrent">Determines whether full name is used within routes at the current 
-        /// resource level, e.g. products/{productId}</param>
+        /// resource type, e.g. products/{productId}</param>
         public DefaultIdNameConvention(string idName = null, bool fullNameForCurrent = false)
         {
             this.fullNameForCurrent = fullNameForCurrent;

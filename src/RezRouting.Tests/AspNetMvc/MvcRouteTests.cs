@@ -16,7 +16,7 @@ namespace RezRouting.Tests.AspNetMvc
 
         static MvcRouteTests()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Singular("Profile", profile =>
             {
                 profile.Route("Show", new MvcAction(typeof(ProfileController), "Show"), "GET", "");

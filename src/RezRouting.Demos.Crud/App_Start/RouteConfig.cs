@@ -20,9 +20,9 @@ namespace RezRouting.Demos.Crud
 
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             var crudConventions = new CrudRouteConventions();
-            builder.IncludeRouteConventions(crudConventions);
+            builder.ApplyRouteConventions(crudConventions);
             builder.Singular("Session", session => session.HandledBy<SessionController>());
             builder.Collection("Products", products =>
             {

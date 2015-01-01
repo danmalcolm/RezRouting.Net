@@ -7,6 +7,9 @@
 
 [ ] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation
 
+[ ] clear index cache after mapping mvc resources
+
+
 Next
 ----
 
@@ -39,6 +42,11 @@ Next
 
 Done
 ----
+
+[x] Slight refactoring of conventions, e.g. convention passed to ResourcesBuilder, no need for extra build step
+
+[x] don't use route conventions in tests when simple routes can be set up
+
 [x] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral 
 - not everything uses controller classes, e.g. functional style for newer frameworks
 

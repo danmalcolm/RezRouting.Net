@@ -106,7 +106,7 @@
     <Compile Include="Configuration\ResourceHierarchyTests.cs" />
     <Compile Include="Configuration\ResourceUrlTests.cs" />
     <Compile Include="Configuration\ResourceBuilderOptionConfigurationTests.cs" />
-    <Compile Include="Configuration\ResourceBuilderTests.cs" />
+    <Compile Include="Configuration\ResourceGraphBuilderTests.cs" />
     <Compile Include="Configuration\RouteTests.cs" />
     <Compile Include="Configuration\RouteUrlTests.cs" />
     <Compile Include="Configuration\SingularBuilderTests.cs" />

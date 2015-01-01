@@ -7,11 +7,11 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
     public static class TestResourceModel
     {
-        public static ResourcesBuilder Configure()
+        public static ResourceGraphBuilder Configure()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             var crudConventions = new CrudRouteConventions();
-            builder.IncludeRouteConventions(crudConventions);
+            builder.ApplyRouteConventions(crudConventions);
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

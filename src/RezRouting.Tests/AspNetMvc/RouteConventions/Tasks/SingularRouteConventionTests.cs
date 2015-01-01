@@ -15,9 +15,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public SingularRouteConventionTests()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             var taskConventions = new TaskRouteConventions();
-            builder.IncludeRouteConventions(taskConventions);
+            builder.ApplyRouteConventions(taskConventions);
             builder.Singular("Profile", profile =>
             {
                 profile.HandledBy<DisplayProfileController>();

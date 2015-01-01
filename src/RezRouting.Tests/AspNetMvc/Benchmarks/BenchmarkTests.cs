@@ -158,9 +158,9 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             });
         }
 
-        private static ResourcesBuilder ConfigureResources()
+        private static ResourceGraphBuilder ConfigureResources()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             DemoData.Resources.Each(resourceInfo =>
             {
                 string resourceName = resourceInfo.Item1;
@@ -179,7 +179,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             return builder;
         }
 
-        private static ResourcesModel BuildModel()
+        private static ResourceGraphModel BuildModel()
         {
             var builder = ConfigureResources();
             var model = builder.Build();

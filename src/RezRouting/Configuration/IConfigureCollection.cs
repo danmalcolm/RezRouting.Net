@@ -8,7 +8,7 @@ namespace RezRouting.Configuration
     public interface IConfigureCollection : IConfigureResource, IConfigureChildren
     {
         /// <summary>
-        /// Sets the name used for the collection item-level resource belonging to this 
+        /// Sets the name used for the collection itemtype resource belonging to this 
         /// collection. The item name is based on a singular version of the collection 
         /// name by default - this method allows an alternative to be specified.
         /// </summary>
@@ -16,7 +16,7 @@ namespace RezRouting.Configuration
         void ItemName(string name);
 
         /// <summary>
-        /// Configures resources at item level within this collection
+        /// Configures resource representing itemstype within this collection
         /// </summary>
         /// <param name="configure"></param>
         void Items(Action<CollectionItemBuilder> configure);

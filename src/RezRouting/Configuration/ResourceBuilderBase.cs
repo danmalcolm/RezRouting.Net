@@ -7,7 +7,7 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Base class used to configure and create Resources
+    /// Base class for builders used to configure different levels of resource
     /// </summary>
     public abstract class ResourceBuilderBase : IConfigureResource, IResourceBuilder
     {
@@ -19,10 +19,10 @@ namespace RezRouting.Configuration
         /// Creates a ResourceBuilderBase
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="level"></param>
-        protected ResourceBuilderBase(string name, ResourceLevel level)
+        /// <param name="type"></param>
+        protected ResourceBuilderBase(string name, ResourceType type)
         {
-            Level = level;
+            Type = type;
             Name = name;
             ChildBuilders = new List<IResourceBuilder>();
         }
@@ -33,9 +33,9 @@ namespace RezRouting.Configuration
         protected string Name { get; set; }
 
         /// <summary>
-        /// The level of the Resource
+        /// The type of the Resource
         /// </summary>
-        protected ResourceLevel Level { get; private set; }
+        protected ResourceType Type { get; private set; }
         
         /// <summary>
         /// A collection of builders used to configure child resources
@@ -54,7 +54,7 @@ namespace RezRouting.Configuration
         {
             var children = ChildBuilders.Select(x => x.Build(context)).ToList();
             var urlSegment = GetUrlSegment(context.Options);
-            var resource = new Resource(Name, urlSegment, Level, customProperties, children);
+            var resource = new Resource(Name, urlSegment, Type, customProperties, children);
             var conventionRoutes = from convention in context.RouteConventions
                 from route in convention.Create(resource, handlers, context.Options.PathFormatter)
                 select route;

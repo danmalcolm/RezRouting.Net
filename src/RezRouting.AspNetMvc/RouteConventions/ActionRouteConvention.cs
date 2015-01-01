@@ -11,10 +11,10 @@ namespace RezRouting.AspNetMvc.RouteConventions
     /// </summary>
     public class ActionRouteConvention : IRouteConvention
     {
-        public ActionRouteConvention(string name, ResourceLevel level, string action, string httpMethod, string path)
+        public ActionRouteConvention(string name, ResourceType type, string action, string httpMethod, string path)
         {
             Name = name;
-            Level = level;
+            Type = type;
             Action = action;
             HttpMethod = httpMethod;
             Path = path;
@@ -22,7 +22,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Name { get; set; }
 
-        public ResourceLevel Level { get; set; }
+        public ResourceType Type { get; set; }
 
         public string Action { get; set; }
 
@@ -32,7 +32,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
         {
-            if (resource.Level == Level)
+            if (resource.Type == Type)
             {
                 return from controller in handlers.OfType<MvcController>()
                        let controllerType = controller.ControllerType

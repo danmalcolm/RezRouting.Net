@@ -12,25 +12,25 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class ResourceBuilderTests
+    public class ResourceGraphBuilderTests
     {
         [Fact]
         public void should_create_resources_configured_via_builders()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
             var model = builder.Build();
 
             model.Resources.Should().HaveCount(2);
-            model.Resources.Should().Contain(x => x.Name == "Products" && x.Level == ResourceLevel.Collection);
-            model.Resources.Should().Contain(x => x.Name == "Profile" && x.Level == ResourceLevel.Singular);
+            model.Resources.Should().Contain(x => x.Name == "Products" && x.Type == ResourceType.Collection);
+            model.Resources.Should().Contain(x => x.Name == "Profile" && x.Type == ResourceType.Singular);
         }
         
         [Fact]
         public void should_include_base_path_in_all_resource_urls()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products => { });
 
             builder.BasePath("api");
@@ -43,7 +43,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_base_name_in_full_resource_names()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products => { });
 
             builder.BaseName("Api");
@@ -56,7 +56,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_apply_each_convention_for_each_resource_and_configured_handlers()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -71,7 +71,7 @@ namespace RezRouting.Tests.Configuration
             var convention1 = new TestRouteConvention(actualAttempts);
             var convention2 = new TestRouteConvention(actualAttempts);
             var conventions = new TestRouteConventionScheme(convention1, convention2);
-            builder.IncludeRouteConventions(conventions);
+            builder.ApplyRouteConventions(conventions);
 
             var model = builder.Build();
 
@@ -111,7 +111,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_create_routes_specified_by_each_convention()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -123,7 +123,7 @@ namespace RezRouting.Tests.Configuration
             var convention2 = new Infrastructure.TestRouteConvention("Route2", "Action2", "GET", "action2",
                 (r,t) => r.Name == "Product");
             var conventions = new TestRouteConventionScheme(convention1, convention2);
-            builder.IncludeRouteConventions(conventions);
+            builder.ApplyRouteConventions(conventions);
             var model = builder.Build();
 
             var resource1 = model.Resources.Single();
@@ -135,7 +135,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_routes_specified_on_resource_before_routes_created_by_conventions()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -144,7 +144,7 @@ namespace RezRouting.Tests.Configuration
 
             var convention = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1");
             var conventions = new TestRouteConventionScheme(convention);
-            builder.IncludeRouteConventions(conventions);
+            builder.ApplyRouteConventions(conventions);
             var model = builder.Build();
 
             var resource1 = model.Resources.Single();

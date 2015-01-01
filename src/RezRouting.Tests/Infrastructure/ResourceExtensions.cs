@@ -7,11 +7,11 @@ namespace RezRouting.Tests.Infrastructure
     public static class ResourceExtensions
     {
         /// <summary>
-        /// Returns all resources in the specified ResourcesModel by combining top level resources
+        /// Returns all resources in the specified ResourceGraphModel by combining top level resources
         /// and their descendants
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Resource> AllResources(this ResourcesModel model)
+        public static IEnumerable<Resource> AllResources(this ResourceGraphModel model)
         {
             return model.Resources.Expand();
         }

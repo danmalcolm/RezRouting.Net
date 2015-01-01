@@ -14,7 +14,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_url_formatting_using_options()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
 
             builder.Collection("FineProducts", products =>
                 products.Route("Route2", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
@@ -28,12 +28,12 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_id_names_using_options()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
             builder.Collection("Products", products => products.Items(product => product.HandledBy<TestController>()));
             builder.Options(options => options.CustomiseIdNames(new DefaultIdNameConvention("code", true)));
             var model = builder.Build();
 
-            var resourceUrl = model.Resources.Single().Children.Single(x => x.Level == ResourceLevel.CollectionItem).Url;
+            var resourceUrl = model.Resources.Single().Children.Single(x => x.Type == ResourceType.CollectionItem).Url;
             resourceUrl.Should().Be("products/{productCode}");
         }
 

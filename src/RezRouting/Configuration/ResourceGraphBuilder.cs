@@ -9,7 +9,7 @@ namespace RezRouting.Configuration
     /// RezRouting's main entry-point for resource configuration. Configures resource hierarchy 
     /// and routes for an application (or part of an application). 
     /// </summary>
-    public class ResourcesBuilder : IConfigureChildren
+    public class ResourceGraphBuilder : IConfigureChildren
     {
         private readonly RootBuilder rootBuilder = new RootBuilder();
         private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
@@ -38,11 +38,11 @@ namespace RezRouting.Configuration
         }
 
         /// <summary>
-        /// Adds one or more route conventions from a route convention scheme that will be 
-        /// used to generate routes for all resources configured by this ResourcesBuilder
+        /// Specifies a convention scheme containing conventions used to generate routes 
+        /// for the resources configured by this ResourceGraphBuilder
         /// </summary>
         /// <param name="scheme"></param>
-        public void IncludeRouteConventions(IRouteConventionScheme scheme)
+        public void ApplyRouteConventions(IRouteConventionScheme scheme)
         {
             var conventions = scheme.GetConventions();
             this.routeConventions.AddRange(conventions);
@@ -50,7 +50,7 @@ namespace RezRouting.Configuration
 
         /// <summary>
         /// Sets options that control the way in which routes are configured by this
-        /// ResourcesBuilder
+        /// ResourceGraphBuilder
         /// </summary>
         /// <param name="configure"></param>
         public void Options(Action<IConfigureOptions> configure)
@@ -70,7 +70,7 @@ namespace RezRouting.Configuration
 
         /// <summary>
         /// Sets a base name for resources. The specified name will be included in the
-        /// full names of all resources and routes mapped by this ResourcesBuilder. If more
+        /// full names of all resources and routes mapped by this ResourceGraphBuilder. If more
         /// than one set of resource routes are being configured, it is recommended
         /// that a unique base name is used for each to prevent naming clashes.
         /// </summary>
@@ -81,15 +81,15 @@ namespace RezRouting.Configuration
         }
         
         /// <summary>
-        /// Creates a ResourcesModel
+        /// Creates a ResourceGraphModel
         /// </summary>
         /// <returns></returns>
-        public ResourcesModel Build()
+        public ResourceGraphModel Build()
         {
             var options = optionsBuilder.Build();
             var context = new RouteMappingContext(routeConventions, options);
             var rootResource = rootBuilder.Build(context);
-            return new ResourcesModel(rootResource.Children);
+            return new ResourceGraphModel(rootResource.Children);
         }
     }
 }

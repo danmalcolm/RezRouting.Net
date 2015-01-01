@@ -9,9 +9,9 @@ namespace RezRouting.Tests.Configuration
 {
     public class ResourceUrlTests
     {
-        private ResourcesModel BuildResources(Action<ResourcesBuilder> configure)
+        private ResourceGraphModel BuildResources(Action<RezRouting.Configuration.ResourceGraphBuilder> configure)
         {
-            var builder = new ResourcesBuilder();
+            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
             configure(builder);
             var model = builder.Build();
             return model;

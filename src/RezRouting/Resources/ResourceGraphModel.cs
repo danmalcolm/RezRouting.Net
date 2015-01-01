@@ -4,17 +4,17 @@ using RezRouting.Utility;
 namespace RezRouting.Resources
 {
     /// <summary>
-    /// Contains models representing the Resources and Routes configured for an application
+    /// Contains the hierarchy of Resources and Routes configured for an application
     /// (or part of an application). Used internally but also available for use by any 
     /// application-specific functionality.
     /// </summary>
-    public class ResourcesModel
+    public class ResourceGraphModel
     {
         /// <summary>
         /// Creates a ResourceModel
         /// </summary>
         /// <param name="resources"></param>
-        public ResourcesModel(IEnumerable<Resource> resources)
+        public ResourceGraphModel(IEnumerable<Resource> resources)
         {
             Resources = resources.ToReadOnlyList();
         }

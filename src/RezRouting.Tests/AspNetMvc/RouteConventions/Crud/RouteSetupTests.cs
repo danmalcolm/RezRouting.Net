@@ -55,9 +55,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         [Fact]
         public void should_not_map_resource_level_routes_on_different_level_resources()
         {
-            var builder = new ResourcesBuilder();
+            var builder = new ResourceGraphBuilder();
             var crudConventions = new CrudRouteConventions();
-            builder.IncludeRouteConventions(crudConventions);
+            builder.ApplyRouteConventions(crudConventions);
             builder.Collection("Products", products =>
             {
                 products.Items(product => product.HandledBy<ProductsController>());

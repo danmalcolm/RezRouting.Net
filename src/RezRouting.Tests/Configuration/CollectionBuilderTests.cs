@@ -21,7 +21,7 @@ namespace RezRouting.Tests.Configuration
             var collection = builder.Build(context);
             
             collection.Should().NotBeNull();
-            collection.Level.Should().Be(ResourceLevel.Collection);
+            collection.Type.Should().Be(ResourceType.Collection);
             collection.Name.Should().Be("Products");
         }
 
@@ -44,7 +44,7 @@ namespace RezRouting.Tests.Configuration
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
-            item.Level.Should().Be(ResourceLevel.CollectionItem);
+            item.Type.Should().Be(ResourceType.CollectionItem);
             item.Parent.Should().Be(collection);
         }
 
