@@ -7,7 +7,7 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Base class for builders used to configure different levels of resource
+    /// Base class for builders used to configure different types of resource
     /// </summary>
     public abstract class ResourceBuilderBase : IConfigureResource, IResourceBuilder
     {

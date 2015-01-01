@@ -6,7 +6,7 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Configures a singulartype Resource
+    /// Configures a singular Resource
     /// </summary>
     public class SingularBuilder : ResourceBuilderBase, IConfigureSingular
     {
