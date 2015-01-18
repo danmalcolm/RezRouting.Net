@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
@@ -29,7 +30,7 @@ namespace RezRouting.Tests.Infrastructure
             this.filter = filter ?? delegate { return true; };
         }
 
-        public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
+        public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
         {
             return handlers
                 .OfType<MvcController>()

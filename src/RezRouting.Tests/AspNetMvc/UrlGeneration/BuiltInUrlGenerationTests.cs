@@ -2,7 +2,9 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.Configuration.Options;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
@@ -17,7 +19,9 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var context = TestRequestContextBuilder.Create();
             var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            builder.MapMvcRoutes(options, routes);
             helper = new UrlHelper(context, routes);
         }
 

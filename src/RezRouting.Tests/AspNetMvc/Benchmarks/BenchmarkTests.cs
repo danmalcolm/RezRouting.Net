@@ -4,9 +4,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.Benchmarks.Controllers;
 using RezRouting.Tests.Infrastructure;
@@ -26,16 +26,16 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         [Fact]
         public void test_model_should_contain_routes()
         {
-            var model = BuildModel();
+            var root = BuildResources();
 
-            model.Resources.Count.Should().Be(100);
-            model.Resources.SelectMany(x => x.Routes).Count().Should().Be(1000);
+            root.Children.Count.Should().Be(100);
+            root.Children.SelectMany(x => x.Routes).Count().Should().Be(1000);
         }
 
         [Fact]
         public void model_mapping()
         {
-            Profiler.Profile("Building resource model", 100, () => BuildModel());
+            Profiler.Profile("Building resource model", 100, () => BuildResources());
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         [Fact]
         public void creating_routes_within_route_collection()
         {
-            var model = BuildModel();
+            var model = BuildResources();
 
             Profiler.Profile("Creating routes", 100, () =>
             {
@@ -160,12 +160,12 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
 
         private static ResourceGraphBuilder ConfigureResources()
         {
-            var builder = new ResourceGraphBuilder();
+            var root = new ResourceGraphBuilder("");
             DemoData.Resources.Each(resourceInfo =>
             {
                 string resourceName = resourceInfo.Item1;
                 var controllerType = resourceInfo.Item2;
-                builder.Collection(resourceName, collection =>
+                root.Collection(resourceName, collection =>
                 {
                     // Add 10 routes (Action1 .. Action10)
                     for (int i = 1; i <= 10; i++)
@@ -176,21 +176,20 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
                     }
                 });
             });
-            return builder;
+            return root;
         }
 
-        private static ResourceGraphModel BuildModel()
+        private static Resource BuildResources()
         {
-            var builder = ConfigureResources();
-            var model = builder.Build();
-            return model;
+            var root = ConfigureResources();
+            return root.Build(new ResourceOptions());
         }
 
         private static RouteCollection MapRoutes()
         {
             var builder = ConfigureResources();
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(new ResourceOptions(), routes);
             return routes;
         }
 

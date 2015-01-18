@@ -2,10 +2,12 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Product;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Products;
+using RezRouting.Configuration.Options;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
 using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc.UrlGeneration
@@ -17,7 +19,9 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            builder.MapMvcRoutes(options, routes);
 
             var index = new RouteModelIndex(routes);
 

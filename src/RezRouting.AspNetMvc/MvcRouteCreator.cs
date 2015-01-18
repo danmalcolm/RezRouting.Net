@@ -19,9 +19,9 @@ namespace RezRouting.AspNetMvc
         /// <param name="model"></param>
         /// <param name="routes"></param>
         /// <param name="area">The name of the area - if null, no area will be configured</param>
-        public void CreateRoutes(ResourceGraphModel model, RouteCollection routes, string area)
+        public void CreateRoutes(Resource model, RouteCollection routes, string area)
         {
-            var routeModels = GetRoutes(model.Resources).ToList();
+            var routeModels = GetRoutes(model.Children).ToList();
 
             new RouteValidator().ThrowIfInvalid(routeModels, routes);
             

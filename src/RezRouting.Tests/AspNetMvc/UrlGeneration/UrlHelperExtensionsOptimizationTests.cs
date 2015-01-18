@@ -3,10 +3,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Product;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Products;
+using RezRouting.Configuration.Options;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
@@ -16,18 +18,20 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
     {
         private readonly UrlHelper helper;
         private readonly UrlHelper helperUsingIndexedRoutes;
-
+        
         public UrlHelperExtensionsOptimizationTests()
         {
             var context = TestRequestContextBuilder.Create();
             var builder = TestCrudResourceModel.Configure();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
             
             var collection1 = new RouteCollection();
-            builder.MapMvcRoutes(collection1);
+            builder.MapMvcRoutes(options, collection1);
             helper = new UrlHelper(context, collection1);
 
             var collection2 = new RouteCollection();
-            builder.MapMvcRoutes(collection2);
+            builder.MapMvcRoutes(options, collection2);
             helperUsingIndexedRoutes = new UrlHelper(context, collection2);
 
             UrlHelperExtensions.IndexRoutes(collection2);

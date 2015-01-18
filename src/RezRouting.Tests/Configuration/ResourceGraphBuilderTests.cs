@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
@@ -15,48 +16,47 @@ namespace RezRouting.Tests.Configuration
     public class ResourceGraphBuilderTests
     {
         [Fact]
-        public void should_create_resources_configured_via_builders()
+        public void should_build_resources_configured_via_child_resource_builders()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
-            var model = builder.Build();
+            var model = builder.Build(new ResourceOptions());
 
-            model.Resources.Should().HaveCount(2);
-            model.Resources.Should().Contain(x => x.Name == "Products" && x.Type == ResourceType.Collection);
-            model.Resources.Should().Contain(x => x.Name == "Profile" && x.Type == ResourceType.Singular);
+            model.Children.Should().HaveCount(2);
+            model.Children.Should().Contain(x => x.Name == "Products" && x.Type == ResourceType.Collection);
+            model.Children.Should().Contain(x => x.Name == "Profile" && x.Type == ResourceType.Singular);
         }
         
         [Fact]
-        public void should_include_base_path_in_all_resource_urls()
+        public void should_include_root_path_in_all_resource_urls()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("Api");
+            builder.UrlPath("api");
             builder.Collection("Products", products => { });
 
-            builder.BasePath("api");
-            var model = builder.Build();
+            var root = builder.Build(new ResourceOptions());
 
-            var urls = model.AllResources().Select(x => x.Url);
+            var urls = root.Children.Expand().Select(x => x.Url);
             urls.Should().BeEquivalentTo("api/products", "api/products/{id}");
         }
 
         [Fact]
         public void should_include_base_name_in_full_resource_names()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("Api");
             builder.Collection("Products", products => { });
 
-            builder.BaseName("Api");
-            var model = builder.Build();
+            var root = builder.Build(new ResourceOptions());
 
-            var fullNames = model.AllResources().Select(x => x.FullName);
+            var fullNames = root.Children.Expand().Select(x => x.FullName);
             fullNames.Should().BeEquivalentTo("Api.Products", "Api.Products.Product");
         }
 
         [Fact]
         public void should_apply_each_convention_for_each_resource_and_configured_handlers()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -71,11 +71,12 @@ namespace RezRouting.Tests.Configuration
             var convention1 = new TestRouteConvention(actualAttempts);
             var convention2 = new TestRouteConvention(actualAttempts);
             var conventions = new TestRouteConventionScheme(convention1, convention2);
-            builder.ApplyRouteConventions(conventions);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(conventions);
 
-            var model = builder.Build();
+            var root = builder.Build(options);
 
-            var collection = model.Resources.Single();
+            var collection = root.Children.Single();
             var collectionItem = collection.Children.Single();
             var expectedAttempts = new List<Tuple<TestRouteConvention, Resource, string>>()
             {
@@ -98,7 +99,7 @@ namespace RezRouting.Tests.Configuration
                 this.actualAttempts = actualAttempts;
             }
 
-            public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
+            public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
             {
                 var controllerTypes = handlers.Cast<MvcController>().Select(x => x.ControllerType);
                 string typeNames = string.Join(",", controllerTypes.Select(x => x.Name));
@@ -111,7 +112,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_create_routes_specified_by_each_convention()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -122,11 +123,12 @@ namespace RezRouting.Tests.Configuration
                 (r,t) => r.Name == "Products");
             var convention2 = new Infrastructure.TestRouteConvention("Route2", "Action2", "GET", "action2",
                 (r,t) => r.Name == "Product");
-            var conventions = new TestRouteConventionScheme(convention1, convention2);
-            builder.ApplyRouteConventions(conventions);
-            var model = builder.Build();
 
-            var resource1 = model.Resources.Single();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new TestRouteConventionScheme(convention1, convention2));
+            var root = builder.Build(options);
+
+            var resource1 = root.Children.Single();
             var resource2 = resource1.Children.Single();
             resource1.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route1"});
             resource2.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route2" });
@@ -135,7 +137,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_routes_specified_on_resource_before_routes_created_by_conventions()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.HandledBy<TestController1>();
@@ -144,10 +146,11 @@ namespace RezRouting.Tests.Configuration
 
             var convention = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1");
             var conventions = new TestRouteConventionScheme(convention);
-            builder.ApplyRouteConventions(conventions);
-            var model = builder.Build();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(conventions);
+            var root = builder.Build(options);
 
-            var resource1 = model.Resources.Single();
+            var resource1 = root.Children.Single();
             resource1.Routes.Select(x => x.Name).Should().Equal("Route2", "Route1");
         }
         

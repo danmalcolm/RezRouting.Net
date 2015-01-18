@@ -15,7 +15,7 @@
         string GetIdName(string resourceName);
 
         /// <summary>
-        /// Gets the key for the id of the resource within the URL of a route that belongs
+        /// Gets the key for the id of a resource within the URL of a route that belongs
         /// to a descendant of the resource
         /// </summary>
         /// <param name="resourceName"></param>

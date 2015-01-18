@@ -2,6 +2,7 @@ using System.Linq;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Profile;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
@@ -15,17 +16,17 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public SingularRouteConventionTests()
         {
-            var builder = new ResourceGraphBuilder();
-            var taskConventions = new TaskRouteConventions();
-            builder.ApplyRouteConventions(taskConventions);
+            var builder = new ResourceGraphBuilder("");
             builder.Singular("Profile", profile =>
             {
                 profile.HandledBy<DisplayProfileController>();
                 profile.HandledBy<DeleteProfileController>();
                 profile.HandledBy<EditProfileController>();
             });
-            var model = builder.Build();
-            resource = model.Resources.Single();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new TaskRouteConventions());
+            var root = builder.Build(options);
+            resource = root.Children.Single();
         }
 
         [Fact]

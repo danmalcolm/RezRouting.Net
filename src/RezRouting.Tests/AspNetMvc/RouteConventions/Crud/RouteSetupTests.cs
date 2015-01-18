@@ -5,11 +5,12 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Product;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Products;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel.Controllers.Profile;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Profile;
 using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Utility;
 using Xunit;
@@ -24,8 +25,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         static RouteSetupTests()
         {
             var builder = TestCrudResourceModel.Configure();
-            var model = builder.Build();
-            Routes = model.Resources.Expand().SelectMany(x => x.Routes).ToList();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            var root = builder.Build(options);
+            Routes = root.Children.Expand().SelectMany(x => x.Routes).ToList();
         }
 
         [Theory]
@@ -55,15 +58,15 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         [Fact]
         public void should_not_map_resource_level_routes_on_different_level_resources()
         {
-            var builder = new ResourceGraphBuilder();
-            var crudConventions = new CrudRouteConventions();
-            builder.ApplyRouteConventions(crudConventions);
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.Items(product => product.HandledBy<ProductsController>());
             });
-            var model = builder.Build();
-            var routes = model.Resources.Expand().SelectMany(x => x.Routes);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            var root = builder.Build(options);
+            var routes = root.Children.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
         }
     }

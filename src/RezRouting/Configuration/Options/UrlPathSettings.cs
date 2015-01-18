@@ -4,12 +4,12 @@ using RezRouting.Utility;
 namespace RezRouting.Configuration.Options
 {
     /// <summary>
-    /// Settings that apply to formatting of a resource's path in a route URL
+    /// Controls the formatting of a resource's path in route URLs
     /// </summary>
     public class UrlPathSettings
     {
         /// <summary>
-        /// Creates a new instance of UrlPathSettings
+        /// Creates a new UrlPathSettings instance
         /// </summary>
         /// <param name="caseStyle">The CaseStyle to be used</param>
         /// <param name="wordSeparator">A string added between "camel humps" in the resource name, e.g. "PurchaseOrders" => "purchase-orders". 
@@ -36,7 +36,34 @@ namespace RezRouting.Configuration.Options
         /// Note that only numbers, letters, "-" and "_" may be used
         /// </summary>
         public string WordSeparator { get; private set; }
-        
+
+        /// <summary>
+        /// Formats a directory name based on the supplied name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public string FormatDirectoryName(string name)
+        {
+            string result = name;
+
+            result = PathSegmentCleaner.Clean(result);
+
+            if (WordSeparator != "")
+            {
+                result = IntercappedStringHelper.SeparateWords(result, WordSeparator);
+            }
+            switch (CaseStyle)
+            {
+                case CaseStyle.Lower:
+                    result = result.ToLowerInvariant();
+                    break;
+                case CaseStyle.Upper:
+                    result = result.ToUpperInvariant();
+                    break;
+            }
+            return result;
+        }
+
         /// <inheritdoc />
         public override string ToString()
         {

@@ -1,13 +1,15 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class ResourceHierarchyTests
+    public class ResourceHierarchyConfigurationTests
     {
+        private Resource root;
         private Resource collection;
         private Resource item;
         private Resource nestedCollection;
@@ -15,9 +17,9 @@ namespace RezRouting.Tests.Configuration
         private Resource nestedSingular;
         private Resource nestedCollectionItem;
 
-        public ResourceHierarchyTests()
+        public ResourceHierarchyConfigurationTests()
         {
-            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.Items(product =>
@@ -29,45 +31,50 @@ namespace RezRouting.Tests.Configuration
             {
                 profile.Singular("User", user => {});
             });
-            var model = builder.Build();
-
-            collection = model.Resources.Single(x => x.Name == "Products");
+            root = builder.Build(new ResourceOptions());
+            collection = root.Children.Single(x => x.Name == "Products");
             item = collection.Children.Single(x => x.Name == "Product");
             nestedCollection = item.Children.Single(x => x.Name == "Reviews");
             nestedCollectionItem = nestedCollection.Children.Single(x => x.Name == "Review");
-            singular = model.Resources.Single(x => x.Name == "Profile");
+            singular = root.Children.Single(x => x.Name == "Profile");
             nestedSingular = singular.Children.Single(x => x.Name == "User");
         }
 
         [Fact]
-        public void top_level_resources_should_not_have_ancestors()
+        public void root_resource_should_not_have_ancestors()
         {
-            collection.Ancestors.Should().BeEmpty();
-            singular.Ancestors.Should().BeEmpty();
+            root.Ancestors.Should().BeEmpty();
         }
 
         [Fact]
-        public void collection_item_should_have_parent_as_ancestor()
+        public void child_resources_should_have_root_as_ancestor()
         {
-            item.Ancestors.Should().Equal(new[] { collection });
+            collection.Ancestors.Should().Equal(new [] { root });
+            singular.Ancestors.Should().Equal(new[] { root });
+        }
+
+        [Fact]
+        public void collection_item_should_have_parent_and_root_as_ancestor()
+        {
+            item.Ancestors.Should().Equal(new[] { collection, root });
         }
 
         [Fact]
         public void nested_collection_should_have_parent_item_and_collection_as_ancestors()
         {
-            nestedCollection.Ancestors.Should().Equal(new[] { item, collection });
+            nestedCollection.Ancestors.Should().Equal(new[] { item, collection, root });
         }
 
         [Fact]
-        public void nested_collection_item_should_have_parent_collection_and_its_ancestors()
+        public void nested_collection_item_should_have_parent_collection_and_its_ancestors_as_ancestors()
         {
-            nestedCollectionItem.Ancestors.Should().Equal(new[] { nestedCollection, item, collection });
+            nestedCollectionItem.Ancestors.Should().Equal(new[] { nestedCollection, item, collection, root });
         }
 
         [Fact]
         public void nested_singular_should_have_parent_as_ancestor()
         {
-            nestedSingular.Ancestors.Should().Equal(new[] {singular});
+            nestedSingular.Ancestors.Should().Equal(new[] { singular, root });
         }
     }
 }

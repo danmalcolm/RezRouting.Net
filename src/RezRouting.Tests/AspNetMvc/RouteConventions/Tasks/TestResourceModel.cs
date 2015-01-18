@@ -2,24 +2,25 @@
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 
 namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
     public static class TestResourceModel
     {
-        public static ResourceGraphBuilder Configure()
+        public static ISingularConfigurator Configure()
         {
-            var builder = new ResourceGraphBuilder();
-            var crudConventions = new CrudRouteConventions();
-            builder.ApplyRouteConventions(crudConventions);
-            builder.Collection("Products", products =>
+            var root = new ResourceGraphBuilder("");
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            root.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product => product.HandledBy<ProductController>());
             });
-            builder.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+            root.Singular("Profile", profile => profile.HandledBy<ProfileController>());
 
-            return builder;
+            return root;
         }
     }
 

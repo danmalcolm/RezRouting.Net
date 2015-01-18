@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Utility;
@@ -42,7 +43,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         public string HttpMethod { get; set; }
         
         /// <inheritdoc />
-        public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathFormatter pathFormatter)
+        public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
         {
             if (resource.Type == Type)
             {
@@ -52,7 +53,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
                     var supported = ActionMappingHelper.SupportsAction(controllerType, Action);
                     if (supported)
                     {
-                        var path = GetPath(resource, controllerType, pathFormatter);
+                        var path = GetPath(resource, controllerType, urlPathSettings);
                         string controllerName = RouteValueHelper.TrimControllerFromTypeName(controllerType);
                         string name = string.Format("{0}.{1}", controllerName, Action);
                         var handler = new MvcAction(controllerType, Action);
@@ -63,7 +64,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
             }
         }
 
-        private string GetPath(Resource resource, Type controllerType, UrlPathFormatter pathFormatter)
+        private string GetPath(Resource resource, Type controllerType, UrlPathSettings urlPathSettings)
         {
             string path = RouteValueHelper.TrimControllerFromTypeName(controllerType);
             var suffixes = GetPossibleResourceNameSuffixes(resource);
@@ -72,7 +73,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
                 .Select(suffix => path.Substring(0, path.Length - suffix.Length))
                 .FirstOrDefault() ?? path;
 
-            path = pathFormatter.FormatDirectoryName(path);
+            path = urlPathSettings.FormatDirectoryName(path);
 
             return path;
         }

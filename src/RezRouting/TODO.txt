@@ -1,13 +1,30 @@
 ﻿First - Final tweaks to API to minimise change
 -----
 
+[ ] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation:
+
+- x RGB.Base returns a singular builder
+- x all builders have a build 
+- x options aren't set via root builder, they're just passed to the Build method
+- x conventions are included in the options
+- move item name back up to collection method
+- x collapse options builder into options
+- x collapse urlpathformatter into settings
+
 [ ] Publish to nuget
+
+[ ] Add Resource.Descendants that gets all children
 
 [ ] Wiki
 
-[ ] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation
+* add to root model builder
+* child resources not allowed empty name or urlpath
 
 [ ] clear index cache after mapping mvc resources
+
+[ ] Add simpler convention data dictionary rather than IHandlerComponent
+
+[ ] Allow exclude from conventions
 
 
 Next
@@ -27,9 +44,9 @@ Next
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
-[ ] MVC tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
+[ ] MVC unit tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
 
-[ ] Detect clashes between id param names within hierarchy, e.g. if same name used by ancestor
+[ ] Detect clashes between id param names within hierarchy, e.g., ensure same name not used by ancestor
 
 [ ] Global conventions applied to all resources, e.g. comments. 
 

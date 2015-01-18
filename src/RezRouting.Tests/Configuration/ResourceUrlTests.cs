@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -9,40 +10,40 @@ namespace RezRouting.Tests.Configuration
 {
     public class ResourceUrlTests
     {
-        private ResourceGraphModel BuildResources(Action<RezRouting.Configuration.ResourceGraphBuilder> configure)
+        private Resource BuildResources(Action<ISingularConfigurator> configure)
         {
-            var builder = new RezRouting.Configuration.ResourceGraphBuilder();
-            configure(builder);
-            var model = builder.Build();
-            return model;
+            var root = new ResourceGraphBuilder("");
+            configure(root);
+            var resource = root.Build(new ResourceOptions());
+            return resource;
         }
 
         [Fact]
         public void top_level_singular_urls_should_be_based_on_directory()
         {
-            var model = BuildResources(builder => 
+            var root = BuildResources(builder => 
                 builder.Singular("Profile", x => {})
             );
 
-            var resource = model.Resources.Single();
+            var resource = root.Children.Single();
             resource.Url.Should().Be("profile");
         }
 
         [Fact]
         public void top_level_collection_urls_should_be_based_on_directory()
         {
-            var model = BuildResources(builder => 
+            var root = BuildResources(builder => 
                 builder.Collection("Products", x => { })
             );
 
-            var collection = model.Resources.Single();
+            var collection = root.Children.Single();
             collection.Url.Should().Be("products");
         }
         
         [Fact]
         public void nested_singular_urls_should_include_ancestor_paths()
         {
-            var model = BuildResources(builder =>
+            var root = BuildResources(builder =>
             {
                 builder.Singular("Profile", profile =>
                 {
@@ -53,7 +54,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var level0 = model.Resources.Single();
+            var level0 = root.Children.Single();
             var level1 = level0.Children.Single();
             var level2 = level1.Children.Single();
 
@@ -64,10 +65,10 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void collection_item_urls_should_combine_parent_path_and_id_parameter()
         {
-            var model = BuildResources(builder =>
+            var root = BuildResources(builder =>
                 builder.Collection("Products", x => { })
             ); 
-            var collection = model.Resources.Single();
+            var collection = root.Children.Single();
             var item = collection.Children.Single();
             item.Url.Should().Be("products/{id}");
         }
@@ -75,7 +76,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void nested_collection_resource_urls_should_include_ancestor_paths()
         {
-            var model = BuildResources(builder =>
+            var root = BuildResources(builder =>
             {
                 builder.Singular("Profile", profile =>
                 {
@@ -83,7 +84,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var level0 = model.Resources.Single();
+            var level0 = root.Children.Single();
             var collection = level0.Children.Single();
             var collectionItem = collection.Children.Single();
 
@@ -94,7 +95,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void collection_item_ancestor_resources_should_use_ancestor_id_param_name()
         {
-            var model = BuildResources(builder =>
+            var root = BuildResources(builder =>
             {
                 builder.Collection("Products", products =>
                 {
@@ -105,7 +106,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var collection = model.Resources.Single();
+            var collection = root.Children.Single();
             var collectionItem = collection.Children.Single();
             var nestedItem = collectionItem.Children.Single().Children.Single();
 

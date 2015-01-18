@@ -1,7 +1,9 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
+using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.Configuration.Options;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
 using RezRouting.Tests.Infrastructure;
 using Xunit.Extensions;
 
@@ -14,7 +16,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         static InboundRequestTests()
         {
             var builder = TestCrudResourceModel.Configure();
-            builder.MapMvcRoutes(Routes);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            builder.MapMvcRoutes(options, Routes);
         }
         
         [Theory]

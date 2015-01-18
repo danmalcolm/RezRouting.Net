@@ -3,6 +3,7 @@ using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Products.Product.Reviews;
@@ -20,11 +21,9 @@ namespace RezRouting.Demos.Crud
 
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
-            var builder = new ResourceGraphBuilder();
-            var crudConventions = new CrudRouteConventions();
-            builder.ApplyRouteConventions(crudConventions);
-            builder.Singular("Session", session => session.HandledBy<SessionController>());
-            builder.Collection("Products", products =>
+            var root = new ResourceGraphBuilder("");
+            root.Singular("Session", session => session.HandledBy<SessionController>());
+            root.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product =>
@@ -37,7 +36,9 @@ namespace RezRouting.Demos.Crud
                     });
                 });
             });
-            builder.MapMvcRoutes(routes);
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new CrudRouteConventions());
+            root.MapMvcRoutes(options, routes);
 
             // Allow RezRouting to generate URLs (much) more quickly
             UrlHelperExtensions.IndexRoutes(routes);

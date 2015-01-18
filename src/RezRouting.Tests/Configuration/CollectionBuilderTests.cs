@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using RezRouting.Configuration;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
@@ -11,14 +11,14 @@ namespace RezRouting.Tests.Configuration
 {
     public class CollectionBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<IRouteConvention>(), new OptionsBuilder().Build());
+        private readonly ResourceOptions options = new ResourceOptions();
 
         [Fact]
         public void should_build_collection_resource()
         {
             var builder = new CollectionBuilder("Products");
             
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
             
             collection.Should().NotBeNull();
             collection.Type.Should().Be(ResourceType.Collection);
@@ -30,7 +30,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             collection.FullName.Should().Be("Products");
         }
@@ -40,7 +40,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -53,7 +53,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -65,7 +65,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Hamburgera");
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -75,11 +75,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_use_custom_name_for_child_item_resource_if_specified()
         {
-            var builder = new CollectionBuilder("Products");
+            var builder = new CollectionBuilder("Products", "AProduct");
 
-            builder.ItemName("AProduct");
-
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
@@ -91,7 +89,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Products");
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             var item = collection.Children.Single();
             item.FullName.Should().Be("Products.Product");
@@ -107,7 +105,7 @@ namespace RezRouting.Tests.Configuration
                 product.Singular("Manufacturer", manufacturer => { });
             });
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
 
             var expectedNames = new[] { "Products", "Products.Product", "Products.Product.Reviews", "Products.Product.Reviews.Review", "Products.Product.Manufacturer"};
             collection.Expand().Select(x => x.FullName).Should().BeEquivalentTo(expectedNames);
@@ -120,7 +118,7 @@ namespace RezRouting.Tests.Configuration
             builder.Items(items => items.IdName("productCode"));
             builder.Items(items => items.IdName("productId"));
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.Url.Should().Be("products/{productId}");
@@ -132,7 +130,7 @@ namespace RezRouting.Tests.Configuration
             var builder = new CollectionBuilder("Products");
             builder.Items(items => { });
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
             var item = collection.Children.Single();
             item.Url.Should().Be("products/{id}");
         }
@@ -143,7 +141,7 @@ namespace RezRouting.Tests.Configuration
             var builder = new CollectionBuilder("Users");
             builder.Items(items => items.IdName("userName"));
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
             var item = collection.Children.Single();
             item.Url.Should().Be("users/{userName}");
         }
@@ -158,7 +156,7 @@ namespace RezRouting.Tests.Configuration
                 items.Collection("Comments", comments => {});
             });
 
-            var collection = builder.Build(context);
+            var collection = builder.Build(options);
             var nestedItem = collection.Children.Single().Children.Single();
             nestedItem.Name.Should().Be("Comments");
             nestedItem.Url.Should().Be("users/{parentId}/comments");
@@ -169,7 +167,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = new CollectionBuilder("Products");
 
-            var resource = builder.Build(context);
+            var resource = builder.Build(options);
 
             resource.Url.Should().Be("products");
         }
@@ -180,7 +178,7 @@ namespace RezRouting.Tests.Configuration
             var builder = new CollectionBuilder("Products");
 
             builder.UrlPath("myproducts");
-            var resource = builder.Build(context);
+            var resource = builder.Build(options);
 
             resource.Url.Should().Be("myproducts");
         }

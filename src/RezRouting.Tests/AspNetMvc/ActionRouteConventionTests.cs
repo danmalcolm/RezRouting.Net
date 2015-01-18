@@ -14,11 +14,10 @@ namespace RezRouting.Tests.AspNetMvc
     {
         public Resource CreateCollectionResource()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products => {});
-            var model = builder.Build();
-            var resources = model.Resources;
-            var collection = resources.Single(x => x.Name == "Products");
+            var root = builder.Build(new ResourceOptions());
+            var collection = root.Children.Single(x => x.Name == "Products");
             return collection;
         }
 
@@ -27,10 +26,10 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var collection = CreateCollectionResource();
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "FunkyAction");
-            var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Upper, "_"));
+            var urlPathSettings = new UrlPathSettings(CaseStyle.Upper, "_");
             
             var route = convention
-                .Create(collection, new [] { new MvcController(typeof(TestController)) }, formatter)
+                .Create(collection, new [] { new MvcController(typeof(TestController)) }, urlPathSettings)
                 .Single();
 
             route.Path.Should().Be("FUNKY_ACTION");
@@ -43,7 +42,7 @@ namespace RezRouting.Tests.AspNetMvc
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "UnknownAction", "GET", "FunkyAction");
             
             var routes = convention
-                .Create(collection, new[] { new MvcController(typeof(TestController)) }, new UrlPathFormatter());
+                .Create(collection, new[] { new MvcController(typeof(TestController)) }, new UrlPathSettings());
 
             routes.Should().BeEmpty();
         }
@@ -55,7 +54,7 @@ namespace RezRouting.Tests.AspNetMvc
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "Action1");
 
             var route = convention
-                .Create(collection, new[] { new MvcController(typeof(TestControllerWithActionNameAttribute)) }, new UrlPathFormatter())
+                .Create(collection, new[] { new MvcController(typeof(TestControllerWithActionNameAttribute)) }, new UrlPathSettings())
                 .Single();
 
             route.Should().NotBeNull();

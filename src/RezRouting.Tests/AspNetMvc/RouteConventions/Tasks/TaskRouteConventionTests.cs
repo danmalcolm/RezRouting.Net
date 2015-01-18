@@ -14,16 +14,16 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
     {
         private readonly Resource collection;
         private readonly Resource singular;
-        private readonly UrlPathFormatter pathFormatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.None));
+        private readonly UrlPathSettings pathSettings = new UrlPathSettings(CaseStyle.None);
 
         public TaskRouteConventionTests()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
-            var model = builder.Build();
-            collection = model.Resources.Single(x => x.Name == "Products");
-            singular = model.Resources.Single(x => x.Name == "Profile");
+            var root = builder.Build(new ResourceOptions());
+            collection = root.Children.Single(x => x.Name == "Products");
+            singular = root.Children.Single(x => x.Name == "Profile");
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
 
             var route = convention
-                .Create(collection, new[] { MvcController.Create<EditProductsController>() }, pathFormatter)
+                .Create(collection, new[] { MvcController.Create<EditProductsController>() }, pathSettings)
                 .Single();
             
             route.Path.Should().Be("Edit");
@@ -44,7 +44,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
             
             var route = convention
-                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, pathFormatter)
+                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, pathSettings)
                 .Single();
 
             route.Path.Should().Be("Create");
@@ -54,10 +54,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public void should_format_task_path_using_settings()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            var formatter = new UrlPathFormatter(new UrlPathSettings(CaseStyle.Lower));
-
+            
             var route = convention
-                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, formatter)
+                .Create(collection, new[] { MvcController.Create<CreateProductController>() }, new UrlPathSettings(CaseStyle.Lower))
                 .Single();
 
             route.Path.Should().Be("create");
@@ -69,7 +68,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
 
             var routes = convention
-                .Create(singular, new [] { MvcController.Create<EditProductsController>() }, pathFormatter);
+                .Create(singular, new [] { MvcController.Create<EditProductsController>() }, pathSettings);
 
             routes.Should().BeEmpty();
         }

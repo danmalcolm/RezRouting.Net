@@ -3,7 +3,7 @@ using System;
 namespace RezRouting.Configuration
 {
     /// <summary>
-    /// Exception thrown if route configuration is invalid
+    /// Exception thrown if resource and route configuration is invalid
     /// </summary>
     public class RouteConfigurationException : Exception
     {

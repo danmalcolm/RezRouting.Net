@@ -2,6 +2,7 @@
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Products;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
@@ -16,16 +17,17 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public CollectionRouteConventionTests()
         {
             var taskConventions = new TaskRouteConventions();
-            var builder = new ResourceGraphBuilder();
-            builder.ApplyRouteConventions(taskConventions);
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ListProductsController>();
                 products.HandledBy<CreateProductController>();
                 products.HandledBy<EditProductsController>();
             });
-            var model = builder.Build();
-            collection = model.Resources.Single();
+            var options = new ResourceOptions();
+            options.AddRouteConventions(new TaskRouteConventions());
+            var root = builder.Build(options);
+            collection = root.Children.Single();
         }
 
         [Fact]

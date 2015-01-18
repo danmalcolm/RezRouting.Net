@@ -110,7 +110,8 @@ namespace RezRouting.Resources
         public Resource Parent { get; private set; }
 
         /// <summary>
-        /// Gets all ancestors, starting from this resource's immediate parent
+        /// Gets a sequence containing this resource's ancestors in the resource hierarchy, from the 
+        /// immediate parent to the root resource
         /// </summary>
         public IEnumerable<Resource> Ancestors
         {

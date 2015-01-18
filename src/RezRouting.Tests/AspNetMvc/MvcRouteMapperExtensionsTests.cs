@@ -4,6 +4,7 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 using Route = RezRouting.Resources.Route;
@@ -18,7 +19,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(new ResourceOptions(), routes);
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["RouteModel"] as Route)
@@ -32,7 +33,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes, area: "Area1");
+            builder.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["area"] as string)
@@ -44,23 +45,23 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var builder = CreateBuilder();
 
-            ResourceGraphModel model = null;
-            builder.MapMvcRoutes(new RouteCollection(), modelAction: x => model = x);
+            Resource model = null;
+            builder.MapMvcRoutes(new ResourceOptions(), new RouteCollection(), modelAction: x => model = x);
 
             model.Should().NotBeNull();
-            model.Resources.Should().HaveCount(1);
-            model.Resources.Should().ContainSingle(x => x.Name == "Products");
+            model.Children.Should().HaveCount(1);
+            model.Children.Should().ContainSingle(x => x.Name == "Products");
         }
         
         private ResourceGraphBuilder CreateBuilder()
         {
-            var builder = new ResourceGraphBuilder();
-            builder.Collection("Products", products =>
+            var root = new ResourceGraphBuilder("");
+            root.Collection("Products", products =>
             {
                 products.Route("Route1", new MvcAction(typeof(TestController), "Action1"), "GET", "action1");
                 products.Route("Route2", new MvcAction(typeof(TestController), "Action2"), "GET", "action2");
             });
-            return builder;
+            return root;
         }
 
         public class TestController : Controller

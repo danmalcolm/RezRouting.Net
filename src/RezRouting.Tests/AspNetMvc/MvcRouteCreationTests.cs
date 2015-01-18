@@ -5,6 +5,7 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
@@ -23,7 +24,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
             var handler = MvcAction.For((TestController c) => c.Action1());
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", handler, "GET", "action1");
@@ -46,11 +47,11 @@ namespace RezRouting.Tests.AspNetMvc
                 });
             });
             var routes = new RouteCollection();
-            ResourceGraphModel model = null;
+            Resource model = null;
 
-            builder.MapMvcRoutes(routes, modelAction: x => model = x);
+            builder.MapMvcRoutes(new ResourceOptions(), routes, modelAction: x => model = x);
             
-            var expectedRouteNames = model.Resources.Expand().Select(resource => resource.FullName + ".Route1");
+            var expectedRouteNames = model.Children.Expand().Select(resource => resource.FullName + ".Route1");
             routes.Cast<System.Web.Routing.Route>().Select(x => x.DataTokens["Name"])
                 .ShouldBeEquivalentTo(expectedRouteNames);
         }
@@ -58,13 +59,13 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_name_route_based_on_full_name_of_resource()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products",
                 products => products.Route("Route1", MvcAction.For((TestController c) => c.Action1()),
                     "GET", "action1"));
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(new ResourceOptions(), routes);
 
             var route = routes.Cast<System.Web.Routing.Route>().Single();
             routes["Products.Route1"].Should().BeSameAs(route);
@@ -73,14 +74,14 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_throw_if_route_names_are_not_unique()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
             });
 
-            Action action = () => builder.MapMvcRoutes(new RouteCollection());
+            Action action = () => builder.MapMvcRoutes(new ResourceOptions(), new RouteCollection());
             const string expectedMessage =
                 @"Unable to add routes to RouteCollection because the following route names are not unique:
 Products.Route1 - (defined on resources Products and Products)
@@ -91,13 +92,13 @@ Products.Route1 - (defined on resources Products and Products)
         [Fact]
         public void should_throw_if_route_names_already_in_use()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products => 
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
             routes.MapRoute("Products.Route1", "url");
             
-            Action action = () => builder.MapMvcRoutes(routes);
+            Action action = () => builder.MapMvcRoutes(new ResourceOptions(), routes);
 
             const string expectedMessage = @"Unable to create routes because the following routes have names that already exist in the RouteCollection:
 Products.Route1 - (defined on resource Products)
@@ -108,22 +109,22 @@ Products.Route1 - (defined on resource Products)
         [Fact]
         public void should_add_route_model_to_route()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products => 
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
-            ResourceGraphModel model = null;
+            Resource model = null;
 
-            builder.MapMvcRoutes(routes, modelAction: x => model = x);
+            builder.MapMvcRoutes(new ResourceOptions(), routes, modelAction: x => model = x);
             
             var route = routes.Cast<System.Web.Routing.Route>().Single();
-            route.DataTokens["RouteModel"].Should().Be(model.Resources.First().Routes.First());
+            route.DataTokens["RouteModel"].Should().Be(model.Children.First().Routes.First());
         }
 
         [Fact]
         public void should_map_collection_routes_before_item_routes()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
@@ -145,7 +146,7 @@ Products.Route1 - (defined on resource Products)
                 });
             });
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes);
+            builder.MapMvcRoutes(new ResourceOptions(), routes);
             var expectedRouteNames = new[]
             {
                 "Products.Route1", "Products.Route2", "Products.Product.Route1", "Products.Product.Route2",
@@ -158,7 +159,7 @@ Products.Route1 - (defined on resource Products)
         [Fact]
         public void should_include_area_when_mapping_area_routes()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = new ResourceGraphBuilder("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");
@@ -166,7 +167,7 @@ Products.Route1 - (defined on resource Products)
             });
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(routes, area: "Area1");
+            builder.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["area"] as string)

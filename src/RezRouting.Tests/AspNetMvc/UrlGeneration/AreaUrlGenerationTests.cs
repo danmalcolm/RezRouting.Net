@@ -2,7 +2,12 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.Tests.AspNetMvc.RouteConventions.Crud.TestModel;
+using RezRouting.Configuration;
+using RezRouting.Configuration.Options;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
+using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Profile;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
@@ -12,23 +17,32 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
     {
         private readonly UrlHelper helper;
 
+        private void ConfigureTestResources(ISingularConfigurator root)
+        {
+            root.Collection("Products", products =>
+            {
+                products.Route("Index", MvcAction.For((ProductsController c) => c.Index()), "GET", "");
+                products.Items(product =>
+                {
+                    product.Route("Show", MvcAction.For((ProductController c) => c.Show(null)), "GET", "");
+                });
+            });
+            root.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+        }
+
         public AreaUrlGenerationTests()
         {
             var context = TestRequestContextBuilder.Create();
             var routes = new RouteCollection();
-            var area1Builder = TestCrudResourceModel.Configure(a =>
-            {
-                a.BaseName("Area1");
-                a.BasePath("area1");
-            });
-            area1Builder.MapMvcRoutes(routes, area: "Area1");
+            var area1Root = new ResourceGraphBuilder("Area1");
+            area1Root.UrlPath("area1");
+            ConfigureTestResources(area1Root);
+            area1Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
 
-            var area2Builder = TestCrudResourceModel.Configure(a =>
-            {
-                a.BaseName("Area2");
-                a.BasePath("area2");
-            });
-            area2Builder.MapMvcRoutes(routes, area: "Area2");
+            var area2Root = new ResourceGraphBuilder("Area2");
+            area2Root.UrlPath("area2");
+            ConfigureTestResources(area2Root);
+            area2Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area2");
 
             helper = new UrlHelper(context, routes);
         }

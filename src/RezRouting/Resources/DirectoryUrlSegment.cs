@@ -1,6 +1,4 @@
-﻿using RezRouting.Configuration;
-
-namespace RezRouting.Resources
+﻿namespace RezRouting.Resources
 {
     /// <summary>
     /// Represents a fixed directory path within a Resource URL template

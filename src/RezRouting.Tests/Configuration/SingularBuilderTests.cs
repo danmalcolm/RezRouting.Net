@@ -2,6 +2,7 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
@@ -10,7 +11,7 @@ namespace RezRouting.Tests.Configuration
 {
     public class SingularBuilderTests
     {
-        private readonly RouteMappingContext context = new RouteMappingContext(Enumerable.Empty<IRouteConvention>(), new OptionsBuilder().Build());
+        private readonly ResourceOptions context = new ResourceOptions();
 
         [Fact]
         public void should_build_singular_resource()
