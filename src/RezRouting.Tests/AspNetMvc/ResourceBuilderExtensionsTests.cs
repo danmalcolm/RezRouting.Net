@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
-using Moq;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
@@ -71,6 +70,11 @@ namespace RezRouting.Tests.AspNetMvc
             }
 
             public void Collection(string name, Action<ICollectionConfigurator> configure)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Collection(string name, string itemName, Action<ICollectionConfigurator> configure)
             {
                 throw new NotImplementedException();
             }

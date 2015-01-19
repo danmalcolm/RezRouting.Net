@@ -84,24 +84,43 @@ namespace RezRouting.Configuration.Builders
         /// <inheritdoc />
         public void Singular(string name, Action<ISingularConfigurator> configure)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (configure == null) throw new ArgumentNullException("configure");
+
             AddChild(new SingularBuilder(name), x => configure(x));
         }
 
         /// <inheritdoc />
         public void Collection(string name, Action<ICollectionConfigurator> configure)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (configure == null) throw new ArgumentNullException("configure");
+
             AddChild(new CollectionBuilder(name), x => configure(x));
+        }
+
+        /// <inheritdoc />
+        public void Collection(string name, string itemName, Action<ICollectionConfigurator> configure)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (itemName == null) throw new ArgumentNullException("itemName");
+
+            AddChild(new CollectionBuilder(name, itemName), x => configure(x));
         }
 
         /// <inheritdoc />
         public void HandledBy(IResourceHandler handler)
         {
+            if (handler == null) throw new ArgumentNullException("handler");
+
             handlers.Add(handler);
         }
 
         /// <inheritdoc />
         public void CustomProperties(IDictionary<string, object> properties)
         {
+            if (properties == null) throw new ArgumentNullException("properties");
+
             foreach (var item in properties)
             {
                 customProperties[item.Key] = item.Value;
@@ -111,17 +130,11 @@ namespace RezRouting.Configuration.Builders
         /// <inheritdoc />
         public void Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null)
         {
+            if (name == null) throw new ArgumentNullException("name");
+            if (handler == null) throw new ArgumentNullException("handler");
+
             var route = new Route(name, handler, httpMethod, path, customProperties ?? new Dictionary<string, object>());
             routes.Add(route);
-        }
-
-        /// <summary>
-        /// Changes the name of the resource
-        /// </summary>
-        /// <param name="name"></param>
-        internal protected void ChangeName(string name)
-        {
-            Name = name;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace RezRouting.Configuration
 {
     /// <summary>
     /// RezRouting's main entry point for configuring an application or component's resource hierarchy and routes.
-    /// Configures attributes of the root resource and it's descendants.
+    /// Configures routes and other attributes of the root resource and it's descendants.
     /// </summary>
     public class ResourceGraphBuilder : SingularBuilder
     {
@@ -12,10 +12,10 @@ namespace RezRouting.Configuration
         /// Creates a new ResourceGraphBuilder, RezRouting's main entry point for configuring an application
         /// or component's resource hierarchy and routes.
         /// </summary>
-        /// <param name="name">The name of the root resource. The specified name will be included in the 
+        /// <param name="name">An option name to give to the root resource. The specified name will be included in the 
         /// full name of all resources and routes set up by this ResourceGraphBuilder.</param>
         /// <returns></returns>
-        public ResourceGraphBuilder(string name) : base(name)
+        public ResourceGraphBuilder(string name = "") : base(name)
         {
             this.UrlPath("");
         }
