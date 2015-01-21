@@ -59,11 +59,11 @@
     </Compile>
     <Compile Include="ActionMappingHelper.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
-    <Compile Include="ResourceGraphBuilderExtensions.cs" />
+    <Compile Include="ResourceConfiguratorExtensions.cs" />
     <Compile Include="MvcAction.cs" />
     <Compile Include="MvcController.cs" />
     <Compile Include="MvcRouteCreator.cs" />
-    <Compile Include="MvcResourceBuilderExtensions.cs" />
+    <Compile Include="ResourceGraphBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceRoute.cs" />
     <Compile Include="RouteValidator.cs" />

@@ -124,7 +124,7 @@
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
-    <Compile Include="AspNetMvc\MvcRouteMapperExtensionsTests.cs" />
+    <Compile Include="AspNetMvc\ResourceGraphBuilderExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\RouteSetupTests.cs" />

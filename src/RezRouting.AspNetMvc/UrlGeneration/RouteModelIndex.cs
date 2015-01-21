@@ -9,7 +9,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
     /// <summary>
     /// Stores a collection of routes, indexed by controller type and action for
     /// rapid retrieval during URL generation. Only routes created by RezRouting
-    /// are included.
+    /// are indexed.
     /// </summary>
     public class RouteModelIndex
     {

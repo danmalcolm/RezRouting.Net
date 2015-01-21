@@ -11,7 +11,7 @@ using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.Tests.AspNetMvc
 {
-    public class MvcResourceBuilderExtensionsTests
+    public class ResourceGraphBuilderExtensionsTests
     {
         [Fact]
         public void when_mapping_MVC_routes_should_map_routes_based_on_resources_model()
@@ -22,7 +22,7 @@ namespace RezRouting.Tests.AspNetMvc
             builder.MapMvcRoutes(new ResourceOptions(), routes);
 
             routes.Cast<System.Web.Routing.Route>()
-                .Select(x => x.DataTokens["RouteModel"] as Route)
+                .Select(x => x.DataTokens[RouteDataTokenKeys.RouteModel] as Route)
                 .Select(x => x.FullName)
                 .ShouldBeEquivalentTo(new[] { "Products.Route1", "Products.Route2" });
         }
