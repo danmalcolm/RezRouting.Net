@@ -16,7 +16,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_build_collection_resource()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = RootResourceBuilder.Create();
             builder.Collection("Products", x => {});
 
             var root = builder.Build(new ResourceOptions());
@@ -218,9 +218,9 @@ namespace RezRouting.Tests.Configuration
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
-        private Resource BuildResource(Action<ResourceGraphBuilder> configure)
+        private Resource BuildResource(Action<IRootResourceBuilder> configure)
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = RootResourceBuilder.Create();
             configure(builder);
             var root = builder.Build(new ResourceOptions());
             return root.Children.Single();

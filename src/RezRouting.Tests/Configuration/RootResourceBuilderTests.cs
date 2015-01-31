@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Linq;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
@@ -13,12 +8,12 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class ResourceGraphBuilderTests
+    public class RootResourceBuilderTests
     {
         [Fact]
         public void should_build_resources_configured_via_child_resource_builders()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
             var model = builder.Build(new ResourceOptions());
@@ -31,7 +26,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_root_path_in_all_resource_urls()
         {
-            var builder = new ResourceGraphBuilder("Api");
+            var builder = RootResourceBuilder.Create("Api");
             builder.UrlPath("api");
             builder.Collection("Products", products => { });
 
@@ -44,7 +39,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_base_name_in_full_resource_names()
         {
-            var builder = new ResourceGraphBuilder("Api");
+            var builder = RootResourceBuilder.Create("Api");
             builder.Collection("Products", products => { });
 
             var root = builder.Build(new ResourceOptions());

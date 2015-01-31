@@ -18,7 +18,7 @@ namespace RezRouting.Tests.AspNetMvc
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
             var handler = MvcAction.For((TestController c) => c.Action1());
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", handler, "GET", "action1");
@@ -53,7 +53,7 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_name_route_based_on_full_name_of_resource()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products",
                 products => products.Route("Route1", MvcAction.For((TestController c) => c.Action1()),
                     "GET", "action1"));
@@ -68,7 +68,7 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_throw_if_route_names_are_not_unique()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
@@ -86,7 +86,7 @@ Products.Route1 - (defined on resources Products and Products)
         [Fact]
         public void should_throw_if_route_names_already_in_use()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => 
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
@@ -103,7 +103,7 @@ Products.Route1 - (defined on resource Products)
         [Fact]
         public void should_add_route_model_to_route()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => 
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             var routes = new RouteCollection();
@@ -118,7 +118,7 @@ Products.Route1 - (defined on resource Products)
         [Fact]
         public void should_map_collection_routes_before_item_routes()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
@@ -153,7 +153,7 @@ Products.Route1 - (defined on resource Products)
         [Fact]
         public void should_include_area_when_mapping_area_routes()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action2()), "GET", "action2");

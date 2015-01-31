@@ -12,7 +12,7 @@ namespace RezRouting.Tests.Configuration
     {
         private Resource BuildResources(Action<ISingularConfigurator> configure)
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             configure(root);
             var resource = root.Build(new ResourceOptions());
             return resource;

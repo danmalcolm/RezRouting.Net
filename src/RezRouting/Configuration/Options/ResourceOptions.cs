@@ -55,7 +55,7 @@ namespace RezRouting.Configuration.Options
 
         /// <summary>
         /// Specifies a convention scheme containing conventions used to generate routes 
-        /// for the resources configured by this ResourceGraphBuilder
+        /// for the resources configured by this RootResourceBuilder
         /// </summary>
         /// <param name="scheme"></param>
         public void AddRouteConventions(IRouteConventionScheme scheme)

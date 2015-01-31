@@ -14,7 +14,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_url_formatting_using_options()
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             root.Collection("FineProducts", products =>
                 products.Route("Route2", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
             
@@ -31,7 +31,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_customise_id_names_using_options()
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             root.Collection("Products", products => products.Items(product => product.HandledBy<TestController>()));
             var options = new ResourceOptions
             {

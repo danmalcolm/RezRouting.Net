@@ -17,7 +17,7 @@ namespace RezRouting.Tests.AspNetMvc
     {
         public Resource CreateCollectionResource()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
             var root = builder.Build(new ResourceOptions());
             var collection = root.Children.Single(x => x.Name == "Products");

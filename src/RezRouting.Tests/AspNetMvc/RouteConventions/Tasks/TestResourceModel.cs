@@ -10,7 +10,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
     {
         public static ISingularConfigurator Configure()
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             var options = new ResourceOptions();
             options.AddRouteConventions(new CrudRouteConventions());
             root.Collection("Products", products =>

@@ -129,9 +129,9 @@ namespace RezRouting.Tests.Configuration
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
-        private Resource BuildResourcesWithConventions(Action<ResourceGraphBuilder> configure, params IRouteConvention[] conventions)
+        private Resource BuildResourcesWithConventions(Action<IRootResourceBuilder> configure, params IRouteConvention[] conventions)
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = RootResourceBuilder.Create();
             configure(builder);
             var options = new ResourceOptions();
             var scheme = new TestRouteConventionScheme(conventions);

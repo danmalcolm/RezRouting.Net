@@ -75,9 +75,9 @@ namespace RezRouting.Tests.Configuration
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
-        private Resource BuildResource(Action<ResourceGraphBuilder> configure)
+        private Resource BuildResource(Action<IRootResourceBuilder> configure)
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = RootResourceBuilder.Create();
             configure(builder);
             var root = builder.Build(new ResourceOptions());
             return root.Children.Single();

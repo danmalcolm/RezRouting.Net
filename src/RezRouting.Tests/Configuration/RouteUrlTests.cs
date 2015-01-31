@@ -14,7 +14,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_should_include_parent_resource_url()
         {
-            var rootBuilder = new ResourceGraphBuilder("");
+            var rootBuilder = RootResourceBuilder.Create("");
             rootBuilder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
@@ -60,7 +60,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void route_urls_for_routes_with_empty_path_should_match_parent_resource_url()
         {
-            var rootBuilder = new ResourceGraphBuilder("");
+            var rootBuilder = RootResourceBuilder.Create("");
             rootBuilder.Singular("Profile", profile =>
             {
                 profile.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "");

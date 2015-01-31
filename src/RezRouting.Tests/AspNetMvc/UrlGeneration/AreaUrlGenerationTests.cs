@@ -34,12 +34,12 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             var context = TestRequestContextBuilder.Create();
             var routes = new RouteCollection();
-            var area1Root = new ResourceGraphBuilder("Area1");
+            var area1Root = RootResourceBuilder.Create("Area1");
             area1Root.UrlPath("area1");
             ConfigureTestResources(area1Root);
             area1Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
 
-            var area2Root = new ResourceGraphBuilder("Area2");
+            var area2Root = RootResourceBuilder.Create("Area2");
             area2Root.UrlPath("area2");
             ConfigureTestResources(area2Root);
             area2Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area2");

@@ -17,7 +17,7 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void when_specifying_controller_handling_resource_should_add_to_convention_data()
         {
-            var builder = new ResourceGraphBuilder();
+            var builder = RootResourceBuilder.Create();
             builder.HandledBy<Controller1>();
             builder.HandledBy<Controller2>();
             builder.ConventionData(data =>

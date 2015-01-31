@@ -11,7 +11,7 @@ using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.Tests.AspNetMvc
 {
-    public class ResourceGraphBuilderExtensionsTests
+    public class RouteMappingExtensionsTests
     {
         [Fact]
         public void when_mapping_MVC_routes_should_map_routes_based_on_resources_model()
@@ -53,9 +53,9 @@ namespace RezRouting.Tests.AspNetMvc
             model.Children.Should().ContainSingle(x => x.Name == "Products");
         }
         
-        private ResourceGraphBuilder CreateBuilder()
+        private IRootResourceBuilder CreateBuilder()
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             root.Collection("Products", products =>
             {
                 products.Route("Route1", new MvcAction(typeof(TestController), "Action1"), "GET", "action1");

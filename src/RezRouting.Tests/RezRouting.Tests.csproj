@@ -106,14 +106,13 @@
     <Compile Include="Configuration\CollectionConfigurationTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathSettingsTests.cs" />
-    <Compile Include="Configuration\ResourceConventionDataConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceCustomPropertyConfigurationTests.cs" />
     <Compile Include="Configuration\RouteConventionTests.cs" />
     <Compile Include="Configuration\ResourceRouteConfigurationTests.cs" />
-    <Compile Include="Configuration\ResourceHierarchyTests.cs" />
+    <Compile Include="Configuration\ResourceHierarchyConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceUrlTests.cs" />
     <Compile Include="Configuration\OptionConfigurationTests.cs" />
-    <Compile Include="Configuration\ResourceGraphBuilderTests.cs" />
+    <Compile Include="Configuration\RootResourceBuilderTests.cs" />
     <Compile Include="Configuration\RouteTests.cs" />
     <Compile Include="Configuration\RouteUrlTests.cs" />
     <Compile Include="Configuration\SingularConfigurationTests.cs" />
@@ -124,7 +123,7 @@
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
-    <Compile Include="AspNetMvc\ResourceGraphBuilderExtensionsTests.cs" />
+    <Compile Include="AspNetMvc\RouteMappingExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcRouteTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\RouteSetupTests.cs" />

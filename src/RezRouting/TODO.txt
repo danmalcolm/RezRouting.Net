@@ -1,16 +1,11 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
-[ ] Add simpler convention data dictionary rather than IHandlerComponent
-
-[ ] Factory method for ResourceGraphBuilder RootResourceBuilder.Create - just return root resource builder
-and use interface, so that we don't have to repeat comments
-
 [ ] Publish to nuget
 
 [ ] Wiki
 
-[ ] Improve tasks demo - pick better example for task-based approach
+[ ] Improve tasks demo - pick better example for task-based approach, e.g. meeting requests
 
 [ ] Web API - demonstrate multi-framework support
 
@@ -46,6 +41,10 @@ Next
 
 Done
 ----
+[x] Factory method for ResourceGraphBuilder RootResourceBuilder.Create - just return root resource builder
+and use interface, so that we don't have to repeat comments
+
+[x] Add simpler convention data dictionary rather than IHandlerComponent
 
 [x] clear index cache after mapping mvc resources
 

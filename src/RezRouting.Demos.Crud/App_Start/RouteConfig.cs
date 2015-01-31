@@ -21,7 +21,7 @@ namespace RezRouting.Demos.Crud
 
             routes.MapRoute("Home", "", new {Controller = "Home", Action = "Index"});
 
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create();
             root.Singular("Session", session => session.HandledBy<SessionController>());
             root.Collection("Products", products =>
             {

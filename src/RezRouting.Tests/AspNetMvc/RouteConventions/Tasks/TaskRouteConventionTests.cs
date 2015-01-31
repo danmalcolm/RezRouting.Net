@@ -20,7 +20,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 
         public TaskRouteConventionTests()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
             var root = builder.Build(new ResourceOptions());

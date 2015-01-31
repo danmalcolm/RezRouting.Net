@@ -9,9 +9,9 @@ namespace RezRouting.Tests.AspNetMvc.TestModels.Crud
 {
     public static class TestCrudResourceModel
     {
-        public static ResourceGraphBuilder Configure()
+        public static IRootResourceBuilder Configure()
         {
-            var builder = new ResourceGraphBuilder("");
+            var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();

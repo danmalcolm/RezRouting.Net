@@ -158,9 +158,9 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
             });
         }
 
-        private static ResourceGraphBuilder ConfigureResources()
+        private static IRootResourceBuilder ConfigureResources()
         {
-            var root = new ResourceGraphBuilder("");
+            var root = RootResourceBuilder.Create("");
             DemoData.Resources.Each(resourceInfo =>
             {
                 string resourceName = resourceInfo.Item1;

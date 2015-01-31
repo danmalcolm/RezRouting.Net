@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Resources;
 using Xunit;
-using Xunit.Extensions;
 
 namespace RezRouting.Tests.Configuration
 {
     public class RouteTests
     {
-        private IResourceRouteHandler testHandler = new MvcAction(typeof(TestController), "Action1");
+        private IResourceRouteHandler testHandler = MvcAction.For((TestController x) => x.Action1());
+
         [Fact]
         public void should_build_route_with_core_properties_configured()
         {
@@ -47,7 +46,10 @@ namespace RezRouting.Tests.Configuration
         
         private class TestController : Controller
         {
-            
+            public ActionResult Action1()
+            {
+                return null;
+            }
         }
     }
 }
