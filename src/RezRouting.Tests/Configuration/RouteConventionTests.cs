@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
+using Moq;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
@@ -16,114 +17,161 @@ namespace RezRouting.Tests.Configuration
     public class RouteConventionTests
     {
         [Fact]
-        public void should_apply_each_convention_for_each_resource_and_configured_handlers()
+        public void should_apply_each_convention_to_each_resource_in_hierarchy()
         {
-            var builder = new ResourceGraphBuilder("");
-            builder.Collection("Products", products =>
-            {
-                products.HandledBy<TestController1>();
-                products.HandledBy<TestController2>();
-                products.Items(product =>
-                {
-                    product.HandledBy<TestController1>();
-                    product.HandledBy<TestController2>();
-                });
-            });
-            var actualAttempts = new List<Tuple<TestRouteConvention, Resource, string>>();
-            var convention1 = new TestRouteConvention(actualAttempts);
-            var convention2 = new TestRouteConvention(actualAttempts);
-            var conventions = new TestRouteConventionScheme(convention1, convention2);
-            var options = new ResourceOptions();
-            options.AddRouteConventions(conventions);
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
 
-            var root = builder.Build(options);
+            var root = BuildResourcesWithConventions(builder =>
+            {
+                builder.Collection("Products", products =>
+                {
+                    products.Items(product =>
+                    {
+                        product.Collection("Reviews", reviews => {});
+                    });
+                });
+            }, convention1, convention2);
+
+            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(root.Expand());
+            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(root.Expand());
+        }
+
+        [Fact]
+        public void should_apply_each_convention_using_each_resources_convention_data()
+        {
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
+
+            var root = BuildResourcesWithConventions(builder =>
+            {
+                builder.Collection("Products", products =>
+                {
+                    products.ConventionData(x => x["key1"] = "value1");
+                    products.Items(product =>
+                    {
+                        product.ConventionData(x => x["key2"] = "value2");
+                    });
+                });
+            }, convention1, convention2);
 
             var collection = root.Children.Single();
             var collectionItem = collection.Children.Single();
-            var expectedAttempts = new List<Tuple<TestRouteConvention, Resource, string>>()
+            var expectedCalls = new List<ConventionCreateCall>()
             {
-                Tuple.Create(convention1, collectionItem, "TestController1,TestController2"),
-                Tuple.Create(convention2, collectionItem, "TestController1,TestController2"),
-                Tuple.Create(convention1, collection, "TestController1,TestController2"),
-                Tuple.Create(convention2, collection, "TestController1,TestController2")
+                new ConventionCreateCall(root, new Dictionary<string, object>(), null),
+                new ConventionCreateCall(collection, new Dictionary<string, object>{{"key1", "value1"}}, null),
+                new ConventionCreateCall(collectionItem, new Dictionary<string, object>{{"key2", "value2"}}, null)
             };
-            actualAttempts
-                .Where(x => x.Item2 == collection || x.Item2 == collectionItem)
-                .ShouldAllBeEquivalentTo(expectedAttempts);
+            convention1.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
+            convention2.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
         }
-
-        public class TestRouteConvention : IRouteConvention
-        {
-            private readonly List<Tuple<TestRouteConvention, Resource, string>> actualAttempts;
-
-            public TestRouteConvention(List<Tuple<TestRouteConvention, Resource, string>> actualAttempts)
-            {
-                this.actualAttempts = actualAttempts;
-            }
-
-            public virtual IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
-            {
-                var controllerTypes = handlers.Cast<MvcController>().Select(x => x.ControllerType);
-                string typeNames = string.Join(",", controllerTypes.Select(x => x.Name));
-                actualAttempts.Add(Tuple.Create(this, resource, typeNames));
-                yield break;
-            }
-        }
-
 
         [Fact]
-        public void should_create_routes_specified_by_each_convention()
+        public void should_combine_modifications_to_convention_data_when_configuring_resource()
         {
-            var builder = new ResourceGraphBuilder("");
-            builder.Collection("Products", products =>
+            var convention = new TestRouteConvention("ConventionRoute1");
+            var root = BuildResourcesWithConventions(builder =>
             {
-                products.HandledBy<TestController1>();
-                products.Items(product => product.HandledBy<TestController2>());
-            });
+                builder.ConventionData(data => data["key1"] = "value1");
+                builder.ConventionData(data => data["key2"] = "value2");
+            }, convention);
 
-            var convention1 = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1",
-                (r,t) => r.Name == "Products");
-            var convention2 = new Infrastructure.TestRouteConvention("Route2", "Action2", "GET", "action2",
-                (r,t) => r.Name == "Product");
+            var expectedData = new Dictionary<string, object>
+            {
+                { "key1", "value1" }, 
+                { "key2", "value2" }
+            };
 
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new TestRouteConventionScheme(convention1, convention2));
-            var root = builder.Build(options);
+            convention.Calls.Single().Data.Should().Equal(expectedData);
+        }
 
-            var resource1 = root.Children.Single();
-            var resource2 = resource1.Children.Single();
-            resource1.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route1"});
-            resource2.Routes.Select(x => x.Name).ShouldBeEquivalentTo(new [] { "Route2" });
+        [Fact]
+        public void should_supply_empty_data_to_convention_when_none_configured()
+        {
+            var convention = new TestRouteConvention("ConventionRoute1");
+            var root = BuildResourcesWithConventions(builder => { },
+                convention);
+            convention.Calls.Single().Data.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void should_add_routes_created_by_each_convention()
+        {
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
+            var root = BuildResourcesWithConventions(builder =>
+            {
+                builder.Collection("Products", products => { });
+            }, convention1, convention2);
+
+            root.Routes.Select(x => x.Name).Should().Equal("ConventionRoute1", "ConventionRoute2");
+            var collection = root.Children.Single();
+            collection.Routes.Select(x => x.Name).Should().Equal("ConventionRoute1", "ConventionRoute2");
         }
 
         [Fact]
         public void should_include_routes_specified_on_resource_before_routes_created_by_conventions()
         {
-            var builder = new ResourceGraphBuilder("");
-            builder.Collection("Products", products =>
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
+            var root = BuildResourcesWithConventions(builder =>
             {
-                products.HandledBy<TestController1>();
-                products.Route("Route2", new MvcAction(typeof(TestController2), "Action2"), "GET", "action2");
-            });
-
-            var convention = new Infrastructure.TestRouteConvention("Route1", "Action1", "GET", "action1");
-            var conventions = new TestRouteConventionScheme(convention);
-            var options = new ResourceOptions();
-            options.AddRouteConventions(conventions);
-            var root = builder.Build(options);
-
-            var resource1 = root.Children.Single();
-            resource1.Routes.Select(x => x.Name).Should().Equal("Route2", "Route1");
-        }
-        
-        public class TestController1 : Controller
-        {
+                builder.Route("Route1", Mock.Of<IResourceRouteHandler>(), "GET", "");
+            }, convention1, convention2);
             
+            root.Routes.Select(x => x.Name).Should().Equal("Route1", "ConventionRoute1", "ConventionRoute2");
         }
 
-        public class TestController2 : Controller
-        {
 
+        /// <summary>
+        /// Configures resources using supplied action and returns the root resource
+        /// </summary>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        private Resource BuildResourcesWithConventions(Action<ResourceGraphBuilder> configure, params IRouteConvention[] conventions)
+        {
+            var builder = new ResourceGraphBuilder();
+            configure(builder);
+            var options = new ResourceOptions();
+            var scheme = new TestRouteConventionScheme(conventions);
+            options.AddRouteConventions(scheme);
+            var root = builder.Build(options);
+            return root;
+        }
+
+        private class TestRouteConvention : IRouteConvention
+        {
+            private readonly string name;
+
+            public TestRouteConvention(string name)
+            {
+                this.name = name;
+            }
+
+            public List<ConventionCreateCall> Calls = new List<ConventionCreateCall>();
+
+            public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
+            {
+                Calls.Add(new ConventionCreateCall(resource, data, urlPathSettings));
+                yield return new Route(name, Mock.Of<IResourceRouteHandler>(), "GET", name.ToLower());
+            }
+
+            public IDictionary<string, object> Data { get; set; }
+        }
+
+        private class ConventionCreateCall
+        {
+            public ConventionCreateCall(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
+            {
+                Resource = resource;
+                Data = data;
+                UrlPathSettings = urlPathSettings;
+            }
+
+            public readonly Resource Resource;
+            public readonly Dictionary<string, object> Data;
+            public readonly UrlPathSettings UrlPathSettings;
         }
     }
 }

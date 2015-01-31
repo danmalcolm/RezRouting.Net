@@ -58,10 +58,11 @@
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="ActionMappingHelper.cs" />
+    <Compile Include="ConventionDataExtensions.cs" />
+    <Compile Include="ConventionDataKeys.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="ResourceConfiguratorExtensions.cs" />
     <Compile Include="MvcAction.cs" />
-    <Compile Include="MvcController.cs" />
     <Compile Include="MvcRouteCreator.cs" />
     <Compile Include="ResourceGraphBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

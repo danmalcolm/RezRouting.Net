@@ -55,9 +55,9 @@
     <Compile Include="Configuration\Builders\IResourceBuilder.cs" />
     <Compile Include="Configuration\Builders\ResourceBuilderBase.cs" />
     <Compile Include="Configuration\Builders\SingularBuilder.cs" />
-    <Compile Include="Configuration\Conventions\IResourceHandler.cs" />
     <Compile Include="Configuration\Conventions\IRouteConvention.cs" />
     <Compile Include="Configuration\Conventions\IRouteConventionScheme.cs" />
+    <Compile Include="Configuration\CustomDataBuilder.cs" />
     <Compile Include="Configuration\ICollectionConfigurator.cs" />
     <Compile Include="Configuration\ICollectionItemConfigurator.cs" />
     <Compile Include="Configuration\IResourceConfigurator.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\DirectoryUrlSegment.cs" />
     <Compile Include="Resources\IdUrlSegment.cs" />
-    <Compile Include="Resources\IRouteHandler.cs" />
+    <Compile Include="Resources\IResourceRouteHandler.cs" />
     <Compile Include="Resources\IUrlSegment.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\ResourceType.cs" />

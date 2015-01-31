@@ -11,7 +11,7 @@ namespace RezRouting.Tests.Configuration
 {
     public class RouteTests
     {
-        private IRouteHandler testHandler = new MvcAction(typeof(TestController), "Action1");
+        private IResourceRouteHandler testHandler = new MvcAction(typeof(TestController), "Action1");
         [Fact]
         public void should_build_route_with_core_properties_configured()
         {

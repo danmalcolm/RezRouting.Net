@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
@@ -26,13 +28,21 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             singular = root.Children.Single(x => x.Name == "Profile");
         }
 
+        private Dictionary<string, object> CreateConventionData(Type controllerType)
+        {
+            var data = new Dictionary<string, object>();
+            data.AddControllerTypes(new[] { controllerType });
+            return data;
+        }
+
         [Fact]
         public void should_trim_resource_name_from_path()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
+            var data = CreateConventionData(typeof (EditProductsController));
 
             var route = convention
-                .Create(collection, new[] { MvcController.Create<EditProductsController>() }, pathSettings)
+                .Create(collection, data, pathSettings)
                 .Single();
             
             route.Path.Should().Be("Edit");
@@ -42,9 +52,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public void should_trim_singular_version_of_collection_resource_name_from_path()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            
+            var data = CreateConventionData(typeof(CreateProductController));
+
             var route = convention
-                .Create(collection, new [] { MvcController.Create<CreateProductController>() }, pathSettings)
+                .Create(collection, data, pathSettings)
                 .Single();
 
             route.Path.Should().Be("Create");
@@ -54,9 +65,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public void should_format_task_path_using_settings()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            
+            var data = CreateConventionData(typeof (CreateProductController));
+
             var route = convention
-                .Create(collection, new[] { MvcController.Create<CreateProductController>() }, new UrlPathSettings(CaseStyle.Lower))
+                .Create(collection, data, new UrlPathSettings(CaseStyle.Lower))
                 .Single();
 
             route.Path.Should().Be("create");
@@ -66,9 +78,10 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
         public void should_not_create_route_for_resource_with_different_level()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
+            var data = CreateConventionData(typeof(EditProductsController));
 
             var routes = convention
-                .Create(singular, new [] { MvcController.Create<EditProductsController>() }, pathSettings);
+                .Create(singular, data, pathSettings);
 
             routes.Should().BeEmpty();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
 using RezRouting.Resources;
 
 namespace RezRouting.Configuration
@@ -11,13 +10,6 @@ namespace RezRouting.Configuration
     public interface IResourceConfigurator
     {
         /// <summary>
-        /// Adds a component that handles one or more of a resource's routes. When route conventions
-        /// are in use, they will inspect a resource's handlers to determine which routes are supported. 
-        /// </summary>
-        /// <param name="handler"></param>
-        void HandledBy(IResourceHandler handler);
-
-        /// <summary>
         /// Adds a route to the current resource
         /// </summary>
         /// <param name="name">The name of the route</param>
@@ -25,7 +17,7 @@ namespace RezRouting.Configuration
         /// <param name="httpMethod">The HTTP method that request will be under for route to applie</param>
         /// <param name="path">The path within the URL used to identify the route - appended to the resource's URL to create the full route URL</param>
         /// <param name="customProperties">Custom properties attached to the route - intended for use by application-specific functionality and extensions</param>
-        void Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null);
+        void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null);
 
         /// <summary>
         /// Sets custom properties stored on the resource being configured - intended for use by application-specific functionality and extensions
@@ -33,6 +25,12 @@ namespace RezRouting.Configuration
         /// <param name="properties"></param>
         void CustomProperties(IDictionary<string, object> properties);
 
+        /// <summary>
+        /// Modifies custom data made available to conventions when creating this resource and its routes
+        /// </summary>
+        /// <param name="configure">An action that modifies the collection containing customer data</param>
+        void ConventionData(Action<Dictionary<string, object>> configure);
+        
         /// <summary>
         /// Adds a child singular resource to resource being configured
         /// </summary>

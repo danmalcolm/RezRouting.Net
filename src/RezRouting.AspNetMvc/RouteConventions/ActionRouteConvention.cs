@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -31,12 +31,12 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Path { get; set; }
 
-        public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
+        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
         {
             if (resource.Type == Type)
             {
-                return from controller in handlers.OfType<MvcController>()
-                       let controllerType = controller.ControllerType
+                var controllerTypes = data.GetControllerTypes();
+                return from controllerType in controllerTypes
                        where ActionMappingHelper.SupportsAction(controllerType, Action)
                        let handler = new MvcAction(controllerType, Action)
                        let path = urlPathSettings.FormatDirectoryName(Path)

@@ -14,12 +14,6 @@ namespace RezRouting.Tests.AspNetMvc
 {
     public class MvcRouteCreationTests
     {
-        private readonly TestRouteConvention convention1 = new TestRouteConvention
-            ("Route1", "Action1", "GET", "action1");
-
-        private readonly TestRouteConvention convention2 = new TestRouteConvention
-            ("Route2", "Action2", "GET", "action2");
-
         [Fact]
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {

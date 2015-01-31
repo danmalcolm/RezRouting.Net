@@ -1,31 +1,18 @@
-﻿First - Final tweaks to API to minimise change
+﻿First - Final tweaks to API to minimise change and publish
 -----
-
-[ ] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation:
-
-- x RGB.Base returns a singular builder
-- x all builders have a build 
-- x options aren't set via root builder, they're just passed to the Build method
-- x conventions are included in the options
-- move item name back up to collection method
-- x collapse options builder into options
-- x collapse urlpathformatter into settings
-
-[ ] Publish to nuget
-
-[ ] Add Resource.Descendants that gets all children
-
-[ ] Wiki
-
-* add to root model builder
-* child resources not allowed empty name or urlpath
-
-[ ] clear index cache after mapping mvc resources
 
 [ ] Add simpler convention data dictionary rather than IHandlerComponent
 
-[ ] Allow exclude from conventions
+[ ] Factory method for ResourceGraphBuilder RootResourceBuilder.Create - just return root resource builder
+and use interface, so that we don't have to repeat comments
 
+[ ] Publish to nuget
+
+[ ] Wiki
+
+[ ] Improve tasks demo - pick better example for task-based approach
+
+[ ] Web API - demonstrate multi-framework support
 
 Next
 ----
@@ -59,6 +46,18 @@ Next
 
 Done
 ----
+
+[x] clear index cache after mapping mvc resources
+
+[x] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation:
+
+- x RGB.Base returns a singular builder
+- x all builders have a build 
+- x options aren't set via root builder, they're just passed to the Build method
+- x conventions are included in the options
+- x move item name back up to collection method
+- x collapse options builder into options
+- x collapse urlpathformatter into settings
 
 [x] Slight refactoring of conventions, e.g. convention passed to ResourcesBuilder, no need for extra build step
 

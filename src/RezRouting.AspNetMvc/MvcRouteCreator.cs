@@ -9,12 +9,12 @@ using Route = RezRouting.Resources.Route;
 namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Adds routes to RouteCollection based on routes within a ResourceGraphModel
+    /// Adds routes to RouteCollection based on routes belonging to a hierarchy of resources
     /// </summary>
     public class MvcRouteCreator
     {
         /// <summary>
-        /// Creates the routes within a ResourceGraphModel within the specified RouteCollection
+        /// Adds the routes within a hierarchy of resources to the specified RouteCollection
         /// </summary>
         /// <param name="model"></param>
         /// <param name="routes"></param>

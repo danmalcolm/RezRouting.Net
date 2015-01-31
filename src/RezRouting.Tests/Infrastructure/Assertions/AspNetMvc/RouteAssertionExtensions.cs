@@ -6,7 +6,7 @@ namespace RezRouting.Tests.Infrastructure.Assertions.AspNetMvc
 {
     public static class RouteAssertionExtensions
     {
-        public static void ShouldBeConfiguredAs(this Route route, string name, IRouteHandler handler, string httpMethod, string path)
+        public static void ShouldBeConfiguredAs(this Route route, string name, IResourceRouteHandler handler, string httpMethod, string path)
         {
             route.Name.Should().Be(name);
             route.Handler.Should().Be(handler);

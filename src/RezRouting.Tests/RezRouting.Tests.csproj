@@ -96,7 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DemoData.tt</DependentUpon>
     </Compile>
-    <Compile Include="AspNetMvc\ResourceBuilderExtensionsTests.cs" />
+    <Compile Include="AspNetMvc\ResourceConfiguratorExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcActionTests.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\Controllers\Products\ProductsController.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\Controllers\Products\Product\ProductController.cs" />
@@ -106,6 +106,7 @@
     <Compile Include="Configuration\CollectionConfigurationTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathSettingsTests.cs" />
+    <Compile Include="Configuration\ResourceConventionDataConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceCustomPropertyConfigurationTests.cs" />
     <Compile Include="Configuration\RouteConventionTests.cs" />
     <Compile Include="Configuration\ResourceRouteConfigurationTests.cs" />
@@ -120,7 +121,6 @@
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\ResourceExtensions.cs" />
     <Compile Include="Infrastructure\TestRouteConventionScheme.cs" />
-    <Compile Include="Infrastructure\TestRouteConvention.cs" />
     <Compile Include="Utility\IntercappedStringHelperTests.cs" />
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />

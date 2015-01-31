@@ -17,10 +17,10 @@ namespace RezRouting.Configuration.Conventions
         /// <summary>
         /// Creates routes that apply to a resource based on the supplied handlers
         /// </summary>
-        /// <param name="resource"></param>
-        /// <param name="handlers"></param>
+        /// <param name="resource">The resource object</param>
+        /// <param name="data">Data added during resource configuration to drive conventions</param>
         /// <param name="urlPathSettings"></param>
         /// <returns></returns>
-        IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings);
+        IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings);
     }
 }

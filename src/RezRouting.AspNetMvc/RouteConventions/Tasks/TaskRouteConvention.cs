@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -43,13 +42,13 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         public string HttpMethod { get; set; }
         
         /// <inheritdoc />
-        public IEnumerable<Route> Create(Resource resource, IEnumerable<IResourceHandler> handlers, UrlPathSettings urlPathSettings)
+        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
         {
             if (resource.Type == Type)
             {
-                foreach (var mvcController in handlers.OfType<MvcController>())
+                var controllerTypes = data.GetControllerTypes();
+                foreach (var controllerType in controllerTypes)
                 {
-                    var controllerType = mvcController.ControllerType;
                     var supported = ActionMappingHelper.SupportsAction(controllerType, Action);
                     if (supported)
                     {

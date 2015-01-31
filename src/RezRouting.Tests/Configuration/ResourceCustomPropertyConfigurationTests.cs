@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;

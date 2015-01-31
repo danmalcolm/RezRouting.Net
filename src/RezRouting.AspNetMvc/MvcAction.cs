@@ -9,7 +9,7 @@ namespace RezRouting.AspNetMvc
     /// <summary>
     /// Defines an ASP.Net MVC controller action responsible for handling an individual route
     /// </summary>
-    public class MvcAction : IRouteHandler
+    public class MvcAction : IResourceRouteHandler
     {
         /// <summary>
         /// Creates an instance of MvcAction based on the specified expression

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
@@ -12,8 +11,8 @@ namespace RezRouting.Configuration.Builders
     /// </summary>
     public abstract class ResourceBuilderBase : IResourceConfigurator, IResourceBuilder
     {
-        private readonly List<IResourceHandler> handlers = new List<IResourceHandler>();
         private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> conventionData = new Dictionary<string, object>();
         private readonly List<Route> routes = new List<Route>();
 
         /// <summary>
@@ -50,24 +49,6 @@ namespace RezRouting.Configuration.Builders
         /// <returns></returns>
         protected abstract IUrlSegment GetUrlSegment(ResourceOptions options);
 
-        /// <inheritdoc />
-        public Resource Build(ResourceOptions options)
-        {
-            if (options == null) throw new ArgumentNullException("options");
-
-            var children = ChildBuilders.Select(x => x.Build(options)).ToList();
-            var urlSegment = GetUrlSegment(options);
-            var resource = new Resource(Name, urlSegment, Type, customProperties, children);
-            var conventionRoutes = from convention in options.RouteConventions
-                from route in convention.Create(resource, handlers, options.UrlPathSettings)
-                select route;
-
-            var allRoutes = routes.Concat(conventionRoutes);
-            resource.InitRoutes(allRoutes);
-
-            return resource;
-        }
-
         /// <summary>
         /// Adds a child resource to the current resource being configured
         /// </summary>
@@ -79,6 +60,14 @@ namespace RezRouting.Configuration.Builders
         {
             configure(childBuilder);
             ChildBuilders.Add(childBuilder);
+        }
+
+        /// <inheritdoc />
+        public void ConventionData(Action<Dictionary<string, object>> configure)
+        {
+            if (configure == null) throw new ArgumentNullException("configure");
+
+            configure(conventionData);
         }
 
         /// <inheritdoc />
@@ -109,14 +98,6 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void HandledBy(IResourceHandler handler)
-        {
-            if (handler == null) throw new ArgumentNullException("handler");
-
-            handlers.Add(handler);
-        }
-
-        /// <inheritdoc />
         public void CustomProperties(IDictionary<string, object> properties)
         {
             if (properties == null) throw new ArgumentNullException("properties");
@@ -128,13 +109,31 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void Route(string name, IRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null)
+        public void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
 
             var route = new Route(name, handler, httpMethod, path, customProperties ?? new Dictionary<string, object>());
             routes.Add(route);
+        }
+
+        /// <inheritdoc />
+        public Resource Build(ResourceOptions options)
+        {
+            if (options == null) throw new ArgumentNullException("options");
+
+            var children = ChildBuilders.Select(x => x.Build(options)).ToList();
+            var urlSegment = GetUrlSegment(options);
+            var resource = new Resource(Name, urlSegment, Type, customProperties, children);
+            var conventionRoutes = from convention in options.RouteConventions
+                                   from route in convention.Create(resource, conventionData, options.UrlPathSettings)
+                                   select route;
+
+            var allRoutes = routes.Concat(conventionRoutes);
+            resource.InitRoutes(allRoutes);
+
+            return resource;
         }
     }
 }

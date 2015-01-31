@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dan Malcolm")]
 [assembly: AssemblyProduct("RezRouting.Net")]
-[assembly: AssemblyCopyright("Copyright ©Dan Malcolm 2014")]
+[assembly: AssemblyCopyright("Copyright ©Dan Malcolm 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
