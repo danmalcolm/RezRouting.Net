@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using FluentAssertions;
 using Moq;
-using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
@@ -133,10 +131,9 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = RootResourceBuilder.Create();
             configure(builder);
-            var options = new ResourceOptions();
             var scheme = new TestRouteConventionScheme(conventions);
-            options.AddRouteConventions(scheme);
-            var root = builder.Build(options);
+            builder.ApplyRouteConventions(scheme);
+            var root = builder.Build();
             return root;
         }
 

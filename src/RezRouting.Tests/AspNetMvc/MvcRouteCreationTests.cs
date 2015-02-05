@@ -5,7 +5,6 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
@@ -43,7 +42,7 @@ namespace RezRouting.Tests.AspNetMvc
             var routes = new RouteCollection();
             Resource model = null;
 
-            builder.MapMvcRoutes(new ResourceOptions(), routes, modelAction: x => model = x);
+            builder.MapMvcRoutes(routes, modelAction: x => model = x);
             
             var expectedRouteNames = model.Children.Expand().Select(resource => resource.FullName + ".Route1");
             routes.Cast<System.Web.Routing.Route>().Select(x => x.DataTokens["Name"])
@@ -59,7 +58,7 @@ namespace RezRouting.Tests.AspNetMvc
                     "GET", "action1"));
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes);
+            builder.MapMvcRoutes(routes);
 
             var route = routes.Cast<System.Web.Routing.Route>().Single();
             routes["Products.Route1"].Should().BeSameAs(route);
@@ -75,7 +74,7 @@ namespace RezRouting.Tests.AspNetMvc
                 products.Route("Route1", MvcAction.For((TestController c) => c.Action1()), "GET", "action1");
             });
 
-            Action action = () => builder.MapMvcRoutes(new ResourceOptions(), new RouteCollection());
+            Action action = () => builder.MapMvcRoutes(new RouteCollection());
             const string expectedMessage =
                 @"Unable to add routes to RouteCollection because the following route names are not unique:
 Products.Route1 - (defined on resources Products and Products)
@@ -92,7 +91,7 @@ Products.Route1 - (defined on resources Products and Products)
             var routes = new RouteCollection();
             routes.MapRoute("Products.Route1", "url");
             
-            Action action = () => builder.MapMvcRoutes(new ResourceOptions(), routes);
+            Action action = () => builder.MapMvcRoutes(routes);
 
             const string expectedMessage = @"Unable to create routes because the following routes have names that already exist in the RouteCollection:
 Products.Route1 - (defined on resource Products)
@@ -109,7 +108,7 @@ Products.Route1 - (defined on resource Products)
             var routes = new RouteCollection();
             Resource model = null;
 
-            builder.MapMvcRoutes(new ResourceOptions(), routes, modelAction: x => model = x);
+            builder.MapMvcRoutes(routes, modelAction: x => model = x);
             
             var route = routes.Cast<System.Web.Routing.Route>().Single();
             route.DataTokens["RouteModel"].Should().Be(model.Children.First().Routes.First());
@@ -140,7 +139,7 @@ Products.Route1 - (defined on resource Products)
                 });
             });
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes);
+            builder.MapMvcRoutes(routes);
             var expectedRouteNames = new[]
             {
                 "Products.Route1", "Products.Route2", "Products.Product.Route1", "Products.Product.Route2",
@@ -161,7 +160,7 @@ Products.Route1 - (defined on resource Products)
             });
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
+            builder.MapMvcRoutes(routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["area"] as string)

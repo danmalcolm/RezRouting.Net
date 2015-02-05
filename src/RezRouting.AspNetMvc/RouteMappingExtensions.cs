@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Routing;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc
@@ -23,20 +22,18 @@ namespace RezRouting.AspNetMvc
         /// </para>
         /// </summary>
         /// <param name="builder"></param>
-        /// <param name="options"></param>
         /// <param name="routes"></param>
         /// <param name="area">The name of the area within which the routes should be created</param>
         /// <param name="modelAction">Specifies an action to be executed with the ResourceGraphModel
         ///     instance that is built by the RootResourceBuilder. The action is executed after the MVC
         ///     routes have been created. For use by application-specific functionality that 
         ///     makes use of the ResourceGraphModel</param>
-        public static void MapMvcRoutes(this IRootResourceBuilder builder, ResourceOptions options, RouteCollection routes, string area = null, Action<Resource> modelAction = null)
+        public static void MapMvcRoutes(this IRootResourceBuilder builder, RouteCollection routes, string area = null, Action<Resource> modelAction = null)
         {
             if (builder == null) throw new ArgumentNullException("builder");
-            if (options == null) throw new ArgumentNullException("options");
             if (routes == null) throw new ArgumentNullException("routes");
 
-            var rootResource = builder.Build(options);
+            var rootResource = builder.Build();
             new MvcRouteCreator().CreateRoutes(rootResource, routes, area);
             if (modelAction != null)
                 modelAction(rootResource);

@@ -2,7 +2,6 @@
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 
 namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
 {
@@ -10,17 +9,16 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
     {
         public static ISingularConfigurator Configure()
         {
-            var root = RootResourceBuilder.Create("");
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
-            root.Collection("Products", products =>
+            var builder = RootResourceBuilder.Create("");
+            builder.ApplyRouteConventions(new CrudRouteConventions());
+            builder.Collection("Products", products =>
             {
                 products.HandledBy<ProductsController>();
                 products.Items(product => product.HandledBy<ProductController>());
             });
-            root.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+            builder.Singular("Profile", profile => profile.HandledBy<ProfileController>());
 
-            return root;
+            return builder;
         }
     }
 

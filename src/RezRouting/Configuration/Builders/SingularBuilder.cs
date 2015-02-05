@@ -33,7 +33,7 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        protected override IUrlSegment GetUrlSegment(ResourceOptions options)
+        protected override IUrlSegment GetUrlSegment(ConfigurationOptions options)
         {
             string path = urlPath ?? options.UrlPathSettings.FormatDirectoryName(Name);
             return new DirectoryUrlSegment(path);

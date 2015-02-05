@@ -4,7 +4,8 @@ using RezRouting.Resources;
 namespace RezRouting.Configuration.Builders
 {
     /// <summary>
-    /// Creates resource object - normally paired with IResourceConfigurator
+    /// Creates resource object - used internally (paired with IResourceConfigurator
+    /// exposed to public API)
     /// </summary>
     public interface IResourceBuilder 
     {
@@ -13,6 +14,6 @@ namespace RezRouting.Configuration.Builders
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        Resource Build(ResourceOptions options);
+        Resource Build(ConfigurationOptions options, ConfigurationContext context);
     }
 }

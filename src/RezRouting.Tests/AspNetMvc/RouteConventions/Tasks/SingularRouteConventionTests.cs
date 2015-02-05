@@ -2,7 +2,6 @@ using System.Linq;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.RouteConventions.Tasks.TestControllers.Profile;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
@@ -23,9 +22,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
                 profile.HandledBy<DeleteProfileController>();
                 profile.HandledBy<EditProfileController>();
             });
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new TaskRouteConventions());
-            var root = builder.Build(options);
+            builder.ApplyRouteConventions(new TaskRouteConventions());
+            var root = builder.Build();
             resource = root.Children.Single();
         }
 

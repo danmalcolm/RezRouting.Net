@@ -2,7 +2,6 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -14,7 +13,7 @@ namespace RezRouting.Tests.Configuration
         {
             var root = RootResourceBuilder.Create("");
             configure(root);
-            var resource = root.Build(new ResourceOptions());
+            var resource = root.Build();
             return resource;
         }
 

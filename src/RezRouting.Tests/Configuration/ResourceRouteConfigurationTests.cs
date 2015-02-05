@@ -5,8 +5,6 @@ using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Builders;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -79,7 +77,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = RootResourceBuilder.Create();
             configure(builder);
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             return root.Children.Single();
         }
 

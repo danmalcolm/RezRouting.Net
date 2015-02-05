@@ -3,7 +3,6 @@ using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Demos.Tasks.Controllers.Products;
 using RezRouting.Demos.Tasks.Controllers.Products.Product;
 using RezRouting.Demos.Tasks.Controllers.Session;
@@ -31,16 +30,14 @@ namespace RezRouting.Demos.Tasks
                     product.HandledBy<EditProductController>();
                 });
             });
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new TaskRouteConventions());
-            root.MapMvcRoutes(options, routes);
+            root.ApplyRouteConventions(new TaskRouteConventions());
+            root.MapMvcRoutes(routes);
 
             // Use CRUD for session for now
             root = RootResourceBuilder.Create("");
-            options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
+            root.ApplyRouteConventions(new CrudRouteConventions());
             root.Singular("Session", session => session.HandledBy<SessionController>());
-            root.MapMvcRoutes(options, routes);
+            root.MapMvcRoutes(routes);
         }
     }
 }

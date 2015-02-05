@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Resources;
 

@@ -3,21 +3,21 @@
 namespace RezRouting.Configuration.Options
 {
     /// <summary>
-    /// Built-in strategy used to generate id component within route URLs
+    /// Built-in strategy used to generate id component within route URL templates
     /// </summary>
-    public class DefaultIdNameConvention : IIdNameConvention
+    public class DefaultIdNameFormatter : IIdNameFormatter
     {
         private readonly bool fullNameForCurrent;
         private readonly string idName;
         private readonly string idNamePascal;
 
         /// <summary>
-        /// Creates a new DefaultIdNameConvention
+        /// Creates a new DefaultIdNameFormatter
         /// </summary>
         /// <param name="idName">Sets the name of the identifier parameter, e.g. "id"</param>
         /// <param name="fullNameForCurrent">Determines whether full name is used within routes at the current 
         /// resource type, e.g. products/{productId}</param>
-        public DefaultIdNameConvention(string idName = null, bool fullNameForCurrent = false)
+        public DefaultIdNameFormatter(string idName = null, bool fullNameForCurrent = false)
         {
             this.fullNameForCurrent = fullNameForCurrent;
             this.idName = idName ?? "id";

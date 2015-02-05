@@ -11,7 +11,7 @@ namespace RezRouting.Tests.Configuration.Options
         [Fact]
         public void ShouldUseIdWithoutResourceName()
         {
-            var convention = new DefaultIdNameConvention();
+            var convention = new DefaultIdNameFormatter();
             string name = convention.GetIdName(resourceName);
             name.Should().Be("id");
         }
@@ -19,7 +19,7 @@ namespace RezRouting.Tests.Configuration.Options
         [Fact]
         public void ShouldUseIncludeResourceNameIfSpecified()
         {
-            var convention = new DefaultIdNameConvention(fullNameForCurrent: true);
+            var convention = new DefaultIdNameFormatter(fullNameForCurrent: true);
             string name = convention.GetIdName(resourceName);
             name.Should().Be("thingId");
         }
@@ -27,7 +27,7 @@ namespace RezRouting.Tests.Configuration.Options
         [Fact]
         public void ShouldUseCustomNameIfSpecified()
         {
-            var convention = new DefaultIdNameConvention(idName: "code");
+            var convention = new DefaultIdNameFormatter(idName: "code");
             string name = convention.GetIdName(resourceName);
             name.Should().Be("code");
         }
@@ -35,7 +35,7 @@ namespace RezRouting.Tests.Configuration.Options
         [Fact]
         public void ShouldUseCustomNameForIdAsAncestorIfSpecified()
         {
-            var convention = new DefaultIdNameConvention(idName: "code");
+            var convention = new DefaultIdNameFormatter(idName: "code");
             string name = convention.GetIdNameAsAncestor(resourceName);
             name.Should().Be("thingCode");
         }
@@ -43,7 +43,7 @@ namespace RezRouting.Tests.Configuration.Options
         [Fact]
         public void ShouldUseFullCamelizedNameForIdAsAncestor()
         {
-            var convention = new DefaultIdNameConvention();
+            var convention = new DefaultIdNameFormatter();
             string name = convention.GetIdNameAsAncestor(resourceName);
             name.Should().Be("thingId");
         }

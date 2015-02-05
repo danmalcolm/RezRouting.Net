@@ -2,8 +2,6 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Builders;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -11,15 +9,13 @@ namespace RezRouting.Tests.Configuration
 {
     public class SingularConfigurationTests
     {
-        private readonly ResourceOptions options = new ResourceOptions();
-
         [Fact]
         public void should_build_singular_resource()
         {
             var builder = RootResourceBuilder.Create();
             builder.Singular("Profile", x => { });
 
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             root.Children.Should().HaveCount(1);
             var singular = root.Children.Single();
             singular.Type.Should().Be(ResourceType.Singular);
@@ -75,7 +71,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = RootResourceBuilder.Create();
             configure(builder);
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             return root.Children.Single();
         }
     }

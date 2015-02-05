@@ -7,7 +7,8 @@ namespace RezRouting.Tests.Infrastructure
     public static class ResourceExtensions
     {
         /// <summary>
-        /// Flattens resource hierarchy, returning all resources in the specified sequence and their descendants
+        /// Gets a "flattened" resource hierarchy, returning all resources in the 
+        /// specified sequence and their descendants
         /// </summary>
         /// <param name="resources"></param>
         /// <returns></returns>
@@ -17,7 +18,8 @@ namespace RezRouting.Tests.Infrastructure
         }
 
         /// <summary>
-        /// Flattens resource hierarchy, returning the specified resource and its descendants
+        /// Gets a "flattens" resource hierarchy, returning the specified resource 
+        /// and its descendants
         /// </summary>
         /// <param name="resource"></param>
         /// <returns></returns>

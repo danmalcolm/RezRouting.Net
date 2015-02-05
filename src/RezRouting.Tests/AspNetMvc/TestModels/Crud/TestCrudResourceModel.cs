@@ -1,5 +1,4 @@
-﻿using System;
-using RezRouting.AspNetMvc;
+﻿using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -19,7 +18,7 @@ namespace RezRouting.Tests.AspNetMvc
         {
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             var collection = root.Children.Single(x => x.Name == "Products");
             return collection;
         }

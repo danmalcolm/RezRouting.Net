@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -65,7 +64,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = RootResourceBuilder.Create();
             configure(builder);
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             return root.Children.Single();
         }
     }

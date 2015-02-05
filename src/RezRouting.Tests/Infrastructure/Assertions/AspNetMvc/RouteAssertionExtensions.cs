@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using RezRouting.Resources;
 
 namespace RezRouting.Tests.Infrastructure.Assertions.AspNetMvc

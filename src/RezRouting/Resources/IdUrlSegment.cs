@@ -1,6 +1,4 @@
-﻿using RezRouting.Configuration;
-
-namespace RezRouting.Resources
+﻿namespace RezRouting.Resources
 {
     /// <summary>
     /// An element within a resource URL template that contains the id of a resource

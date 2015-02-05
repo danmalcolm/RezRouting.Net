@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -31,7 +30,7 @@ namespace RezRouting.Tests.Configuration
             {
                 profile.Singular("User", user => {});
             });
-            root = builder.Build(new ResourceOptions());
+            root = builder.Build();
             collection = root.Children.Single(x => x.Name == "Products");
             item = collection.Children.Single(x => x.Name == "Product");
             nestedCollection = item.Children.Single(x => x.Name == "Reviews");

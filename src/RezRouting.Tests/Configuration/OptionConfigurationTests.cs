@@ -17,12 +17,10 @@ namespace RezRouting.Tests.Configuration
             var root = RootResourceBuilder.Create("");
             root.Collection("FineProducts", products =>
                 products.Route("Route2", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
-            
-            var options = new ResourceOptions
-            {
-                UrlPathSettings = new UrlPathSettings(caseStyle: CaseStyle.Upper, wordSeparator: "_")
-            };
-            var rootResource = root.Build(options);
+
+            var settings = new UrlPathSettings(caseStyle: CaseStyle.Upper, wordSeparator: "_");
+            root.Options(options => options.UrlPaths(settings));
+            var rootResource = root.Build();
 
             var routeUrl = rootResource.Children.Single().Routes.Single().Url;
             routeUrl.Should().Be("FINE_PRODUCTS/action1");
@@ -33,11 +31,10 @@ namespace RezRouting.Tests.Configuration
         {
             var root = RootResourceBuilder.Create("");
             root.Collection("Products", products => products.Items(product => product.HandledBy<TestController>()));
-            var options = new ResourceOptions
-            {
-                IdNameConvention = new DefaultIdNameConvention("code", true)
-            };
-            var rootResource = root.Build(options);
+
+            var formatter = new DefaultIdNameFormatter("code", true);
+            root.Options(options => options.IdFormat(formatter));
+            var rootResource = root.Build();
 
             var resourceUrl = rootResource.Children.Single().Children.Single(x => x.Type == ResourceType.CollectionItem).Url;
             resourceUrl.Should().Be("products/{productCode}");

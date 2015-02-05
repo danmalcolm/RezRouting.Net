@@ -4,7 +4,6 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 using Route = RezRouting.Resources.Route;
@@ -19,7 +18,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes);
+            builder.MapMvcRoutes(routes);
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens[RouteDataTokenKeys.RouteModel] as Route)
@@ -33,7 +32,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = CreateBuilder();
 
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
+            builder.MapMvcRoutes(routes, area: "Area1");
 
             routes.Cast<System.Web.Routing.Route>()
                 .Select(x => x.DataTokens["area"] as string)
@@ -46,7 +45,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = CreateBuilder();
 
             Resource model = null;
-            builder.MapMvcRoutes(new ResourceOptions(), new RouteCollection(), modelAction: x => model = x);
+            builder.MapMvcRoutes(new RouteCollection(), modelAction: x => model = x);
 
             model.Should().NotBeNull();
             model.Children.Should().HaveCount(1);

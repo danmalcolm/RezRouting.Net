@@ -47,7 +47,7 @@ namespace RezRouting.Configuration.Builders
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        protected abstract IUrlSegment GetUrlSegment(ResourceOptions options);
+        protected abstract IUrlSegment GetUrlSegment(ConfigurationOptions options);
 
         /// <summary>
         /// Adds a child resource to the current resource being configured
@@ -119,14 +119,14 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public Resource Build(ResourceOptions options)
+        public Resource Build(ConfigurationOptions options, ConfigurationContext context)
         {
             if (options == null) throw new ArgumentNullException("options");
 
-            var children = ChildBuilders.Select(x => x.Build(options)).ToList();
+            var children = ChildBuilders.Select(x => x.Build(options, context)).ToList();
             var urlSegment = GetUrlSegment(options);
             var resource = new Resource(Name, urlSegment, Type, customProperties, children);
-            var conventionRoutes = from convention in options.RouteConventions
+            var conventionRoutes = from convention in context.RouteConventions
                                    from route in convention.Create(resource, conventionData, options.UrlPathSettings)
                                    select route;
 

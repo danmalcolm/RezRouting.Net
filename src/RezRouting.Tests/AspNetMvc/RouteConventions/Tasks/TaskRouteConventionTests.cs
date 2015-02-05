@@ -23,7 +23,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             collection = root.Children.Single(x => x.Name == "Products");
             singular = root.Children.Single(x => x.Name == "Profile");
         }

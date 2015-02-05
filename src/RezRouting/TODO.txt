@@ -1,16 +1,23 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
+[ ] Final changes to entry-point
+- options
+- different build method
+- include context for caching stuff
+
 [ ] Publish to nuget
 
 [ ] Wiki
 
-[ ] Improve tasks demo - pick better example for task-based approach, e.g. meeting requests
+[ ] Improve tasks demo - pick better example for task-based approach, meeting requests?
 
 [ ] Web API - demonstrate multi-framework support
 
 Next
 ----
+
+[ ] Demo apps on Azure?
 
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
@@ -22,7 +29,7 @@ Next
 
 [ ] Refactor: Test structure
 
-[ ] Refactor: Resolve route creation dependency on Resource - does it need access to resource or just a context object?
+[ ] Route generation with multiple 
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 

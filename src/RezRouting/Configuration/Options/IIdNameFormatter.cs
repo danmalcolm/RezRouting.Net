@@ -4,7 +4,7 @@
     /// Formats the name of the id parameter placeholder for URL template of a collection item type
     /// Resource, based on the name of the Resource
     /// </summary>
-    public interface IIdNameConvention
+    public interface IIdNameFormatter
     {
         /// <summary>
         /// Gets the key for the id of the resource within the URL of a route that belongs

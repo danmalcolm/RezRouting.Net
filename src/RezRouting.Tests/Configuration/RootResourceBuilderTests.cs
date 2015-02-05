@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
@@ -16,7 +15,7 @@ namespace RezRouting.Tests.Configuration
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => {});
             builder.Singular("Profile", profile => {});
-            var model = builder.Build(new ResourceOptions());
+            var model = builder.Build();
 
             model.Children.Should().HaveCount(2);
             model.Children.Should().Contain(x => x.Name == "Products" && x.Type == ResourceType.Collection);
@@ -30,7 +29,7 @@ namespace RezRouting.Tests.Configuration
             builder.UrlPath("api");
             builder.Collection("Products", products => { });
 
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
 
             var urls = root.Children.Expand().Select(x => x.Url);
             urls.Should().BeEquivalentTo("api/products", "api/products/{id}");
@@ -42,7 +41,7 @@ namespace RezRouting.Tests.Configuration
             var builder = RootResourceBuilder.Create("Api");
             builder.Collection("Products", products => { });
 
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
 
             var fullNames = root.Children.Expand().Select(x => x.FullName);
             fullNames.Should().BeEquivalentTo("Api.Products", "Api.Products.Product");

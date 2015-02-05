@@ -6,7 +6,6 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.Benchmarks.Controllers;
 using RezRouting.Tests.Infrastructure;
@@ -182,14 +181,14 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         private static Resource BuildResources()
         {
             var root = ConfigureResources();
-            return root.Build(new ResourceOptions());
+            return root.Build();
         }
 
         private static RouteCollection MapRoutes()
         {
             var builder = ConfigureResources();
             var routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), routes);
+            builder.MapMvcRoutes(routes);
             return routes;
         }
 

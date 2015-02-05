@@ -3,7 +3,6 @@ using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Demos.Crud.Controllers.Products;
 using RezRouting.Demos.Crud.Controllers.Products.Product;
 using RezRouting.Demos.Crud.Controllers.Products.Product.Reviews;
@@ -36,9 +35,8 @@ namespace RezRouting.Demos.Crud
                     });
                 });
             });
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
-            root.MapMvcRoutes(options, routes);
+            root.ApplyRouteConventions(new CrudRouteConventions());
+            root.MapMvcRoutes(routes);
 
             // Allow RezRouting to generate URLs (much) more quickly
             UrlHelperExtensions.IndexRoutes(routes);

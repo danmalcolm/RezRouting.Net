@@ -2,7 +2,6 @@
 using System.Linq;
 using FluentAssertions;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
@@ -11,15 +10,13 @@ namespace RezRouting.Tests.Configuration
 {
     public class CollectionConfigurationTests
     {
-        private readonly ResourceOptions options = new ResourceOptions();
-
         [Fact]
         public void should_build_collection_resource()
         {
             var builder = RootResourceBuilder.Create();
             builder.Collection("Products", x => {});
 
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             root.Children.Should().HaveCount(1);
             var collection = root.Children.Single();
             collection.Type.Should().Be(ResourceType.Collection);
@@ -222,7 +219,7 @@ namespace RezRouting.Tests.Configuration
         {
             var builder = RootResourceBuilder.Create();
             configure(builder);
-            var root = builder.Build(new ResourceOptions());
+            var root = builder.Build();
             return root.Children.Single();
         }
     }

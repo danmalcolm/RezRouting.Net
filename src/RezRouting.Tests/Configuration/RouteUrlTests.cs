@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
@@ -40,7 +39,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var root = rootBuilder.Build(new ResourceOptions());
+            var root = rootBuilder.Build();
 
             var level1Singular = root.Children.Single(x => x.Type == ResourceType.Singular);
             var level2Singular = level1Singular.Children.Single();
@@ -74,7 +73,7 @@ namespace RezRouting.Tests.Configuration
                 });
             });
 
-            var root = rootBuilder.Build(new ResourceOptions());
+            var root = rootBuilder.Build();
 
             var singular = root.Children.Single(x => x.Type == ResourceType.Singular);
             var collection = root.Children.Single(x => x.Type == ResourceType.Collection);

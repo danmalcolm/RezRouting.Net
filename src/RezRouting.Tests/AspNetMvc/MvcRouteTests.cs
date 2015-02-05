@@ -4,7 +4,6 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Infrastructure.Assertions.AspNetMvc;
 using Xunit;
@@ -26,7 +25,7 @@ namespace RezRouting.Tests.AspNetMvc
                 profile.Route("Delete", new MvcAction(typeof(ProfileController), "Delete"), "DELETE", "");
             });
             Routes = new RouteCollection();
-            builder.MapMvcRoutes(new ResourceOptions(), Routes);
+            builder.MapMvcRoutes(Routes);
         }
 
         private RouteData GetRouteData(string httpMethod, string path, NameValueCollection headers = null, NameValueCollection form = null)

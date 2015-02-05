@@ -3,8 +3,6 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
-using RezRouting.Tests.AspNetMvc.TestModels.Crud;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Profile;
@@ -37,12 +35,12 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var area1Root = RootResourceBuilder.Create("Area1");
             area1Root.UrlPath("area1");
             ConfigureTestResources(area1Root);
-            area1Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area1");
+            area1Root.MapMvcRoutes(routes, area: "Area1");
 
             var area2Root = RootResourceBuilder.Create("Area2");
             area2Root.UrlPath("area2");
             ConfigureTestResources(area2Root);
-            area2Root.MapMvcRoutes(new ResourceOptions(), routes, area: "Area2");
+            area2Root.MapMvcRoutes(routes, area: "Area2");
 
             helper = new UrlHelper(context, routes);
         }

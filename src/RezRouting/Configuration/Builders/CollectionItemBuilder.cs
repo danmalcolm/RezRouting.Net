@@ -33,10 +33,10 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        protected override IUrlSegment GetUrlSegment(ResourceOptions options)
+        protected override IUrlSegment GetUrlSegment(ConfigurationOptions options)
         {
-            string idName = customIdName ?? options.IdNameConvention.GetIdName(Name);
-            string idNameAsAncestor = customIdNameAsAncestor ?? options.IdNameConvention.GetIdNameAsAncestor(Name);
+            string idName = customIdName ?? options.IdNameFormatter.GetIdName(Name);
+            string idNameAsAncestor = customIdNameAsAncestor ?? options.IdNameFormatter.GetIdNameAsAncestor(Name);
             
             return new IdUrlSegment(idName, idNameAsAncestor);
         }

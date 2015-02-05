@@ -5,7 +5,6 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.UrlGeneration;
-using RezRouting.Configuration.Options;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
@@ -23,15 +22,14 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             var context = TestRequestContextBuilder.Create();
             var builder = TestCrudResourceModel.Configure();
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
+            builder.ApplyRouteConventions(new CrudRouteConventions());
             
             var collection1 = new RouteCollection();
-            builder.MapMvcRoutes(options, collection1);
+            builder.MapMvcRoutes(collection1);
             helper = new UrlHelper(context, collection1);
 
             var collection2 = new RouteCollection();
-            builder.MapMvcRoutes(options, collection2);
+            builder.MapMvcRoutes(collection2);
             helperUsingIndexedRoutes = new UrlHelper(context, collection2);
 
             UrlHelperExtensions.IndexRoutes(collection2);

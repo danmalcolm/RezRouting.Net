@@ -5,14 +5,12 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
-using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.Tests.AspNetMvc.TestModels.Crud.Controllers.Profile;
 using RezRouting.Tests.Infrastructure;
-using RezRouting.Tests.Utility;
 using Xunit;
 using Xunit.Extensions;
 
@@ -25,9 +23,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
         static RouteSetupTests()
         {
             var builder = TestCrudResourceModel.Configure();
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
-            var root = builder.Build(options);
+            builder.ApplyRouteConventions(new CrudRouteConventions());
+            var root = builder.Build();
             Routes = root.Children.Expand().SelectMany(x => x.Routes).ToList();
         }
 
@@ -63,9 +60,8 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Crud
             {
                 products.Items(product => product.HandledBy<ProductsController>());
             });
-            var options = new ResourceOptions();
-            options.AddRouteConventions(new CrudRouteConventions());
-            var root = builder.Build(options);
+            builder.ApplyRouteConventions(new CrudRouteConventions());
+            var root = builder.Build();
             var routes = root.Children.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();
         }
