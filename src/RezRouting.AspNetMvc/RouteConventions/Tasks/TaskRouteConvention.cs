@@ -42,7 +42,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         public string HttpMethod { get; set; }
         
         /// <inheritdoc />
-        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems)
+        public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
         {
             if (resource.Type == Type)
             {

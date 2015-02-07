@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using RezRouting.Resources;
 using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
@@ -21,13 +22,13 @@ namespace RezRouting.AspNetMvc
         /// <param name="actionName"></param>
         /// <param name="contextItems"></param>
         /// <returns></returns>
-        public static bool SupportsAction(Type controllerType, string actionName, Dictionary<string, object> contextItems)
+        public static bool SupportsAction(Type controllerType, string actionName, CustomValueCollection contextItems)
         {
             var actionInfo = GetControllerDescriptor(controllerType, contextItems);
             return actionInfo.SupportsAction(actionName);
         }
 
-        private static ControllerActionInfo GetControllerDescriptor(Type controllerType, Dictionary<string, object> contextItems)
+        private static ControllerActionInfo GetControllerDescriptor(Type controllerType, CustomValueCollection contextItems)
         {
             var cache = contextItems.GetOrAdd(ActionsCacheKey,
                 () => new Dictionary<Type, ControllerActionInfo>());

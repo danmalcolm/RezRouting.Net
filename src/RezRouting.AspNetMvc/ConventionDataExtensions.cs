@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RezRouting.Resources;
 using RezRouting.Utility;
 
 namespace RezRouting.AspNetMvc
@@ -15,12 +16,12 @@ namespace RezRouting.AspNetMvc
         /// </summary>
         /// <param name="conventionData"></param>
         /// <returns></returns>
-        public static List<Type> GetControllerTypes(this Dictionary<string,object> conventionData)
+        public static List<Type> GetControllerTypes(this CustomValueCollection conventionData)
         {
             return conventionData.GetOrAdd(ConventionDataKeys.ControllerTypes, () => new List<Type>());
         }
 
-        public static void AddControllerTypes(this Dictionary<string, object> conventionData, IEnumerable<Type> types)
+        public static void AddControllerTypes(this CustomValueCollection conventionData, IEnumerable<Type> types)
         {
             var data = conventionData.GetControllerTypes();
             data.AddRange(types);

@@ -59,7 +59,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit", new Dictionary<string, object> { { "key1", "value1" } });
+                    products.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit", new CustomValueCollection { { "key1", "value1" } });
                 });
             });
 

@@ -57,9 +57,9 @@ namespace RezRouting.Tests.Configuration
             var collectionItem = collection.Children.Single();
             var expectedCalls = new List<ConventionCreateCall>()
             {
-                new ConventionCreateCall(root, new Dictionary<string, object>(), null),
-                new ConventionCreateCall(collection, new Dictionary<string, object>{{"key1", "value1"}}, null),
-                new ConventionCreateCall(collectionItem, new Dictionary<string, object>{{"key2", "value2"}}, null)
+                new ConventionCreateCall(root, new CustomValueCollection(), null),
+                new ConventionCreateCall(collection, new CustomValueCollection{{"key1", "value1"}}, null),
+                new ConventionCreateCall(collectionItem, new CustomValueCollection{{"key2", "value2"}}, null)
             };
             convention1.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
             convention2.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
@@ -148,18 +148,16 @@ namespace RezRouting.Tests.Configuration
 
             public List<ConventionCreateCall> Calls = new List<ConventionCreateCall>();
 
-            public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems)
+            public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
             {
                 Calls.Add(new ConventionCreateCall(resource, data, urlPathSettings));
                 yield return new Route(name, Mock.Of<IResourceRouteHandler>(), "GET", name.ToLower());
             }
-
-            public IDictionary<string, object> Data { get; set; }
         }
 
         private class ConventionCreateCall
         {
-            public ConventionCreateCall(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
+            public ConventionCreateCall(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings)
             {
                 Resource = resource;
                 Data = data;
@@ -167,7 +165,7 @@ namespace RezRouting.Tests.Configuration
             }
 
             public readonly Resource Resource;
-            public readonly Dictionary<string, object> Data;
+            public readonly CustomValueCollection Data;
             public readonly UrlPathSettings UrlPathSettings;
         }
     }

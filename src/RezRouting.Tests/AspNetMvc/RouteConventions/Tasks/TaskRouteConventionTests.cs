@@ -28,9 +28,9 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             singular = root.Children.Single(x => x.Name == "Profile");
         }
 
-        private Dictionary<string, object> CreateConventionData(Type controllerType)
+        private CustomValueCollection CreateConventionData(Type controllerType)
         {
-            var data = new Dictionary<string, object>();
+            var data = new CustomValueCollection();
             data.AddControllerTypes(new[] { controllerType });
             return data;
         }
@@ -42,7 +42,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof (EditProductsController));
 
             var route = convention
-                .Create(collection, data, pathSettings, new Dictionary<string, object>())
+                .Create(collection, data, pathSettings, new CustomValueCollection())
                 .Single();
             
             route.Path.Should().Be("Edit");
@@ -55,7 +55,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof(CreateProductController));
 
             var route = convention
-                .Create(collection, data, pathSettings, new Dictionary<string, object>())
+                .Create(collection, data, pathSettings, new CustomValueCollection())
                 .Single();
 
             route.Path.Should().Be("Create");
@@ -68,7 +68,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof (CreateProductController));
 
             var route = convention
-                .Create(collection, data, new UrlPathSettings(CaseStyle.Lower), new Dictionary<string, object>())
+                .Create(collection, data, new UrlPathSettings(CaseStyle.Lower), new CustomValueCollection())
                 .Single();
 
             route.Path.Should().Be("create");
@@ -81,7 +81,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof(EditProductsController));
 
             var routes = convention
-                .Create(singular, data, pathSettings, new Dictionary<string, object>());
+                .Create(singular, data, pathSettings, new CustomValueCollection());
 
             routes.Should().BeEmpty();
         }

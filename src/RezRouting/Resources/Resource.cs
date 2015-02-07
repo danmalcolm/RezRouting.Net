@@ -19,12 +19,12 @@ namespace RezRouting.Resources
         /// <param name="type"></param>
         /// <param name="customProperties"></param>
         /// <param name="children"></param>
-        public Resource(string name, IUrlSegment urlSegment, ResourceType type, IDictionary<string,object> customProperties, IEnumerable<Resource> children)
+        public Resource(string name, IUrlSegment urlSegment, ResourceType type, CustomValueCollection customProperties, IEnumerable<Resource> children)
         {
             Name = name;
             this.urlSegment = urlSegment;
             Type = type;
-            CustomProperties = customProperties;
+            CustomProperties = new CustomValueCollection(customProperties);
             Children = children.ToReadOnlyList();
             Children.Each(child => child.InitParent(this));
         }
@@ -132,7 +132,7 @@ namespace RezRouting.Resources
         /// Additional data assigned to this Resource - designed for use by application-specific
         /// extensions to core routing functionality.
         /// </summary>
-        public IDictionary<string, object> CustomProperties { get; private set; }
+        public CustomValueCollection CustomProperties { get; private set; }
 
         /// <inheritdoc />
         public override string ToString()

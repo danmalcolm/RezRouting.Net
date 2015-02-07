@@ -73,6 +73,7 @@
     <Compile Include="Configuration\RouteConfigurationException.cs" />
     <Compile Include="Configuration\RootResourceBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\CustomValueCollection.cs" />
     <Compile Include="Resources\DirectoryUrlSegment.cs" />
     <Compile Include="Resources\IdUrlSegment.cs" />
     <Compile Include="Resources\IResourceRouteHandler.cs" />

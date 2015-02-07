@@ -18,7 +18,7 @@ namespace RezRouting.Resources
         /// <param name="httpMethod"></param>
         /// <param name="path"></param>
         /// <param name="customProperties"></param>
-        public Route(string name, IResourceRouteHandler handler, string httpMethod, string path, IDictionary<string, object> customProperties = null)
+        public Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customProperties = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -29,9 +29,7 @@ namespace RezRouting.Resources
             Handler = handler;
             HttpMethod = httpMethod;
             Path = path;
-            CustomProperties = customProperties != null
-                ? new Dictionary<string, object>(customProperties)
-                : new Dictionary<string, object>(); ;
+            CustomProperties = new CustomValueCollection(customProperties ?? new CustomValueCollection());
         }
 
         internal void InitResource(Resource resource)
@@ -76,7 +74,7 @@ namespace RezRouting.Resources
         /// Additional data assigned to this Route - designed for use by application-specific
         /// extensions to core routing functionality.
         /// </summary>
-        public IDictionary<string, object> CustomProperties { get; private set; }
+        public CustomValueCollection CustomProperties { get; private set; }
 
         /// <summary>
         /// The full URL for requests that will be handled by this Route

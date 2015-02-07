@@ -30,7 +30,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Path { get; set; }
 
-        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems)
+        public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
         {
             if (resource.Type == Type)
             {

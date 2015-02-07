@@ -23,10 +23,10 @@ namespace RezRouting.Tests.Configuration
         {
             var resource = BuildResource(root => root.Singular("Profile", profile =>
             {
-                profile.CustomProperties(new Dictionary<string, object>
+                profile.CustomProperties(props =>
                 {
-                    { "key1", "value1" }, 
-                    { "key2", "value2" }
+                    props["key1"] = "value1";
+                    props["key2"] = "value2";
                 });
             }));
 
@@ -43,8 +43,8 @@ namespace RezRouting.Tests.Configuration
         {
             var resource = BuildResource(root => root.Singular("Profile", profile =>
             {
-                profile.CustomProperties(new Dictionary<string, object> { { "key1", "value1" } });
-                profile.CustomProperties(new Dictionary<string, object> { { "key2", "value2" } });
+                profile.CustomProperties(props => props["key1"] = "value1");
+                profile.CustomProperties(props => props["key2"] = "value2");
             }));
            
             var expectedData = new Dictionary<string, object>

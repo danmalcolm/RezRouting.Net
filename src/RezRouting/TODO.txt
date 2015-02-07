@@ -3,7 +3,7 @@
 
 [ ] Publish to nuget
 
-[ ] Additional route data, e.g. for comments, add ObjectTypeId = Products, Id = 1
+[ ] Additional route data, e.g. for shared controller like comments, add ObjectTypeId = Products, Id = 1
 
 [ ] Route generation when controller / action combination used more than once
 

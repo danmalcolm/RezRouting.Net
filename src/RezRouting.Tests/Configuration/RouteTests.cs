@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
@@ -37,10 +38,10 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_include_copy_of_items_in_custom_properties_if_specified()
         {
-            var data = new Dictionary<string, object> { {"key 1", "value 1" }};
+            var data = new CustomValueCollection { {"key 1", "value 1" }};
             var route = new Route("Route1", testHandler, "GET", "test", data);
 
-            route.CustomProperties.ShouldBeEquivalentTo(new Dictionary<string,object> { { "key 1", "value 1"}});
+            route.CustomProperties.ShouldBeEquivalentTo(new CustomValueCollection { { "key 1", "value 1" } });
             route.CustomProperties.Should().NotBeSameAs(data);
         }
         

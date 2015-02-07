@@ -11,8 +11,8 @@ namespace RezRouting.Configuration.Builders
     /// </summary>
     public abstract class ResourceBuilderBase : IResourceConfigurator, IResourceBuilder
     {
-        private readonly Dictionary<string, object> customProperties = new Dictionary<string, object>();
-        private readonly Dictionary<string, object> conventionData = new Dictionary<string, object>();
+        private readonly CustomValueCollection customProperties = new CustomValueCollection();
+        private readonly CustomValueCollection conventionData = new CustomValueCollection();
         private readonly List<Route> routes = new List<Route>();
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void ConventionData(Action<Dictionary<string, object>> configure)
+        public void ConventionData(Action<CustomValueCollection> configure)
         {
             if (configure == null) throw new ArgumentNullException("configure");
 
@@ -98,23 +98,22 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void CustomProperties(IDictionary<string, object> properties)
+        public void CustomProperties(Action<CustomValueCollection> configure)
         {
-            if (properties == null) throw new ArgumentNullException("properties");
+            if (configure == null) throw new ArgumentNullException("configure");
 
-            foreach (var item in properties)
-            {
-                customProperties[item.Key] = item.Value;
-            }
+            configure(customProperties);
         }
 
         /// <inheritdoc />
-        public void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, IDictionary<string,object> customProperties = null)
+        public void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customValues = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
+            if (httpMethod == null) throw new ArgumentNullException("httpMethod");
+            if (path == null) throw new ArgumentNullException("path");
 
-            var route = new Route(name, handler, httpMethod, path, customProperties ?? new Dictionary<string, object>());
+            var route = new Route(name, handler, httpMethod, path, customValues ?? new CustomValueCollection());
             routes.Add(route);
         }
 

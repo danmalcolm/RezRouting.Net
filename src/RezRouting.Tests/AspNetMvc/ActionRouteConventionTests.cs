@@ -23,9 +23,9 @@ namespace RezRouting.Tests.AspNetMvc
             return collection;
         }
 
-        private Dictionary<string, object> CreateConventionData(Type controllerType)
+        private CustomValueCollection CreateConventionData(Type controllerType)
         {
-            var data = new Dictionary<string, object>();
+            var data = new CustomValueCollection();
             data.AddControllerTypes(new[] {controllerType});
             return data;
         }
@@ -39,7 +39,7 @@ namespace RezRouting.Tests.AspNetMvc
             var data = CreateConventionData(typeof(TestController));
             
             var route = convention
-                .Create(collection, data, urlPathSettings, new Dictionary<string, object>())
+                .Create(collection, data, urlPathSettings, new CustomValueCollection())
                 .Single();
 
             route.Path.Should().Be("FUNKY_ACTION");
@@ -54,7 +54,7 @@ namespace RezRouting.Tests.AspNetMvc
             
             
             var routes = convention
-                .Create(collection, data, new UrlPathSettings(), new Dictionary<string, object>());
+                .Create(collection, data, new UrlPathSettings(), new CustomValueCollection());
 
             routes.Should().BeEmpty();
         }
@@ -67,7 +67,7 @@ namespace RezRouting.Tests.AspNetMvc
             var data = CreateConventionData(typeof(TestControllerWithActionNameAttribute));
             
             var route = convention
-                .Create(collection, data, new UrlPathSettings(), new Dictionary<string, object>())
+                .Create(collection, data, new UrlPathSettings(), new CustomValueCollection())
                 .Single();
 
             route.Should().NotBeNull();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RezRouting.Configuration.Conventions;
+using RezRouting.Resources;
 
 namespace RezRouting.Configuration.Builders
 {
@@ -12,7 +13,7 @@ namespace RezRouting.Configuration.Builders
         public ConfigurationContext(List<IRouteConvention> routeConventions)
         {
             RouteConventions = routeConventions;
-            Items = new Dictionary<string, object>();
+            Items = new CustomValueCollection();
         }
 
         /// <summary>
@@ -21,10 +22,10 @@ namespace RezRouting.Configuration.Builders
         public List<IRouteConvention> RouteConventions { get; private set; }
 
         /// <summary>
-        /// A collection of data made available to all builders in the hierarchy as
+        /// A collection of data shared by all builders in the hierarchy as
         /// the resource model is built - suitable for optimizations such as 
-        /// caching reusable data.
+        /// caching shared data.
         /// </summary>
-        public Dictionary<string, object> Items { get; private set; }
+        public CustomValueCollection Items { get; private set; }
     }
 }
