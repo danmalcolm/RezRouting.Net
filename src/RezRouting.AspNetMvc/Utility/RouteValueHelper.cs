@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RezRouting.Utility
+namespace RezRouting.AspNetMvc.Utility
 {
     internal static class RouteValueHelper
     {

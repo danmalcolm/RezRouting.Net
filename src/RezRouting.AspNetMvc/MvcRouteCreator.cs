@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.AspNetMvc.Utility;
 using RezRouting.Resources;
-using RezRouting.Utility;
 using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Adds routes to RouteCollection based on routes belonging to a hierarchy of resources
+    /// Adds ASP.Net MVC routes to RouteCollection based on routes belonging to a 
+    /// hierarchy of resources
     /// </summary>
     public class MvcRouteCreator
     {
@@ -43,15 +44,15 @@ namespace RezRouting.AspNetMvc
             {
                 var controllerType = handler.ControllerType;
                 string controller = RouteValueHelper.TrimControllerFromTypeName(controllerType);
+                var defaults = new RouteValueDictionary(model.AdditionalRouteValues);
+                defaults[RouteValueKeys.Controller] = controller;
+                defaults[RouteValueKeys.Action] = handler.ActionName;
+
                 var constraints = CreateConstraints(model);
 
                 var route = new ResourceRoute(model.Url, new MvcRouteHandler())
                 {
-                    Defaults = new RouteValueDictionary
-                    {
-                        { "controller", controller }, 
-                        { "action", handler.ActionName }
-                    },
+                    Defaults = defaults,
                     Constraints = constraints,
                     DataTokens = new RouteValueDictionary()
                 };

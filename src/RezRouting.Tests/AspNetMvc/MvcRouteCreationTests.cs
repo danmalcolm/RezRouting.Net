@@ -50,13 +50,33 @@ namespace RezRouting.Tests.AspNetMvc
         }
 
         [Fact]
+        public void should_set_defaults_based_on_additional_route_values_configured_on_route()
+        {
+            var builder = RootResourceBuilder.Create("");
+            var values = new CustomValueCollection
+            {
+                {"key1", "value1"}, {"key2", "value2"}
+            };
+            builder.Collection("Products",
+                products => products.Route("Route1", MvcAction.For((TestController c) => c.Action1()),
+                    "GET", "action1", additionalRouteValues: values));
+
+            var routes = new RouteCollection();
+            builder.MapMvcRoutes(routes);
+
+            var route = routes.Cast<System.Web.Routing.Route>().Single();
+            route.Defaults.Should().Contain("key1", "value1");
+            route.Defaults.Should().Contain("key2", "value2");
+        }
+
+        [Fact]
         public void should_name_route_based_on_full_name_of_resource()
         {
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products",
                 products => products.Route("Route1", MvcAction.For((TestController c) => c.Action1()),
                     "GET", "action1"));
-
+            
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
 

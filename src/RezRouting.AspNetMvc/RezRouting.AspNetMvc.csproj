@@ -57,24 +57,26 @@
     <Compile Include="..\SharedAssemblyVersion.cs">
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="ActionMappingHelper.cs" />
-    <Compile Include="ConventionDataExtensions.cs" />
-    <Compile Include="ConventionDataKeys.cs" />
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
     <Compile Include="ResourceConfiguratorExtensions.cs" />
     <Compile Include="MvcAction.cs" />
     <Compile Include="MvcRouteCreator.cs" />
+    <Compile Include="RouteConventions\ActionMappingHelper.cs" />
+    <Compile Include="RouteConventions\ConventionDataExtensions.cs" />
+    <Compile Include="RouteConventions\ConventionDataKeys.cs" />
     <Compile Include="RouteMappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceRoute.cs" />
     <Compile Include="RouteValidator.cs" />
-    <Compile Include="RouteDataTokenKeys.cs" />
     <Compile Include="RouteConventions\ActionRouteConvention.cs" />
     <Compile Include="RouteConventions\Crud\CrudRouteConventions.cs" />
     <Compile Include="RouteConventions\Tasks\TaskRouteConventions.cs" />
     <Compile Include="RouteConventions\Tasks\TaskRouteConvention.cs" />
     <Compile Include="UrlGeneration\RouteModelIndex.cs" />
     <Compile Include="UrlGeneration\UrlHelperExtensions.cs" />
+    <Compile Include="Utility\RouteDataTokenKeys.cs" />
+    <Compile Include="Utility\RouteValueHelper.cs" />
+    <Compile Include="Utility\RouteValueKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RezRouting\RezRouting.csproj">

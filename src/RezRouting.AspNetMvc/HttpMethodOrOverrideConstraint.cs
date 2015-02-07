@@ -61,7 +61,5 @@ namespace RezRouting.AspNetMvc
             return keys.Select(key => form[key])
                 .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
         }
-
-
     }
 }

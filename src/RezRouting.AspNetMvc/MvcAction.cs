@@ -7,12 +7,14 @@ using RezRouting.Utility;
 namespace RezRouting.AspNetMvc
 {
     /// <summary>
-    /// Defines an ASP.Net MVC controller action responsible for handling an individual route
+    /// Defines an ASP.Net MVC controller action (based on a controller type and action 
+    /// name) - a type of <see cref="IResourceRouteHandler" /> used when defining a route
     /// </summary>
     public class MvcAction : IResourceRouteHandler
     {
         /// <summary>
-        /// Creates an instance of MvcAction based on the specified expression
+        /// Creates a new MvcAction based on the controller and
+        /// action in the specified expression
         /// </summary>
         /// <typeparam name="TController"></typeparam>
         /// <param name="action"></param>
@@ -32,6 +34,11 @@ namespace RezRouting.AspNetMvc
             return new MvcAction(controllerType, actionName);
         }
 
+        /// <summary>
+        /// Creates a new MvcAction
+        /// </summary>
+        /// <param name="controllerType"></param>
+        /// <param name="actionName"></param>
         public MvcAction(Type controllerType, string actionName)
         {
             if (controllerType == null) throw new ArgumentNullException("controllerType");

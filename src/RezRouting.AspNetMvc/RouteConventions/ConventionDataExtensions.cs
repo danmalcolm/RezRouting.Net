@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using RezRouting.Resources;
-using RezRouting.Utility;
 
-namespace RezRouting.AspNetMvc
+namespace RezRouting.AspNetMvc.RouteConventions
 {
     /// <summary>
     /// Extensions used to access convention data

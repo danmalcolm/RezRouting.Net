@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
 using Xunit;
 

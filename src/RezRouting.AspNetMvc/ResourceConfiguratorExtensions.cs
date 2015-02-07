@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
 
 namespace RezRouting.AspNetMvc

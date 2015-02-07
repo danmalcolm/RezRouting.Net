@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.AspNetMvc.Utility;
 using RezRouting.Utility;
 using Route = RezRouting.Resources.Route;
 

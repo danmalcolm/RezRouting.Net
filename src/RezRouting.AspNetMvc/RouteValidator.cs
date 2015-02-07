@@ -8,6 +8,11 @@ using Route = RezRouting.Resources.Route;
 
 namespace RezRouting.AspNetMvc
 {
+    /// <summary>
+    /// Validates route information to throw informative exceptions about problems
+    /// that would occur if ASP.Net routes were added based on a resource and 
+    /// route hierarchy
+    /// </summary>
     internal class RouteValidator
     {
         public void ThrowIfInvalid(List<Route> routeModels, RouteCollection routes)

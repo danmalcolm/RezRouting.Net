@@ -7,8 +7,8 @@ namespace RezRouting.AspNetMvc
     // Based on v. useful tips here: http://samsaffron.com/archive/2011/10/13/optimising-asp-net-mvc3-routing
 
     /// <summary>
-    /// Route implementation used for resource routes configured by RezRouting, includes 
-    /// optimised in-bound route identification logic.
+    /// Route implementation used for ASP.Net MVC routes configured by RezRouting, includes 
+    /// in-bound route identification optimizations.
     /// </summary>
     public class ResourceRoute : System.Web.Routing.Route
     {

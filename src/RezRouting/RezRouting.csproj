@@ -84,7 +84,6 @@
     <Compile Include="Utility\DictionaryExtensions.cs" />
     <Compile Include="Utility\IntercappedStringHelper.cs" />
     <Compile Include="Utility\PathSegmentCleaner.cs" />
-    <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\InflectorExtensions.cs" />
     <Compile Include="Utility\StringExtensions.cs" />

@@ -1,4 +1,4 @@
-﻿namespace RezRouting.AspNetMvc
+﻿namespace RezRouting.AspNetMvc.RouteConventions
 {
     /// <summary>
     /// Keys used to store data used by ASP.Net MVC conventions in the ConventionData dictionary

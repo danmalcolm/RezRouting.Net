@@ -5,10 +5,11 @@ using System.Web.Mvc;
 using RezRouting.Resources;
 using RezRouting.Utility;
 
-namespace RezRouting.AspNetMvc
+namespace RezRouting.AspNetMvc.RouteConventions
 {
     /// <summary>
-    /// Helper class for mapping controller actions
+    /// Helper class used by route conventions to determine whether a controller
+    /// supports specific actions
     /// </summary>
     public static class ActionMappingHelper
     {
