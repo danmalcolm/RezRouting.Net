@@ -44,7 +44,25 @@ namespace RezRouting.Tests.Configuration
             route.CustomProperties.ShouldBeEquivalentTo(new CustomValueCollection { { "key 1", "value 1" } });
             route.CustomProperties.Should().NotBeSameAs(data);
         }
-        
+
+        [Fact]
+        public void additional_route_values_should_be_empty_if_not_configured()
+        {
+            var route = new Route("Route1", testHandler, "GET", "test");
+
+            route.AdditionalRouteValues.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void should_include_copy_of_additional_route_values_if_specified()
+        {
+            var values = new CustomValueCollection { { "key 1", "value 1" } };
+            var route = new Route("Route1", testHandler, "GET", "test", additionalRouteValues: values);
+
+            route.AdditionalRouteValues.ShouldBeEquivalentTo(new CustomValueCollection { { "key 1", "value 1" } });
+            route.AdditionalRouteValues.Should().NotBeSameAs(values);
+        }
+
         private class TestController : Controller
         {
             public ActionResult Action1()

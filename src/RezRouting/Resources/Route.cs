@@ -18,7 +18,7 @@ namespace RezRouting.Resources
         /// <param name="httpMethod"></param>
         /// <param name="path"></param>
         /// <param name="customProperties"></param>
-        public Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customProperties = null)
+        public Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customProperties = null, CustomValueCollection additionalRouteValues = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -29,7 +29,12 @@ namespace RezRouting.Resources
             Handler = handler;
             HttpMethod = httpMethod;
             Path = path;
-            CustomProperties = new CustomValueCollection(customProperties ?? new CustomValueCollection());
+            CustomProperties = customProperties != null 
+                ? new CustomValueCollection(customProperties) 
+                : new CustomValueCollection();
+            AdditionalRouteValues = additionalRouteValues != null
+                ? new CustomValueCollection(additionalRouteValues)
+                : new CustomValueCollection();
         }
 
         internal void InitResource(Resource resource)
@@ -71,10 +76,16 @@ namespace RezRouting.Resources
         public string Path { get; private set; }
 
         /// <summary>
-        /// Additional data assigned to this Route - designed for use by application-specific
+        /// Custom data assigned to this Route - designed for use by application-specific
         /// extensions to core routing functionality.
         /// </summary>
         public CustomValueCollection CustomProperties { get; private set; }
+
+        /// <summary>
+        /// Additional values used to build the route URL and added to route when
+        /// configured
+        /// </summary>
+        public CustomValueCollection AdditionalRouteValues { get; private set; }
 
         /// <summary>
         /// The full URL for requests that will be handled by this Route

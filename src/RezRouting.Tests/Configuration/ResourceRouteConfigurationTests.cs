@@ -68,6 +68,37 @@ namespace RezRouting.Tests.Configuration
             editRoute.CustomProperties.Should().Equal(expectedData);
         }
 
+        [Fact]
+        public void additional_route_values_should_be_empty_if_not_specified()
+        {
+            var resource = BuildResource(root =>
+            {
+                root.Collection("Products", products =>
+                {
+                    products.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit");
+                });
+            });
+
+            var editRoute = resource.Routes.Single(x => x.Name == "Edit");
+            editRoute.AdditionalRouteValues.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void should_include_additional_route_values_on_route()
+        {
+            var resource = BuildResource(root =>
+            {
+                root.Collection("Products", products =>
+                {
+                    products.Route("Edit", new MvcAction(typeof(TestController), "Edit"), "GET", "edit", additionalRouteValues: new CustomValueCollection { { "key1", "value1" } });
+                });
+            });
+
+            var editRoute = resource.Routes.Single(x => x.Name == "Edit");
+            var expectedData = new Dictionary<string, object> { { "key1", "value1" } };
+            editRoute.AdditionalRouteValues.Should().Equal(expectedData);
+        }
+
         /// <summary>
         /// Configures resources using supplied action and returns the first child resource
         /// </summary>
