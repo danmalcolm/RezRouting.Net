@@ -10,19 +10,19 @@ using Xunit;
 
 namespace RezRouting.Tests.AspNetMvc
 {
-    public class MvcRouteTests
+    public class MvcRouteInboundMatchingTests
     {
         private static readonly RouteCollection Routes;
 
-        static MvcRouteTests()
+        static MvcRouteInboundMatchingTests()
         {
             var builder = RootResourceBuilder.Create("");
             builder.Singular("Profile", profile =>
             {
-                profile.Route("Show", new MvcAction(typeof(ProfileController), "Show"), "GET", "");
-                profile.Route("Edit", new MvcAction(typeof(ProfileController), "Edit"), "GET", "edit");
-                profile.Route("Update", new MvcAction(typeof(ProfileController), "Update"), "PUT", "");
-                profile.Route("Delete", new MvcAction(typeof(ProfileController), "Delete"), "DELETE", "");
+                profile.Route("Show", MvcAction.For((ProfileController x) => x.Show()), "GET", "");
+                profile.Route("Edit", MvcAction.For((ProfileController x) => x.Edit()), "GET", "edit");
+                profile.Route("Update", MvcAction.For((ProfileController x) => x.Update()), "PUT", "");
+                profile.Route("Delete", MvcAction.For((ProfileController x) => x.Delete()), "DELETE", "");
             });
             Routes = new RouteCollection();
             builder.MapMvcRoutes(Routes);
@@ -94,7 +94,7 @@ namespace RezRouting.Tests.AspNetMvc
             routeData.Should().BeNull();
         }
         
-        private class ProfileController
+        private class ProfileController : Controller
         {
             public ActionResult Show()
             {

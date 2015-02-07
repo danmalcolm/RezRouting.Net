@@ -3,9 +3,9 @@
 
 [ ] Publish to nuget
 
-[ ] Additional route data, e.g. for shared controller like comments, add ObjectTypeId = Products, Id = 1
-
 [ ] Route generation when controller / action combination used more than once
+
+[ ] Within collection, allow parent id name to be overriden
 
 [ ] Wiki
 
@@ -50,7 +50,9 @@ Better support for large number of resources and faster inbound/outbound resolut
 Done
 ----
 
-[x] Final changes to entry-point
+[x] Additional route data, e.g. for shared controller like comments, add ObjectTypeId = Products, Id = 1
+
+[x] Final changes to entry-point API
 - options
 - different build method
 - include context for caching stuff

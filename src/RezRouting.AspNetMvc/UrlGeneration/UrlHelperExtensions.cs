@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,7 +16,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
     public static class UrlHelperExtensions
     {
         private static readonly ConcurrentDictionary<RouteCollection, RouteModelIndex> Indexes = new ConcurrentDictionary<RouteCollection, RouteModelIndex>();
-        
+
         /// <summary>
         /// Stores an index based on the supplied RouteCollection that can be used by 
         /// UrlHelperExtensions for faster route URL generation. This method is designed 
@@ -54,7 +55,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         public static string ResourceUrl<TController>(this UrlHelper helper, string action, object routeValues)
             where TController : Controller
         {
-            return helper.ResourceUrl(typeof (TController), action, routeValues);
+            return helper.ResourceUrl(typeof(TController), action, routeValues);
         }
 
         /// <summary>
@@ -87,29 +88,28 @@ namespace RezRouting.AspNetMvc.UrlGeneration
         /// <returns></returns>
         public static string ResourceUrl(this UrlHelper helper, Type controllerType, string action, RouteValueDictionary routeValues, string protocol = null, string hostName = null)
         {
-            const string key = RouteDataTokenKeys.RouteModel;
-
-            Route route;
+            IEnumerable<Route> routeModels;
             RouteModelIndex index;
             if (Indexes.TryGetValue(helper.RouteCollection, out index))
             {
-                route = index.Get(controllerType, action);
+                routeModels = index.GetRoutes(controllerType, action);
             }
             else
             {
-                route = helper.RouteCollection.OfType<System.Web.Routing.Route>()
-                    .Where(r => r.DataTokens != null && r.DataTokens.ContainsKey(key))
+                const string key = RouteDataTokenKeys.RouteModel;
+                routeModels = helper.RouteCollection.OfType<System.Web.Routing.Route>()
+                    .Where(route => route.DataTokens != null && route.DataTokens.ContainsKey(key))
                     .Select(r => r.DataTokens[key] as Route)
-                    .FirstOrDefault(h => h != null
+                    .Where(h => h != null
                         && h.Handler is MvcAction
                         && ((MvcAction)h.Handler).ControllerType == controllerType
                         && ((MvcAction)h.Handler).ActionName.EqualsIgnoreCase(action));
             }
 
-            if (route == null) return null;
-
-            string url = helper.RouteUrl(route.FullName, routeValues, protocol, hostName);
-            return url;
+            var routeUrl = routeModels
+                .Select(route => helper.RouteUrl(route.FullName, routeValues, protocol, hostName))
+                .FirstOrDefault(url => url != null);
+            return routeUrl;
         }
     }
 }

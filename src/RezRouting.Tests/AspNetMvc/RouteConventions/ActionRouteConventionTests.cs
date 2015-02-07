@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
@@ -10,7 +9,7 @@ using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
-namespace RezRouting.Tests.AspNetMvc
+namespace RezRouting.Tests.AspNetMvc.RouteConventions
 {
     public class ActionRouteConventionTests
     {

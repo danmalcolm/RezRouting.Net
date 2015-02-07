@@ -89,7 +89,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetMvc\ActionRouteConventionTests.cs" />
     <Compile Include="AspNetMvc\Benchmarks\BenchmarkTests.cs" />
     <Compile Include="AspNetMvc\Benchmarks\Controllers\DemoData.cs">
       <AutoGen>True</AutoGen>
@@ -98,10 +97,12 @@
     </Compile>
     <Compile Include="AspNetMvc\ResourceConfiguratorExtensionsTests.cs" />
     <Compile Include="AspNetMvc\MvcActionTests.cs" />
+    <Compile Include="AspNetMvc\RouteConventions\ActionRouteConventionTests.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\Controllers\Products\ProductsController.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\Controllers\Products\Product\ProductController.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\Controllers\Profile\ProfileController.cs" />
     <Compile Include="AspNetMvc\TestModels\Crud\TestCrudResourceModel.cs" />
+    <Compile Include="AspNetMvc\UrlGeneration\SharedControllerUrlGenerationTests.cs" />
     <Compile Include="Configuration\NestedResourceConfigurationTests.cs" />
     <Compile Include="Configuration\CollectionConfigurationTests.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
@@ -124,7 +125,7 @@
     <Content Include="AspNetMvc\Benchmarks\Controllers\ResourceNames.txt" />
     <Compile Include="AspNetMvc\MvcRouteCreationTests.cs" />
     <Compile Include="AspNetMvc\RouteMappingExtensionsTests.cs" />
-    <Compile Include="AspNetMvc\MvcRouteTests.cs" />
+    <Compile Include="AspNetMvc\MvcRouteInboundTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\InboundRequestTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Crud\RouteSetupTests.cs" />
     <Compile Include="AspNetMvc\RouteConventions\Tasks\CollectionItemRouteConventionTests.cs" />

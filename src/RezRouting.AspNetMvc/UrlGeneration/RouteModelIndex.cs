@@ -14,7 +14,7 @@ namespace RezRouting.AspNetMvc.UrlGeneration
     /// </summary>
     public class RouteModelIndex
     {
-        private readonly Dictionary<ControllerActionKey, Route> routesByKey;
+        private readonly Dictionary<ControllerActionKey, List<Route>> routesByKey;
         
         /// <summary>
         /// Creates a new RouteModelIndex
@@ -25,29 +25,29 @@ namespace RezRouting.AspNetMvc.UrlGeneration
             const string modelKey = RouteDataTokenKeys.RouteModel;
 
             routesByKey = (from route in routes.OfType<System.Web.Routing.Route>()
-                     let model = route.DataTokens != null ? route.DataTokens[modelKey] as Route : null
-                     where model != null
-                     let handler = model.Handler as MvcAction
-                     where handler != null
-                     let key = new ControllerActionKey(handler.ControllerType, handler.ActionName)
-                     group model by key
-                         into grouped
-                         select grouped)
-                .ToDictionary(g => g.Key, g => g.First());
+                let model = route.DataTokens != null ? route.DataTokens[modelKey] as Route : null
+                where model != null
+                let handler = model.Handler as MvcAction
+                where handler != null
+                let key = new ControllerActionKey(handler.ControllerType, handler.ActionName)
+                group model by key
+                    into grouped
+                    select grouped)
+                .ToDictionary(g => g.Key, g => g.ToList());
         }
 
         /// <summary>
-        /// Gets the RezRouting route for the specified controller type and action
+        /// Gets the RezRouting routes matching the specified controller type and action
         /// </summary>
         /// <param name="controllerType"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public Route Get(Type controllerType, string action)
+        public IEnumerable<Route> GetRoutes(Type controllerType, string action)
         {
             var key = new ControllerActionKey(controllerType, action);
-            Route route;
-            routesByKey.TryGetValue(key, out route);
-            return route;
+            List<Route> routes;
+            routesByKey.TryGetValue(key, out routes);
+            return routes ?? Enumerable.Empty<Route>();
         }
 
         private struct ControllerActionKey
