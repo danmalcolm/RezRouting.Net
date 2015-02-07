@@ -30,13 +30,13 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Path { get; set; }
 
-        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
+        public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems)
         {
             if (resource.Type == Type)
             {
                 var controllerTypes = data.GetControllerTypes();
                 return from controllerType in controllerTypes
-                       where ActionMappingHelper.SupportsAction(controllerType, Action)
+                       where ActionMappingHelper.SupportsAction(controllerType, Action, contextItems)
                        let handler = new MvcAction(controllerType, Action)
                        let path = urlPathSettings.FormatDirectoryName(Path)
                        select new Route(Name, handler, HttpMethod, path, null);

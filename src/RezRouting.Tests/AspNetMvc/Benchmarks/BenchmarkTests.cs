@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
 using RezRouting.Resources;
@@ -32,9 +33,26 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         }
 
         [Fact]
-        public void model_mapping()
+        public void configuring_resources()
         {
             Profiler.Profile("Building resource model", 100, () => BuildResources());
+        }
+
+        [Fact]
+        public void building_resources()
+        {
+            var builder = ConfigureResources();
+            Profiler.Profile("Building resource model", 100, () => builder.Build());
+        }
+
+        [Fact]
+        public void building_resources_with_route_conventions()
+        {
+            var builder = ConfigureResourcesUsingConventions();
+            Profiler.Profile("Creating routes", 100, () =>
+            {
+                builder.Build();
+            });
         }
 
         [Fact]
@@ -156,26 +174,52 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
                 creator.CreateRoutes(model, routes, null);
             });
         }
-
+        
         private static IRootResourceBuilder ConfigureResources()
         {
-            var root = RootResourceBuilder.Create("");
+            var builder = RootResourceBuilder.Create("");
+            var actionNames = Enumerable.Range(1, 10)
+                .Select(n => "Action" + n)
+                .ToList();
+
             DemoData.Resources.Each(resourceInfo =>
             {
                 string resourceName = resourceInfo.Item1;
                 var controllerType = resourceInfo.Item2;
-                root.Collection(resourceName, collection =>
+                builder.Collection(resourceName, collection =>
                 {
                     // Add 10 routes (Action1 .. Action10)
-                    for (int i = 1; i <= 10; i++)
+                    foreach (var actionName in actionNames)
                     {
-                        string actionName = "Action" + i;
                         string path = actionName.ToLowerInvariant();
                         collection.Route(actionName, new MvcAction(controllerType, actionName), "GET", path);
                     }
                 });
             });
-            return root;
+            return builder;
+        }
+
+        private static IRootResourceBuilder ConfigureResourcesUsingConventions()
+        {
+            var actionNames = Enumerable.Range(1, 10)
+                .Select(n => "Action" + n)
+                .ToList();
+            var conventions = actionNames.Select(name => 
+                new ActionRouteConvention(name, ResourceType.Collection, name, "GET", name.ToLowerInvariant()));
+            var scheme = new TestRouteConventionScheme(conventions);
+            
+            var builder = RootResourceBuilder.Create("");
+            builder.ApplyRouteConventions(scheme);
+            DemoData.Resources.Each(resourceInfo =>
+            {
+                string resourceName = resourceInfo.Item1;
+                var controllerType = resourceInfo.Item2;
+                builder.Collection(resourceName, collection =>
+                {
+                    collection.HandledBy(controllerType);
+                });
+            });
+            return builder;
         }
 
         private static Resource BuildResources()
@@ -202,7 +246,6 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         
         public void Dispose()
         {
-            ActionMappingHelper.ResetCache();
             UrlHelperExtensions.ClearIndexedRoutes();
         }
     }

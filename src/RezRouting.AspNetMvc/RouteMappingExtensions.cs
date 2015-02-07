@@ -37,9 +37,6 @@ namespace RezRouting.AspNetMvc
             new MvcRouteCreator().CreateRoutes(rootResource, routes, area);
             if (modelAction != null)
                 modelAction(rootResource);
-
-            // Reset cache used during the mapping process
-            ActionMappingHelper.ResetCache();
         } 
     }
 }

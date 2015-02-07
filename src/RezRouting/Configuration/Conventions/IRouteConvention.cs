@@ -20,7 +20,8 @@ namespace RezRouting.Configuration.Conventions
         /// <param name="resource">The resource object</param>
         /// <param name="data">Data added during resource configuration to drive conventions</param>
         /// <param name="urlPathSettings"></param>
+        /// <param name="contextItems"></param>
         /// <returns></returns>
-        IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings);
+        IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems);
     }
 }

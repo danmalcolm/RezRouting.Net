@@ -12,6 +12,7 @@ namespace RezRouting.Configuration.Builders
         public ConfigurationContext(List<IRouteConvention> routeConventions)
         {
             RouteConventions = routeConventions;
+            Items = new Dictionary<string, object>();
         }
 
         /// <summary>

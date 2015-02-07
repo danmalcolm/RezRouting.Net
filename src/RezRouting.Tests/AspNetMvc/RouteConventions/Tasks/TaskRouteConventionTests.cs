@@ -42,7 +42,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof (EditProductsController));
 
             var route = convention
-                .Create(collection, data, pathSettings)
+                .Create(collection, data, pathSettings, new Dictionary<string, object>())
                 .Single();
             
             route.Path.Should().Be("Edit");
@@ -55,7 +55,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof(CreateProductController));
 
             var route = convention
-                .Create(collection, data, pathSettings)
+                .Create(collection, data, pathSettings, new Dictionary<string, object>())
                 .Single();
 
             route.Path.Should().Be("Create");
@@ -68,7 +68,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof (CreateProductController));
 
             var route = convention
-                .Create(collection, data, new UrlPathSettings(CaseStyle.Lower))
+                .Create(collection, data, new UrlPathSettings(CaseStyle.Lower), new Dictionary<string, object>())
                 .Single();
 
             route.Path.Should().Be("create");
@@ -81,7 +81,7 @@ namespace RezRouting.Tests.AspNetMvc.RouteConventions.Tasks
             var data = CreateConventionData(typeof(EditProductsController));
 
             var routes = convention
-                .Create(singular, data, pathSettings);
+                .Create(singular, data, pathSettings, new Dictionary<string, object>());
 
             routes.Should().BeEmpty();
         }

@@ -11,16 +11,7 @@ namespace RezRouting.AspNetMvc
     /// </summary>
     public static class ActionMappingHelper
     {
-        private static readonly Dictionary<Type, ControllerActions> ControllerActionsCache
-            = new Dictionary<Type, ControllerActions>();
-
-        /// <summary>
-        /// Clears any data stored while inspecting controller types
-        /// </summary>
-        public static void ResetCache()
-        {
-            ControllerActionsCache.Clear();
-        }
+        private const string ActionsCacheKey = "RezRouting.AspNetMvc.ActionMappingHelper.ControllerActionsCache";
 
         /// <summary>
         /// Indicates whether an ASP.Net MVC controller supports the specified
@@ -28,30 +19,33 @@ namespace RezRouting.AspNetMvc
         /// </summary>
         /// <param name="controllerType"></param>
         /// <param name="actionName"></param>
+        /// <param name="contextItems"></param>
         /// <returns></returns>
-        public static bool SupportsAction(Type controllerType, string actionName)
+        public static bool SupportsAction(Type controllerType, string actionName, Dictionary<string, object> contextItems)
         {
-            var controllerDescriptor = GetControllerDescriptor(controllerType);
-            return controllerDescriptor.SupportsAction(actionName);
+            var actionInfo = GetControllerDescriptor(controllerType, contextItems);
+            return actionInfo.SupportsAction(actionName);
         }
 
-        private static ControllerActions GetControllerDescriptor(Type controllerType)
+        private static ControllerActionInfo GetControllerDescriptor(Type controllerType, Dictionary<string, object> contextItems)
         {
-            return ControllerActionsCache.GetOrAdd(controllerType, 
-                () => ControllerActions.Create(controllerType));
+            var cache = contextItems.GetOrAdd(ActionsCacheKey,
+                () => new Dictionary<Type, ControllerActionInfo>());
+            return cache.GetOrAdd(controllerType, 
+                () => ControllerActionInfo.Create(controllerType));
         }
 
-        private class ControllerActions
+        private class ControllerActionInfo
         {
-            public static ControllerActions Create(Type controllerType)
+            public static ControllerActionInfo Create(Type controllerType)
             {
                 var descriptor = new ReflectedControllerDescriptor(controllerType);
-                return new ControllerActions(descriptor);
+                return new ControllerActionInfo(descriptor);
             }
 
             private readonly HashSet<string> actionNames;
 
-            private ControllerActions(ControllerDescriptor descriptor)
+            private ControllerActionInfo(ControllerDescriptor descriptor)
             {
                 var names = from action in descriptor.GetCanonicalActions()
                             let actionNameAttribute = action.GetCustomAttributes(typeof(ActionNameAttribute), true)

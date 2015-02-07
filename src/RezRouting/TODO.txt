@@ -1,12 +1,11 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
-[ ] Final changes to entry-point
-- options
-- different build method
-- include context for caching stuff
-
 [ ] Publish to nuget
+
+[ ] Additional route data, e.g. for comments, add ObjectTypeId = Products, Id = 1
+
+[ ] Route generation when controller / action combination used more than once
 
 [ ] Wiki
 
@@ -16,6 +15,13 @@
 
 Next
 ----
+
+[ ] Consider using a single MVC route based on entire resources model, or one per level?
+Better support for large number of resources and faster inbound/outbound resolution of routes at end of colleciton
+
+[ ] Id format, e.g. int
+
+[ ] Custom id format, e.g. combine name and id products/superfunkye1000-222
 
 [ ] Demo apps on Azure?
 
@@ -29,8 +35,6 @@ Next
 
 [ ] Refactor: Test structure
 
-[ ] Route generation with multiple 
-
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
 [ ] MVC unit tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
@@ -43,11 +47,14 @@ Next
 
 [ ] Additional custom RouteData in routes
 
-[ ] Consider using a single MVC route based on entire resources model? Better support for large number of resources and faster inbound/outbound resolution of routes at end of colleciton
-
-
 Done
 ----
+
+[x] Final changes to entry-point
+- options
+- different build method
+- include context for caching stuff
+
 [x] Factory method for ResourceGraphBuilder RootResourceBuilder.Create - just return root resource builder
 and use interface, so that we don't have to repeat comments
 

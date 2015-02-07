@@ -127,7 +127,7 @@ namespace RezRouting.Configuration.Builders
             var urlSegment = GetUrlSegment(options);
             var resource = new Resource(Name, urlSegment, Type, customProperties, children);
             var conventionRoutes = from convention in context.RouteConventions
-                                   from route in convention.Create(resource, conventionData, options.UrlPathSettings)
+                                   from route in convention.Create(resource, conventionData, options.UrlPathSettings, context.Items)
                                    select route;
 
             var allRoutes = routes.Concat(conventionRoutes);

@@ -148,7 +148,7 @@ namespace RezRouting.Tests.Configuration
 
             public List<ConventionCreateCall> Calls = new List<ConventionCreateCall>();
 
-            public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings)
+            public IEnumerable<Route> Create(Resource resource, Dictionary<string, object> data, UrlPathSettings urlPathSettings, Dictionary<string, object> contextItems)
             {
                 Calls.Add(new ConventionCreateCall(resource, data, urlPathSettings));
                 yield return new Route(name, Mock.Of<IResourceRouteHandler>(), "GET", name.ToLower());
