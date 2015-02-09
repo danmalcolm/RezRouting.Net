@@ -9,7 +9,7 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class OptionConfigurationTests
+    public class OptionsConfigurationTests
     {
         [Fact]
         public void should_customise_url_formatting_using_options()

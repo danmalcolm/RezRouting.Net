@@ -112,7 +112,7 @@
     <Compile Include="Configuration\ResourceRouteConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceHierarchyConfigurationTests.cs" />
     <Compile Include="Configuration\ResourceUrlTests.cs" />
-    <Compile Include="Configuration\OptionConfigurationTests.cs" />
+    <Compile Include="Configuration\OptionsConfigurationTests.cs" />
     <Compile Include="Configuration\RootResourceBuilderTests.cs" />
     <Compile Include="Configuration\RouteTests.cs" />
     <Compile Include="Configuration\RouteUrlTests.cs" />

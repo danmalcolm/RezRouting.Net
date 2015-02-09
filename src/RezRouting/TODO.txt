@@ -3,9 +3,7 @@
 
 [ ] Publish to nuget
 
-[ ] Route generation when controller / action combination used more than once
-
-[ ] Within collection, allow parent id name to be overriden
+[ ] Within resource, allow id of parent collection item resource to be overriden
 
 [ ] Wiki
 
@@ -49,6 +47,7 @@ Better support for large number of resources and faster inbound/outbound resolut
 
 Done
 ----
+[x] Route generation when controller / action combination used more than once
 
 [x] Additional route data, e.g. for shared controller like comments, add ObjectTypeId = Products, Id = 1
 
