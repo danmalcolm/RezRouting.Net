@@ -74,6 +74,7 @@ namespace RezRouting.Tests.Configuration
             collection.Children.Should().HaveCount(1);
             var item = collection.Children.Single();
             item.Name.Should().Be("AProduct");
+            item.FullName.Should().Be("Products.AProduct");
         }
 
         [Fact]
@@ -114,18 +115,25 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Items(items =>
+                    products.Items(product =>
                     {
-                        items.IdName("productCode");
-                        items.IdNameAsAncestor("parentProductId");
+                        product.IdName("productCode");
+                        product.IdNameAsAncestor("parentProductId");
                     });
-                    products.Items(items => items.IdName("productId"));
+                    products.Items(product =>
+                    {
+                        product.IdName("productId");
+                        product.Collection("Reviews", reviews => {});
+                    });
                 });
             });
 
             var item = collection.Children.Single();
+            var childCollection = item.Children.Single();
+            var childItem = childCollection.Children.Single();
             item.Url.Should().Be("products/{productId}");
-            item.UrlAsAncestor.Should().Be("products/{parentProductId}");
+            childCollection.Url.Should().Be("products/{parentProductId}/reviews");
+            childItem.Url.Should().Be("products/{parentProductId}/reviews/{id}");
         }
 
         [Fact]
@@ -162,12 +170,20 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Items(product => product.IdNameAsAncestor("productCode"));
+                    products.Items(product =>
+                    {
+                        product.IdNameAsAncestor("parentProductCode");
+                        product.Collection("Reviews", reviews => {});
+                    });
                 });
             });
 
             var item = collection.Children.Single();
-            item.UrlAsAncestor.Should().Be("products/{productCode}");
+            var childCollection = item.Children.Single();
+            var childItem = childCollection.Children.Single();
+            item.Url.Should().Be("products/{id}");
+            childCollection.Url.Should().Be("products/{parentProductCode}/reviews");
+            childItem.Url.Should().Be("products/{parentProductCode}/reviews/{id}");
         }
 
         [Fact]

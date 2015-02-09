@@ -9,6 +9,15 @@
         /// Creates a new IdUrlSegment
         /// </summary>
         /// <param name="idName"></param>
+        public IdUrlSegment(string idName) : this(idName, idName)
+        {
+            
+        }
+
+        /// <summary>
+        /// Creates a new IdUrlSegment
+        /// </summary>
+        /// <param name="idName"></param>
         /// <param name="idNameAsAncestor"></param>
         public IdUrlSegment(string idName, string idNameAsAncestor)
         {

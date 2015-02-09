@@ -12,7 +12,7 @@ namespace RezRouting.Configuration
         /// Configures resource representing items within this collection resource
         /// </summary>
         /// <param name="configure"></param>
-        void Items(Action<CollectionItemBuilder> configure);
+        void Items(Action<ICollectionItemConfigurator> configure);
 
         /// <summary>
         /// Sets a custom path for the URL of this collection resource

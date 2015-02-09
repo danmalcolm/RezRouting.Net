@@ -27,7 +27,7 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void Items(Action<CollectionItemBuilder> configure)
+        public void Items(Action<ICollectionItemConfigurator> configure)
         {
             if (configure == null) throw new ArgumentNullException("configure");
 

@@ -14,6 +14,7 @@ namespace RezRouting.Configuration.Builders
         private readonly CustomValueCollection customProperties = new CustomValueCollection();
         private readonly CustomValueCollection conventionData = new CustomValueCollection();
         private readonly List<Route> routes = new List<Route>();
+        private IdUrlSegment ancestorIdUrlSegment = null;
 
         /// <summary>
         /// Creates a ResourceBuilderBase
@@ -98,6 +99,12 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
+        public void AncestorIdName(string name)
+        {
+            ancestorIdUrlSegment = new IdUrlSegment(name);
+        }
+
+        /// <inheritdoc />
         public void CustomProperties(Action<CustomValueCollection> configure)
         {
             if (configure == null) throw new ArgumentNullException("configure");
@@ -124,7 +131,7 @@ namespace RezRouting.Configuration.Builders
 
             var children = ChildBuilders.Select(x => x.Build(options, context)).ToList();
             var urlSegment = GetUrlSegment(options);
-            var resource = new Resource(Name, urlSegment, Type, customProperties, children);
+            var resource = new Resource(Name, urlSegment, Type, ancestorIdUrlSegment, customProperties, children);
             var conventionRoutes = from convention in context.RouteConventions
                                    from route in convention.Create(resource, conventionData, options.UrlPathSettings, context.Items)
                                    select route;

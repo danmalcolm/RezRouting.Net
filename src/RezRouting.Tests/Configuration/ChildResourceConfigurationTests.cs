@@ -7,7 +7,7 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class NestedResourceConfigurationTests
+    public class ChildResourceConfigurationTests
     {
         [Fact]
         public void singular_resource_should_not_have_children_if_none_configured()

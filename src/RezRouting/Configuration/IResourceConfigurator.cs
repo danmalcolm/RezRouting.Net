@@ -55,5 +55,12 @@ namespace RezRouting.Configuration
         /// <param name="itemName">The name used for item resources nested within the child collection resource</param>
         /// <param name="configure">An action that configures the child resource</param>
         void Collection(string name, string itemName, Action<ICollectionConfigurator> configure);
+
+        /// <summary>
+        /// Sets the name of the identifier parameter that is used to identify the closest
+        /// ancestor collection item in the route URL for this resource. 
+        /// </summary>
+        /// <param name="name"></param>
+        void AncestorIdName(string name);
     }
 }

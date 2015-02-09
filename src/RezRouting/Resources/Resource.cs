@@ -10,6 +10,7 @@ namespace RezRouting.Resources
     public class Resource
     {
         private readonly IUrlSegment urlSegment;
+        private IdUrlSegment overrideAncestorItemId;
 
         /// <summary>
         /// Creates a Resource
@@ -17,12 +18,14 @@ namespace RezRouting.Resources
         /// <param name="name"></param>
         /// <param name="urlSegment"></param>
         /// <param name="type"></param>
+        /// <param name="overrideAncestorItemId"></param>
         /// <param name="customProperties"></param>
         /// <param name="children"></param>
-        public Resource(string name, IUrlSegment urlSegment, ResourceType type, CustomValueCollection customProperties, IEnumerable<Resource> children)
+        public Resource(string name, IUrlSegment urlSegment, ResourceType type, IdUrlSegment overrideAncestorItemId, CustomValueCollection customProperties, IEnumerable<Resource> children)
         {
             Name = name;
             this.urlSegment = urlSegment;
+            this.overrideAncestorItemId = overrideAncestorItemId;
             Type = type;
             CustomProperties = new CustomValueCollection(customProperties);
             Children = children.ToReadOnlyList();
@@ -67,7 +70,7 @@ namespace RezRouting.Resources
             get
             {
                 // TODO - optimise (create once on construction?)
-                string parentPath = Parent != null ? Parent.UrlAsAncestor : "";
+                string parentPath = Parent != null ? Parent.GetUrlAsAncestor(overrideAncestorItemId) : "";
                 string path = UrlPathHelper.JoinPaths(parentPath, urlSegment.Path);
                 return path;
             }
@@ -77,15 +80,29 @@ namespace RezRouting.Resources
         /// The URL used to identify this resource within the URL of a route belonging
         /// to a descendant of this resource
         /// </summary>
-        public string UrlAsAncestor
+        /// <param name="overrideItemId">An overriden id to identify the nearest collection item</param>
+        public string GetUrlAsAncestor(IdUrlSegment overrideItemId)
         {
-            get
+            // TODO - optimise (create once on construction?)
+            IUrlSegment currentUrlSegment;
+            IdUrlSegment parentOverride;
+            
+            if (overrideItemId != null && Type == ResourceType.CollectionItem)
             {
-                // TODO - optimise (create once on construction?)
-                string parentPath = Parent != null ? Parent.UrlAsAncestor : "";
-                string path = UrlPathHelper.JoinPaths(parentPath, urlSegment.PathAsAncestor);
-                return path;
+                // Use overrideItemId for this (item) resource (won't apply to 
+                // remaining ancestors)
+                currentUrlSegment = overrideItemId;
+                parentOverride = null;
             }
+            else
+            {
+                currentUrlSegment = urlSegment;
+                parentOverride = overrideItemId ?? overrideAncestorItemId;
+            }
+
+            string parentPath = Parent != null ? Parent.GetUrlAsAncestor(parentOverride) : "";
+            string path = UrlPathHelper.JoinPaths(parentPath, currentUrlSegment.PathAsAncestor);
+            return path;
         }
 
         /// <summary>

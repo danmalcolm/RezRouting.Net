@@ -80,7 +80,7 @@ namespace RezRouting.Tests.Configuration
         }
         
         [Fact]
-        public void descendants_of_collection_items_should_use_ancestor_id_param_name()
+        public void descendants_of_collection_items_should_include_ancestor_id_param_name()
         {
             var resources = BuildResources(builder =>
             {
@@ -97,6 +97,39 @@ namespace RezRouting.Tests.Configuration
             resources["Products.Product.Status"].Url.Should().Be("products/{productId}/status");
             resources["Products.Product.Reviews"].Url.Should().Be("products/{productId}/reviews");
             resources["Products.Product.Reviews.Review"].Url.Should().Be("products/{productId}/reviews/{id}");
+        }
+
+        [Fact]
+        public void descendants_of_collection_items_should_use_alternative_ancestor_id_param_name_if_specified()
+        {
+            var resources = BuildResources(builder =>
+            {
+                builder.Collection("Products", products =>
+                {
+                    products.Items(product =>
+                    {
+                        product.Singular("Status1", status => { });
+                        product.Singular("Status2", status =>
+                        {
+                            status.AncestorIdName("objectId");
+                        });
+                        product.Collection("Reviews", reviews => { });
+                        product.Collection("Comments", comments =>
+                        {
+                            comments.AncestorIdName("parentObjectId");
+                        });
+                    });
+                });
+            });
+
+            resources["Products.Product.Status1"].Url.Should().Be("products/{productId}/status1");
+            resources["Products.Product.Status2"].Url.Should().Be("products/{objectId}/status2");
+            
+            resources["Products.Product.Reviews"].Url.Should().Be("products/{productId}/reviews");
+            resources["Products.Product.Reviews.Review"].Url.Should().Be("products/{productId}/reviews/{id}");
+
+            resources["Products.Product.Comments"].Url.Should().Be("products/{parentObjectId}/comments");
+            resources["Products.Product.Comments.Comment"].Url.Should().Be("products/{parentObjectId}/comments/{id}");
         }
 
         private Dictionary<string, Resource> BuildResources(Action<ISingularConfigurator> configure)
