@@ -105,6 +105,7 @@
     <Compile Include="AspNetMvc\UrlGeneration\SharedControllerUrlGenerationTests.cs" />
     <Compile Include="Configuration\ChildResourceConfigurationTests.cs" />
     <Compile Include="Configuration\CollectionConfigurationTests.cs" />
+    <Compile Include="Configuration\ConfigurationTestsBase.cs" />
     <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
     <Compile Include="Configuration\Options\UrlPathSettingsTests.cs" />
     <Compile Include="Configuration\ResourceCustomPropertyConfigurationTests.cs" />

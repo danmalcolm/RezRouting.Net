@@ -115,7 +115,7 @@ namespace RezRouting.Tests.Configuration
             var convention2 = new TestRouteConvention("ConventionRoute2");
             var root = BuildResourcesWithConventions(builder =>
             {
-                builder.Route("Route1", Mock.Of<IResourceRouteHandler>(), "GET", "");
+                builder.Route("Route1", "GET", "", Mock.Of<IResourceRouteHandler>());
             }, convention1, convention2);
             
             root.Routes.Select(x => x.Name).Should().Equal("Route1", "ConventionRoute1", "ConventionRoute2");
@@ -151,7 +151,7 @@ namespace RezRouting.Tests.Configuration
             public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
             {
                 Calls.Add(new ConventionCreateCall(resource, data, urlPathSettings));
-                yield return new Route(name, Mock.Of<IResourceRouteHandler>(), "GET", name.ToLower());
+                yield return new Route(name, "GET", name.ToLower(), Mock.Of<IResourceRouteHandler>());
             }
         }
 

@@ -19,10 +19,10 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             root.Collection("Products", products =>
             {
-                products.Route("Index", MvcAction.For((ProductsController c) => c.Index()), "GET", "");
+                products.Route("Index", "GET", "", MvcAction.For((ProductsController c) => c.Index()));
                 products.Items(product =>
                 {
-                    product.Route("Show", MvcAction.For((ProductController c) => c.Show(null)), "GET", "");
+                    product.Route("Show", "GET", "", MvcAction.For((ProductController c) => c.Show(null)));
                 });
             });
             root.Singular("Profile", profile => profile.HandledBy<ProfileController>());

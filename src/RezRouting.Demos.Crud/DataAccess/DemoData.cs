@@ -16,7 +16,9 @@ namespace RezRouting.Demos.Crud.DataAccess
                 select new Manufacturer
                 {
                     Id = manufacturerId, 
-                    Name = "Manufacturer " + manufacturerId
+                    Name = "Manufacturer " + manufacturerId,
+                    CreatedOn = DateTime.Now.AddDays(-14).AddDays(-manufacturerId),
+                    ModifiedOn = DateTime.Now.AddDays(-14).AddDays(-manufacturerId),
                 })
                 .ToList();
 

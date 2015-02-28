@@ -16,7 +16,7 @@ namespace RezRouting.Tests.Configuration
         {
             var root = RootResourceBuilder.Create("");
             root.Collection("FineProducts", products =>
-                products.Route("Route2", MvcAction.For((TestController c) => c.Action1()), "GET", "action1"));
+                products.Route("Route2", "GET", "action1", MvcAction.For((TestController c) => c.Action1())));
 
             var settings = new UrlPathSettings(caseStyle: CaseStyle.Upper, wordSeparator: "_");
             root.Options(options => options.UrlPaths(settings));

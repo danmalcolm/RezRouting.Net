@@ -39,7 +39,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
                        where ActionMappingHelper.SupportsAction(controllerType, Action, contextItems)
                        let handler = new MvcAction(controllerType, Action)
                        let path = urlPathSettings.FormatDirectoryName(Path)
-                       select new Route(Name, handler, HttpMethod, path, null);
+                       select new Route(Name, HttpMethod, path, handler, null);
             }
             return Enumerable.Empty<Route>();
         }

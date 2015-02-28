@@ -113,14 +113,14 @@ namespace RezRouting.Configuration.Builders
         }
 
         /// <inheritdoc />
-        public void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customValues = null, CustomValueCollection additionalRouteValues = null)
+        public void Route(string name, string httpMethod, string path, IResourceRouteHandler handler, CustomValueCollection customValues = null, CustomValueCollection additionalRouteValues = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
             if (httpMethod == null) throw new ArgumentNullException("httpMethod");
             if (path == null) throw new ArgumentNullException("path");
 
-            var route = new Route(name, handler, httpMethod, path, customValues, additionalRouteValues);
+            var route = new Route(name, httpMethod, path, handler, customProperties: customValues, additionalRouteValues: additionalRouteValues);
             routes.Add(route);
         }
 

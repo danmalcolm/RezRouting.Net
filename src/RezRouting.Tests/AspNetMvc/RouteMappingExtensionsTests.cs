@@ -58,8 +58,8 @@ namespace RezRouting.Tests.AspNetMvc
             var root = RootResourceBuilder.Create("");
             root.Collection("Products", products =>
             {
-                products.Route("Route1", new MvcAction(typeof(TestController), "Action1"), "GET", "action1");
-                products.Route("Route2", new MvcAction(typeof(TestController), "Action2"), "GET", "action2");
+                products.Route("Route1", "GET", "action1", new MvcAction(typeof(TestController), "Action1"));
+                products.Route("Route2", "GET", "action2", new MvcAction(typeof(TestController), "Action2"));
             });
             return root;
         }

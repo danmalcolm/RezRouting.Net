@@ -57,7 +57,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
                         string controllerName = RouteValueHelper.TrimControllerFromTypeName(controllerType);
                         string name = string.Format("{0}.{1}", controllerName, Action);
                         var handler = new MvcAction(controllerType, Action);
-                        var route = new Route(name, handler, HttpMethod, path);
+                        var route = new Route(name, HttpMethod, path, handler);
                         yield return route;
                     }
                 }

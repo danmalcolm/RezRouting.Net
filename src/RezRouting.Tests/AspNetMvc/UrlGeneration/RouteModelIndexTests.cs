@@ -54,18 +54,18 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var builder = RootResourceBuilder.Create();
             builder.Collection("Products", products =>
             {
-                products.Route("Index", MvcAction.For((ProductsController x) => x.Index()), "GET", "");
+                products.Route("Index", "GET", "", MvcAction.For((ProductsController x) => x.Index()));
                 products.Collection("AuditLog", auditlog =>
                 {
-                    auditlog.Route("Index", MvcAction.For((AuditLogController x) => x.Index("")), "GET", "");
+                    auditlog.Route("Index", "GET", "", MvcAction.For((AuditLogController x) => x.Index("")));
                 });
             });
             builder.Collection("Manufacturers", manufacturers =>
             {
-                manufacturers.Route("Index", MvcAction.For((ManufacturersController x) => x.Index()), "GET", "");
+                manufacturers.Route("Index", "GET", "", MvcAction.For((ManufacturersController x) => x.Index()));
                 manufacturers.Collection("AuditLog", auditlog =>
                 {
-                    auditlog.Route("Index", MvcAction.For((AuditLogController x) => x.Index("")), "GET", "");
+                    auditlog.Route("Index", "GET", "", MvcAction.For((AuditLogController x) => x.Index("")));
                 });
             });
             return builder;

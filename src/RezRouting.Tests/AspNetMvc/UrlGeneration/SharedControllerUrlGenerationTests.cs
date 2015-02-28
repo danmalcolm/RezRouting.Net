@@ -120,7 +120,7 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             {
                 var routeValues = new CustomValueCollection { { "parentType", parentType } };
                 var action = MvcAction.For((CommentsController x) => x.Index("", ""));
-                comments.Route("Index", action, "GET", "", additionalRouteValues: routeValues);
+                comments.Route("Index", "GET", "", action, additionalRouteValues: routeValues);
             });
         }
     }

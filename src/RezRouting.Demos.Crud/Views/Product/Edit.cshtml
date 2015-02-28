@@ -1,10 +1,12 @@
-﻿@model RezRouting.Demos.Crud.Controllers.Products.Product.EditModel
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.Crud.Controllers.Products.Product
+@model RezRouting.Demos.Crud.Controllers.Products.Product.EditModel
 
 @{
     ViewBag.Title = "Update Product";
 }
 
-<form method="POST" action="@Url.Action("Update", "Product", new { httpMethod = "PUT"} )">
+<form method="POST" action="@(Url.ResourceUrl<ProductController>("Update"))">
 
     @Html.ValidationSummary()
 

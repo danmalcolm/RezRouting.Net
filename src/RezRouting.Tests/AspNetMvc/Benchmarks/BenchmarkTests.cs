@@ -192,7 +192,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
                     foreach (var actionName in actionNames)
                     {
                         string path = actionName.ToLowerInvariant();
-                        collection.Route(actionName, new MvcAction(controllerType, actionName), "GET", path);
+                        collection.Route(actionName, "GET", path, new MvcAction(controllerType, actionName));
                     }
                 });
             });

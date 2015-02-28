@@ -6,7 +6,7 @@ namespace RezRouting.Demos.Crud.Controllers.Home
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Show()
         {
             var model = new HomeModel { LatestProducts = DemoData.Products.OrderBy(x => x.CreatedOn).Take(3).ToList() };
             return View(model);

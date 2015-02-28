@@ -17,8 +17,10 @@ namespace RezRouting.Resources
         /// <param name="name"></param>
         /// <param name="httpMethod"></param>
         /// <param name="path"></param>
+        /// <param name="handler"></param>
         /// <param name="customProperties"></param>
-        public Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customProperties = null, CustomValueCollection additionalRouteValues = null)
+        /// <param name="additionalRouteValues"></param>
+        public Route(string name, string httpMethod, string path, IResourceRouteHandler handler, CustomValueCollection customProperties = null, CustomValueCollection additionalRouteValues = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -45,14 +47,19 @@ namespace RezRouting.Resources
         /// <summary>
         /// The name of this Route
         /// </summary>
-        public string Name { set; get; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// The full name of this Route (combined with the full name of the parent Resource)
+        /// The full name of this Route (includes full name of the parent Resource)
         /// </summary>
         public string FullName
         {
-            get { return Resource.FullName + "." + Name; }
+            get
+            {
+                return Resource.FullName.Length > 0
+                    ? Resource.FullName + "." + Name
+                    : Name;
+            }
         }
 
         /// <summary>

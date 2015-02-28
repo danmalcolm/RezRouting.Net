@@ -1,0 +1,27 @@
+﻿@model RezRouting.Demos.Crud.Controllers.Manufacturers.ManufacturersIndexModel
+
+@{
+    ViewBag.Title = "Manufacturers";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var manufacturer in Model.Manufacturers)
+        {
+            <tr>
+                <td><a href="@Url.Action("Show", "Manufacturer", new { id = manufacturer.Id })">@manufacturer.Id</a></td>
+                <td>@manufacturer.Name</td>
+                <td>@manufacturer.CreatedOn</td>
+                <td>@manufacturer.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>
+<div><a class="btn btn-default" href="@Url.Action("New", "Manufacturers")">Add New Manufacturer</a></div>
+

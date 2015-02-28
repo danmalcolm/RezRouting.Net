@@ -27,14 +27,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">RezRouting CRUD Demo</a>
+                <a class="navbar-brand" href="@Url.Action("Show", "Home")">RezRouting CRUD Demo</a>
             </div>
             @if (ViewContext.HttpContext.Request.IsAuthenticated)
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("Show", "Home")">Home</a></li>
                         <li><a href="@Url.Action("Index", "Products")">Products</a></li>
+                        <li><a href="@Url.Action("Index", "Manufacturers")">Manufacturers</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><p class="navbar-text">@ViewContext.HttpContext.User.Identity.Name signed in</p></li>

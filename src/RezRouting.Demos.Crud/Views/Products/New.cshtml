@@ -1,10 +1,12 @@
-﻿@model RezRouting.Demos.Crud.Controllers.Products.CreateModel
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.Crud.Controllers.Products
+@model RezRouting.Demos.Crud.Controllers.Products.CreateModel
 
 @{
     ViewBag.Title = "Create Product";
 }
 
-<form method="POST" action="@Url.Action("Create", "Products")">
+<form method="POST" action="@(Url.ResourceUrl<ProductsController>("Create"))">
     
     @Html.ValidationSummary()
 

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
-using RezRouting.Configuration;
-using RezRouting.Resources;
-using RezRouting.Tests.Infrastructure;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class ResourceUrlTests
+    public class ResourceUrlTests : ConfigurationTestsBase
     {
         [Fact]
         public void top_level_singular_urls_should_be_based_on_resource_name()
@@ -130,14 +124,6 @@ namespace RezRouting.Tests.Configuration
 
             resources["Products.Product.Comments"].Url.Should().Be("products/{parentObjectId}/comments");
             resources["Products.Product.Comments.Comment"].Url.Should().Be("products/{parentObjectId}/comments/{id}");
-        }
-
-        private Dictionary<string, Resource> BuildResources(Action<ISingularConfigurator> configure)
-        {
-            var builder = RootResourceBuilder.Create("");
-            configure(builder);
-            var resource = builder.Build();
-            return resource.Expand().ToDictionary(x => x.FullName);
         }
     }
 }

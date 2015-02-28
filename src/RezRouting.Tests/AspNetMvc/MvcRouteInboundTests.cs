@@ -19,10 +19,10 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = RootResourceBuilder.Create("");
             builder.Singular("Profile", profile =>
             {
-                profile.Route("Show", MvcAction.For((ProfileController x) => x.Show()), "GET", "");
-                profile.Route("Edit", MvcAction.For((ProfileController x) => x.Edit()), "GET", "edit");
-                profile.Route("Update", MvcAction.For((ProfileController x) => x.Update()), "PUT", "");
-                profile.Route("Delete", MvcAction.For((ProfileController x) => x.Delete()), "DELETE", "");
+                profile.Route("Show", "GET", "", MvcAction.For((ProfileController x) => x.Show()));
+                profile.Route("Edit", "GET", "edit", MvcAction.For((ProfileController x) => x.Edit()));
+                profile.Route("Update", "PUT", "", MvcAction.For((ProfileController x) => x.Update()));
+                profile.Route("Delete", "DELETE", "", MvcAction.For((ProfileController x) => x.Delete()));
             });
             Routes = new RouteCollection();
             builder.MapMvcRoutes(Routes);

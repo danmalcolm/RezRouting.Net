@@ -13,11 +13,12 @@ namespace RezRouting.Configuration
         /// Adds a route to the current resource
         /// </summary>
         /// <param name="name">The name of the route</param>
-        /// <param name="handler">The handler that handles the route</param>
         /// <param name="httpMethod">The HTTP method that request will be under for route to applie</param>
         /// <param name="path">The path within the URL used to identify the route - appended to the resource's URL to create the full route URL</param>
+        /// <param name="handler">The handler that handles the route</param>
         /// <param name="customValues">Custom properties attached to the route - intended for use by application-specific functionality and extensions</param>
-        void Route(string name, IResourceRouteHandler handler, string httpMethod, string path, CustomValueCollection customValues = null, CustomValueCollection additionalRouteValues = null);
+        /// <param name="additionalRouteValues"></param>
+        void Route(string name, string httpMethod, string path, IResourceRouteHandler handler, CustomValueCollection customValues = null, CustomValueCollection additionalRouteValues = null);
 
         /// <summary>
         /// Sets custom properties stored on the resource being configured - intended for use by application-specific functionality and extensions

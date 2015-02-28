@@ -121,6 +121,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Home\HomeModel.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateInput.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateModel.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturersController.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturersIndexModel.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\EditInput.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\EditModel.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerController.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerDetailsModel.cs" />
     <Compile Include="Controllers\Products\CreateInput.cs" />
     <Compile Include="Controllers\Products\CreateModel.cs" />
     <Compile Include="Controllers\Products\ProductsIndexModel.cs" />
@@ -155,7 +163,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Session\Show.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Show.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Product\Show.cshtml" />
     <Content Include="Views\Shared\Alerts.cshtml" />
@@ -164,6 +172,10 @@
     <Content Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Review\Show.cshtml" />
+    <Content Include="Views\Manufacturer\Edit.cshtml" />
+    <Content Include="Views\Manufacturer\Show.cshtml" />
+    <Content Include="Views\Manufacturers\Index.cshtml" />
+    <Content Include="Views\Manufacturers\New.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

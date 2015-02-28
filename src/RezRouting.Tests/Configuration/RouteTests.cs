@@ -15,7 +15,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_build_route_with_core_properties_configured()
         {
-            var route = new Route("Route1", testHandler, "GET", "test");
+            var route = new Route("Route1", "GET", "test", testHandler);
 
             route.Should().NotBeNull();
             route.ShouldBeEquivalentTo(new
@@ -30,7 +30,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void custom_properties_should_be_empty_if_not_configured()
         {
-            var route = new Route("Route1", testHandler, "GET", "test");
+            var route = new Route("Route1", "GET", "test", testHandler);
 
             route.CustomProperties.Should().BeEmpty();
         }
@@ -39,7 +39,7 @@ namespace RezRouting.Tests.Configuration
         public void should_include_copy_of_items_in_custom_properties_if_specified()
         {
             var data = new CustomValueCollection { {"key 1", "value 1" }};
-            var route = new Route("Route1", testHandler, "GET", "test", data);
+            var route = new Route("Route1", "GET", "test", testHandler, data);
 
             route.CustomProperties.ShouldBeEquivalentTo(new CustomValueCollection { { "key 1", "value 1" } });
             route.CustomProperties.Should().NotBeSameAs(data);
@@ -48,7 +48,7 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void additional_route_values_should_be_empty_if_not_configured()
         {
-            var route = new Route("Route1", testHandler, "GET", "test");
+            var route = new Route("Route1", "GET", "test", testHandler);
 
             route.AdditionalRouteValues.Should().BeEmpty();
         }
@@ -57,12 +57,12 @@ namespace RezRouting.Tests.Configuration
         public void should_include_copy_of_additional_route_values_if_specified()
         {
             var values = new CustomValueCollection { { "key 1", "value 1" } };
-            var route = new Route("Route1", testHandler, "GET", "test", additionalRouteValues: values);
+            var route = new Route("Route1", "GET", "test", testHandler, additionalRouteValues: values);
 
             route.AdditionalRouteValues.ShouldBeEquivalentTo(new CustomValueCollection { { "key 1", "value 1" } });
             route.AdditionalRouteValues.Should().NotBeSameAs(values);
         }
-
+        
         private class TestController : Controller
         {
             public ActionResult Action1()
