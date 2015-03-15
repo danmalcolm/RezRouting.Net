@@ -12,8 +12,8 @@ namespace RezRouting.Configuration
         /// <summary>
         /// Adds a route to the current resource
         /// </summary>
-        /// <param name="name">The name of the route</param>
-        /// <param name="httpMethod">The HTTP method that request will be under for route to applie</param>
+        /// <param name="name">The name of the route - combined with the full name of the resource to give the full route name</param>
+        /// <param name="httpMethod">The HTTP method that must be used for this route to match</param>
         /// <param name="path">The path within the URL used to identify the route - appended to the resource's URL to create the full route URL</param>
         /// <param name="handler">The handler that handles the route</param>
         /// <param name="customValues">Custom properties attached to the route - intended for use by application-specific functionality and extensions</param>

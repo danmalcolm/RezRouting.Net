@@ -8,7 +8,7 @@ namespace RezRouting.Configuration
 {
     /// <summary>
     /// RezRouting's main entry point for configuring an application or component's 
-    /// eesource hierarchy and routes. Configures routes and other attributes of 
+    /// resource hierarchy and routes. Configures routes and other attributes of 
     /// the root resource and its descendants.
     /// </summary>
     public class RootResourceBuilder : SingularBuilder, IRootResourceBuilder
@@ -18,7 +18,8 @@ namespace RezRouting.Configuration
         /// configuring an application or component's resource hierarchy and routes.
         /// </summary>
         /// <param name="name">An optional name to give to the root resource. The specified 
-        /// name will be included in the full name of all chlid resources and their routes.
+        /// name will be included in the full names of routes belonging to the root resource
+        /// and to the full names of all child resources and their routes.
         /// </param>
         /// <returns></returns>
         public static IRootResourceBuilder Create(string name = "")
