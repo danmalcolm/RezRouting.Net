@@ -47,9 +47,6 @@ namespace RezRouting.Demos.Crud
             });
             root.ApplyRouteConventions(new CrudRouteConventions());
             root.MapMvcRoutes(routes);
-
-            // Allow RezRouting to generate URLs (much) more quickly
-            UrlHelperExtensions.IndexRoutes(routes);
         }
     }
 }

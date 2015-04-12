@@ -35,6 +35,14 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         }
 
         [Fact]
+        public void should_ignore_case_of_action_name()
+        {
+            helper.ResourceUrl(typeof(ProductsController), "index", null).Should().Be("/products");
+            helper.ResourceUrl(typeof(ProductsController), "Index", null).Should().Be("/products");
+            helper.ResourceUrl(typeof(ProductsController), "INDEX", null).Should().Be("/products");
+        }
+
+        [Fact]
         public void should_generate_url_specified_by_controller_type_as_type_parameter()
         {
             string url = helper.ResourceUrl<ProductsController>("Index", null);

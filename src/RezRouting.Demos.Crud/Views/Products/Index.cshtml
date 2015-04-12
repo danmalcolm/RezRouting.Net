@@ -1,4 +1,7 @@
-﻿@model RezRouting.Demos.Crud.Controllers.Products.ProductsIndexModel
+﻿@using Microsoft.Web.Mvc.Resources
+@using RezRouting.Demos.Crud.Controllers.Products.Product
+@using RezRouting.Demos.Crud.Utility
+@model RezRouting.Demos.Crud.Controllers.Products.ProductsIndexModel
 
 @{
     ViewBag.Title = "Products";
@@ -16,7 +19,7 @@
         @foreach (var product in Model.Products)
         {
             <tr>
-                <td><a href="@Url.Action("Show", "Product", new { id = product.Id })">@product.Id</a></td>
+                <td><a href="@Url.ResourceUrl((ProductController x) => x.Show(product.Id))">@product.Id</a></td>
                 <td>@product.Name</td>
                 <td>@product.Manufacturer.Name</td>
                 <td>@product.CreatedOn</td>

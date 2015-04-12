@@ -96,9 +96,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void descendants_of_collection_items_should_use_alternative_ancestor_id_param_name_if_specified()
         {
-            var resources = BuildResources(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products =>
+                root.Collection("Products", products =>
                 {
                     products.Items(product =>
                     {

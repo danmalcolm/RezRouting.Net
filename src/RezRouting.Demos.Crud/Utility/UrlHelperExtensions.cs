@@ -16,7 +16,7 @@ namespace RezRouting.Demos.Crud.Utility
         /// <param name="expression"></param>
         /// <param name="additionalRouteValues"></param>
         /// <returns></returns>
-        public static string ResourceAction<TController>(this UrlHelper urlHelper, Expression<Action<TController>> expression, object additionalRouteValues = null)
+        public static string ResourceUrl<TController>(this UrlHelper urlHelper, Expression<Action<TController>> expression, object additionalRouteValues = null)
              where TController : Controller
         {
             var routeValues = Microsoft.Web.Mvc.Internal.ExpressionHelper.GetRouteValuesFromExpression(expression);

@@ -146,7 +146,6 @@
     <Compile Include="AspNetMvc\UrlGeneration\AreaUrlGenerationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\BuiltInUrlGenerationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\RouteModelIndexTests.cs" />
-    <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsOptimizationTests.cs" />
     <Compile Include="AspNetMvc\UrlGeneration\UrlHelperExtensionsTests.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteDataAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\AspNetMvc\RouteCollectionAssertionExtensions.cs" />

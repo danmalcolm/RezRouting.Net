@@ -12,8 +12,7 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
 {
     public class SharedControllerUrlGenerationTests
     {
-        private readonly UrlHelper helper;
-        private UrlHelper optimizedHelper;
+        private readonly UrlHelper urlHelper;
 
         public SharedControllerUrlGenerationTests()
         {
@@ -44,29 +43,23 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
                 });
             });
 
-            var collection1 = new RouteCollection();
-            builder.MapMvcRoutes(collection1);
-            helper = new UrlHelper(context, collection1);
-
-            var collection2 = new RouteCollection();
-            builder.MapMvcRoutes(collection2);
-            optimizedHelper = new UrlHelper(context, collection2);
-
-            UrlHelperExtensions.IndexRoutes(collection2);
+            var routes = new RouteCollection();
+            builder.MapMvcRoutes(routes);
+            urlHelper = new UrlHelper(context, routes);
         }
 
         [Fact]
         private void built_in_url_generation_should_get_route_identified_by_additional_route_values()
         {
-            string url1 = helper.Action("Index", "Comments", 
+            string url1 = urlHelper.Action("Index", "Comments", 
                 new { id = 12345, parentType = "Product" });
             url1.Should().Be("/products/12345/comments");
 
-            string url2 = helper.Action("Index", "Comments", 
+            string url2 = urlHelper.Action("Index", "Comments", 
                 new { id = 12345, parentType = "Manufacturer" });
             url2.Should().Be("/manufacturers/12345/comments");
 
-            string url3 = helper.Action("Index", "Comments",
+            string url3 = urlHelper.Action("Index", "Comments",
                 new { id = 12345, parentType = "Supplier" });
             url3.Should().Be("/suppliers/12345/comments");
         }
@@ -74,31 +67,15 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         [Fact]
         private void custom_url_generation_should_get_route_identified_by_additional_route_values()
         {
-            string url1 = helper.ResourceUrl<CommentsController>("Index",
+            string url1 = urlHelper.ResourceUrl<CommentsController>("Index",
                 new { id = 12345, parentType = "Product" });
             url1.Should().Be("/products/12345/comments");
 
-            string url2 = helper.ResourceUrl<CommentsController>("Index",
+            string url2 = urlHelper.ResourceUrl<CommentsController>("Index",
                 new { id = 12345, parentType = "Manufacturer" });
             url2.Should().Be("/manufacturers/12345/comments");
 
-            string url3 = helper.ResourceUrl<CommentsController>("Index",
-                new { id = 12345, parentType = "Supplier" });
-            url3.Should().Be("/suppliers/12345/comments");
-        }
-
-        [Fact]
-        private void optimized_custom_url_generation_should_get_route_identified_by_additional_route_values()
-        {
-            string url1 = optimizedHelper.ResourceUrl<CommentsController>("Index",
-                new { id = 12345, parentType = "Product" });
-            url1.Should().Be("/products/12345/comments");
-
-            string url2 = optimizedHelper.ResourceUrl<CommentsController>("Index",
-                new { id = 12345, parentType = "Manufacturer" });
-            url2.Should().Be("/manufacturers/12345/comments");
-
-            string url3 = optimizedHelper.ResourceUrl<CommentsController>("Index",
+            string url3 = urlHelper.ResourceUrl<CommentsController>("Index",
                 new { id = 12345, parentType = "Supplier" });
             url3.Should().Be("/suppliers/12345/comments");
         }

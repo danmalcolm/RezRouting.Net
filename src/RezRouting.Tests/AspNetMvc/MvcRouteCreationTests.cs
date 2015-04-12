@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
+using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
@@ -16,7 +17,7 @@ namespace RezRouting.Tests.AspNetMvc
         [Fact]
         public void should_create_routes_for_resources_at_all_levels_of_model()
         {
-            var handler = MvcAction.For((TestController c) => c.Action1());
+            var handler = MvcAction.For((Test1Controller c) => c.Action1());
             var builder = RootResourceBuilder.Create("");
             builder.Singular("Profile", profile =>
             {
@@ -59,7 +60,7 @@ namespace RezRouting.Tests.AspNetMvc
             };
             builder.Collection("Products",
                 products => products.Route("Route1",
-                    "GET", "action1", MvcAction.For((TestController c) => c.Action1()), additionalRouteValues: values));
+                    "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()), additionalRouteValues: values));
 
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
@@ -75,7 +76,7 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products",
                 products => products.Route("Route1",
-                    "GET", "action1", MvcAction.For((TestController c) => c.Action1())));
+                    "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1())));
             
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
@@ -90,8 +91,8 @@ namespace RezRouting.Tests.AspNetMvc
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
             });
 
             Action action = () => builder.MapMvcRoutes(new RouteCollection());
@@ -107,7 +108,7 @@ Products.Route1 - (defined on resources Products and Products)
         {
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => 
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1())));
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1())));
             var routes = new RouteCollection();
             routes.MapRoute("Products.Route1", "url");
             
@@ -124,7 +125,7 @@ Products.Route1 - (defined on resource Products)
         {
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products => 
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1())));
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1())));
             var routes = new RouteCollection();
             Resource model = null;
 
@@ -140,20 +141,20 @@ Products.Route1 - (defined on resource Products)
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
-                products.Route("Route2", "GET", "action2", MvcAction.For((TestController c) => c.Action2()));
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                products.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
                 products.Items(product =>
                 {
-                    product.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
-                    product.Route("Route2", "GET", "action2", MvcAction.For((TestController c) => c.Action2()));
+                    product.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                    product.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
-                        reviews.Route("Route2", "GET", "action2", MvcAction.For((TestController c) => c.Action2()));
+                        reviews.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                        reviews.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
                         reviews.Items(review =>
                         {
-                            review.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
-                            review.Route("Route2", "GET", "action2", MvcAction.For((TestController c) => c.Action2()));
+                            review.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                            review.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
                         });
                     });
                 });
@@ -175,8 +176,8 @@ Products.Route1 - (defined on resource Products)
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
-                products.Route("Route1", "GET", "action2", MvcAction.For((TestController c) => c.Action2()));
-                products.Items(product => product.HandledBy<TestController>());
+                products.Route("Route1", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
+                products.Items(product => product.HandledBy<Test1Controller>());
             });
 
             var routes = new RouteCollection();
@@ -187,7 +188,61 @@ Products.Route1 - (defined on resource Products)
                 .Should().OnlyContain(x => Equals(x, "Area1"));
         }
 
-        public class TestController : Controller
+        [Fact]
+        public void should_initialise_index_used_by_url_generation()
+        {
+            var builder = RootResourceBuilder.Create();
+            builder.Collection("Products", products =>
+            {
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                products.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
+                products.Items(product => product.HandledBy<Test1Controller>());
+            });
+
+            var routes = new RouteCollection();
+            builder.MapMvcRoutes(routes);
+
+            var indexed = UrlHelperExtensions.Index.GetRoutes(routes, typeof (Test1Controller), "Action1");
+            indexed.Select(x => x.FullName).Should().Equal("Products.Route1");
+        }
+
+        [Fact]
+        public void when_mapping_routes_for_separate_resources_hierarchies_should_index_all_for_url_generation()
+        {
+            var routes = new RouteCollection();
+            var builder1 = RootResourceBuilder.Create("Area1");
+            builder1.Collection("Products", products =>
+            {
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+            });
+            builder1.MapMvcRoutes(routes);
+            var builder2 = RootResourceBuilder.Create("Area2");
+            builder2.Collection("Products", products =>
+            {
+                products.Route("Route1", "GET", "action1", MvcAction.For((Test2Controller c) => c.Action1()));
+            });
+            builder2.MapMvcRoutes(routes);
+
+            UrlHelperExtensions.Index.GetRoutes(routes, typeof(Test1Controller), "Action1")
+                .Select(x => x.FullName).Should().Equal("Area1.Products.Route1");
+            UrlHelperExtensions.Index.GetRoutes(routes, typeof(Test2Controller), "Action1")
+                .Select(x => x.FullName).Should().Equal("Area2.Products.Route1");
+        }
+
+        public class Test1Controller : Controller
+        {
+            public ActionResult Action1()
+            {
+                return null;
+            }
+
+            public ActionResult Action2()
+            {
+                return null;
+            }
+        }
+
+        public class Test2Controller : Controller
         {
             public ActionResult Action1()
             {

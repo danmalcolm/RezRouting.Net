@@ -1,4 +1,7 @@
-﻿@model RezRouting.Demos.Crud.Controllers.Manufacturers.ManufacturersIndexModel
+﻿@using RezRouting.Demos.Crud.Controllers.Manufacturers
+@using RezRouting.Demos.Crud.Controllers.Manufacturers.Manufacturer
+@using RezRouting.Demos.Crud.Utility
+@model ManufacturersIndexModel
 
 @{
     ViewBag.Title = "Manufacturers";
@@ -15,7 +18,7 @@
         @foreach (var manufacturer in Model.Manufacturers)
         {
             <tr>
-                <td><a href="@Url.Action("Show", "Manufacturer", new { id = manufacturer.Id })">@manufacturer.Id</a></td>
+                <td><a href="@Url.ResourceUrl((ManufacturerController x) => x.Show(manufacturer.Id)) ">@manufacturer.Id</a></td>
                 <td>@manufacturer.Name</td>
                 <td>@manufacturer.CreatedOn</td>
                 <td>@manufacturer.ModifiedOn</td>

@@ -80,29 +80,6 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         public void url_generation_using_resource_url_extensions_optimised_to_use_index()
         {
             var helper = CreateUrlHelperWithRoutes();
-            UrlHelperExtensions.IndexRoutes(helper.RouteCollection);
-            
-            helper.ResourceUrl<AbyssiniansController>("Action1", null)
-                .Should().Be("/abyssinians/action1");
-            Profiler.Profile("Generating URL for route at start of RouteCollection", 100,
-                () => helper.ResourceUrl<AbyssiniansController>("Action1", null));
-
-            helper.ResourceUrl<LobstersController>("Action3", null)
-                .Should().Be("/lobsters/action3");
-            Profiler.Profile("Generating URL for route near middle of RouteCollection", 100,
-                () => helper.ResourceUrl<LobstersController>("Action3", null));
-
-            helper.ResourceUrl<ZoosController>("Action5", null)
-                .Should().Be("/zoos/action5");
-            Profiler.Profile("Generating URL for route at end of RouteCollection", 100,
-                () => helper.ResourceUrl<ZoosController>("Action5", null));
-        }
-
-        [Fact]
-        public void url_generation_using_resource_url_extensions_without_index_optimisations()
-        {
-            var helper = CreateUrlHelperWithRoutes();
-            UrlHelperExtensions.ClearIndexedRoutes();
 
             helper.ResourceUrl<AbyssiniansController>("Action1", null)
                 .Should().Be("/abyssinians/action1");
@@ -246,7 +223,7 @@ namespace RezRouting.Tests.AspNetMvc.Benchmarks
         
         public void Dispose()
         {
-            UrlHelperExtensions.ClearIndexedRoutes();
+            UrlHelperExtensions.Index.Clear();
         }
     }
 }

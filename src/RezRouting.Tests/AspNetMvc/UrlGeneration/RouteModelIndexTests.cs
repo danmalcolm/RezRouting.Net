@@ -18,12 +18,13 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
 
-            var index = new RouteModelIndex(routes);
+            var index = new RouteModelIndex();
+            index.AddRoutes(routes);
 
-            var routeModels = index.GetRoutes(typeof (ProductsController), "Index");
+            var routeModels = index.GetRoutes(routes, typeof (ProductsController), "Index");
             routeModels.Select(x => x.FullName).Should().Equal("Products.Index");
 
-            routeModels = index.GetRoutes(typeof(ManufacturersController), "Index");
+            routeModels = index.GetRoutes(routes, typeof(ManufacturersController), "Index");
             routeModels.Select(x => x.FullName).Should().Equal("Manufacturers.Index");
         }
 
@@ -34,9 +35,10 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
             var routes = new RouteCollection();
             builder.MapMvcRoutes(routes);
 
-            var index = new RouteModelIndex(routes);
+            var index = new RouteModelIndex();
+            index.AddRoutes(routes);
 
-            var routeModels = index.GetRoutes(typeof(AuditLogController), "Index");
+            var routeModels = index.GetRoutes(routes, typeof(AuditLogController), "Index");
             routeModels.Select(x => x.FullName).Should()
                 .Equal("Products.AuditLog.Index", "Manufacturers.AuditLog.Index");
         }
@@ -46,7 +48,8 @@ namespace RezRouting.Tests.AspNetMvc.UrlGeneration
         {
             var routes = new RouteCollection();
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            var index = new RouteModelIndex(routes);
+            var index = new RouteModelIndex();
+            index.AddRoutes(routes);
         }
 
         private IRootResourceBuilder ConfigureResources()

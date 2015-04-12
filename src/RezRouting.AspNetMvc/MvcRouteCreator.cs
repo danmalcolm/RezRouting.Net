@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.AspNetMvc.Utility;
 using RezRouting.Resources;
 using Route = RezRouting.Resources.Route;
@@ -17,12 +18,12 @@ namespace RezRouting.AspNetMvc
         /// <summary>
         /// Adds the routes within a hierarchy of resources to the specified RouteCollection
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="root"></param>
         /// <param name="routes"></param>
         /// <param name="area">The name of the area - if null, no area will be configured</param>
-        public void CreateRoutes(Resource model, RouteCollection routes, string area)
+        public void CreateRoutes(Resource root, RouteCollection routes, string area)
         {
-            var routeModels = GetRoutes(new [] { model }).ToList();
+            var routeModels = GetRoutes(new [] { root }).ToList();
 
             new RouteValidator().ThrowIfInvalid(routeModels, routes);
             
@@ -30,6 +31,7 @@ namespace RezRouting.AspNetMvc
             {
                 CreateRoute(route, routes, area);
             }
+            UrlHelperExtensions.Index.AddRoutes(routes);
         }
 
         private IEnumerable<Route> GetRoutes(IEnumerable<Resource> resources)
