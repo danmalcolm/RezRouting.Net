@@ -13,12 +13,10 @@
     <BuildDir>$(RootDir)\build</BuildDir>
     <SlnDir>$(RootDir)\src</SlnDir>
     <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
-    <MainCsProjDir>$(SlnDir)\RezRouting.AspNetMvc</MainCsProjDir>
-    <NuSpecPath>$(SlnDir)\RezRouting.AspNetMvc.nuspec</NuSpecPath>
     <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
   </PropertyGroup>
 
-  <Target Name="Full" DependsOnTargets="Build;RunTests;PackageNuGet" />
+  <Target Name="Full" DependsOnTargets="Build;PackageNuGet" />
 
   <Target Name="Prepare">
     <RemoveDir Directories="$(BuildDir);$(PackageDir)" />
@@ -29,22 +27,17 @@
     <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);"  />
   </Target>
 
-  <Target Name="RunTests">
-      <xunit Assembly="$(SlnDir)\RezRouting.Tests\bin\$(Configuration)\RezRouting.Tests.dll" />
+  <Target Name="RunTests" >
+    <ItemGroup>
+      <TestAssembly Include="$(SlnDir)\RezRouting.Tests\bin\$(Configuration)\RezRouting.Tests.dll" />
+      <TestAssembly Include="$(SlnDir)\RezRouting.AspNetMvc5.Tests\bin\$(Configuration)\RezRouting.AspNetMvc5.Tests.dll" />
+    </ItemGroup>
+    <xunit Assemblies="@(TestAssembly)" />
   </Target>
 
   <Target Name="PackageNuGet">
-    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(MainCsProjDir)\RezRouting.AspNetMvc.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
-    <OnError ExecuteTargets="RestorePackagesConfigFile" />
-  </Target>
-
-  <Target Name="HidePackagesConfigFile" BeforeTargets="PackageNuGet">
-    <!-- rename packages.config to prevent NuGet pack from including dependencies in our package -->
-    <Move SourceFiles="$(MainCsProjDir)\packages.config" DestinationFiles="$(MainCsProjDir)\_packages.config" />
-  </Target>
-  
-  <Target Name="RestorePackagesConfigFile" AfterTargets="PackageNuGet">
-    <Move SourceFiles="$(MainCsProjDir)\_packages.config" DestinationFiles="$(MainCsProjDir)\packages.config" />
+    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting\RezRouting.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
+    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting.AspNetMvc5\RezRouting.AspNetMvc5.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
   </Target>
 
 </Project>

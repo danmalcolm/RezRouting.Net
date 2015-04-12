@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Resources;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
@@ -13,12 +13,14 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void should_add_specified_routes_to_resource()
         {
+            var handler1 = new TestRouteHandler();
+            var handler2 = new TestRouteHandler();
             var resources = BuildResources(root =>
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"));
-                    products.Route("Update", "PUT", "", new MvcAction(typeof(TestController), "Update"));
+                    products.Route("Edit", "GET", "edit", handler1);
+                    products.Route("Update", "PUT", "", handler2);
                 });
             });
 
@@ -26,12 +28,12 @@ namespace RezRouting.Tests.Configuration
             resource.Routes.Select(x => x.Name).Should().Equal("Edit", "Update");
 
             var editRoute = resource.Routes.Single(x => x.Name == "Edit");
-            editRoute.Handler.Should().Be(new MvcAction(typeof (TestController), "Edit"));
+            editRoute.Handler.Should().Be(handler1);
             editRoute.HttpMethod.Should().Be("GET");
             editRoute.Path.Should().Be("edit");
 
             var updateRoute = resource.Routes.Single(x => x.Name == "Update");
-            updateRoute.Handler.Should().Be(new MvcAction(typeof(TestController), "Update"));
+            updateRoute.Handler.Should().Be(handler2);
             updateRoute.HttpMethod.Should().Be("PUT");
             updateRoute.Path.Should().Be("");
         }
@@ -45,7 +47,7 @@ namespace RezRouting.Tests.Configuration
                 {
                     products.Items(product =>
                     {
-                        product.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"));
+                        product.Route("Edit", "GET", "edit", new TestRouteHandler());
                     });
                 });
             });
@@ -60,7 +62,7 @@ namespace RezRouting.Tests.Configuration
         {
             var resources = BuildResources(root =>
             {
-                root.Route("Home", "GET", "", new MvcAction(typeof(TestController), "Index"));
+                root.Route("Home", "GET", "", new TestRouteHandler());
             });
 
             var resource = resources.Values.Single();
@@ -75,7 +77,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"));
+                    products.Route("Edit", "GET", "edit", new TestRouteHandler());
                 });
             });
 
@@ -91,7 +93,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"), new CustomValueCollection { { "key1", "value1" } });
+                    products.Route("Edit", "GET", "edit", new TestRouteHandler(), new CustomValueCollection { { "key1", "value1" } });
                 });
             });
             
@@ -108,7 +110,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"));
+                    products.Route("Edit", "GET", "edit", new TestRouteHandler());
                 });
             });
 
@@ -124,7 +126,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.Collection("Products", products =>
                 {
-                    products.Route("Edit", "GET", "edit", new MvcAction(typeof(TestController), "Edit"), additionalRouteValues: new CustomValueCollection { { "key1", "value1" } });
+                    products.Route("Edit", "GET", "edit", new TestRouteHandler(), additionalRouteValues: new CustomValueCollection { { "key1", "value1" } });
                 });
             });
 

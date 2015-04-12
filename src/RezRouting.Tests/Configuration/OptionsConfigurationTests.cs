@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
@@ -16,7 +16,7 @@ namespace RezRouting.Tests.Configuration
         {
             var root = RootResourceBuilder.Create("");
             root.Collection("FineProducts", products =>
-                products.Route("Route2", "GET", "action1", MvcAction.For((TestController c) => c.Action1())));
+                products.Route("Route2", "GET", "action1", new TestRouteHandler()));
 
             var settings = new UrlPathSettings(caseStyle: CaseStyle.Upper, wordSeparator: "_");
             root.Options(options => options.UrlPaths(settings));
@@ -30,7 +30,7 @@ namespace RezRouting.Tests.Configuration
         public void should_customise_id_names_using_options()
         {
             var root = RootResourceBuilder.Create("");
-            root.Collection("Products", products => products.Items(product => product.HandledBy<TestController>()));
+            root.Collection("Products", products => products.Items(product => {}));
 
             var formatter = new DefaultIdNameFormatter("code", true);
             root.Options(options => options.IdFormat(formatter));

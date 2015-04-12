@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Configuration;
 using RezRouting.Resources;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
@@ -16,24 +16,24 @@ namespace RezRouting.Tests.Configuration
             var rootBuilder = RootResourceBuilder.Create("");
             rootBuilder.Singular("Profile", profile =>
             {
-                profile.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                profile.Route("Route1", "GET", "action1", new TestRouteHandler());
                 profile.Singular("User", user =>
                 {
-                    user.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                    user.Route("Route1", "GET", "action1", new TestRouteHandler());
                 });
             });
             rootBuilder.Collection("Products", products =>
             {
-                products.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                products.Route("Route1", "GET", "action1", new TestRouteHandler());
                 products.Items(product =>
                 {
-                    product.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                    product.Route("Route1", "GET", "action1", new TestRouteHandler());
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));
+                        reviews.Route("Route1", "GET", "action1", new TestRouteHandler());
                         reviews.Items(review =>
                         {
-                            review.Route("Route1", "GET", "action1", MvcAction.For((TestController c) => c.Action1()));                        
+                            review.Route("Route1", "GET", "action1", new TestRouteHandler());                        
                         });
                     });
                 });
@@ -62,14 +62,14 @@ namespace RezRouting.Tests.Configuration
             var rootBuilder = RootResourceBuilder.Create("");
             rootBuilder.Singular("Profile", profile =>
             {
-                profile.Route("Route1", "GET", "", MvcAction.For((TestController c) => c.Action1()));
+                profile.Route("Route1", "GET", "", new TestRouteHandler());
             });
             rootBuilder.Collection("Products", products =>
             {
-                products.Route("Route1", "GET", "", MvcAction.For((TestController c) => c.Action1()));
+                products.Route("Route1", "GET", "", new TestRouteHandler());
                 products.Items(product =>
                 {
-                    product.Route("Route1", "GET", "", MvcAction.For((TestController c) => c.Action1()));
+                    product.Route("Route1", "GET", "", new TestRouteHandler());
                 });
             });
 

@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.Resources;
+using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
     public class RouteTests
     {
-        private IResourceRouteHandler testHandler = MvcAction.For((TestController x) => x.Action1());
+        private IResourceRouteHandler testHandler = new TestRouteHandler();
 
         [Fact]
         public void should_build_route_with_core_properties_configured()
@@ -20,8 +18,8 @@ namespace RezRouting.Tests.Configuration
             route.Should().NotBeNull();
             route.ShouldBeEquivalentTo(new
             {
-                Name = "Route1", 
-                Handler = new MvcAction(typeof(TestController), "Action1"),
+                Name = "Route1",
+                Handler = testHandler,
                 HttpMethod = "GET",
                 Path = "test"
             }, options => options.ExcludingMissingProperties());

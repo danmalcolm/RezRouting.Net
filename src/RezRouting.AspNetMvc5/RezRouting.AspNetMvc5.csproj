@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1D7A9580-FB23-45EF-A93C-77DB341C3A6C}</ProjectGuid>
+    <ProjectGuid>{7DD4EFB8-D7D1-4295-8F27-923A4F8A3285}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RezRouting.Tests</RootNamespace>
-    <AssemblyName>RezRouting.Tests</AssemblyName>
+    <RootNamespace>RezRouting.AspNetMvc</RootNamespace>
+    <AssemblyName>RezRouting.AspNetMvc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>ea46b79f</NuGetPackageImportStamp>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +21,9 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\RezRouting.AspNetMvc.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,20 +31,11 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\RezRouting.AspNetMvc.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentAssertions.3.2.1\lib\net45\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=3.2.1.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\FluentAssertions.3.2.1\lib\net45\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1408.0717\lib\net40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -57,53 +48,37 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.extensions">
-      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\ChildResourceConfigurationTests.cs" />
-    <Compile Include="Configuration\CollectionConfigurationTests.cs" />
-    <Compile Include="Configuration\ConfigurationTestsBase.cs" />
-    <Compile Include="Configuration\Options\DefaultIdNameConventionTests.cs" />
-    <Compile Include="Configuration\Options\UrlPathSettingsTests.cs" />
-    <Compile Include="Configuration\ResourceCustomPropertyConfigurationTests.cs" />
-    <Compile Include="Configuration\RouteConventionTests.cs" />
-    <Compile Include="Configuration\ResourceRouteConfigurationTests.cs" />
-    <Compile Include="Configuration\ResourceHierarchyConfigurationTests.cs" />
-    <Compile Include="Configuration\ResourceUrlTests.cs" />
-    <Compile Include="Configuration\OptionsConfigurationTests.cs" />
-    <Compile Include="Configuration\RootResourceBuilderTests.cs" />
-    <Compile Include="Configuration\RouteTests.cs" />
-    <Compile Include="Configuration\RouteUrlTests.cs" />
-    <Compile Include="Configuration\SingularConfigurationTests.cs" />
-    <Compile Include="Infrastructure\ResourceExtensions.cs" />
-    <Compile Include="Infrastructure\TestRouteConventionScheme.cs" />
-    <Compile Include="Infrastructure\TestRouteHandler.cs" />
-    <Compile Include="Utility\IntercappedStringHelperTests.cs" />
-    <Compile Include="Infrastructure\ControllerActionInfo.cs" />
-    <Compile Include="Infrastructure\Performance\Profiler.cs" />
-    <Compile Include="Infrastructure\Performance\ProfileResult.cs" />
-    <Compile Include="Infrastructure\TestHttpContextBuilder.cs" />
-    <Compile Include="Infrastructure\TestRequestContextBuilder.cs" />
+    <Compile Include="..\SharedAssemblyVersion.cs">
+      <Link>SharedAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="HttpMethodOrOverrideConstraint.cs" />
+    <Compile Include="ResourceConfiguratorExtensions.cs" />
+    <Compile Include="MvcAction.cs" />
+    <Compile Include="MvcRouteCreator.cs" />
+    <Compile Include="RouteConventions\ActionMappingHelper.cs" />
+    <Compile Include="RouteConventions\ConventionDataExtensions.cs" />
+    <Compile Include="RouteConventions\ConventionDataKeys.cs" />
+    <Compile Include="RouteMappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <Compile Include="ResourceRoute.cs" />
+    <Compile Include="RouteValidator.cs" />
+    <Compile Include="RouteConventions\ActionRouteConvention.cs" />
+    <Compile Include="RouteConventions\Crud\CrudRouteConventions.cs" />
+    <Compile Include="RouteConventions\Tasks\TaskRouteConventions.cs" />
+    <Compile Include="RouteConventions\Tasks\TaskRouteConvention.cs" />
+    <Compile Include="UrlGeneration\RouteModelIndex.cs" />
+    <Compile Include="UrlGeneration\UrlHelperExtensions.cs" />
+    <Compile Include="Utility\RouteDataTokenKeys.cs" />
+    <Compile Include="Utility\RouteValueHelper.cs" />
+    <Compile Include="Utility\RouteValueKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RezRouting\RezRouting.csproj">
       <Project>{ec46b63d-45d9-472b-8400-12a9cac5bb9e}</Project>
       <Name>RezRouting</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
