@@ -6,10 +6,18 @@ namespace RezRouting.Tests.Configuration
     public class ResourceUrlTests : ConfigurationTestsBase
     {
         [Fact]
+        public void root_url_should_be_empty()
+        {
+            var resources = BuildResources(root => { });
+
+            resources[""].Url.Should().Be("");
+        }
+
+        [Fact]
         public void top_level_singular_urls_should_be_based_on_resource_name()
         {
-            var resources = BuildResources(builder => 
-                builder.Singular("Profile", x => {})
+            var resources = BuildResources(root => 
+                root.Singular("Profile", x => {})
             );
 
             resources["Profile"].Url.Should().Be("profile");
@@ -18,8 +26,8 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void top_level_collection_urls_should_be_based_on_resource_name()
         {
-            var resources = BuildResources(builder => 
-                builder.Collection("Products", x => { })
+            var resources = BuildResources(root => 
+                root.Collection("Products", x => { })
             );
 
             resources["Products"].Url.Should().Be("products");
@@ -28,8 +36,8 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void collection_item_urls_should_combine_collection_path_and_id_parameter()
         {
-            var resources = BuildResources(builder =>
-                builder.Collection("Products", x => { })
+            var resources = BuildResources(root =>
+                root.Collection("Products", x => { })
             ); 
 
             resources["Products.Product"].Url.Should().Be("products/{id}");
@@ -38,9 +46,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void descendants_of_singular_resources_should_include_ancestor_paths()
         {
-            var resources = BuildResources(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Singular("Profile", profile =>
+                root.Singular("Profile", profile =>
                 {
                     profile.Singular("User", user =>
                     {
@@ -59,9 +67,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void descendants_of_collection_resources_should_include_ancestor_paths()
         {
-            var resources = BuildResources(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products =>
+                root.Collection("Products", products =>
                 {
                     products.Collection("Reviews", reviews => {});
                     products.Singular("Top", top => {});
@@ -76,9 +84,9 @@ namespace RezRouting.Tests.Configuration
         [Fact]
         public void descendants_of_collection_items_should_include_ancestor_id_param_name()
         {
-            var resources = BuildResources(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products =>
+                root.Collection("Products", products =>
                 {
                     products.Items(product =>
                     {

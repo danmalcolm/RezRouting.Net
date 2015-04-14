@@ -17,9 +17,9 @@ namespace RezRouting.Tests.Configuration
         /// <returns></returns>
         protected Dictionary<string, Resource> BuildResources(Action<IRootResourceBuilder> configure)
         {
-            var builder = RootResourceBuilder.Create("");
-            configure(builder);
-            var resource = builder.Build();
+            var root = RootResourceBuilder.Create("");
+            configure(root);
+            var resource = root.Build();
             return resource.Expand().ToDictionary(x => x.FullName);
         }
     }
