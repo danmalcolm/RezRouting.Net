@@ -9,18 +9,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <RootDir>$(MSBuildProjectDirectory)</RootDir>
-    <PackageDir>$(RootDir)\package</PackageDir>
     <BuildDir>$(RootDir)\build</BuildDir>
+    <PackagesDir>$(RootDir)\build\packages</PackagesDir>
     <SlnDir>$(RootDir)\src</SlnDir>
     <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
     <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
   </PropertyGroup>
 
-  <Target Name="Full" DependsOnTargets="Build;PackageNuGet" />
+  <Target Name="Full" DependsOnTargets="Build;RunTests;CreateNuGetPackages" />
 
   <Target Name="Prepare">
-    <RemoveDir Directories="$(BuildDir);$(PackageDir)" />
-    <MakeDir Directories="$(BuildDir);$(PackageDir)" />
+    <RemoveDir Directories="$(BuildDir);$(PackagesDir)" />
+    <MakeDir Directories="$(BuildDir);$(PackagesDir)" />
   </Target>
 
   <Target Name="Build" DependsOnTargets="Prepare">
@@ -35,9 +35,9 @@
     <xunit Assemblies="@(TestAssembly)" />
   </Target>
 
-  <Target Name="PackageNuGet">
-    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting\RezRouting.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
-    <Exec WorkingDirectory="$(PackageDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting.AspNetMvc5\RezRouting.AspNetMvc5.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
+  <Target Name="CreateNuGetPackages">
+    <Exec WorkingDirectory="$(PackagesDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting\RezRouting.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
+    <Exec WorkingDirectory="$(PackagesDir)" Command="$(NuGetExePath) pack $(SlnDir)\RezRouting.AspNetMvc5\RezRouting.AspNetMvc5.csproj -Prop Configuration=$(Configuration) -IncludeReferencedProjects" />
   </Target>
 
 </Project>
