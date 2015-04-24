@@ -1,20 +1,22 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
-[ ] Publish to nuget
-
-[ ] Within resource, allow id of parent collection item resource to be overriden
+[ ] Tests for home route mapping
 
 [ ] Wiki
 
+[ ] Logo
+
 [ ] Improve tasks demo - pick better example for task-based approach, meeting requests?
 
-[ ] Web API - demonstrate multi-framework support
+[ ] Publish to nuget
 
 Next
 ----
 
-[ ] Consider using a single MVC route based on entire resources model, or one per level?
+[ ] Web API - demonstrate multi-framework support
+
+[ ] Consider using a single MVC route (mega route!) based on entire resources model, or one per level?
 Better support for large number of resources and faster inbound/outbound resolution of routes at end of colleciton
 
 [ ] Id format, e.g. int
@@ -25,28 +27,21 @@ Better support for large number of resources and faster inbound/outbound resolut
 
 [ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
-[ ] Demo app - add some comments, explanations and readme
-
-[ ] * routes, e.g. all action methods on a resource's controllers, attributes?
-
-[ ] Separate support for MVC 4
-
-[ ] Refactor: Test structure
-
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 
 [ ] MVC unit tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
 
 [ ] Detect clashes between id param names within hierarchy, e.g., ensure same name not used by ancestor
 
-[ ] Global conventions applied to all resources, e.g. comments. 
-
-[ ] Customise id param of parent resource for specific route, e.g. adding comments route might change productId to parentObjectId
-
-[ ] Additional custom RouteData in routes
-
 Done
 ----
+
+[x] Make route indexing an opt-out, included by default
+
+[x] Within resource, allow id of parent collection item resource to be overriden
+
+[x] Route names for root resource, e.g. ".Home"
+
 [x] Route generation when controller / action combination used more than once
 
 [x] Additional route data, e.g. for shared controller like comments, add ObjectTypeId = Products, Id = 1
@@ -66,7 +61,7 @@ and use interface, so that we don't have to repeat comments
 [x] Have base RootResourceBuilder rather than specialised ResourcesBuilder - needs some kind of consolidation:
 
 - x RGB.Base returns a singular builder
-- x all builders have a build 
+- x all builders have a build
 - x options aren't set via root builder, they're just passed to the Build method
 - x conventions are included in the options
 - x move item name back up to collection method
@@ -77,7 +72,7 @@ and use interface, so that we don't have to repeat comments
 
 [x] don't use route conventions in tests when simple routes can be set up
 
-[x] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral 
+[x] Introduce IHandler and IRouteHandler to replace controller type and controller-type.action - more framework neutral
 - not everything uses controller classes, e.g. functional style for newer frameworks
 
 [X] Change entry point name, e.g. resource builder
@@ -130,7 +125,7 @@ and use interface, so that we don't have to repeat comments
 
 [x] Resource.Data - arbitrary information attached to model, such as user friendly titles, whether to include in navigation etc, menu display order etc
 
-[x] Separate RezRouting.AspNetMvc 
+[x] Separate RezRouting.AspNetMvc
 
 [x] Include arbitrary data in Resource model
 
@@ -146,7 +141,7 @@ and use interface, so that we don't have to repeat comments
 
 [x] Task routes
 
-[x] Task routes demo 
+[x] Task routes demo
 
 [x] Demo app - bootstrap
 
@@ -168,7 +163,7 @@ and use interface, so that we don't have to repeat comments
 
 [x] Configure types handling routes - HandledBy
 
-[x] Introduce RouteConventions 
+[x] Introduce RouteConventions
 
 [x] Add Routes to Resource model
 

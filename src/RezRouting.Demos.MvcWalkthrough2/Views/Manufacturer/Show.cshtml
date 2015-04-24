@@ -1,0 +1,31 @@
+﻿@model RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer.ManufacturerDetailsModel
+
+@{
+    ViewBag.Title = Model.Manufacturer.Name + " Details";
+}
+<p>Added on: @Model.Manufacturer.CreatedOn</p>
+<p>Modified on: @Model.Manufacturer.ModifiedOn</p>
+<div>
+    <a class="btn btn-default" href="@Url.Action("Edit", new { id = Model.Manufacturer.Id })">Edit</a>
+</div>
+
+<h2>Recently Updated Products</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td><a href="@Url.Action("Show", "Product", new { id = product.Id })">@product.Id</a></td>
+                <td>@product.Name</td>
+                <td>@product.CreatedOn</td>
+                <td>@product.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>

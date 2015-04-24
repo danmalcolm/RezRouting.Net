@@ -1,0 +1,22 @@
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.MvcWalkthrough1.Controllers.Products
+@using RezRouting.Demos.MvcWalkthrough1.Utility
+@model RezRouting.Demos.MvcWalkthrough1.Controllers.Home.HomeModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Latest Products</h2>
+<ul>
+    @foreach (var product in Model.LatestProducts)
+    {
+        <li><a href="@Url.Action("Show", "Product", new { id = product.Id })">@product.Name</a></li>
+    }
+</ul>
+<h2>URL Generation</h2>
+<p><a href="@Url.Action("Index", "Products")">View All</a> - Using existing UrlHelper extension methods: <code>@@Url.Action("Index", "Products")</code></p>
+<p><a href="@Url.ResourceUrl(typeof(ProductsController), "Index", null)">View All</a> - Using a built-in RezRouting UrlHelper extension method: <code>@@Url.ResourceUrl(typeof(ProductsController), "Index", null)</code></p> 
+<p><a href="@Url.ResourceUrl((ProductsController c) => c.Index())">View All</a> - 
+    Using a custom expression-tree based UrlHelper extension method: <code>@@Url.ResourceUrl((ProductsController c) => c.Index())</code> An expression-tree based variation isn't built-in to RezRouting, but it's very easy to <a href="https://github.com/danmalcolm/RezRouting.Net/blob/master/src/RezRouting.Demos.Crud/Utility/UrlHelperExtensions.cs">roll your own</a> (hint: use the highly optimized <code>ExpressionHelper.GetRouteValuesFromExpression</code> method in  <a href="https://www.nuget.org/packages/Microsoft.AspNet.Mvc.Futures/5.0.0">Microsoft.AspNet.Mvc.Futures</a>).</p>
+

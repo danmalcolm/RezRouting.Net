@@ -1,0 +1,16 @@
+﻿@model RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product.Reviews.ReviewsIndexModel
+
+@{
+    ViewBag.Title = Model.Product.Name + " Reviews";
+}
+
+<ul class="list-group">
+    @foreach (var review in Model.Reviews)
+    {
+        <li class="list-group-item">
+            <p><span class="badge pull-right">@review.Score</span> @review.UserName - @review.ReviewDate</p>
+            <p>@review.Comments.Substring(0, 40) ...</p>
+            <p><p><a class="btn btn-default" href="@Url.Action("Show", "Review", new { productId = Model.Product.Id, id = review.Id })">Full Details</a></p></p>
+        </li>
+    }
+</ul>

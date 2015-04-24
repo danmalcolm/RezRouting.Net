@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{65AB001B-2E57-4A15-BDE5-39CCA93F570B}</ProjectGuid>
+    <ProjectGuid>{94B80A57-CE28-4CFB-8763-D17FA1779E57}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RezRouting.Demos.Tasks</RootNamespace>
-    <AssemblyName>RezRouting.Demos.Tasks</AssemblyName>
+    <RootNamespace>RezRouting.Demos.MvcWalkthrough1</RootNamespace>
+    <AssemblyName>RezRouting.Demos.MvcWalkthrough1</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -50,8 +50,12 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.Futures.5.1.0-rc1\lib\net40\Microsoft.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -62,26 +66,25 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Web.Razor">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Web.WebPages">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Web.WebPages.Deployment">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
@@ -116,36 +119,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\ViewEngineConfig.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Home\HomeModel.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateInput.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateModel.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturersController.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturersIndexModel.cs" />
+    <Compile Include="Controllers\Manufacturers\EditInput.cs" />
+    <Compile Include="Controllers\Manufacturers\EditModel.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturerDetailsModel.cs" />
     <Compile Include="Controllers\Products\CreateInput.cs" />
     <Compile Include="Controllers\Products\CreateModel.cs" />
-    <Compile Include="Controllers\Products\CreateProductController.cs" />
-    <Compile Include="Controllers\Products\DisplayModel.cs" />
-    <Compile Include="Controllers\Products\Product\EditProductController.cs" />
-    <Compile Include="Controllers\Products\Product\DeleteProductController.cs" />
-    <Compile Include="Controllers\Products\Product\EditInput.cs" />
-    <Compile Include="Controllers\Products\Product\EditModel.cs" />
-    <Compile Include="Controllers\Products\Product\ShowProductController.cs" />
-    <Compile Include="Controllers\Products\Product\DetailsModel.cs" />
+    <Compile Include="Controllers\Products\ProductsIndexModel.cs" />
+    <Compile Include="Controllers\Products\EditInput.cs" />
+    <Compile Include="Controllers\Products\EditModel.cs" />
+    <Compile Include="Controllers\Products\ProductDetailsModel.cs" />
+    <Compile Include="Controllers\Reviews\ReviewDetailsModel.cs" />
+    <Compile Include="Controllers\Reviews\ReviewsController.cs" />
+    <Compile Include="Controllers\Reviews\ReviewsIndexModel.cs" />
     <Compile Include="Controllers\Session\Credentials.cs" />
-    <Compile Include="Controllers\Shared\TaskController.cs" />
     <Compile Include="DataAccess\DemoData.cs" />
-    <Compile Include="Controllers\Products\ListProductsController.cs" />
+    <Compile Include="Controllers\Products\ProductsController.cs" />
     <Compile Include="Controllers\Session\SessionController.cs" />
     <Compile Include="DataAccess\Manufacturer.cs" />
     <Compile Include="DataAccess\Product.cs" />
+    <Compile Include="DataAccess\Review.cs" />
+    <Compile Include="DataAccess\TestDataHelper.cs" />
     <Compile Include="DataAccess\User.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewEngines\ControllerPathResolver.cs" />
-    <Compile Include="ViewEngines\ControllerPathSettings.cs" />
-    <Compile Include="ViewEngines\ControllerPathViewEngine.cs" />
-    <Compile Include="ViewEngines\ViewPathSettingsAttribute.cs" />
+    <Compile Include="Utility\UrlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -154,13 +160,19 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Session\Show.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Products\ListProducts.cshtml" />
-    <Content Include="Views\Products\Product\ShowProduct.cshtml" />
+    <Content Include="Views\Home\Show.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Show.cshtml" />
     <Content Include="Views\Shared\Alerts.cshtml" />
-    <Content Include="Views\Products\Product\EditProduct.cshtml" />
+    <Content Include="Views\Products\New.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
-    <Content Include="Views\Products\CreateProduct.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Reviews\Show.cshtml" />
+    <Content Include="Views\Manufacturers\Edit.cshtml" />
+    <Content Include="Views\Manufacturers\Show.cshtml" />
+    <Content Include="Views\Manufacturers\Index.cshtml" />
+    <Content Include="Views\Manufacturers\New.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -172,6 +184,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="css\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Review\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RezRouting.AspNetMvc5\RezRouting.AspNetMvc5.csproj">
@@ -196,9 +209,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62472</DevelopmentServerPort>
+          <DevelopmentServerPort>62480</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65529/</IISUrl>
+          <IISUrl>http://localhost:65527/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

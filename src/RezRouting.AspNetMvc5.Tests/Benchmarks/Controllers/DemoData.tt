@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-namespace RezRouting.Tests.AspNetMvc.Benchmarks.Controllers 
+namespace RezRouting.Tests.AspNetMvc5.Benchmarks.Controllers 
 {
 <# 
 	const string names = @"abyssinians,accelerators,accordions,accounts,baboons,backbones,badges,badgers,cabbages,cabinets,cakes,calculators,daffodils,daisies,dancers,dashboards,eagles,ears,earthquakes,elephants,faces,facilities,facts,factories,garages,gardens,ghosts,giraffes,halibuts,hamburgers,hammers,hamsters,icicles,insects,invoices,jaguars,jeeps,jewels,jokes,kangaroos,kayaks,kettles,kittens,languages,larches,lawyers,lobsters,machines,magazines,managers,mandolins,napkins,needles,noodles,nuts,occupations,offences,offices,operas,packages,packets,pancakes,papers,queens,questions,quilts,quinces,rabbits,radiators,radishes,rainbows,sailors,salamanders,sardines,sausages,tables,tadpoles,taxis,teachers,umbrellas,uncles,underpants,units,valleys,values,vans,wallets,waterfalls,waves,weeds,xylophones,yachts,yaks,yards,years,yams,zebras,zephyrs,zippers,zoos";
