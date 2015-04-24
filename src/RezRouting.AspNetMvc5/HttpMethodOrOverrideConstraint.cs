@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Routing;
 
 namespace RezRouting.AspNetMvc
@@ -42,7 +43,7 @@ namespace RezRouting.AspNetMvc
             if (string.Equals(request.HttpMethod, "POST", StringComparison.OrdinalIgnoreCase))
             {
                 // http://msdn.microsoft.com/en-us/library/system.web.httprequest.unvalidated(v=vs.110).aspx
-                var form = request.Unvalidated.Form;
+                var form = request.Unvalidated().Form;
                 string methodOverride = GetOverride(form, FormOverrideKeys)
                                         ?? GetOverride(request.Headers, HeaderOverrideKeys);
                 if (methodOverride != null)
