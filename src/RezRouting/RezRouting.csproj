@@ -89,6 +89,7 @@
     <Compile Include="Utility\StringExtensions.cs" />
     <Compile Include="Utility\TextUtility.cs" />
     <Compile Include="Utility\UrlPathHelper.cs" />
+    <Compile Include="Utility\WordSeparatorValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TODO.txt" />

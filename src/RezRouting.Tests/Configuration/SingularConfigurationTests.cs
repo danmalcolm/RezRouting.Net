@@ -48,6 +48,20 @@ namespace RezRouting.Tests.Configuration
         }
 
         [Fact]
+        public void should_use_custom_url_path_containing_directory_separator()
+        {
+            var singular = BuildResource(root =>
+            {
+                root.Singular("profile", products =>
+                {
+                    products.UrlPath("mystuff/profile");
+                });
+            });
+
+            singular.Url.Should().Be("mystuff/profile");
+        }
+
+        [Fact]
         public void should_throw_if_custom_url_path_invalid()
         {
             Action action = () => BuildResource(root =>

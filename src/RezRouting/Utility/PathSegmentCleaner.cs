@@ -7,7 +7,7 @@ namespace RezRouting.Utility
     /// </summary>
     internal class PathSegmentCleaner
     {
-        private static readonly Regex InvalidCharactersRegex = new Regex("[^a-z0-9-_]", RegexOptions.IgnoreCase);
+        private static readonly Regex InvalidCharactersRegex = new Regex("[^/a-z0-9-_]", RegexOptions.IgnoreCase);
 
         public static bool IsValid(string value)
         {
