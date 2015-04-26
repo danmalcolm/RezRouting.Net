@@ -10,7 +10,7 @@ using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests
+namespace RezRouting.AspNetMvc.Tests
 {
     public class MvcRouteCreationTests
     {

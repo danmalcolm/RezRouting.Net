@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 [assembly: InternalsVisibleTo("RezRouting.Tests")]
-[assembly: InternalsVisibleTo("RezRouting.AspNetMvc5.Tests")]
+[assembly: InternalsVisibleTo("RezRouting.AspNetMvc.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

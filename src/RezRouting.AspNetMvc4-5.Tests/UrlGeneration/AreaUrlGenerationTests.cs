@@ -2,14 +2,14 @@
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products.Product;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Profile;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Profile;
 using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.UrlGeneration
+namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
     public class AreaUrlGenerationTests
     {

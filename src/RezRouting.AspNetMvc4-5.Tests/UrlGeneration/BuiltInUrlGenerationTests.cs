@@ -3,11 +3,11 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.UrlGeneration
+namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
     public class BuiltInUrlGenerationTests
     {

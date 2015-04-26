@@ -13,7 +13,7 @@ using RezRouting.Tests.Infrastructure;
 using RezRouting.Tests.Infrastructure.Performance;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.Benchmarks
+namespace RezRouting.AspNetMvc.Tests.Benchmarks
 {
     /// <summary>
     /// Contains tests used to give indication of execution times - currently 

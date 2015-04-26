@@ -1,21 +1,19 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>RezRouting.AspNetMvc5</id>
-    <version>$version$</version>
+    <id>RezRouting.AspNetMvc4-5</id>
+    <version>0.1.0-alpha003</version>
     <authors>Dan Malcolm</authors>
     <owners>Dan Malcolm</owners>
     <licenseUrl>https://github.com/danmalcolm/RezRouting.Net/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/danmalcolm/RezRouting.Net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A lightweight library for setting up routes based on a flexible resource-oriented URL structure in ASP.Net MVC 5 applications</description>
+    <description>A lightweight library for setting up routes based on a flexible resource-oriented URL structure in ASP.Net MVC applications. This package compatible with MVC4 and MVC5</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags></tags>
     <dependencies>
-      <dependency id="RezRouting" version="" />
+      <dependency id="RezRouting" version="0.1.0" />
     </dependencies>
   </metadata>
-  <files>
-  </files>
 </package>

@@ -1,13 +1,13 @@
 using System.Linq;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
-using RezRouting.AspNetMvc5.Tests.Infrastructure.Assertions;
-using RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks.TestControllers.Profile;
+using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Profile;
+using RezRouting.AspNetMvc.Tests.Infrastructure.Assertions;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
 {
     public class SingularRouteConventionTests
     {

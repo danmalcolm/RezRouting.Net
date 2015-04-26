@@ -8,7 +8,7 @@ using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.UrlGeneration
+namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
     public class SharedControllerUrlGenerationTests
     {

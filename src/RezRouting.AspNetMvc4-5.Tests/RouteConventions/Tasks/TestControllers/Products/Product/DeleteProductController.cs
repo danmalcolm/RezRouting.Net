@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks.TestControllers.Products.Product
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products.Product
 {
     /// <summary>
     /// Example collection item task controller

@@ -3,13 +3,13 @@ using System.Linq;
 using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
-using RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks.TestControllers.Products;
+using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
 {
     public class TaskRouteConventionTests
     {

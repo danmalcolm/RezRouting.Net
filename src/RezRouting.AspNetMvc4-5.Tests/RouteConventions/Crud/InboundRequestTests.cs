@@ -2,11 +2,11 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud;
 using RezRouting.Tests.Infrastructure;
 using Xunit.Extensions;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Crud
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
 {
     public class InboundRequestTests
     {

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks.TestControllers.Profile
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Profile
 {
     public class DisplayProfileController : Controller
     {

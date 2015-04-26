@@ -7,7 +7,7 @@ using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.UrlGeneration
+namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
     public class RouteModelIndexTests
     {

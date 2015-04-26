@@ -1,10 +1,10 @@
 ﻿using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products.Product;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Profile;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Profile;
 using RezRouting.Configuration;
 
-namespace RezRouting.AspNetMvc5.Tests.TestModels.Crud
+namespace RezRouting.AspNetMvc.Tests.TestModels.Crud
 {
     public static class TestCrudResourceModel
     {

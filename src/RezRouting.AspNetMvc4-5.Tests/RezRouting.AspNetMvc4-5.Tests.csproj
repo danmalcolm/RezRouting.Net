@@ -7,8 +7,8 @@
     <ProjectGuid>{BA5D3B65-FF74-47D0-8DE7-F3BCCFA3E77B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RezRouting.AspNetMvc5.Tests</RootNamespace>
-    <AssemblyName>RezRouting.AspNetMvc5.Tests</AssemblyName>
+    <RootNamespace>RezRouting.AspNetMvc.Tests</RootNamespace>
+    <AssemblyName>RezRouting.AspNetMvc.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

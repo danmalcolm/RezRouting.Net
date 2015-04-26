@@ -4,7 +4,7 @@ using FluentAssertions;
 using RezRouting.AspNetMvc;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests
+namespace RezRouting.AspNetMvc.Tests
 {
     public class MvcActionTests
     {

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using RezRouting.Resources;
 
-namespace RezRouting.AspNetMvc5.Tests.Infrastructure.Assertions
+namespace RezRouting.AspNetMvc.Tests.Infrastructure.Assertions
 {
     public static class RouteAssertionExtensions
     {

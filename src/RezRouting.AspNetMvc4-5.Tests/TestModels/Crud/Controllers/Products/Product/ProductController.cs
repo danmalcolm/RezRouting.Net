@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products.Product
+namespace RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product
 {
     public class ProductController : Controller
     {

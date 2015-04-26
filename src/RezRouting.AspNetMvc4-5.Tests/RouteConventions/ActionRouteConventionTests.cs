@@ -9,7 +9,7 @@ using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions
+namespace RezRouting.AspNetMvc.Tests.RouteConventions
 {
     public class ActionRouteConventionTests
     {
@@ -25,7 +25,7 @@ namespace RezRouting.AspNetMvc5.Tests.RouteConventions
         private CustomValueCollection CreateConventionData(Type controllerType)
         {
             var data = new CustomValueCollection();
-            ConventionDataExtensions.AddControllerTypes(data, new[] {controllerType});
+            data.AddControllerTypes(new[] {controllerType});
             return data;
         }
 

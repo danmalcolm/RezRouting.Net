@@ -116,7 +116,6 @@
     <Compile Include="Utility\RouteDataTokenKeys.cs" />
     <Compile Include="Utility\RouteValueHelper.cs" />
     <Compile Include="Utility\RouteValueKeys.cs" />
-    <Compile Include="Utility\UnvalidatedFormHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RezRouting\RezRouting.csproj">

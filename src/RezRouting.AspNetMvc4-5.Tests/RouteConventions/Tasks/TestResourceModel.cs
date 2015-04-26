@@ -3,7 +3,7 @@ using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.Configuration;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
 {
     public static class TestResourceModel
     {

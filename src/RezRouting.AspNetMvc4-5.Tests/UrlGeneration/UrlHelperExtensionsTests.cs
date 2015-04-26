@@ -4,14 +4,14 @@ using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.AspNetMvc.UrlGeneration;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests.UrlGeneration
+namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
     public class UrlHelperExtensionsTests
     {

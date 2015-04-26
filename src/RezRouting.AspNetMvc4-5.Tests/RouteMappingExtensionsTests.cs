@@ -9,7 +9,7 @@ using RezRouting.Resources;
 using Xunit;
 using Route = RezRouting.Resources.Route;
 
-namespace RezRouting.AspNetMvc5.Tests
+namespace RezRouting.AspNetMvc.Tests
 {
     public class RouteMappingExtensionsTests
     {

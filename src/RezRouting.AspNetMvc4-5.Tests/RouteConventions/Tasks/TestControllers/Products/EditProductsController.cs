@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Tasks.TestControllers.Products
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products
 {
     /// <summary>
     /// Example collection task controller - bulk edit

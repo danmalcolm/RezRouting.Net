@@ -3,12 +3,12 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc5.Tests.Infrastructure.Assertions;
+using RezRouting.AspNetMvc.Tests.Infrastructure.Assertions;
 using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests
+namespace RezRouting.AspNetMvc.Tests
 {
     public class MvcRouteInboundMatchingTests
     {

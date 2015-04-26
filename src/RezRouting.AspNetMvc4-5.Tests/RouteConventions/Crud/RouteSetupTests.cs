@@ -4,17 +4,17 @@ using System.Linq;
 using FluentAssertions;
 using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Products.Product;
-using RezRouting.AspNetMvc5.Tests.TestModels.Crud.Controllers.Profile;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
+using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Profile;
 using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 using Xunit.Extensions;
 
-namespace RezRouting.AspNetMvc5.Tests.RouteConventions.Crud
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
 {
     public class RouteSetupTests
     {

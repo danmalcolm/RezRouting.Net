@@ -7,7 +7,7 @@ using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
 using Xunit;
 
-namespace RezRouting.AspNetMvc5.Tests
+namespace RezRouting.AspNetMvc.Tests
 {
     public class ResourceConfiguratorExtensionsTests
     {

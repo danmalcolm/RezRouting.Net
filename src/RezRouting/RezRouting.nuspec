@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RezRouting</id>
-    <version>$version$</version>
+    <version>0.1.0-alpha003</version>
     <authors>Dan Malcolm</authors>
     <owners>Dan Malcolm</owners>
     <licenseUrl>https://github.com/danmalcolm/RezRouting.Net/blob/master/LICENSE</licenseUrl>
@@ -13,6 +13,4 @@
     <copyright>Copyright 2015</copyright>
     <tags></tags>
   </metadata>
-  <files>
-  </files>
 </package>
