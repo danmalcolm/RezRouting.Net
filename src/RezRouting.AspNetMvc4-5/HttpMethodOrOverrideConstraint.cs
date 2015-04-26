@@ -2,7 +2,6 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Routing;
 
 namespace RezRouting.AspNetMvc
@@ -42,8 +41,7 @@ namespace RezRouting.AspNetMvc
         {
             if (string.Equals(request.HttpMethod, "POST", StringComparison.OrdinalIgnoreCase))
             {
-                // http://msdn.microsoft.com/en-us/library/system.web.httprequest.unvalidated(v=vs.110).aspx
-                var form = request.Unvalidated().Form;
+                var form = GetUnvalidatedForm(request);
                 string methodOverride = GetOverride(form, FormOverrideKeys)
                                         ?? GetOverride(request.Headers, HeaderOverrideKeys);
                 if (methodOverride != null)
@@ -55,6 +53,33 @@ namespace RezRouting.AspNetMvc
 
             return base.Match(httpContext, route, parameterName,
                 values, routeDirection);
+        }
+
+        /// <summary>
+        /// Gets unvalidated form, allowing routing to happen without triggering
+        /// validation - http://msdn.microsoft.com/en-us/library/system.web.httprequest.unvalidated(v=vs.110).aspx
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        private NameValueCollection GetUnvalidatedForm(HttpRequestBase request)
+        {
+#if NET40
+            if (HttpContext.Current != null)
+            {
+                // HACK: The Unvalidated method in System.Web.Helpers actually
+                // gets values from HttpContext.Current.Request, ignoring the request
+                // parameter. So we can safely use this to differentiate between
+                // web app runtime and unit test
+                return System.Web.Helpers.Validation.Unvalidated(request).Form;
+            }
+            else
+            {
+                // Unit test
+                return request.Form;
+            }
+#else
+            return request.Unvalidated.Form;
+#endif
         }
 
         private static string GetOverride(NameValueCollection form, string[] keys)
