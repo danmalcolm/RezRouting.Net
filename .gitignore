@@ -15,8 +15,7 @@
 [Dd]ebug/
 [Rr]elease/
 x64/
-build/
-package/
+dist/
 [Bb]in/
 [Oo]bj/
 

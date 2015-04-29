@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Full" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <BuildDir>$(MSBuildProjectDirectory)</BuildDir>
+    <RootDir>$(BuildDir)\..</RootDir>
+    <DistDir>$(RootDir)\dist</DistDir>
+    <PackagesDir>$(DistDir)\packages</PackagesDir>
+    <SlnDir>$(RootDir)\src</SlnDir>
+    <SlnPath>$(SlnDir)\RezRouting.sln</SlnPath>
+    <CoreProjDir>$(SlnDir)\RezRouting</CoreProjDir>
+    <Mvc4-5ProjDir>$(SlnDir)\RezRouting.AspNetMvc4-5</Mvc4-5ProjDir>
+    <NuGetExePath>$(SlnDir)\.nuget\NuGet.exe</NuGetExePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <XUnitTasksPath Include="$(SlnDir)\packages\xunit*\lib\net20\xunit.runner.msbuild.dll" />
+  </ItemGroup>
+  <UsingTask AssemblyFile="@(XUnitTasksPath)" TaskName="Xunit.Runner.MSBuild.xunit"/>
+
+  <Target Name="Full" DependsOnTargets="Build;RunTests;CreateBinaryPackages;CreateNuGetPackages" />
+  
+  <Target Name="Prepare">
+    <RemoveDir Directories="$(DistDir);$(PackagesDir)" />
+    <MakeDir Directories="$(DistDir);$(PackagesDir)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Prepare">
+    <MSBuild Projects="$(SlnPath)" Properties="Configuration=$(Configuration);"  />
+  </Target>
+
+  <Target Name="RunTests" >
+    <ItemGroup>
+      <TestAssembly Include="$(SlnDir)\RezRouting.Tests\bin\$(Configuration)\RezRouting.Tests.dll" />
+      <TestAssembly Include="$(SlnDir)\RezRouting.AspNetMvc4-5.Tests\bin\$(Configuration)\RezRouting.AspNetMvc.Tests.dll" />
+    </ItemGroup>
+    <xunit Assemblies="@(TestAssembly)" />
+  </Target>
+
+  <Target Name="CreateBinaryPackages">
+    <ItemGroup>
+      <CoreBinaries Include="$(CoreProjDir)/bin/$(Configuration)/RezRouting.*" />
+      <AspNetMvcBinaries Include="$(Mvc4-5ProjDir)/bin/$(Configuration)/RezRouting.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(CoreBinaries)" DestinationFolder="$(DistDir)/RezRouting" />
+    <Copy SourceFiles="@(AspNetMvcBinaries)" DestinationFolder="$(DistDir)/RezRouting.AspNetMvc4-5" />
+  </Target>
+  
+  <Target Name="CreateNuGetPackages">
+    
+    <PropertyGroup>
+      <WorkingDir>$(PackagesDir)\temp</WorkingDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <CoreLibFiles Include="$(DistDir)\RezRouting\RezRouting.*" />
+      <AspNetMvcLibFiles Include="$(DistDir)\RezRouting.AspNetMvc4-5\RezRouting.AspNetMvc.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="$(CoreProjDir)\RezRouting.nuspec" DestinationFolder="$(WorkingDir)/RezRouting" />
+    <Copy SourceFiles="@(CoreLibFiles)" DestinationFolder="$(WorkingDir)/RezRouting/lib/net40" />
+
+    <Copy SourceFiles="$(Mvc4-5ProjDir)\RezRouting.AspNetMvc4-5.nuspec" DestinationFolder="$(WorkingDir)/RezRouting.AspNetMvc4-5" />
+    <Copy SourceFiles="@(AspNetMvcLibFiles)" DestinationFolder="$(WorkingDir)/RezRouting.AspNetMvc4-5/lib/net40" />
+
+    <Exec WorkingDirectory="$(PackagesDir)" Command="$(NuGetExePath) pack $(WorkingDir)\RezRouting\RezRouting.nuspec -IncludeReferencedProjects" />
+    <Exec WorkingDirectory="$(PackagesDir)" Command="$(NuGetExePath) pack $(WorkingDir)\RezRouting.AspNetMvc4-5\RezRouting.AspNetMvc4-5.nuspec -IncludeReferencedProjects" />
+    
+    <RemoveDir Directories="$(WorkingDir)" />
+  </Target>
+
+</Project>

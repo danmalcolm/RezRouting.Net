@@ -63,7 +63,6 @@ namespace RezRouting.AspNetMvc
         /// <returns></returns>
         private NameValueCollection GetUnvalidatedForm(HttpRequestBase request)
         {
-#if NET40
             if (HttpContext.Current != null)
             {
                 // HACK: The Unvalidated method in System.Web.Helpers actually
@@ -74,12 +73,8 @@ namespace RezRouting.AspNetMvc
             }
             else
             {
-                // Unit test
                 return request.Form;
             }
-#else
-            return request.Unvalidated.Form;
-#endif
         }
 
         private static string GetOverride(NameValueCollection form, string[] keys)
