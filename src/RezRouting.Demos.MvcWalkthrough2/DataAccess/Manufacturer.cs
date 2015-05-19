@@ -2,10 +2,8 @@
 
 namespace RezRouting.Demos.MvcWalkthrough2.DataAccess
 {
-    public class Manufacturer
+    public class Manufacturer : Entity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public DateTime CreatedOn { get; set; }

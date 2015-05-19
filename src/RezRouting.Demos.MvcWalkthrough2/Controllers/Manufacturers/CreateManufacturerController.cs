@@ -1,46 +1,36 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Demos.MvcWalkthrough2.DataAccess;
 
 namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers
 {
-    public class ManufacturersController : Controller
+    public class CreateManufacturerController : Controller
     {
-        public ActionResult Index()
-        {
-            var model = new ManufacturersIndexModel
-            {
-                Manufacturers = DemoData.Manufacturers.ToList()
-            };
-            return View(model);
-        }
-
         public ActionResult New()
         {
-            return DisplayNewView(new CreateInput());
+            return DisplayNewView(new CreateManufacturerRequest());
         }
 
-        private ActionResult DisplayNewView(CreateInput input)
+        private ActionResult DisplayNewView(CreateManufacturerRequest manufacturerRequest)
         {
             var model = new CreateModel
             {
-                Input = input
+                ManufacturerRequest = manufacturerRequest
             };
             return View("New", model);
         }
 
-        public ActionResult Create(CreateInput input)
+        public ActionResult Create(CreateManufacturerRequest manufacturerRequest)
         {
             if (!ModelState.IsValid)
             {
-                return DisplayNewView(input);
+                return DisplayNewView(manufacturerRequest);
             }
 
             var manufacturer = new DataAccess.Manufacturer
             {
                 Id = DemoData.Manufacturers.Count + 1,
-                Name = input.Name,
+                Name = manufacturerRequest.Name,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now,
             };

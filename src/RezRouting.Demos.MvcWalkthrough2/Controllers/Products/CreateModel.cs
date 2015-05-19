@@ -9,6 +9,6 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products
     {
         public SelectList ManufacturerOptions { get; set; }
 
-        public CreateInput Input { get; set; } 
+        public CreateProductRequest Request { get; set; } 
     }
 }

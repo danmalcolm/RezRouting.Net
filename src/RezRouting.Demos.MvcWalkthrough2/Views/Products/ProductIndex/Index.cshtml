@@ -1,0 +1,38 @@
+﻿@using RezRouting.Demos.MvcWalkthrough2.Controllers.Products
+@using RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
+@using RezRouting.Demos.MvcWalkthrough2.Utility
+@model EntityIndexModel<RezRouting.Demos.MvcWalkthrough2.DataAccess.Product,EntityCriteria>
+
+@{
+    ViewBag.Title = "Products";
+}
+<form action="@Url.ResourceUrl((ProductIndexController c) => c.Index(null))"
+      class="form-inline">
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Criteria.Keyword, new { @class = "form-control", placeholder="Search keyword"})
+    </div>
+    <button type="submit" class="btn btn-default">Search</button>
+</form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Manufacturer</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var product in Model.Items)
+        {
+            <tr>
+                <td><a href="@Url.ResourceUrl((ProductDetailsController x) => x.Show(product.Id))">@product.Id</a></td>
+                <td>@product.Name</td>
+                <td>@product.Manufacturer.Name</td>
+                <td>@product.CreatedOn</td>
+                <td>@product.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>
+<div><a class="btn btn-default" href="@Url.Action("New", "CreateProduct")">Add New Product</a></div>
+

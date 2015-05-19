@@ -6,7 +6,7 @@
     ViewBag.Title = "Update Manufacturer";
 }
 
-<form method="POST" action="@(Url.ResourceUrl<ManufacturerController>("Update"))">
+<form method="POST" action="@(Url.ResourceUrl<ManufacturerEditController>("Update"))">
 
     @Html.ValidationSummary()
 

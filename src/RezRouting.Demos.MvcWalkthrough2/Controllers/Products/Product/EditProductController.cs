@@ -5,27 +5,8 @@ using RezRouting.Demos.MvcWalkthrough2.DataAccess;
 
 namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
 {
-    public class ProductController : Controller
+    public class EditProductController : Controller
     {
-        public ActionResult Show(int id)
-        {
-            var product = DemoData.Products.SingleOrDefault(x => x.Id == id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            var reviews = DemoData.Reviews.Where(x => x.Product == product)
-                .OrderByDescending(x => x.ReviewDate)
-                .Take(3)
-                .ToList();
-            var model = new ProductDetailsModel
-            {
-                Product = product,
-                Reviews = reviews
-            };
-            return View(model);
-        }
-
         public ActionResult Edit(int id)
         {
             var product = DemoData.Products.SingleOrDefault(x => x.Id == id);
@@ -34,7 +15,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
                 return HttpNotFound();
             }
 
-            var input = new EditInput
+            var input = new EditProductRequest
             {
                 Id = product.Id, 
                 ManufacturerId = product.Manufacturer.Id, 
@@ -43,26 +24,26 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
             return DisplayEditView(input);
         }
 
-        private ActionResult DisplayEditView(EditInput input)
+        private ActionResult DisplayEditView(EditProductRequest request)
         {
-            var model = new EditModel
+            var model = new EditProductModel
             {
-                ManufacturerOptions = new SelectList(DemoData.Manufacturers, "Id", "Name", input.ManufacturerId),
-                Input = input
+                ManufacturerOptions = new SelectList(DemoData.Manufacturers, "Id", "Name", request.ManufacturerId),
+                Request = request
             };
             return View("Edit", model);
         }
 
-        public ActionResult Update(EditInput input)
+        public ActionResult Update(EditProductRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return DisplayEditView(input);
+                return DisplayEditView(request);
             }
 
-            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.ManufacturerId);
-            var product = DemoData.Products.Single(x => x.Id == input.Id);
-            product.Name = input.Name;
+            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == request.ManufacturerId);
+            var product = DemoData.Products.Single(x => x.Id == request.Id);
+            product.Name = request.Name;
             product.Manufacturer = manufacturer;
             product.ModifiedOn = DateTime.Now;
 
@@ -81,7 +62,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
             product.IsActive = false;
 
             TempData["alert-success"] = "Product Deleted";
-            return RedirectToAction("Index", "Products");
+            return RedirectToAction("Index", "CreateProduct");
         }
     }
 }

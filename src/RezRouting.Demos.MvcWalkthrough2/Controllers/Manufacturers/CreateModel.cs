@@ -7,6 +7,6 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers
     /// </summary>
     public class CreateModel
     {
-        public CreateInput Input { get; set; } 
+        public CreateManufacturerRequest ManufacturerRequest { get; set; } 
     }
 }

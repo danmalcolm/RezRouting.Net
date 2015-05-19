@@ -1,0 +1,36 @@
+﻿@using RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers
+@using RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer
+@using RezRouting.Demos.MvcWalkthrough2.Utility
+@model EntityIndexModel<RezRouting.Demos.MvcWalkthrough2.DataAccess.Manufacturer,EntityCriteria>
+
+@{
+    ViewBag.Title = "Manufacturers";
+}
+<form action="@Url.ResourceUrl((ManufacturerIndexController c) => c.Index(null))"
+      class="form-inline">
+    <div class="form-group">
+        @Html.TextBoxFor(x => x.Criteria.Keyword, new { @class = "form-control", placeholder = "Search keyword" })
+    </div>
+    <button type="submit" class="btn btn-default">Search</button>
+</form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var manufacturer in Model.Items)
+        {
+            <tr>
+                <td><a href="@Url.ResourceUrl((ManufacturerDetailsController x) => x.Show(manufacturer.Id)) ">@manufacturer.Id</a></td>
+                <td>@manufacturer.Name</td>
+                <td>@manufacturer.CreatedOn</td>
+                <td>@manufacturer.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>
+<div><a class="btn btn-default" href="@Url.Action("New", "CreateManufacturer")">Add New Manufacturer</a></div>
+

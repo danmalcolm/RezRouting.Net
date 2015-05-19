@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers
+@using RezRouting.Demos.MvcWalkthrough2.Controllers.Products
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -27,15 +30,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Show", "Home")">RezRouting CRUD Demo</a>
+                <a class="navbar-brand" href="@Url.Action("Show", "Home")">RezRouting ASP.Net MVC Walkthrough 2</a>
             </div>
             @if (ViewContext.HttpContext.Request.IsAuthenticated)
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="@Url.Action("Show", "Home")">Home</a></li>
-                        <li><a href="@Url.Action("Index", "Products")">Products</a></li>
-                        <li><a href="@Url.Action("Index", "Manufacturers")">Manufacturers</a></li>
+                        <li><a href="@Url.ResourceUrl((ProductIndexController x) => x.Index(null))">Products</a></li>
+                        <li><a href="@Url.ResourceUrl((ManufacturerIndexController x) => x.Index(null))">Manufacturers</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><p class="navbar-text">@ViewContext.HttpContext.User.Identity.Name signed in</p></li>

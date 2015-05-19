@@ -119,31 +119,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\ViewEngineConfig.cs" />
+    <Compile Include="Controllers\Common\EntityCriteria.cs" />
+    <Compile Include="Controllers\Common\EntityIndexController.cs" />
+    <Compile Include="Controllers\Common\EntityDetailsController.cs" />
+    <Compile Include="Controllers\Common\EntityIndexModel.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Home\HomeModel.cs" />
-    <Compile Include="Controllers\Manufacturers\CreateInput.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateManufacturerRequest.cs" />
     <Compile Include="Controllers\Manufacturers\CreateModel.cs" />
-    <Compile Include="Controllers\Manufacturers\ManufacturersController.cs" />
-    <Compile Include="Controllers\Manufacturers\ManufacturersIndexModel.cs" />
+    <Compile Include="Controllers\Manufacturers\ManufacturerIndexController.cs" />
+    <Compile Include="Controllers\Manufacturers\CreateManufacturerController.cs" />
     <Compile Include="Controllers\Manufacturers\Manufacturer\EditInput.cs" />
     <Compile Include="Controllers\Manufacturers\Manufacturer\EditModel.cs" />
-    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerController.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerDetailsController.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerEditController.cs" />
     <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerDetailsModel.cs" />
-    <Compile Include="Controllers\Products\CreateInput.cs" />
+    <Compile Include="Controllers\Products\CreateProductRequest.cs" />
     <Compile Include="Controllers\Products\CreateModel.cs" />
-    <Compile Include="Controllers\Products\ProductsIndexModel.cs" />
-    <Compile Include="Controllers\Products\Product\EditInput.cs" />
-    <Compile Include="Controllers\Products\Product\EditModel.cs" />
-    <Compile Include="Controllers\Products\Product\ProductController.cs" />
+    <Compile Include="Controllers\Products\CreateProductController.cs" />
+    <Compile Include="Controllers\Products\Product\EditProductRequest.cs" />
+    <Compile Include="Controllers\Products\Product\EditProductModel.cs" />
+    <Compile Include="Controllers\Products\Product\EditProductController.cs" />
+    <Compile Include="Controllers\Products\Product\ProductDetailsController.cs" />
     <Compile Include="Controllers\Products\Product\Reviews\ReviewsController.cs" />
     <Compile Include="Controllers\Products\Product\Reviews\ReviewsIndexModel.cs" />
     <Compile Include="Controllers\Products\Product\Reviews\Review\ReviewDetailsModel.cs" />
-    <Compile Include="Controllers\Products\Product\Reviews\Review\ReviewsController.cs" />
+    <Compile Include="Controllers\Products\Product\Reviews\Review\ReviewDetailsController.cs" />
     <Compile Include="Controllers\Products\Product\ProductDetailsModel.cs" />
     <Compile Include="Controllers\Session\Credentials.cs" />
     <Compile Include="DataAccess\DemoData.cs" />
-    <Compile Include="Controllers\Products\ProductsController.cs" />
+    <Compile Include="Controllers\Products\ProductIndexController.cs" />
     <Compile Include="Controllers\Session\SessionController.cs" />
+    <Compile Include="DataAccess\Entity.cs" />
     <Compile Include="DataAccess\Manufacturer.cs" />
     <Compile Include="DataAccess\Product.cs" />
     <Compile Include="DataAccess\Review.cs" />
@@ -155,6 +163,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\UrlHelperExtensions.cs" />
+    <Compile Include="ViewEngines\ControllerPathRazorViewEngine.cs" />
+    <Compile Include="ViewEngines\ControllerPathResolver.cs" />
+    <Compile Include="ViewEngines\ControllerPathSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -164,18 +175,18 @@
     <Content Include="Views\Session\Show.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Show.cshtml" />
-    <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Product\Show.cshtml" />
+    <Content Include="Views\Products\ProductIndex\Index.cshtml" />
+    <Content Include="Views\Products\Product\ProductDetails\Show.cshtml" />
     <Content Include="Views\Shared\Alerts.cshtml" />
-    <Content Include="Views\Products\New.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Products\CreateProduct\New.cshtml" />
+    <Content Include="Views\Products\Product\EditProduct\Edit.cshtml" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
     <Content Include="Views\Reviews\Index.cshtml" />
-    <Content Include="Views\Review\Show.cshtml" />
-    <Content Include="Views\Manufacturer\Edit.cshtml" />
-    <Content Include="Views\Manufacturer\Show.cshtml" />
-    <Content Include="Views\Manufacturers\Index.cshtml" />
-    <Content Include="Views\Manufacturers\New.cshtml" />
+    <Content Include="Views\ReviewDetails\Show.cshtml" />
+    <Content Include="Views\Manufacturers\Manufacturer\ManufacturerEdit\Edit.cshtml" />
+    <Content Include="Views\Manufacturers\Manufacturer\ManufacturerDetails\Show.cshtml" />
+    <Content Include="Views\Manufacturers\ManufacturerIndex\Index.cshtml" />
+    <Content Include="Views\Manufacturers\CreateManufacturer\New.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

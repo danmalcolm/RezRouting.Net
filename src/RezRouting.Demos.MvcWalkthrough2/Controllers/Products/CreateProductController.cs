@@ -5,44 +5,35 @@ using RezRouting.Demos.MvcWalkthrough2.DataAccess;
 
 namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products
 {
-    public class ProductsController : Controller
+    public class CreateProductController : Controller
     {
-        public ActionResult Index()
-        {
-            var model = new ProductsIndexModel
-            {
-                Products = DemoData.Products.Where(x => x.IsActive).ToList()
-            };
-            return View(model);
-        }
-
         public ActionResult New()
         {
-            return DisplayNewView(new CreateInput());
+            return DisplayNewView(new CreateProductRequest());
         }
 
-        private ActionResult DisplayNewView(CreateInput input)
+        private ActionResult DisplayNewView(CreateProductRequest request)
         {
             var model = new CreateModel
             {
-                ManufacturerOptions = new SelectList(DemoData.Manufacturers, "Id", "Name", input.ManufacturerId),
-                Input = input
+                ManufacturerOptions = new SelectList(DemoData.Manufacturers, "Id", "Name", request.ManufacturerId),
+                Request = request
             };
             return View("New", model);
         }
 
-        public ActionResult Create(CreateInput input)
+        public ActionResult Create(CreateProductRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return DisplayNewView(input);
+                return DisplayNewView(request);
             }
 
-            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.ManufacturerId);
+            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == request.ManufacturerId);
             var product = new DataAccess.Product
             {
                 Id = DemoData.Products.Count + 1,
-                Name = input.Name,
+                Name = request.Name,
                 Manufacturer = manufacturer,
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now,

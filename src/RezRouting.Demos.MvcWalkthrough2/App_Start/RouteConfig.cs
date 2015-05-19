@@ -26,23 +26,27 @@ namespace RezRouting.Demos.MvcWalkthrough2
             root.Singular("Session", session => session.HandledBy<SessionController>());
             root.Collection("Products", products =>
             {
-                products.HandledBy<ProductsController>();
+                products.HandledBy<ProductIndexController>();
+                products.HandledBy<CreateProductController>();
                 products.Items(product =>
                 {
-                    product.HandledBy<ProductController>();
+                    product.HandledBy<ProductDetailsController>();
+                    product.HandledBy<EditProductController>();
                     product.Collection("Reviews", reviews =>
                     {
                         reviews.HandledBy<ReviewsController>();
-                        reviews.Items(review => review.HandledBy<ReviewController>());
+                        reviews.Items(review => review.HandledBy<ReviewDetailsController>());
                     });
                 });
             });
             root.Collection("Manufacturers", manufacturers =>
             {
-                manufacturers.HandledBy<ManufacturersController>();
+                manufacturers.HandledBy<ManufacturerIndexController>();
+                manufacturers.HandledBy<CreateManufacturerController>();
                 manufacturers.Items(manufacturer =>
                 {
-                    manufacturer.HandledBy<ManufacturerController>();
+                    manufacturer.HandledBy<ManufacturerDetailsController>();
+                    manufacturer.HandledBy<ManufacturerEditController>();
                 });
             });
             root.ApplyRouteConventions(new CrudRouteConventions());

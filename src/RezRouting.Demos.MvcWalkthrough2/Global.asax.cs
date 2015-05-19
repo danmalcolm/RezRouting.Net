@@ -9,6 +9,7 @@ namespace RezRouting.Demos.MvcWalkthrough2
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ViewEnginesConfig.Configure(System.Web.Mvc.ViewEngines.Engines);
         }
     }
 }

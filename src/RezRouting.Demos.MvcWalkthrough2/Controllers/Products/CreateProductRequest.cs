@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
+namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products
 {
     /// <summary>
-    /// The values submitted to edit a product
+    /// The values submitted to create a product
     /// </summary>
-    public class EditInput
+    public class CreateProductRequest
     {
-        public int Id { get; set; }
-
         [Required]
         public int? ManufacturerId { get; set; }
 

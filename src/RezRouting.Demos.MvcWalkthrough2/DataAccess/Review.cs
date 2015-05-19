@@ -2,10 +2,8 @@
 
 namespace RezRouting.Demos.MvcWalkthrough2.DataAccess
 {
-    public class Review
+    public class Review : Entity
     {
-        public int Id { get; set; }
-
         public Product Product { get; set; }
 
         public string UserName { get; set; }

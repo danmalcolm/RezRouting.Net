@@ -56,5 +56,37 @@ namespace RezRouting.Demos.MvcWalkthrough2.DataAccess
         public static List<Review> Reviews { get; set; }
 
         public static List<User> Users { get; set; }
+
+        public static TEntity Get<TEntity>(int id)
+            where TEntity : Entity
+        {
+            // We're trying to mimic features of an ORM like
+            // NHibernate or Entity Framework here.
+
+            Entity entity = null;
+
+            if (typeof (TEntity) == typeof (Product))
+                entity = Products.SingleOrDefault(x => x.Id == id);
+
+            if (typeof(TEntity) == typeof(Manufacturer))
+                entity = Manufacturers.SingleOrDefault(x => x.Id == id);
+
+            return entity as TEntity;
+        }
+
+        public static IQueryable<TEntity> Query<TEntity>()
+            where TEntity : Entity
+        {
+            // We're trying to mimic features of an ORM like
+            // NHibernate or Entity Framework here.
+
+            if (typeof(TEntity) == typeof(Product))
+                return (IQueryable<TEntity>) Products.AsQueryable();
+
+            if (typeof(TEntity) == typeof(Manufacturer))
+                return (IQueryable<TEntity>)Manufacturers.AsQueryable();
+
+            throw new NotSupportedException("Unrecognised entity type");
+        }
     }
 }
