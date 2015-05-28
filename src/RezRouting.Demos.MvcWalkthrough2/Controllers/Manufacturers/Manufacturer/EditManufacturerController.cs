@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Demos.MvcWalkthrough2.DataAccess;
+using RezRouting.Demos.MvcWalkthrough2.Utility;
 
 namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer
 {
-    public class ManufacturerEditController : Controller
+    public class EditManufacturerController : Controller
     {
         public ActionResult Edit(int id)
         {
@@ -15,7 +16,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacture
                 return HttpNotFound();
             }
 
-            var input = new EditInput
+            var input = new EditManufacturerRequest
             {
                 Id = manufacturer.Id, 
                 Name = manufacturer.Name
@@ -23,32 +24,32 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacture
             return DisplayEditView(input);
         }
 
-        private ActionResult DisplayEditView(EditInput input)
+        private ActionResult DisplayEditView(EditManufacturerRequest request)
         {
-            var model = new EditModel
+            var model = new EditManufacturerModel
             {
-                Input = input
+                Request = request
             };
             return View("Edit", model);
         }
 
-        public ActionResult Update(EditInput input)
+        public ActionResult Update(EditManufacturerRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return DisplayEditView(input);
+                return DisplayEditView(request);
             }
 
-            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == input.Id);
+            var manufacturer = DemoData.Manufacturers.Single(x => x.Id == request.Id);
             if (manufacturer == null)
             {
                 return HttpNotFound();
             }
-            manufacturer.Name = input.Name;
+            manufacturer.Name = request.Name;
             manufacturer.ModifiedOn = DateTime.Now;
 
             TempData["alert-success"] = "Manufacturer Updated";
-            return RedirectToAction("Show", new { id = manufacturer.Id });
+            return Redirect(Url.ResourceUrl((ManufacturerDetailsController c) => c.Show(manufacturer.Id)));
         }
     }
 }

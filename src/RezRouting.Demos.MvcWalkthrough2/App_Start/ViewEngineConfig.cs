@@ -12,6 +12,5 @@ namespace RezRouting.Demos.MvcWalkthrough2
             var viewEngine = new ControllerPathRazorViewEngine(settings);
             viewEngines.Add(viewEngine);
         }
-         
     }
 }

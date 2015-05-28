@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc.UrlGeneration;
 using RezRouting.Configuration;
 using RezRouting.AspNetMvc;
 using RezRouting.Demos.MvcWalkthrough2.Controllers.Home;
@@ -15,7 +14,7 @@ using RezRouting.Demos.MvcWalkthrough2.Controllers.Session;
 
 namespace RezRouting.Demos.MvcWalkthrough2
 {
-    public class RouteConfig
+    public static class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -46,7 +45,7 @@ namespace RezRouting.Demos.MvcWalkthrough2
                 manufacturers.Items(manufacturer =>
                 {
                     manufacturer.HandledBy<ManufacturerDetailsController>();
-                    manufacturer.HandledBy<ManufacturerEditController>();
+                    manufacturer.HandledBy<EditManufacturerController>();
                 });
             });
             root.ApplyRouteConventions(new CrudRouteConventions());

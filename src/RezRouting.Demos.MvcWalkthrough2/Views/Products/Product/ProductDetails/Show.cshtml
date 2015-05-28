@@ -1,4 +1,5 @@
-﻿@model RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product.ProductDetailsModel
+﻿@using RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
+@model RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product.ProductDetailsModel
 
 @{
     ViewBag.Title = Model.Product.Name + " Details";
@@ -7,11 +8,7 @@
 <p>Added on: @Model.Product.CreatedOn</p>
 <p>Modified on: @Model.Product.ModifiedOn</p>
 <div>
-    <a class="btn btn-default" href="@Url.Action("Edit", new { id = Model.Product.Id })">Edit</a>
-    <form style="display:inline" method="POST" action="@Url.Action("Delete", "ProductDetails")" >
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <input class="btn btn-danger" type="submit" value="Delete" />
-    </form>
+    <a class="btn btn-default" href="@Url.ResourceUrl((EditProductController c) => c.Edit(Model.Product.Id))">Edit</a>
 </div>
 
 <h2>Recent Reviews</h2>

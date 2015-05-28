@@ -1,4 +1,5 @@
-﻿@model RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer.ManufacturerDetailsModel
+﻿@using RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer
+@model ManufacturerDetailsModel
 
 @{
     ViewBag.Title = Model.Manufacturer.Name + " Details";
@@ -6,7 +7,7 @@
 <p>Added on: @Model.Manufacturer.CreatedOn</p>
 <p>Modified on: @Model.Manufacturer.ModifiedOn</p>
 <div>
-    <a class="btn btn-default" href="@Url.Action("Edit", new { id = Model.Manufacturer.Id })">Edit</a>
+    <a class="btn btn-default" href="@Url.ResourceUrl((EditManufacturerController c) => c.Edit(Model.Manufacturer.Id))">Edit</a>
 </div>
 
 <h2>Recently Updated Products</h2>

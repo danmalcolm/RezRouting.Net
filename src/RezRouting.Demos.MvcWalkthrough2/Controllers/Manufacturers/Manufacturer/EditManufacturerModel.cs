@@ -3,8 +3,8 @@
     /// <summary>
     /// Model used to display screen to edit a manufacturer
     /// </summary>
-    public class EditModel
+    public class EditManufacturerModel
     {
-        public EditInput Input { get; set; } 
+        public EditManufacturerRequest Request { get; set; } 
     }
 }

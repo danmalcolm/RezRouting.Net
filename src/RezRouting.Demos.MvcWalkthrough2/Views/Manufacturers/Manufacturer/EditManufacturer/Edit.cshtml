@@ -1,0 +1,20 @@
+﻿@using RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacturer
+@model EditManufacturerModel
+
+@{
+    ViewBag.Title = "Edit Manufacturer";
+}
+
+<form method="POST" action="@Url.ResourceUrl((EditManufacturerController c) => c.Update(null))">
+
+    @Html.ValidationSummary()
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.HiddenFor(x => x.Request.Id)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Request.Name)
+        @Html.TextBoxFor(x => x.Request.Name, new { @class = "form-control" })
+    </div>
+    
+    <input class="btn btn-primary" type="submit" value="Update" />
+
+</form>

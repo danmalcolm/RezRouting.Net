@@ -8,7 +8,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.ViewEngines
     // Adapted from https://github.com/danmalcolm/ControllerPathViewEngine
     public class ControllerPathResolver
     {
-        private readonly ConcurrentDictionary<Type,string> paths = new ConcurrentDictionary<Type, string>(); 
+        private readonly ConcurrentDictionary<Type, string> paths = new ConcurrentDictionary<Type, string>();
         private readonly ControllerPathSettings settings;
 
         public ControllerPathResolver(ControllerPathSettings settings)
@@ -44,7 +44,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.ViewEngines
 
             if (directories == null || directories.Length == 0)
                 return Enumerable.Empty<string>();
-           
+
             // Get a directory for each level within namespace below last occurence of 
             // a "Controllers" element.
             return directories

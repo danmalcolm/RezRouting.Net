@@ -130,10 +130,10 @@
     <Compile Include="Controllers\Manufacturers\CreateModel.cs" />
     <Compile Include="Controllers\Manufacturers\ManufacturerIndexController.cs" />
     <Compile Include="Controllers\Manufacturers\CreateManufacturerController.cs" />
-    <Compile Include="Controllers\Manufacturers\Manufacturer\EditInput.cs" />
-    <Compile Include="Controllers\Manufacturers\Manufacturer\EditModel.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\EditManufacturerRequest.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\EditManufacturerModel.cs" />
     <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerDetailsController.cs" />
-    <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerEditController.cs" />
+    <Compile Include="Controllers\Manufacturers\Manufacturer\EditManufacturerController.cs" />
     <Compile Include="Controllers\Manufacturers\Manufacturer\ManufacturerDetailsModel.cs" />
     <Compile Include="Controllers\Products\CreateProductRequest.cs" />
     <Compile Include="Controllers\Products\CreateModel.cs" />
@@ -181,9 +181,9 @@
     <Content Include="Views\Products\CreateProduct\New.cshtml" />
     <Content Include="Views\Products\Product\EditProduct\Edit.cshtml" />
     <Content Include="Scripts\jquery-1.9.0.min.map" />
-    <Content Include="Views\Reviews\Index.cshtml" />
-    <Content Include="Views\ReviewDetails\Show.cshtml" />
-    <Content Include="Views\Manufacturers\Manufacturer\ManufacturerEdit\Edit.cshtml" />
+    <Content Include="Views\Products\Product\Reviews\Index.cshtml" />
+    <Content Include="Views\Products\Product\Reviews\Review\ReviewDetails\Show.cshtml" />
+    <Content Include="Views\Manufacturers\Manufacturer\EditManufacturer\Edit.cshtml" />
     <Content Include="Views\Manufacturers\Manufacturer\ManufacturerDetails\Show.cshtml" />
     <Content Include="Views\Manufacturers\ManufacturerIndex\Index.cshtml" />
     <Content Include="Views\Manufacturers\CreateManufacturer\New.cshtml" />

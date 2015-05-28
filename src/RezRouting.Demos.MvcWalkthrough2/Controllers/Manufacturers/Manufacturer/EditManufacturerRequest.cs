@@ -5,7 +5,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers.Manufacture
     /// <summary>
     /// The values submitted to edit a manufacturer
     /// </summary>
-    public class EditInput
+    public class EditManufacturerRequest
     {
         public int Id { get; set; }
 

@@ -11,11 +11,13 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product.Reviews.
             // Slightly clunky way of loading a child resource - there are
             // plenty of interesting ways in which this could be improved
 
-            object parentId;
+            int productId;
 
-            if (!RouteData.Values.TryGetValue("productId", out parentId))
+            if (!RouteData.Values.ContainsKey("productId")
+                || !int.TryParse((string) RouteData.Values["productId"], out productId))
+            {
                 return null;
-            int productId = (int) parentId;
+            }
             var review = DemoData.Reviews
                 .SingleOrDefault(x => x.Product.Id == productId && x.Id == id);
             return review;

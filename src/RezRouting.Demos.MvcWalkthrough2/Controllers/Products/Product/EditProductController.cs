@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using RezRouting.Demos.MvcWalkthrough2.DataAccess;
+using RezRouting.Demos.MvcWalkthrough2.Utility;
 
 namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
 {
@@ -48,21 +49,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Products.Product
             product.ModifiedOn = DateTime.Now;
 
             TempData["alert-success"] = "Product Updated";
-            return RedirectToAction("Show", new { id = product.Id });
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var product = DemoData.Products.SingleOrDefault(x => x.Id == id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-
-            product.IsActive = false;
-
-            TempData["alert-success"] = "Product Deleted";
-            return RedirectToAction("Index", "CreateProduct");
+            return Redirect(Url.ResourceUrl((ProductDetailsController c) => c.Show(product.Id)));
         }
     }
 }
