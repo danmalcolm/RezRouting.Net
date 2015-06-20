@@ -23,7 +23,7 @@ namespace RezRouting.AspNetMvc
         /// <param name="area">The name of the area - if null, no area will be configured</param>
         public void CreateRoutes(Resource root, RouteCollection routes, string area)
         {
-            var routeModels = GetRoutes(new [] { root }).ToList();
+            var routeModels = RouteSorter.Sort(root).ToList();
 
             new RouteValidator().ThrowIfInvalid(routeModels, routes);
             
@@ -33,12 +33,7 @@ namespace RezRouting.AspNetMvc
             }
             UrlHelperExtensions.Index.AddRoutes(routes);
         }
-
-        private IEnumerable<Route> GetRoutes(IEnumerable<Resource> resources)
-        {
-            return resources.SelectMany(x => x.Routes.Concat(GetRoutes(x.Children)));
-        }
-
+        
         private void CreateRoute(Route model, RouteCollection routes, string area)
         {
             var handler = model.Handler as MvcAction;

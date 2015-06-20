@@ -61,6 +61,7 @@
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="HttpMethodOrOverrideConstraint.cs" />
+    <Compile Include="RouteSorter.cs" />
     <Compile Include="ResourceConfiguratorExtensions.cs" />
     <Compile Include="MvcAction.cs" />
     <Compile Include="MvcRouteCreator.cs" />

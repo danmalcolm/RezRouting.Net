@@ -171,6 +171,38 @@ Products.Route1 - (defined on resource Products)
         }
 
         [Fact]
+        public void should_map_routes_of_other_child_resources_within_collection_before_item_routes()
+        {
+            var builder = RootResourceBuilder.Create("");
+            builder.Collection("Products", products =>
+            {
+                products.Singular("Singular1", singular1 =>
+                {
+                    singular1.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                    singular1.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
+                });
+                products.Items(product =>
+                {
+                    product.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                    product.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
+                });
+                products.Singular("Singular2", singular2 =>
+                {
+                    singular2.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
+                    singular2.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
+                });
+            });
+            var routes = new RouteCollection();
+            builder.MapMvcRoutes(routes);
+            var expectedRouteNames = new[]
+            {
+                "Products.Singular1.Route1", "Products.Singular1.Route2", "Products.Singular2.Route1", "Products.Singular2.Route2", "Products.Product.Route1", "Products.Product.Route2"
+            };
+            routes.Cast<System.Web.Routing.Route>().Select(x => x.DataTokens["Name"])
+                .Should().Equal(expectedRouteNames);
+        }
+
+        [Fact]
         public void should_include_area_when_mapping_area_routes()
         {
             var builder = RootResourceBuilder.Create("");
@@ -207,7 +239,7 @@ Products.Route1 - (defined on resource Products)
         }
 
         [Fact]
-        public void when_mapping_routes_for_separate_resources_hierarchies_should_index_all_for_url_generation()
+        public void when_mapping_routes_for_separate_resource_hierarchies_should_index_all_for_url_generation()
         {
             var routes = new RouteCollection();
             var builder1 = RootResourceBuilder.Create("Area1");
