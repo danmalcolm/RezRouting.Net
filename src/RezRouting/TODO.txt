@@ -1,13 +1,13 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
+[ ] Separate conventions for Index and Details route mapping? Instead of including within Crud and Task conventions.
+
 [ ] Tests for home route mapping
 
 [ ] Wiki
 
 [ ] Logo
-
-[ ] Improve tasks demo - pick better example for task-based approach, meeting requests?
 
 [ ] Publish to nuget
 

@@ -1,0 +1,19 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product.Reviews.Review
+@model ReviewDetailsModel
+@{
+    var review = Model.Review;
+    var product = review.Product;
+    ViewBag.Title = product.Name + " Review by " + review.UserName;
+}
+
+<p>Review Date: @review.ReviewDate</p>
+<p>Score: @review.Score</p>
+<p>Status: @Html.Partial("ApprovalStatusLabel", review.ApprovalStatus)</p>
+<p>
+    <a class="btn btn-default" href="@Url.ResourceUrl((ApproveReviewController c) => c.Edit(null), new { productId = product.Id, id = review.Id })">Approve</a>
+</p>
+    
+<div class="well">
+    @review.Comments
+</div>
+

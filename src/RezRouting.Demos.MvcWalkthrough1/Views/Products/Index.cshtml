@@ -1,6 +1,6 @@
-﻿@using RezRouting.Demos.MvcWalkthrough1.Controllers.Products
-@using RezRouting.Demos.MvcWalkthrough1.Utility
-@model RezRouting.Demos.MvcWalkthrough1.Controllers.Products.ProductsIndexModel
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.MvcWalkthrough1.Controllers.Products
+@model ProductsIndexModel
 
 @{
     ViewBag.Title = "Products";
@@ -18,7 +18,7 @@
         @foreach (var product in Model.Products)
         {
             <tr>
-                <td><a href="@Url.ResourceUrl((ProductsController x) => x.Show(product.Id))">@product.Id</a></td>
+                <td><a href="@(Url.ResourceUrl<ProductsController>("Show", new { id = product.Id }))">@product.Id</a></td>
                 <td>@product.Name</td>
                 <td>@product.Manufacturer.Name</td>
                 <td>@product.CreatedOn</td>
@@ -27,5 +27,5 @@
         }
     </thead>
 </table>
-<div><a class="btn btn-default" href="@Url.Action("New", "Products")">Add New Product</a></div>
+<div><a class="btn btn-default" href="@(Url.ResourceUrl<ProductsController>("New"))">Add New Product</a></div>
 

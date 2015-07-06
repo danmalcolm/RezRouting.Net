@@ -1,0 +1,20 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product
+@model TaskModel<PublishProductRequest>
+
+@{
+    ViewBag.Title = "Publish Product";
+}
+
+<form method="POST" action="@Request.Url.LocalPath">
+
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(x => x.Request.Id)
+    <div class="form-group">
+        @Html.LabelFor(x => x.Request.PublishComments, "Comments")
+        @Html.TextAreaFor(x => x.Request.PublishComments, new { @class = "form-control" })
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Publish" />
+
+</form>

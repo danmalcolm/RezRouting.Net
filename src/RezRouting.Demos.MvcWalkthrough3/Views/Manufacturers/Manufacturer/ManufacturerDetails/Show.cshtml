@@ -1,0 +1,33 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Manufacturers.Manufacturer
+@model ManufacturerDetailsModel
+
+@{
+    var manufacturer = Model.Manufacturer;
+    ViewBag.Title = manufacturer.Name + " Details";
+}
+<p>Added on: @manufacturer.CreatedOn</p>
+<p>Modified on: @manufacturer.ModifiedOn</p>
+<div>
+    <a class="btn btn-default" href="@Url.ResourceUrl((EditManufacturerController c) => c.Edit(null), new { id = manufacturer.Id })">Edit</a>
+</div>
+
+<h2>Recently Updated Products</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>Modified</th>
+        </tr>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td><a href="@Url.ResourceUrl((ManufacturerDetailsController c) => c.Show(manufacturer.Id))">@product.Id</a></td>
+                <td>@product.Name</td>
+                <td>@product.CreatedOn</td>
+                <td>@product.ModifiedOn</td>
+            </tr>
+        }
+    </thead>
+</table>

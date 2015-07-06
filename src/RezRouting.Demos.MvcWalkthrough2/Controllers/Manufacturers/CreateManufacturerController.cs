@@ -37,7 +37,7 @@ namespace RezRouting.Demos.MvcWalkthrough2.Controllers.Manufacturers
             DemoData.Manufacturers.Add(manufacturer);
 
             TempData["alert-success"] = "Manufacturer Created";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "ManufacturerIndex");
         }
     }
 }

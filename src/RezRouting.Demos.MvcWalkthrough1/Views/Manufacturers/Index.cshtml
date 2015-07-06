@@ -1,5 +1,5 @@
-﻿@using RezRouting.Demos.MvcWalkthrough1.Controllers.Manufacturers
-@using RezRouting.Demos.MvcWalkthrough1.Utility
+﻿@using RezRouting.AspNetMvc.UrlGeneration
+@using RezRouting.Demos.MvcWalkthrough1.Controllers.Manufacturers
 @model ManufacturersIndexModel
 
 @{
@@ -17,7 +17,7 @@
         @foreach (var manufacturer in Model.Manufacturers)
         {
             <tr>
-                <td><a href="@Url.ResourceUrl((ManufacturersController x) => x.Show(manufacturer.Id)) ">@manufacturer.Id</a></td>
+                <td><a href="@(Url.ResourceUrl<ManufacturersController>("Show", new { id = manufacturer.Id })) ">@manufacturer.Id</a></td>
                 <td>@manufacturer.Name</td>
                 <td>@manufacturer.CreatedOn</td>
                 <td>@manufacturer.ModifiedOn</td>

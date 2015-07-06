@@ -1,0 +1,14 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.DataAccess
+@model ReviewApprovalStatus
+@{
+    string level = "default";
+    if (Model == ReviewApprovalStatus.Approved)
+    {
+        level = "success";
+    }
+    else if (Model == ReviewApprovalStatus.Rejected)
+    {
+        level = "danger";
+    }
+}
+<span class="label label-@level">@Model.ToString()</span>

@@ -1,0 +1,25 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product.Reviews.Review
+@model RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product.Reviews.ReviewsIndexModel
+
+@{
+    var product = Model.Product;
+    ViewBag.Title = product.Name + " Reviews";
+}
+
+<ul class="list-group">
+    @foreach (var review in Model.Reviews)
+    {
+        <li class="list-group-item">
+            <p><span class="badge pull-right">@review.Score</span> @review.UserName - @review.ReviewDate - @Html.Partial("ApprovalStatusLabel", review.ApprovalStatus)
+            @if (!string.IsNullOrWhiteSpace(review.ApprovalComments))
+            {
+                <text>(@review.ApprovalComments)</text>
+            }
+            <p>@review.Comments</p>
+            <p>
+                <a class="btn btn-default" href="@Url.ResourceUrl((ReviewDetailsController c) => c.Show(review.Id))">Full Details</a>
+                <a class="btn btn-default" href="@Url.ResourceUrl((ApproveReviewController c) => c.Edit(null), new { productId = product.Id, id = review.Id })">Approve</a>
+            </p>
+        </li>
+    }
+</ul>

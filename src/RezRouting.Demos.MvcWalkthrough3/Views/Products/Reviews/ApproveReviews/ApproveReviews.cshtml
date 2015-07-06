@@ -1,0 +1,57 @@
+﻿@using Microsoft.Web.Mvc
+@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products
+@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product
+@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Reviews
+@using RezRouting.Demos.MvcWalkthrough3.DataAccess
+@using RezRouting.Demos.MvcWalkthrough3.Utility
+@model RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Reviews.ApproveReviewsModel
+
+@{
+    ViewBag.Title = "Product Reviews - Bulk Approval";
+}
+<form method="POST" action="@Url.ResourceUrl((ApproveReviewsController c) => c.Edit(null))">
+    <div class="container">
+        @{
+            int itemIndex = 0;
+        }
+        @foreach (var item in Model.Request.Items)
+        {
+            var review = Model.Reviews.Single(r => r.Id == item.Id);
+            @Html.HiddenFor(x => x.Request.Items[itemIndex].Id)
+            <div class="row">
+                <div class="col-md-6">
+                    <p>@review.Comments</p>
+                    <p>Left by @review.UserName on @review.ReviewDate for @review.Product.Name</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.RadioButtonFor(x => x.Request.Items[itemIndex].Status, ReviewApprovalStatus.Approved) Approve
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.RadioButtonFor(x => x.Request.Items[itemIndex].Status, ReviewApprovalStatus.Rejected) Reject
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.TextAreaFor(x => x.Request.Items[itemIndex].Comments, 2, 20, new { @class = "form-control", placeholder = "Comments" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            itemIndex++;
+        }
+    </div>
+    <div><button class="btn btn-success" type="Submit">Save</button></div>
+</form>

@@ -1,0 +1,37 @@
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Products.Product
+@model ProductDetailsModel
+
+@{
+    var product = Model.Product;
+    ViewBag.Title = product.Name + " Details";
+}
+<p>Made by: @product.Manufacturer.Name</p>
+<p>Added on: @product.CreatedOn</p>
+<p>Modified on: @product.ModifiedOn</p>
+<div>
+    <a class="btn btn-default" href="@Url.ResourceUrl((EditProductController c) => c.Edit(null), new { id = product.Id })">Edit</a>
+    @if (!product.Published)
+    {
+        <a class="btn btn-success" href="@(Url.TaskUrl<PublishProductController>(new {id = product.Id}))">Publish</a>
+    }
+    else
+    {
+        <a class="btn btn-warning" href="@(Url.TaskUrl<ArchiveProductController>(new {id = product.Id}))">Archive</a>
+    }
+</div>
+
+<h2>Recent Reviews</h2>
+<ul class="list-group">
+    @foreach (var review in Model.Reviews)
+    {
+        <li class="list-group-item">
+            <p><span class="badge pull-right">@review.Score</span> @review.UserName - @review.ReviewDate - @Html.Partial("ApprovalStatusLabel", review.ApprovalStatus) 
+            @if (!string.IsNullOrWhiteSpace(review.ApprovalComments))
+            {
+                <text>(@review.ApprovalComments)</text>
+            }</p>
+            <p>@review.Comments.Substring(0, 40) ...</p>
+        </li>
+    }
+</ul>
+<p><a class="btn btn-default" href="@Url.Action("Index", "Reviews", new { productId = product.Id })">All @product.Name Reviews</a></p>
