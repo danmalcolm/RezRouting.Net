@@ -36,7 +36,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ASP.Net MVC 4\System.Web.Mvc.dll</HintPath>
-    </Reference>    
+    </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ASP.Net MVC 4\System.Web.WebPages.dll</HintPath>
@@ -87,20 +87,18 @@
     <Compile Include="RouteConventions\ActionRouteConventionTests.cs" />
     <Compile Include="RouteConventions\Crud\InboundRequestTests.cs" />
     <Compile Include="RouteConventions\Crud\RouteSetupTests.cs" />
-    <Compile Include="RouteConventions\Tasks\CollectionItemRouteConventionTests.cs" />
-    <Compile Include="RouteConventions\Tasks\CollectionRouteConventionTests.cs" />
-    <Compile Include="RouteConventions\Tasks\SingularRouteConventionTests.cs" />
+    <Compile Include="RouteConventions\Display\DisplayRouteConventionsTests.cs" />
+    <Compile Include="RouteConventions\Display\TestControllers\Products\ProductIndexController.cs" />
+    <Compile Include="RouteConventions\Display\TestControllers\Products\Product\ProductDetailsController.cs" />
+    <Compile Include="RouteConventions\Display\TestControllers\Profile\ProfileDetailsController.cs" />
+    <Compile Include="RouteConventions\Tasks\TaskRouteConventionsTests.cs" />
     <Compile Include="RouteConventions\Tasks\TaskRouteConventionTests.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Products\CreateProductController.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Products\EditProductsController.cs" />
-    <Compile Include="RouteConventions\Tasks\TestControllers\Products\ListProductsController.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Products\Product\DeleteProductController.cs" />
-    <Compile Include="RouteConventions\Tasks\TestControllers\Products\Product\DisplayProductController.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Products\Product\EditProfileController.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Profile\DeleteProfileController.cs" />
-    <Compile Include="RouteConventions\Tasks\TestControllers\Profile\DisplayProfileController.cs" />
     <Compile Include="RouteConventions\Tasks\TestControllers\Profile\EditProfileController.cs" />
-    <Compile Include="RouteConventions\Tasks\TestResourceModel.cs" />
     <Compile Include="RouteMappingExtensionsTests.cs" />
     <Compile Include="TestModels\Crud\Controllers\Products\ProductsController.cs" />
     <Compile Include="TestModels\Crud\Controllers\Products\Product\ProductController.cs" />

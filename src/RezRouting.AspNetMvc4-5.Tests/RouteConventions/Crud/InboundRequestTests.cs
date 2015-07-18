@@ -1,6 +1,5 @@
 using System.Web.Routing;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
 using RezRouting.AspNetMvc.Tests.TestModels.Crud;
 using RezRouting.Tests.Infrastructure;

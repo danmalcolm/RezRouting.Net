@@ -1,7 +1,6 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
-[ ] Separate conventions for Index and Details route mapping? Instead of including within Crud and Task conventions.
 
 [ ] Tests for home route mapping
 
@@ -11,6 +10,11 @@
 
 [ ] Publish to nuget
 
+[ ] Remove RezRouting.Demos.Tasks proj
+
+[ ] Logging hook
+
+
 Next
 ----
 
@@ -19,7 +23,7 @@ Next
 [ ] Consider using a single MVC route (mega route!) based on entire resources model, or one per level?
 Better support for large number of resources and faster inbound/outbound resolution of routes at end of colleciton
 
-[ ] Id format, e.g. int
+[ ] Id format / constraint, e.g. int
 
 [ ] Custom id format, e.g. combine name and id products/superfunkye1000-222
 
@@ -31,10 +35,12 @@ Better support for large number of resources and faster inbound/outbound resolut
 
 [ ] MVC unit tests slow (5-6s) - due to mocks? Create FakeHttpContextBase impl?
 
-[ ] Detect clashes between id param names within hierarchy, e.g., ensure same name not used by ancestor
+[ ] Diagnostics: Detect clashes between id param names within hierarchy, e.g., ensure same name not used by ancestor
 
 Done
 ----
+
+[x] Separate conventions for Index and Details route mapping? Instead of including within Crud and Task conventions.
 
 [x] Make route indexing an opt-out, included by default
 

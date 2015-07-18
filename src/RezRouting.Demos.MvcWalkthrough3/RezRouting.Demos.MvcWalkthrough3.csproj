@@ -162,9 +162,11 @@
     <Compile Include="Controllers\Products\Reviews\ApproveReviewsRequest.cs" />
     <Compile Include="Controllers\Products\Reviews\ApproveReviewsRequestItem.cs" />
     <Compile Include="Controllers\Session\Credentials.cs" />
+    <Compile Include="Controllers\Session\SessionDetailsController.cs" />
+    <Compile Include="Controllers\Session\SignOutController.cs" />
     <Compile Include="DataAccess\DemoData.cs" />
     <Compile Include="Controllers\Products\ProductIndexController.cs" />
-    <Compile Include="Controllers\Session\SessionController.cs" />
+    <Compile Include="Controllers\Session\SignInController.cs" />
     <Compile Include="DataAccess\Entity.cs" />
     <Compile Include="DataAccess\Manufacturer.cs" />
     <Compile Include="DataAccess\Product.cs" />
@@ -185,9 +187,9 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Session\New.cshtml" />
+    <Content Include="Views\Session\SignIn\SignIn.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Session\Show.cshtml" />
+    <Content Include="Views\Session\SessionDetails\Show.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Show.cshtml" />
     <Content Include="Views\Products\ProductIndex\Index.cshtml" />

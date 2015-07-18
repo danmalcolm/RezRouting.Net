@@ -47,7 +47,7 @@ namespace RezRouting.AspNetMvc
 
                 var constraints = CreateConstraints(model);
 
-                var route = new ResourceRoute(model.Url, new MvcRouteHandler())
+                var route = new ResourceRoute(model.FullName, model.Url, new MvcRouteHandler())
                 {
                     Defaults = defaults,
                     Constraints = constraints,

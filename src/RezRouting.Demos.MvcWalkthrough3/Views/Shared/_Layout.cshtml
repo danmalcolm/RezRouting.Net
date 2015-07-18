@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class=""><p class="navbar-text">@ViewContext.HttpContext.User.Identity.Name signed in</p></li>
                         <li>
-                            <form class="navbar-form" method="POST" action="@Url.Action("Delete", "Session")">
+                            <form class="navbar-form" method="POST" action="@Url.Action("Delete", "SignIn")">
                                 @Html.HttpMethodOverride(HttpVerbs.Delete)
                                 <input class="btn btn-link" type="submit" value="Sign Out" />
                             </form>

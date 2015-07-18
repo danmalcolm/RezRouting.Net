@@ -1,9 +1,11 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using RezRouting.AspNetMvc.RouteConventions.Crud;
+using RezRouting.AspNetMvc.RouteConventions.Display;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.Configuration;
 using RezRouting.AspNetMvc;
+using RezRouting.Configuration.Options;
 using RezRouting.Demos.MvcWalkthrough3.Controllers.Home;
 using RezRouting.Demos.MvcWalkthrough3.Controllers.Manufacturers;
 using RezRouting.Demos.MvcWalkthrough3.Controllers.Manufacturers.Manufacturer;
@@ -24,7 +26,11 @@ namespace RezRouting.Demos.MvcWalkthrough3
 
             var root = RootResourceBuilder.Create();
             root.Route("Home", "GET", "", MvcAction.For((HomeController c) => c.Show()));
-            root.Singular("Session", session => session.HandledBy<SessionController>());
+            root.Singular("Session", session =>
+            {
+                session.HandledBy<SignInController>();
+                session.HandledBy<SessionDetailsController>();
+            });
             root.Collection("Products", products =>
             {
                 products.HandledBy<ProductIndexController>();
@@ -58,6 +64,8 @@ namespace RezRouting.Demos.MvcWalkthrough3
                     manufacturer.HandledBy<EditManufacturerController>();
                 });
             });
+            root.Options(options => options.UrlPaths(new UrlPathSettings(wordSeparator:"-")));
+            root.ApplyRouteConventions(new DisplayRouteConventions());
             root.ApplyRouteConventions(new TaskRouteConventions());
             root.MapMvcRoutes(routes);
         }

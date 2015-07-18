@@ -12,15 +12,18 @@ namespace RezRouting.AspNetMvc
     /// </summary>
     public class ResourceRoute : System.Web.Routing.Route
     {
+        private readonly string fullName;
         private readonly string start;
 
         /// <summary>
         /// Creates a ResourceRoute
         /// </summary>
+        /// <param name="fullName"></param>
         /// <param name="url"></param>
         /// <param name="handler"></param>
-        public ResourceRoute(string url, IRouteHandler handler) : base(url, handler)
+        public ResourceRoute(string fullName, string url, IRouteHandler handler) : base(url, handler)
         {
+            this.fullName = fullName;
             int index = url.IndexOf('{');
             start = index >= 0 
                 ? "~/" + url.Substring(0, index).TrimEnd('/') 
@@ -47,6 +50,11 @@ namespace RezRouting.AspNetMvc
         {
             string path = httpContext.Request.AppRelativeCurrentExecutionFilePath;
             return path.StartsWithIgnoreCase(start);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("FullName: {0}, Url: {1}", fullName, Url);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace RezRouting.Tests.Configuration
         /// </summary>
         /// <param name="configure"></param>
         /// <returns></returns>
-        protected Dictionary<string, Resource> BuildResources(Action<IRootResourceBuilder> configure)
+        protected static Dictionary<string, Resource> BuildResources(Action<IRootResourceBuilder> configure)
         {
             var root = RootResourceBuilder.Create("");
             configure(root);

@@ -19,7 +19,7 @@ namespace RezRouting.Demos.MvcWalkthrough3.Controllers.Common
             
         }
 
-        private ActionResult DisplayForm(TRequest request)
+        protected ActionResult DisplayForm(TRequest request)
         {
             var model = CreateModel(request);
             var viewName = GetViewName();

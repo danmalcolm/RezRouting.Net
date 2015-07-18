@@ -1,10 +1,11 @@
-﻿@model RezRouting.Demos.MvcWalkthrough3.Controllers.Session.Credentials
+﻿@using RezRouting.Demos.MvcWalkthrough3.Controllers.Session
+@model TaskModel<Credentials>
 
 @{
     ViewBag.Title = "Sign In";
 }
 
-<form method="POST" action="@Url.Action("Create", "Session")">
+<form method="POST" action="@(Url.TaskUrl<SignInController>())">
 
     @Html.ValidationSummary()
 
@@ -16,12 +17,12 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.UserName)
-                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                @Html.LabelFor(x => x.Request.UserName)
+                @Html.TextBoxFor(x => x.Request.UserName, new { @class = "form-control" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.Password)
-                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                @Html.LabelFor(x => x.Request.Password)
+                @Html.PasswordFor(x => x.Request.Password, new { @class = "form-control" })
             </div>
             <input class="btn btn-primary" type="submit" value="Log in" />
         </div>
