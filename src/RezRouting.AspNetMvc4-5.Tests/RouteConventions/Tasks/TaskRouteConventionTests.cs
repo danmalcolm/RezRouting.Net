@@ -1,42 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
 using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products;
-using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
+using RezRouting.Tests.Configuration;
 using Xunit;
 
 namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
 {
-    public class TaskRouteConventionTests
+    public class TaskRouteConventionTests : ConfigurationTestsBase
     {
-        private readonly Resource collection;
-        private readonly Resource singular;
-        private readonly UrlPathSettings pathSettings = new UrlPathSettings(CaseStyle.None);
+        private readonly Dictionary<string, Resource> resources;
+        private readonly UrlPathSettings pathSettings;
 
         public TaskRouteConventionTests()
         {
-            var builder = RootResourceBuilder.Create("");
-            builder.Collection("Products", products => {});
-            builder.Singular("Profile", profile => {});
-            var root = builder.Build();
-            collection = root.Children.Single(x => x.Name == "Products");
-            singular = root.Children.Single(x => x.Name == "Profile");
+            resources = BuildResources(root =>
+            {
+                root.Collection("Products", products => { });
+                root.Singular("Profile", profile => { });
+            });
+            pathSettings = new UrlPathSettings(CaseStyle.Lower);
         }
 
         private CustomValueCollection CreateConventionData(Type controllerType)
         {
             var data = new CustomValueCollection();
-            ConventionDataExtensions.AddControllerTypes(data, new[] { controllerType });
+            data.AddControllerTypes(new[] { controllerType });
             return data;
         }
 
         [Fact]
         public void should_trim_resource_name_from_path()
         {
+            var collection = resources["Products"];
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
             var data = CreateConventionData(typeof (EditProductsController));
 
@@ -44,7 +45,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
                 .Create(collection, data, pathSettings, new CustomValueCollection())
                 .Single();
             
-            route.Path.Should().Be("Edit");
+            route.Path.Should().Be("edit");
         }
 
         [Fact]
@@ -52,20 +53,21 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
             var data = CreateConventionData(typeof(CreateProductController));
-
+            var collection = resources["Products"];
             var route = convention
                 .Create(collection, data, pathSettings, new CustomValueCollection())
                 .Single();
 
-            route.Path.Should().Be("Create");
+            route.Path.Should().Be("create");
         }
 
         [Fact]
         public void should_format_task_path_using_settings()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
+            var collection = resources["Products"];
             var data = CreateConventionData(typeof (CreateProductController));
-
+            
             var route = convention
                 .Create(collection, data, new UrlPathSettings(CaseStyle.Lower), new CustomValueCollection())
                 .Single();
@@ -77,6 +79,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         public void should_not_create_route_for_resource_with_different_level()
         {
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
+            var singular = resources["Profile"];
             var data = CreateConventionData(typeof(EditProductsController));
 
             var routes = convention

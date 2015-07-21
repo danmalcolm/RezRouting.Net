@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Resources;
@@ -38,7 +39,15 @@ namespace RezRouting.Configuration
         /// <inheritdoc/>
         public void ApplyRouteConventions(IRouteConventionScheme scheme)
         {
+            if (scheme == null) throw new ArgumentNullException("scheme");
             var conventions = scheme.GetConventions();
+            this.routeConventions.AddRange(conventions);
+        }
+
+        /// <inheritdoc/>
+        public void ApplyRouteConventions(params IRouteConvention[] conventions)
+        {
+            if (conventions == null) throw new ArgumentNullException("conventions");
             this.routeConventions.AddRange(conventions);
         }
 

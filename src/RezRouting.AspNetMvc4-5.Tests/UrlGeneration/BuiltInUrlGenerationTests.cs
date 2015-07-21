@@ -1,25 +1,32 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud;
+using RezRouting.Tests.Configuration;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
-    public class BuiltInUrlGenerationTests
+    public class BuiltInUrlGenerationTests : ConfigurationTestsBase
     {
         private readonly UrlHelper helper;
 
         public BuiltInUrlGenerationTests()
         {
             var context = TestRequestContextBuilder.Create();
-            var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            builder.ApplyRouteConventions(new CrudRouteConventions());
-            builder.MapMvcRoutes(routes);
+            BuildResources(root =>
+            {
+                root.Collection("Products", products =>
+                {
+                    products.Route("Index", "GET", "", MvcAction.For((ProductsController c) => c.Index()));
+                    products.Items(product =>
+                    {
+                        product.Route("Show", "GET", "", MvcAction.For((ProductsController c) => c.Show(0)));
+                    });
+                });
+                root.MapMvcRoutes(routes);
+            });
             helper = new UrlHelper(context, routes);
         }
 
@@ -33,7 +40,7 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
         [Fact]
         public void should_generate_collection_item_url_using_id_route_value()
         {
-            string url = helper.Action("Show", "Product", new { id = 12345 });
+            string url = helper.Action("Show", "Products", new { id = 12345 });
             url.Should().Be("/products/12345");
         }
 
@@ -42,6 +49,19 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
         {
             string url = helper.Action("index", "Products", null, "https", "www.example.org");
             url.Should().Be("https://www.example.org/products");
+        }
+
+        public class ProductsController : Controller
+        {
+            public ActionResult Index()
+            {
+                return Content("");
+            }
+
+            public ActionResult Show(int id)
+            {
+                return null;
+            }
         }
     }
 }

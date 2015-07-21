@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
-using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions.Tasks;
+using RezRouting.AspNetMvc.Tests.Infrastructure.Assertions;
 using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products;
 using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Products.Product;
-using RezRouting.AspNetMvc.Tests.Infrastructure.Assertions;
 using RezRouting.AspNetMvc.Tests.RouteConventions.Tasks.TestControllers.Profile;
-using RezRouting.Configuration;
 using RezRouting.Resources;
 using RezRouting.Tests.Configuration;
 using Xunit;

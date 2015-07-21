@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Moq;
-using RezRouting.Configuration;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -12,38 +11,65 @@ using Xunit;
 
 namespace RezRouting.Tests.Configuration
 {
-    public class RouteConventionTests
+    public class RouteConventionTests : ConfigurationTestsBase
     {
+        [Fact]
+        public void should_apply_each_convention_in_scheme_to_each_resource_in_hierarchy()
+        {
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
+
+            var resources = BuildResources(root =>
+            {
+                root.Collection("Products", products =>
+                {
+                    products.Items(product =>
+                    {
+                        product.Collection("Reviews", reviews => { });
+                    });
+                });
+                var conventionScheme = new TestRouteConventionScheme(convention1, convention2);
+                root.ApplyRouteConventions(conventionScheme);
+            });
+
+            var all = resources[""].Expand().ToList();
+            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
+            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
+        }
+
         [Fact]
         public void should_apply_each_convention_to_each_resource_in_hierarchy()
         {
             var convention1 = new TestRouteConvention("ConventionRoute1");
             var convention2 = new TestRouteConvention("ConventionRoute2");
 
-            var root = BuildResourcesWithConventions(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products =>
+                root.Collection("Products", products =>
                 {
                     products.Items(product =>
                     {
-                        product.Collection("Reviews", reviews => {});
+                        product.Collection("Reviews", reviews => { });
                     });
                 });
-            }, convention1, convention2);
+                root.ApplyRouteConventions(convention1, convention2);
+            });
 
-            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(root.Expand());
-            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(root.Expand());
+            var all = resources[""].Expand().ToList();
+            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
+            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
         }
-
+        
         [Fact]
         public void should_apply_each_convention_using_each_resources_convention_data()
         {
             var convention1 = new TestRouteConvention("ConventionRoute1");
             var convention2 = new TestRouteConvention("ConventionRoute2");
 
-            var root = BuildResourcesWithConventions(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products =>
+                root.ApplyRouteConventions(convention1, convention2);
+                root.Collection("Products", products =>
                 {
                     products.ConventionData(x => x["key1"] = "value1");
                     products.Items(product =>
@@ -51,13 +77,14 @@ namespace RezRouting.Tests.Configuration
                         product.ConventionData(x => x["key2"] = "value2");
                     });
                 });
-            }, convention1, convention2);
+            });
 
-            var collection = root.Children.Single();
-            var collectionItem = collection.Children.Single();
+            var root1 = resources[""];
+            var collection = resources["Products"];
+            var collectionItem = resources["Products.Product"];
             var expectedCalls = new List<ConventionCreateCall>()
             {
-                new ConventionCreateCall(root, new CustomValueCollection(), null),
+                new ConventionCreateCall(root1, new CustomValueCollection(), null),
                 new ConventionCreateCall(collection, new CustomValueCollection{{"key1", "value1"}}, null),
                 new ConventionCreateCall(collectionItem, new CustomValueCollection{{"key2", "value2"}}, null)
             };
@@ -69,11 +96,12 @@ namespace RezRouting.Tests.Configuration
         public void should_combine_modifications_to_convention_data_when_configuring_resource()
         {
             var convention = new TestRouteConvention("ConventionRoute1");
-            var root = BuildResourcesWithConventions(builder =>
+            BuildResources(root =>
             {
-                builder.ConventionData(data => data["key1"] = "value1");
-                builder.ConventionData(data => data["key2"] = "value2");
-            }, convention);
+                root.ConventionData(data => data["key1"] = "value1");
+                root.ConventionData(data => data["key2"] = "value2");
+                root.ApplyRouteConventions(convention);
+            });
 
             var expectedData = new Dictionary<string, object>
             {
@@ -88,8 +116,10 @@ namespace RezRouting.Tests.Configuration
         public void should_supply_empty_data_to_convention_when_none_configured()
         {
             var convention = new TestRouteConvention("ConventionRoute1");
-            var root = BuildResourcesWithConventions(builder => { },
-                convention);
+            BuildResources(root =>
+            {
+                root.ApplyRouteConventions(convention);
+            });
             convention.Calls.Single().Data.Should().BeEmpty();
         }
 
@@ -98,13 +128,14 @@ namespace RezRouting.Tests.Configuration
         {
             var convention1 = new TestRouteConvention("ConventionRoute1");
             var convention2 = new TestRouteConvention("ConventionRoute2");
-            var root = BuildResourcesWithConventions(builder =>
+            var resources = BuildResources(root =>
             {
-                builder.Collection("Products", products => { });
-            }, convention1, convention2);
+                root.Collection("Products", products => { });
+                root.ApplyRouteConventions(convention1, convention2);
+            });
 
-            root.Routes.Select(x => x.Name).Should().Equal("ConventionRoute1", "ConventionRoute2");
-            var collection = root.Children.Single();
+            resources[""].Routes.Select(x => x.Name).Should().Equal("ConventionRoute1", "ConventionRoute2");
+            var collection = resources["Products"];
             collection.Routes.Select(x => x.Name).Should().Equal("ConventionRoute1", "ConventionRoute2");
         }
 
@@ -113,30 +144,14 @@ namespace RezRouting.Tests.Configuration
         {
             var convention1 = new TestRouteConvention("ConventionRoute1");
             var convention2 = new TestRouteConvention("ConventionRoute2");
-            var root = BuildResourcesWithConventions(builder =>
+            var resources = BuildResources(builder =>
             {
                 builder.Route("Route1", "GET", "", Mock.Of<IResourceRouteHandler>());
-            }, convention1, convention2);
-            
-            root.Routes.Select(x => x.Name).Should().Equal("Route1", "ConventionRoute1", "ConventionRoute2");
+                builder.ApplyRouteConventions(convention1, convention2);
+            });
+            resources[""].Routes.Select(x => x.Name).Should().Equal("Route1", "ConventionRoute1", "ConventionRoute2");
         }
-
-
-        /// <summary>
-        /// Configures resources using supplied action and returns the root resource
-        /// </summary>
-        /// <param name="configure"></param>
-        /// <returns></returns>
-        private Resource BuildResourcesWithConventions(Action<IRootResourceBuilder> configure, params IRouteConvention[] conventions)
-        {
-            var builder = RootResourceBuilder.Create();
-            configure(builder);
-            var scheme = new TestRouteConventionScheme(conventions);
-            builder.ApplyRouteConventions(scheme);
-            var root = builder.Build();
-            return root;
-        }
-
+        
         private class TestRouteConvention : IRouteConvention
         {
             private readonly string name;

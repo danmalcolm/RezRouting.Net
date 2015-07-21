@@ -17,6 +17,14 @@ namespace RezRouting.Configuration
         void ApplyRouteConventions(IRouteConventionScheme scheme);
 
         /// <summary>
+        /// Adds one or more conventions used to generated routes for the root resource
+        /// and its descendants
+        /// </summary>
+        /// <param name="conventions"></param>
+        void ApplyRouteConventions(params IRouteConvention[] conventions);
+
+
+        /// <summary>
         /// Configures options applied during resource and route configuration
         /// </summary>
         /// <param name="configure">An action that configures the options</param>
@@ -28,5 +36,6 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <returns></returns>
         Resource Build();
+
     }
 }

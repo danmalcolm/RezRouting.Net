@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using Xunit;
 
 namespace RezRouting.AspNetMvc.Tests

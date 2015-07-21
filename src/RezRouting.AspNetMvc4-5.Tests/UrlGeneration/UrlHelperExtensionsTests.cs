@@ -2,28 +2,34 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.RouteConventions.Crud;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
 using RezRouting.AspNetMvc.UrlGeneration;
+using RezRouting.Tests.Configuration;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
 
 namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 {
-    public class UrlHelperExtensionsTests
+    public class UrlHelperExtensionsTests : ConfigurationTestsBase
     {
         private readonly UrlHelper helper;
 
         public UrlHelperExtensionsTests()
         {
             var context = TestRequestContextBuilder.Create();
-            var builder = TestCrudResourceModel.Configure();
             var routes = new RouteCollection();
-            builder.ApplyRouteConventions(new CrudRouteConventions());
-            builder.MapMvcRoutes(routes);
+            BuildResources(root =>
+            {
+                root.Collection("Products", products =>
+                {
+                    products.Route("Index", "GET", "", MvcAction.For((ProductsController c) => c.Index()));
+                    products.Items(product =>
+                    {
+                        product.Route("Show", "GET", "", MvcAction.For((ProductsController c) => c.Show(0)));
+                        product.Route("Update", "POST", "", MvcAction.For((ProductsController c) => c.Update(null)));
+                    });
+                });
+                root.MapMvcRoutes(routes);
+            });
             helper = new UrlHelper(context, routes);
         }
 
@@ -66,14 +72,14 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
         [Fact]
         public void should_generate_url_specified_by_controller_type_action_and_values()
         {
-            string url = helper.ResourceUrl(typeof(ProductController), "Show", new { id = "123" });
+            string url = helper.ResourceUrl(typeof(ProductsController), "Show", new { id = "123" });
             url.Should().Be("/products/123");
         }
 
         [Fact]
         public void should_generate_url_for_POST_route_specified_by_controller_type_action_and_values()
         {
-            string url = helper.ResourceUrl(typeof(ProductController), "Update", new { id = "123" });
+            string url = helper.ResourceUrl(typeof(ProductsController), "Update", new { id = "123" });
             url.Should().Be("/products/123");
         }
 
@@ -95,6 +101,24 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
 
             string url = helper.ResourceUrl(typeof(ProductsController), "index", null);
             url.Should().Be("/products");
+        }
+
+        public class ProductsController : Controller
+        {
+            public ActionResult Index()
+            {
+                return Content("");
+            }
+
+            public ActionResult Show(int id)
+            {
+                return null;
+            }
+
+            public ActionResult Update(object value)
+            {
+                return null;
+            }
         }
     }
 }

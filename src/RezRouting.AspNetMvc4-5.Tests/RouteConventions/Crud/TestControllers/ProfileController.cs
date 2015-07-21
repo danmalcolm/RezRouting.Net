@@ -1,6 +1,6 @@
 using System.Web.Mvc;
 
-namespace RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Profile
+namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud.TestControllers
 {
     public class ProfileController : Controller
     {

@@ -1,10 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Products.Product;
-using RezRouting.AspNetMvc.Tests.TestModels.Crud.Controllers.Profile;
 using RezRouting.Configuration;
 using RezRouting.Tests.Infrastructure;
 using Xunit;
@@ -22,10 +18,9 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
                 products.Route("Index", "GET", "", MvcAction.For((ProductsController c) => c.Index()));
                 products.Items(product =>
                 {
-                    product.Route("Show", "GET", "", MvcAction.For((ProductController c) => c.Show(null)));
+                    product.Route("Show", "GET", "", MvcAction.For((ProductsController c) => c.Show(null)));
                 });
             });
-            root.Singular("Profile", profile => profile.HandledBy<ProfileController>());
         }
 
         public AreaUrlGenerationTests()
@@ -58,11 +53,24 @@ namespace RezRouting.AspNetMvc.Tests.UrlGeneration
         [Fact]
         public void should_generate_collection_item_urls_within_area_specified()
         {
-            string url1 = helper.Action("Show", "Product", new { area = "Area1", id = 12345 });
-            string url2 = helper.Action("Show", "Product", new { area = "Area2", id = 12345 });
+            string url1 = helper.Action("Show", "Products", new { area = "Area1", id = 12345 });
+            string url2 = helper.Action("Show", "Products", new { area = "Area2", id = 12345 });
 
             url1.Should().Be("/area1/products/12345");
             url2.Should().Be("/area2/products/12345");
+        }
+
+        public class ProductsController : Controller
+        {
+            public ActionResult Index()
+            {
+                return Content("");
+            }
+
+            public ActionResult Show(string id)
+            {
+                return null;
+            }
         }
     }
 }

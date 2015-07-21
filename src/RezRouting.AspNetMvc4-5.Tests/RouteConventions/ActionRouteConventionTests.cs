@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
-using RezRouting.AspNetMvc;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
 using RezRouting.Configuration.Options;
