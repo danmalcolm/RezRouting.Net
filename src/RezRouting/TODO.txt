@@ -1,6 +1,7 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
+[ ] Return a ResourceHierarchy when building resources
 
 [ ] Tests for home route mapping
 

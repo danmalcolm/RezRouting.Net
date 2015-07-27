@@ -18,7 +18,7 @@ namespace RezRouting.Tests.Infrastructure
         }
 
         /// <summary>
-        /// Gets a "flattens" resource hierarchy, returning the specified resource 
+        /// Gets a "flattened" resource hierarchy, returning the specified resource 
         /// and its descendants
         /// </summary>
         /// <param name="resource"></param>
