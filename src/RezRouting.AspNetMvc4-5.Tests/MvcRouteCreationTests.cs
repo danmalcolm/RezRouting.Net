@@ -208,7 +208,7 @@ Products.Route1 - (defined on resource Products)
             builder.Collection("Products", products =>
             {
                 products.Route("Route1", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
-                products.Items(product => product.HandledBy<Test1Controller>());
+                products.Items(product => product.Controller<Test1Controller>());
             });
 
             var routes = new RouteCollection();
@@ -227,7 +227,7 @@ Products.Route1 - (defined on resource Products)
             {
                 products.Route("Route1", "GET", "action1", MvcAction.For((Test1Controller c) => c.Action1()));
                 products.Route("Route2", "GET", "action2", MvcAction.For((Test1Controller c) => c.Action2()));
-                products.Items(product => product.HandledBy<Test1Controller>());
+                products.Items(product => product.Controller<Test1Controller>());
             });
 
             var routes = new RouteCollection();

@@ -21,18 +21,18 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
                 root.ApplyRouteConventions(new TaskRouteConventions());
                 root.Collection("Products", products =>
                 {
-                    products.HandledBy<CreateProductController>();
-                    products.HandledBy<EditProductsController>();
+                    products.Controller<CreateProductController>();
+                    products.Controller<EditProductsController>();
                     products.Items(product =>
                     {
-                        product.HandledBy<DeleteProductController>();
-                        product.HandledBy<EditProductController>();
+                        product.Controller<DeleteProductController>();
+                        product.Controller<EditProductController>();
                     });
                 });
                 root.Singular("Profile", profile =>
                 {
-                    profile.HandledBy<DeleteProfileController>();
-                    profile.HandledBy<EditProfileController>();
+                    profile.Controller<DeleteProfileController>();
+                    profile.Controller<EditProfileController>();
                 });
             });
         }

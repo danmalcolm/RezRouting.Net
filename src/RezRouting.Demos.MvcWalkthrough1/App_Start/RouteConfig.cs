@@ -19,26 +19,26 @@ namespace RezRouting.Demos.MvcWalkthrough1
 
             var root = RootResourceBuilder.Create();
             root.Route("Home", "GET", "", MvcAction.For((HomeController c) => c.Show()));
-            root.Singular("Session", session => session.HandledBy<SessionController>());
+            root.Singular("Session", session => session.Controller<SessionController>());
             root.Collection("Products", products =>
             {
-                products.HandledBy<ProductsController>();
+                products.Controller<ProductsController>();
                 products.Items(product =>
                 {
-                    product.HandledBy<ProductsController>();
+                    product.Controller<ProductsController>();
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<ReviewsController>();
-                        reviews.Items(review => review.HandledBy<ReviewsController>());
+                        reviews.Controller<ReviewsController>();
+                        reviews.Items(review => review.Controller<ReviewsController>());
                     });
                 });
             });
             root.Collection("Manufacturers", manufacturers =>
             {
-                manufacturers.HandledBy<ManufacturersController>();
+                manufacturers.Controller<ManufacturersController>();
                 manufacturers.Items(manufacturer =>
                 {
-                    manufacturer.HandledBy<ManufacturersController>();
+                    manufacturer.Controller<ManufacturersController>();
                 });
             });
             root.ApplyRouteConventions(new CrudRouteConventions());

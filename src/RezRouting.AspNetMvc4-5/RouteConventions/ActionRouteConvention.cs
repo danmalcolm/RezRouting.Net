@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -9,7 +11,7 @@ namespace RezRouting.AspNetMvc.RouteConventions
     /// <summary>
     /// Creates a route for resource based on a specific action on a controller
     /// </summary>
-    public class ActionRouteConvention : IRouteConvention
+    public class ActionRouteConvention : MvcRouteConvention
     {
         public ActionRouteConvention(string name, ResourceType type, string action, string httpMethod, string path)
         {
@@ -30,11 +32,10 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Path { get; set; }
 
-        public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
+        protected override IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems, IEnumerable<Type> controllerTypes)
         {
             if (resource.Type == Type)
             {
-                var controllerTypes = data.GetControllerTypes();
                 return from controllerType in controllerTypes
                        where ActionMappingHelper.SupportsAction(controllerType, Action, contextItems)
                        let handler = new MvcAction(controllerType, Action)

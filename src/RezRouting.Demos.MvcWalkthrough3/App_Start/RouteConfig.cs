@@ -28,40 +28,40 @@ namespace RezRouting.Demos.MvcWalkthrough3
             root.Route("Home", "GET", "", MvcAction.For((HomeController c) => c.Show()));
             root.Singular("Session", session =>
             {
-                session.HandledBy<SignInController>();
-                session.HandledBy<SessionDetailsController>();
+                session.Controller<SignInController>();
+                session.Controller<SessionDetailsController>();
             });
             root.Collection("Products", products =>
             {
-                products.HandledBy<ProductIndexController>();
-                products.HandledBy<CreateProductController>();
+                products.Controller<ProductIndexController>();
+                products.Controller<CreateProductController>();
                 products.Items(product =>
                 {
-                    product.HandledBy<ProductDetailsController>();
-                    product.HandledBy<EditProductController>();
-                    product.HandledBy<PublishProductController>();
-                    product.HandledBy<ArchiveProductController>();
+                    product.Controller<ProductDetailsController>();
+                    product.Controller<EditProductController>();
+                    product.Controller<PublishProductController>();
+                    product.Controller<ArchiveProductController>();
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<ReviewsController>();
+                        reviews.Controller<ReviewsController>();
                         reviews.Items(review =>
                         {
-                            review.HandledBy<ApproveReviewController>();
-                            review.HandledBy<ReviewDetailsController>();
+                            review.Controller<ApproveReviewController>();
+                            review.Controller<ReviewDetailsController>();
                         });
                     });
                 });
 
-                products.Collection("Reviews", reviews => reviews.HandledBy<ApproveReviewsController>());
+                products.Collection("Reviews", reviews => reviews.Controller<ApproveReviewsController>());
             });
             root.Collection("Manufacturers", manufacturers =>
             {
-                manufacturers.HandledBy<ManufacturerIndexController>();
-                manufacturers.HandledBy<CreateManufacturerController>();
+                manufacturers.Controller<ManufacturerIndexController>();
+                manufacturers.Controller<CreateManufacturerController>();
                 manufacturers.Items(manufacturer =>
                 {
-                    manufacturer.HandledBy<ManufacturerDetailsController>();
-                    manufacturer.HandledBy<EditManufacturerController>();
+                    manufacturer.Controller<ManufacturerDetailsController>();
+                    manufacturer.Controller<EditManufacturerController>();
                 });
             });
             root.Options(options => options.UrlPaths(new UrlPathSettings(wordSeparator:"-")));

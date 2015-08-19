@@ -75,6 +75,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ControllerDiscovery\ControllerHierarchyConfigurationTests.cs" />
+    <Compile Include="ControllerDiscovery\ControllerRootTests.cs" />
+    <Compile Include="ControllerDiscovery\ControllerIndexTests.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers2\Home2Controller.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers2\Products\ProductIndex2Controller.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers\HomeController.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers\Products\ProductIndexController.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers\Products\Product\ProductDetailsController.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers\Products\Product\Reviews\ReviewIndexController.cs" />
+    <Compile Include="ControllerDiscovery\TestControllers\Products\Product\Reviews\Review\ReviewDetailsController.cs" />
     <Compile Include="Infrastructure\Assertions\ResourceAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteAssertionExtensions.cs" />
     <Compile Include="Infrastructure\Assertions\RouteCollectionAssertionExtensions.cs" />
@@ -107,6 +117,7 @@
     <Compile Include="UrlGeneration\RouteModelIndexTests.cs" />
     <Compile Include="UrlGeneration\SharedControllerUrlGenerationTests.cs" />
     <Compile Include="UrlGeneration\UrlHelperExtensionsTests.cs" />
+    <Compile Include="Utility\MvcControllerHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

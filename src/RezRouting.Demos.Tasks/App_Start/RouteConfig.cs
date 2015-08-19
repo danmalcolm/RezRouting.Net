@@ -21,13 +21,13 @@ namespace RezRouting.Demos.Tasks
             var root = RootResourceBuilder.Create("");
             root.Collection("Products", products =>
             {
-                products.HandledBy<ListProductsController>();
-                products.HandledBy<CreateProductController>();
+                products.Controller<ListProductsController>();
+                products.Controller<CreateProductController>();
                 products.Items(product =>
                 {
-                    product.HandledBy<ShowProductController>();
-                    product.HandledBy<DeleteProductController>();
-                    product.HandledBy<EditProductController>();
+                    product.Controller<ShowProductController>();
+                    product.Controller<DeleteProductController>();
+                    product.Controller<EditProductController>();
                 });
             });
             root.ApplyRouteConventions(new TaskRouteConventions());
@@ -36,7 +36,7 @@ namespace RezRouting.Demos.Tasks
             // Use CRUD for session for now
             root = RootResourceBuilder.Create("");
             root.ApplyRouteConventions(new CrudRouteConventions());
-            root.Singular("Session", session => session.HandledBy<SessionController>());
+            root.Singular("Session", session => session.Controller<SessionController>());
             root.MapMvcRoutes(routes);
         }
     }

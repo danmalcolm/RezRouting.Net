@@ -10,7 +10,7 @@ namespace RezRouting.Resources
     public class Resource
     {
         private readonly IUrlSegment urlSegment;
-        private IdUrlSegment overrideAncestorItemId;
+        private readonly IdUrlSegment overrideAncestorItemId;
 
         /// <summary>
         /// Creates a Resource

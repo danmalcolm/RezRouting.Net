@@ -10,9 +10,10 @@ namespace RezRouting.Configuration.Builders
     /// </summary>
     public class ConfigurationContext
     {
-        public ConfigurationContext(List<IRouteConvention> routeConventions)
+        public ConfigurationContext(List<IRouteConvention> routeConventions, CustomValueCollection sharedConventionData)
         {
             RouteConventions = routeConventions;
+            SharedConventionData = sharedConventionData;
             Items = new CustomValueCollection();
         }
 
@@ -20,6 +21,11 @@ namespace RezRouting.Configuration.Builders
         /// Conventions used to add routes to all resources being configured
         /// </summary>
         public List<IRouteConvention> RouteConventions { get; private set; }
+
+        /// <summary>
+        /// Shared convention data specified on the root resource
+        /// </summary>
+        public CustomValueCollection SharedConventionData { get; set; }
 
         /// <summary>
         /// A collection of data shared by all builders in the hierarchy as

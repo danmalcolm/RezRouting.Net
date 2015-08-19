@@ -191,7 +191,7 @@ namespace RezRouting.AspNetMvc.Tests.Benchmarks
                 var controllerType = resourceInfo.Item2;
                 builder.Collection(resourceName, collection =>
                 {
-                    collection.HandledBy(controllerType);
+                    collection.Controller(controllerType);
                 });
             }
             return builder;

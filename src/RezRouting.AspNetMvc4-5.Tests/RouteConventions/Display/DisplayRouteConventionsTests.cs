@@ -21,10 +21,10 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Display
                 root.ApplyRouteConventions(new DisplayRouteConventions());
                 root.Collection("Products", products =>
                 {
-                    products.HandledBy<ProductIndexController>();
-                    products.Items(product => product.HandledBy<ProductDetailsController>());
+                    products.Controller<ProductIndexController>();
+                    products.Items(product => product.Controller<ProductDetailsController>());
                 });
-                root.Singular("Profile", profile => profile.HandledBy<ProfileDetailsController>());
+                root.Singular("Profile", profile => profile.Controller<ProfileDetailsController>());
             });
         }
 

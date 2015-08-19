@@ -1,7 +1,10 @@
 ﻿First - Final tweaks to API to minimise change and publish
 -----
 
-[ ] Return a ResourceHierarchy when building resources
+[ ] Controller hierarchy - convention-based automapping based on controller hierarchy
+
+- Set root controller 
+- Add hook 
 
 [ ] Tests for home route mapping
 
@@ -29,8 +32,6 @@ Better support for large number of resources and faster inbound/outbound resolut
 [ ] Custom id format, e.g. combine name and id products/superfunkye1000-222
 
 [ ] Demo apps on Azure?
-
-[ ] AutoResourceMapping - convention-based automapping based on controller hierarchy
 
 [ ] Advanced Demo: Breadcrumb nav based on ResourceModel, auto-mapping, searching on index, separate base controllers
 

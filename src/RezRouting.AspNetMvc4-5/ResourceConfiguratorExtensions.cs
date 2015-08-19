@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.Mvc;
 using RezRouting.AspNetMvc.RouteConventions;
 using RezRouting.Configuration;
@@ -16,10 +17,10 @@ namespace RezRouting.AspNetMvc
         /// can determine which routes are supported.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void HandledBy<T>(this IResourceConfigurator resource)
+        public static void Controller<T>(this IResourceConfigurator resource)
             where T : Controller
         {
-            resource.HandledBy(typeof(T));
+            resource.Controller(typeof(T));
         }
 
         /// <summary>
@@ -28,10 +29,10 @@ namespace RezRouting.AspNetMvc
         /// can determine which routes are supported.
         /// </summary>
         /// <param name="controllerType">The type of controller</param>
-        public static void HandledBy(this IResourceConfigurator resource, Type controllerType)
+        public static void Controller(this IResourceConfigurator resource, Type controllerType)
         {
             if (controllerType == null) throw new ArgumentNullException("controllerType");
-            resource.ConventionData(data =>
+            resource.ExtensionData(data =>
             {
                 var controllerTypes = data.GetControllerTypes();
                 controllerTypes.Add(controllerType);

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
@@ -17,11 +18,12 @@ namespace RezRouting.Configuration.Conventions
         /// <summary>
         /// Creates routes that apply to a resource based on the supplied handlers
         /// </summary>
-        /// <param name="resource">The resource object</param>
-        /// <param name="data">Data added during resource configuration to drive conventions</param>
+        /// <param name="resource">Data containing properties of the resource being configured</param>
+        /// <param name="sharedConventionData">Data added during resource configuration to the current resource</param>
+        /// <param name="conventionData">Data added during resource configuration to the current resource</param>
         /// <param name="urlPathSettings"></param>
         /// <param name="contextItems"></param>
         /// <returns></returns>
-        IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems);
+        IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems);
     }
 }

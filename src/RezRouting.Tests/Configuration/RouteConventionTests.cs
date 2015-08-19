@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Moq;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
@@ -32,9 +33,9 @@ namespace RezRouting.Tests.Configuration
                 root.ApplyRouteConventions(conventionScheme);
             });
 
-            var all = resources[""].Expand().ToList();
-            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
-            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
+            var allNames = resources[""].Expand().Select(x => x.FullName).ToList();
+            convention1.Calls.Select(x => x.ResourceFullName).Should().BeEquivalentTo(allNames);
+            convention2.Calls.Select(x => x.ResourceFullName).Should().BeEquivalentTo(allNames);
         }
 
         [Fact]
@@ -55,9 +56,9 @@ namespace RezRouting.Tests.Configuration
                 root.ApplyRouteConventions(convention1, convention2);
             });
 
-            var all = resources[""].Expand().ToList();
-            convention1.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
-            convention2.Calls.Select(x => x.Resource).Should().BeEquivalentTo(all);
+            var allNames = resources[""].Expand().Select(x => x.FullName).ToList();
+            convention1.Calls.Select(x => x.ResourceFullName).Should().BeEquivalentTo(allNames);
+            convention2.Calls.Select(x => x.ResourceFullName).Should().BeEquivalentTo(allNames);
         }
         
         [Fact]
@@ -71,10 +72,10 @@ namespace RezRouting.Tests.Configuration
                 root.ApplyRouteConventions(convention1, convention2);
                 root.Collection("Products", products =>
                 {
-                    products.ConventionData(x => x["key1"] = "value1");
+                    products.ExtensionData(x => x["key1"] = "value1");
                     products.Items(product =>
                     {
-                        product.ConventionData(x => x["key2"] = "value2");
+                        product.ExtensionData(x => x["key2"] = "value2");
                     });
                 });
             });
@@ -84,9 +85,40 @@ namespace RezRouting.Tests.Configuration
             var collectionItem = resources["Products.Product"];
             var expectedCalls = new List<ConventionCreateCall>()
             {
-                new ConventionCreateCall(root1, new CustomValueCollection(), null),
-                new ConventionCreateCall(collection, new CustomValueCollection{{"key1", "value1"}}, null),
-                new ConventionCreateCall(collectionItem, new CustomValueCollection{{"key2", "value2"}}, null)
+                new ConventionCreateCall(root1.FullName, new CustomValueCollection(), new CustomValueCollection(), null),
+                new ConventionCreateCall(collection.FullName, new CustomValueCollection(), new CustomValueCollection{{"key1", "value1"}}, null),
+                new ConventionCreateCall(collectionItem.FullName, new CustomValueCollection(), new CustomValueCollection{{"key2", "value2"}}, null)
+            };
+            convention1.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
+            convention2.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
+        }
+
+        [Fact]
+        public void should_apply_each_convention_using_shared_convention_data()
+        {
+            var convention1 = new TestRouteConvention("ConventionRoute1");
+            var convention2 = new TestRouteConvention("ConventionRoute2");
+
+            var resources = BuildResources(root =>
+            {
+                root.SharedExtensionData(x => x["key1"] = "value1");
+                root.ApplyRouteConventions(convention1, convention2);
+                root.Collection("Products", products =>
+                {
+                    products.Items(product =>
+                    {
+                    });
+                });
+            });
+
+            var root1 = resources[""];
+            var collection = resources["Products"];
+            var collectionItem = resources["Products.Product"];
+            var expectedCalls = new List<ConventionCreateCall>()
+            {
+                new ConventionCreateCall(root1.FullName, new CustomValueCollection(), new CustomValueCollection(), null),
+                new ConventionCreateCall(collection.FullName, new CustomValueCollection(), new CustomValueCollection{{"key1", "value1"}}, null),
+                new ConventionCreateCall(collectionItem.FullName, new CustomValueCollection(), new CustomValueCollection{{"key2", "value2"}}, null)
             };
             convention1.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
             convention2.Calls.ShouldAllBeEquivalentTo(expectedCalls, options => options.ExcludingMissingProperties());
@@ -98,8 +130,8 @@ namespace RezRouting.Tests.Configuration
             var convention = new TestRouteConvention("ConventionRoute1");
             BuildResources(root =>
             {
-                root.ConventionData(data => data["key1"] = "value1");
-                root.ConventionData(data => data["key2"] = "value2");
+                root.ExtensionData(data => data["key1"] = "value1");
+                root.ExtensionData(data => data["key2"] = "value2");
                 root.ApplyRouteConventions(convention);
             });
 
@@ -109,7 +141,7 @@ namespace RezRouting.Tests.Configuration
                 { "key2", "value2" }
             };
 
-            convention.Calls.Single().Data.Should().Equal(expectedData);
+            convention.Calls.Single().ConventionData.Should().Equal(expectedData);
         }
 
         [Fact]
@@ -120,7 +152,7 @@ namespace RezRouting.Tests.Configuration
             {
                 root.ApplyRouteConventions(convention);
             });
-            convention.Calls.Single().Data.Should().BeEmpty();
+            convention.Calls.Single().ConventionData.Should().BeEmpty();
         }
 
         [Fact]
@@ -163,24 +195,26 @@ namespace RezRouting.Tests.Configuration
 
             public List<ConventionCreateCall> Calls = new List<ConventionCreateCall>();
 
-            public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
+            public IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
             {
-                Calls.Add(new ConventionCreateCall(resource, data, urlPathSettings));
+                Calls.Add(new ConventionCreateCall(resource.FullName, sharedConventionData, conventionData, urlPathSettings));
                 yield return new Route(name, "GET", name.ToLower(), Mock.Of<IResourceRouteHandler>());
             }
         }
 
         private class ConventionCreateCall
         {
-            public ConventionCreateCall(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings)
+            public ConventionCreateCall(string resourceFullName, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings)
             {
-                Resource = resource;
-                Data = data;
+                ResourceFullName = resourceFullName;
+                SharedConventionData = sharedConventionData;
+                ConventionData = conventionData;
                 UrlPathSettings = urlPathSettings;
             }
 
-            public readonly Resource Resource;
-            public readonly CustomValueCollection Data;
+            public readonly string ResourceFullName;
+            public readonly CustomValueCollection SharedConventionData;
+            public readonly CustomValueCollection ConventionData;
             public readonly UrlPathSettings UrlPathSettings;
         }
     }

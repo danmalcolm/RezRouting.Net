@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RezRouting.AspNetMvc.Utility;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 using RezRouting.Utility;
@@ -12,7 +12,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
     /// <summary>
     /// Route convention used to create a task-oriented route
     /// </summary>
-    public class TaskRouteConvention : IRouteConvention
+    public class TaskRouteConvention : MvcRouteConvention
     {
         public TaskRouteConvention(string name, ResourceType type, string action, string httpMethod)
         {
@@ -41,13 +41,11 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         /// The HTTP method used in requests for this route
         /// </summary>
         public string HttpMethod { get; set; }
-        
-        /// <inheritdoc />
-        public IEnumerable<Route> Create(Resource resource, CustomValueCollection data, UrlPathSettings urlPathSettings, CustomValueCollection contextItems)
+
+        protected override IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems, IEnumerable<Type> controllerTypes)
         {
             if (resource.Type == Type)
             {
-                var controllerTypes = data.GetControllerTypes();
                 foreach (var controllerType in controllerTypes)
                 {
                     var supported = ActionMappingHelper.SupportsAction(controllerType, Action, contextItems);
@@ -64,7 +62,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
             }
         }
 
-        private string GetPath(Resource resource, Type controllerType, UrlPathSettings urlPathSettings)
+        private string GetPath(ResourceData resource, Type controllerType, UrlPathSettings urlPathSettings)
         {
             string path = RouteValueHelper.TrimControllerFromTypeName(controllerType);
             var suffixes = GetPossibleResourceNameSuffixes(resource);
@@ -78,7 +76,7 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
             return path;
         }
 
-        private IEnumerable<string> GetPossibleResourceNameSuffixes(Resource resource)
+        private IEnumerable<string> GetPossibleResourceNameSuffixes(ResourceData resource)
         {
             yield return resource.Name;
             if (resource.Type == ResourceType.Collection)

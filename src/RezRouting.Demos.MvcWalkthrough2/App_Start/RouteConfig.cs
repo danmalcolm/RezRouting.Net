@@ -22,30 +22,30 @@ namespace RezRouting.Demos.MvcWalkthrough2
 
             var root = RootResourceBuilder.Create();
             root.Route("Home", "GET", "", MvcAction.For((HomeController c) => c.Show()));
-            root.Singular("Session", session => session.HandledBy<SessionController>());
+            root.Singular("Session", session => session.Controller<SessionController>());
             root.Collection("Products", products =>
             {
-                products.HandledBy<ProductIndexController>();
-                products.HandledBy<CreateProductController>();
+                products.Controller<ProductIndexController>();
+                products.Controller<CreateProductController>();
                 products.Items(product =>
                 {
-                    product.HandledBy<ProductDetailsController>();
-                    product.HandledBy<EditProductController>();
+                    product.Controller<ProductDetailsController>();
+                    product.Controller<EditProductController>();
                     product.Collection("Reviews", reviews =>
                     {
-                        reviews.HandledBy<ReviewsController>();
-                        reviews.Items(review => review.HandledBy<ReviewDetailsController>());
+                        reviews.Controller<ReviewsController>();
+                        reviews.Items(review => review.Controller<ReviewDetailsController>());
                     });
                 });
             });
             root.Collection("Manufacturers", manufacturers =>
             {
-                manufacturers.HandledBy<ManufacturerIndexController>();
-                manufacturers.HandledBy<CreateManufacturerController>();
+                manufacturers.Controller<ManufacturerIndexController>();
+                manufacturers.Controller<CreateManufacturerController>();
                 manufacturers.Items(manufacturer =>
                 {
-                    manufacturer.HandledBy<ManufacturerDetailsController>();
-                    manufacturer.HandledBy<EditManufacturerController>();
+                    manufacturer.Controller<ManufacturerDetailsController>();
+                    manufacturer.Controller<EditManufacturerController>();
                 });
             });
             root.ApplyRouteConventions(new CrudRouteConventions());

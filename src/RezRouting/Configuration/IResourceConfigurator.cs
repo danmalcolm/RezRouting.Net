@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using RezRouting.Resources;
 
 namespace RezRouting.Configuration
@@ -27,10 +26,10 @@ namespace RezRouting.Configuration
         void CustomProperties(Action<CustomValueCollection> configure);
 
         /// <summary>
-        /// Modifies custom data made available to conventions when creating this resource and its routes
+        /// Modifies custom data made available to extensions when configuring this resource and its routes
         /// </summary>
-        /// <param name="configure">An action that modifies the collection of convention data</param>
-        void ConventionData(Action<CustomValueCollection> configure);
+        /// <param name="configure">An action that modifies the collection of extension data</param>
+        void ExtensionData(Action<CustomValueCollection> configure);
         
         /// <summary>
         /// Adds a child singular resource to resource being configured

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using RezRouting.Configuration.Builders;
 using RezRouting.Configuration.Conventions;
 using RezRouting.Resources;
@@ -28,10 +27,11 @@ namespace RezRouting.Configuration
             return new RootResourceBuilder(name);
         }
 
-        private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>(); 
+        private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
+        private readonly CustomValueCollection sharedConventionData = new CustomValueCollection();
         private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
 
-        private RootResourceBuilder(string name = "") : base(name)
+        private RootResourceBuilder(string name = "") : base(null, name)
         {
             this.UrlPath("");
         }
@@ -51,6 +51,14 @@ namespace RezRouting.Configuration
             this.routeConventions.AddRange(conventions);
         }
 
+        /// <inheritdoc />
+        public void SharedExtensionData(Action<CustomValueCollection> configure)
+        {
+            if (configure == null) throw new ArgumentNullException("configure");
+
+            configure(sharedConventionData);
+        }
+
         /// <inheritdoc/>
         public void Options(Action<IOptionsConfigurator> configure)
         {
@@ -61,7 +69,7 @@ namespace RezRouting.Configuration
         public Resource Build()
         {
             var options = optionsBuilder.Build();
-            var context = new ConfigurationContext(routeConventions);
+            var context = new ConfigurationContext(routeConventions, sharedConventionData);
             var root = Build(options, context);
             return root;
         }

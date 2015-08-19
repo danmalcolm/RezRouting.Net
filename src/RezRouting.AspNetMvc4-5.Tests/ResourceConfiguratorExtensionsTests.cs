@@ -14,12 +14,12 @@ namespace RezRouting.AspNetMvc.Tests
         public void when_specifying_controller_handling_resource_should_add_to_convention_data()
         {
             var builder = RootResourceBuilder.Create();
-            builder.HandledBy<Controller1>();
-            builder.HandledBy<Controller2>();
-            builder.ConventionData(data =>
+            builder.Controller<Controller1>();
+            builder.Controller<Controller2>();
+            builder.ExtensionData(data =>
             {
-                data.Should().ContainKey(ConventionDataKeys.ControllerTypes);
-                var value = data[ConventionDataKeys.ControllerTypes];
+                data.Should().ContainKey(ExtensionDataKeys.ControllerTypes);
+                var value = data[ExtensionDataKeys.ControllerTypes];
                 value.Should().BeOfType<List<Type>>();
                 ((List<Type>) value).Should().Equal(typeof (Controller1), typeof (Controller2));
             });

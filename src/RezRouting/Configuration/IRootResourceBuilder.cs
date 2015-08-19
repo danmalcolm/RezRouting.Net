@@ -23,7 +23,13 @@ namespace RezRouting.Configuration
         /// <param name="conventions"></param>
         void ApplyRouteConventions(params IRouteConvention[] conventions);
 
-
+        /// <summary>
+        /// Modifies shared custom data made available to extensions when creating this resource and its routes.
+        /// This data defined at root level and shared by all resources in the hierarchy.
+        /// </summary>
+        /// <param name="configure">An action that modifies the shared collection of extension data</param>
+        void SharedExtensionData(Action<CustomValueCollection> configure);
+        
         /// <summary>
         /// Configures options applied during resource and route configuration
         /// </summary>
@@ -36,6 +42,5 @@ namespace RezRouting.Configuration
         /// </summary>
         /// <returns></returns>
         Resource Build();
-
     }
 }

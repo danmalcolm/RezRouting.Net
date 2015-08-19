@@ -50,13 +50,17 @@
     <Compile Include="..\SharedAssemblyVersion.cs">
       <Link>SharedAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Configuration\Builders\CollectionItemData.cs" />
+    <Compile Include="Configuration\Builders\CollectionData.cs" />
     <Compile Include="Configuration\Builders\ConfigurationContext.cs" />
     <Compile Include="Configuration\Builders\CollectionItemBuilder.cs" />
     <Compile Include="Configuration\Builders\CollectionBuilder.cs" />
     <Compile Include="Configuration\Builders\IResourceBuilder.cs" />
     <Compile Include="Configuration\Builders\OptionsBuilder.cs" />
     <Compile Include="Configuration\Builders\ResourceBuilderBase.cs" />
+    <Compile Include="Configuration\Builders\ResourceData.cs" />
     <Compile Include="Configuration\Builders\SingularBuilder.cs" />
+    <Compile Include="Configuration\Builders\SingularData.cs" />
     <Compile Include="Configuration\Conventions\IRouteConvention.cs" />
     <Compile Include="Configuration\Conventions\IRouteConventionScheme.cs" />
     <Compile Include="Configuration\ICollectionConfigurator.cs" />

@@ -25,10 +25,10 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
                 root.ApplyRouteConventions(new CrudRouteConventions());
                 root.Collection("Products", products =>
                 {
-                    products.HandledBy<ProductsController>();
-                    products.Items(product => product.HandledBy<ProductController>());
+                    products.Controller<ProductsController>();
+                    products.Items(product => product.Controller<ProductController>());
                 });
-                root.Singular("Profile", profile => profile.HandledBy<ProfileController>());
+                root.Singular("Profile", profile => profile.Controller<ProfileController>());
             });
         }
 
@@ -75,7 +75,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
             var builder = RootResourceBuilder.Create("");
             builder.Collection("Products", products =>
             {
-                products.Items(product => product.HandledBy<ProductsController>());
+                products.Items(product => product.Controller<ProductsController>());
             });
             builder.ApplyRouteConventions(new CrudRouteConventions());
             var root = builder.Build();

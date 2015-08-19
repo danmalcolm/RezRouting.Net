@@ -18,8 +18,8 @@ namespace RezRouting.AspNetMvc
     /// </summary>
     public class HttpMethodOrOverrideConstraint : HttpMethodConstraint
     {
-        private static readonly string[] FormOverrideKeys = new[] { "X-HTTP-Method-Override", "_method" };
-        private static readonly string[] HeaderOverrideKeys = new[] { "X-HTTP-Method-Override" };
+        private static readonly string[] FormOverrideKeys = { "X-HTTP-Method-Override", "_method" };
+        private static readonly string[] HeaderOverrideKeys = { "X-HTTP-Method-Override" };
 
         public HttpMethodOrOverrideConstraint(params string[] allowedMethods)
             : base(allowedMethods) { }
