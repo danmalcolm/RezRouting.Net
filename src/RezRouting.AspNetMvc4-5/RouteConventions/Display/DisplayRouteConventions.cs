@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc.RouteConventions.Display
@@ -7,9 +7,9 @@ namespace RezRouting.AspNetMvc.RouteConventions.Display
     /// <summary>
     /// Creates IRouteConvention collection to map resource display routes
     /// </summary>
-    public class DisplayRouteConventions : IRouteConventionScheme
+    public class DisplayRouteConventions : ExtensionScheme
     {
-        public IEnumerable<IRouteConvention> GetConventions()
+        protected override IEnumerable<IExtension> GetExtensions()
         {
             var displayCollection = new ActionRouteConvention("Index", ResourceType.Collection, "Index", "GET", "");
             

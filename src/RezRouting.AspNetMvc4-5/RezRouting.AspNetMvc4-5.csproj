@@ -81,7 +81,7 @@
     <Compile Include="ResourceRoute.cs" />
     <Compile Include="RouteValidator.cs" />
     <Compile Include="RouteConventions\ActionRouteConvention.cs" />
-    <Compile Include="RouteConventions\Crud\CrudRouteConventions.cs" />
+    <Compile Include="RouteConventions\Crud\CrudRoutesScheme.cs" />
     <Compile Include="RouteConventions\Tasks\TaskRouteConventions.cs" />
     <Compile Include="RouteConventions\Tasks\TaskRouteConvention.cs" />
     <Compile Include="UrlGeneration\RouteModelIndex.cs" />

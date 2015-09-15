@@ -1,5 +1,5 @@
 ﻿using System;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 using RezRouting.Resources;
 
 namespace RezRouting.Configuration
@@ -10,18 +10,11 @@ namespace RezRouting.Configuration
     public interface IRootResourceBuilder : ISingularConfigurator
     {
         /// <summary>
-        /// Adds a set of conventions used to generate routes for the root resource 
-        /// and its descendants
+        /// Adds one or more extensions used to customise the root resource and it's
+        /// hierarchy
         /// </summary>
-        /// <param name="scheme">A scheme containing the route conventions to add</param>
-        void ApplyRouteConventions(IRouteConventionScheme scheme);
-
-        /// <summary>
-        /// Adds one or more conventions used to generated routes for the root resource
-        /// and its descendants
-        /// </summary>
-        /// <param name="conventions"></param>
-        void ApplyRouteConventions(params IRouteConvention[] conventions);
+        /// <param name="extensions"></param>
+        void Extension(params IExtension[] extensions);
 
         /// <summary>
         /// Modifies shared custom data made available to extensions when creating this resource and its routes.

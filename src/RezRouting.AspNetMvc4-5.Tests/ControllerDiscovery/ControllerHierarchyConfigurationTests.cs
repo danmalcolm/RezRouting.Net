@@ -36,7 +36,7 @@ namespace RezRouting.AspNetMvc.Tests.ControllerDiscovery
                     });
                 });
                 root.ControllerHierarchy(typeof (HomeController).Assembly, typeof (HomeController).Namespace);
-                root.ApplyRouteConventions(Convention);
+                root.Extension(Convention);
             });
         }
 
@@ -65,8 +65,8 @@ namespace RezRouting.AspNetMvc.Tests.ControllerDiscovery
         {
             private readonly List<ResourceControllerInfo> controllerInfoList = new List<ResourceControllerInfo>();
 
-            protected override IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings,
-                CustomValueCollection contextItems, IEnumerable<Type> controllerTypes)
+            protected override IEnumerable<RouteData> CreateRoutes(ResourceData resource, ConfigurationContext context, ConfigurationOptions options,
+                IEnumerable<Type> controllerTypes)
             {
                 controllerInfoList.Add(new ResourceControllerInfo { ResourceFullName = resource.FullName, ControllerTypes = controllerTypes.ToList() });
                 yield break;

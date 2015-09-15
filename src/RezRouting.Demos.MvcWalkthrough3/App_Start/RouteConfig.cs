@@ -65,8 +65,8 @@ namespace RezRouting.Demos.MvcWalkthrough3
                 });
             });
             root.Options(options => options.UrlPaths(new UrlPathSettings(wordSeparator:"-")));
-            root.ApplyRouteConventions(new DisplayRouteConventions());
-            root.ApplyRouteConventions(new TaskRouteConventions());
+            root.Extension(new DisplayRouteConventions());
+            root.Extension(new TaskRouteConventions());
             root.MapMvcRoutes(routes);
         }
     }

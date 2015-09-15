@@ -3,8 +3,10 @@
 
 [ ] Controller hierarchy - convention-based automapping based on controller hierarchy
 
+- Replace conventions with dedicated Extension mechanism
 - Set root controller 
 - Add hook 
+- 
 
 [ ] Tests for home route mapping
 

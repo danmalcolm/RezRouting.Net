@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc.RouteConventions.Tasks
@@ -7,9 +7,9 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
     /// <summary>
     /// Creates IRouteConventions used to map resource display and task routes
     /// </summary>
-    public class TaskRouteConventions : IRouteConventionScheme
+    public class TaskRouteConventions : ExtensionScheme
     {
-        public IEnumerable<IRouteConvention> GetConventions()
+        protected override IEnumerable<IExtension> GetExtensions()
         {
             var editCollectionTask = new TaskRouteConvention("EditCollectionTask", ResourceType.Collection, "Edit", "GET");
             var handleCollectionTask = new TaskRouteConvention("HandleCollectionTask", ResourceType.Collection, "Handle", "POST");

@@ -14,7 +14,7 @@ namespace RezRouting.AspNetMvc.ControllerDiscovery
 
         public static IEnumerable<Type> GetControllers(ResourceData resource, CustomValueCollection conventionData, CustomValueCollection contextItems)
         {
-            // Scan assemblies once and cache result for reuse in context items
+            // Scan assemblies once and cache within contextItems for reuse
             var index = contextItems.GetOrAdd(IndexKey, () => IndexControllers(conventionData));
             return from item in index.Items
                 where item.Key.StartsWith(resource.FullName)

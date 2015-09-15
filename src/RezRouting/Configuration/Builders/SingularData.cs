@@ -26,8 +26,7 @@ namespace RezRouting.Configuration.Builders
             }
             set
             {
-                if (value == null) throw new ArgumentNullException("value");
-                if (!PathSegmentCleaner.IsValid(value))
+                if (value != null && !PathSegmentCleaner.IsValid(value))
                 {
                     throw new ArgumentException("Path contains invalid characters. Only numbers, letters, hyphen and underscore characters can be used for a resource's path.", "path");
                 }
@@ -41,6 +40,12 @@ namespace RezRouting.Configuration.Builders
             return new DirectoryUrlSegment(path);
         }
 
-
+        protected override ResourceData CreateCopy()
+        {
+            return new SingularData
+            {
+                UrlPath = UrlPath
+            };
+        }
     }
 }

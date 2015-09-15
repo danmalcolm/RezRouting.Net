@@ -30,12 +30,12 @@ namespace RezRouting.Demos.Tasks
                     product.Controller<EditProductController>();
                 });
             });
-            root.ApplyRouteConventions(new TaskRouteConventions());
+            root.Extension(new TaskRouteConventions());
             root.MapMvcRoutes(routes);
 
             // Use CRUD for session for now
             root = RootResourceBuilder.Create("");
-            root.ApplyRouteConventions(new CrudRouteConventions());
+            root.Extension(new CrudRoutesScheme());
             root.Singular("Session", session => session.Controller<SessionController>());
             root.MapMvcRoutes(routes);
         }

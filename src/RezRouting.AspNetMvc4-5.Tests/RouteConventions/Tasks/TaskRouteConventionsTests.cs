@@ -18,7 +18,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         {
             Resources = BuildResources(root =>
             {
-                root.ApplyRouteConventions(new TaskRouteConventions());
+                root.Extension(new TaskRouteConventions());
                 root.Collection("Products", products =>
                 {
                     products.Controller<CreateProductController>();

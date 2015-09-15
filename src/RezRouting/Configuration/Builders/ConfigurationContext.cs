@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
-using RezRouting.Resources;
+﻿using RezRouting.Resources;
 
 namespace RezRouting.Configuration.Builders
 {
@@ -10,28 +8,22 @@ namespace RezRouting.Configuration.Builders
     /// </summary>
     public class ConfigurationContext
     {
-        public ConfigurationContext(List<IRouteConvention> routeConventions, CustomValueCollection sharedConventionData)
+        public ConfigurationContext(CustomValueCollection sharedExtensionData)
         {
-            RouteConventions = routeConventions;
-            SharedConventionData = sharedConventionData;
-            Items = new CustomValueCollection();
+            SharedExtensionData = sharedExtensionData;
+            Cache = new CustomValueCollection();
         }
-
-        /// <summary>
-        /// Conventions used to add routes to all resources being configured
-        /// </summary>
-        public List<IRouteConvention> RouteConventions { get; private set; }
 
         /// <summary>
         /// Shared convention data specified on the root resource
         /// </summary>
-        public CustomValueCollection SharedConventionData { get; set; }
+        public CustomValueCollection SharedExtensionData { get; set; }
 
         /// <summary>
         /// A collection of data shared by all builders in the hierarchy as
         /// the resource model is built - suitable for optimizations such as 
         /// caching shared data.
         /// </summary>
-        public CustomValueCollection Items { get; private set; }
+        public CustomValueCollection Cache { get; private set; }
     }
 }

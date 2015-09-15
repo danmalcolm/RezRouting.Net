@@ -184,7 +184,7 @@ namespace RezRouting.AspNetMvc.Tests.Benchmarks
             var scheme = new TestRouteConventionScheme(conventions);
             
             var builder = RootResourceBuilder.Create("");
-            builder.ApplyRouteConventions(scheme);
+            builder.Extension(scheme);
             foreach (var resourceInfo in DemoData.Resources)
             {
                 string resourceName = resourceInfo.Item1;

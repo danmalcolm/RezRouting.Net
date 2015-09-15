@@ -18,7 +18,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Display
         {
             Resources = BuildResources(root =>
             {
-                root.ApplyRouteConventions(new DisplayRouteConventions());
+                root.Extension(new DisplayRouteConventions());
                 root.Collection("Products", products =>
                 {
                     products.Controller<ProductIndexController>();

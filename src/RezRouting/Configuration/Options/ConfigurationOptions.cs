@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
-
 namespace RezRouting.Configuration.Options
 {
     /// <summary>
@@ -8,8 +5,6 @@ namespace RezRouting.Configuration.Options
     /// </summary>
     public class ConfigurationOptions
     {
-        private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
-        
         public ConfigurationOptions(UrlPathSettings urlPathSettings, IIdNameFormatter idNameFormatter)
         {
             UrlPathSettings = urlPathSettings;

@@ -13,6 +13,9 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions
 {
     public class ActionRouteConventionTests
     {
+        private readonly ConfigurationContext context = new ConfigurationContext(new CustomValueCollection());
+        private readonly ConfigurationOptions options = new ConfigurationOptions(new UrlPathSettings(), new DefaultIdNameFormatter());
+
         public Resource CreateCollectionResource()
         {
             var builder = RootResourceBuilder.Create("");
@@ -22,43 +25,33 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions
             return collection;
         }
 
-        private CustomValueCollection CreateConventionData(Type controllerType)
-        {
-            var data = new CustomValueCollection();
-            data.AddControllerTypes(new[] {controllerType});
-            return data;
-        }
-
         [Fact]
         public void should_format_path_using_options()
         {
             var resourceData = new CollectionData();
             resourceData.Init("Products", null);
-            var sharedConventionData = new CustomValueCollection();
+            resourceData.ExtensionData.AddControllerTypes(new [] { typeof(TestController)});
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "FunkyAction");
             var urlPathSettings = new UrlPathSettings(CaseStyle.Upper, "_");
-            var data = CreateConventionData(typeof(TestController));
+            var options2 = new ConfigurationOptions(urlPathSettings, new DefaultIdNameFormatter());
             
-            var route = convention
-                .Create(resourceData, sharedConventionData, data, urlPathSettings, new CustomValueCollection())
-                .Single();
+            convention.Extend(resourceData, context, options2);
 
+            var route = resourceData.Routes.Single();
             route.Path.Should().Be("FUNKY_ACTION");
         }
 
         [Fact]
-        public void should_not_build_route_if_action_not_supported()
+        public void should_not_build_route_if_action_not_supported_by_any_controllers()
         {
             var resourceData = new CollectionData();
             resourceData.Init("Products", null);
-            var sharedConventionData = new CustomValueCollection();
+            resourceData.ExtensionData.AddControllerTypes(new [] { typeof(TestController)});
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "UnknownAction", "GET", "FunkyAction");
-            var data = CreateConventionData(typeof(TestController));
             
-            var routes = convention
-                .Create(resourceData, sharedConventionData, data, new UrlPathSettings(), new CustomValueCollection());
+            convention.Extend(resourceData, context, options);
 
-            routes.Should().BeEmpty();
+            resourceData.Routes.Should().BeEmpty();
         }
         
         [Fact]
@@ -66,16 +59,14 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions
         {
             var resourceData = new CollectionData();
             resourceData.Init("Products", null);
-            var sharedConventionData = new CustomValueCollection();
+            resourceData.ExtensionData.AddControllerTypes(new[] { typeof(TestControllerWithActionNameAttribute) });
             var convention = new ActionRouteConvention("FunkyAction", ResourceType.Collection, "FunkyAction", "GET", "Action1");
-            var data = CreateConventionData(typeof(TestControllerWithActionNameAttribute));
             
-            var route = convention
-                .Create(resourceData, sharedConventionData, data, new UrlPathSettings(), new CustomValueCollection())
-                .Single();
+            convention.Extend(resourceData, context, options);
 
-            route.Should().NotBeNull();
-            route.Handler.Should().Be(new MvcAction(typeof (TestControllerWithActionNameAttribute), "FunkyAction"));
+            resourceData.Routes.Should().HaveCount(1);
+            var route = resourceData.Routes.Single();
+            route.Handler.Should().Be(new MvcAction(typeof(TestControllerWithActionNameAttribute), "FunkyAction"));
         }
     }
 

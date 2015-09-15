@@ -59,12 +59,14 @@
     <Compile Include="Configuration\Builders\OptionsBuilder.cs" />
     <Compile Include="Configuration\Builders\ResourceBuilderBase.cs" />
     <Compile Include="Configuration\Builders\ResourceData.cs" />
+    <Compile Include="Configuration\Builders\RouteData.cs" />
     <Compile Include="Configuration\Builders\SingularBuilder.cs" />
     <Compile Include="Configuration\Builders\SingularData.cs" />
-    <Compile Include="Configuration\Conventions\IRouteConvention.cs" />
-    <Compile Include="Configuration\Conventions\IRouteConventionScheme.cs" />
+    <Compile Include="Configuration\Extensions\ExtensionScheme.cs" />
+    <Compile Include="Configuration\Extensions\RouteConventionBase.cs" />
     <Compile Include="Configuration\ICollectionConfigurator.cs" />
     <Compile Include="Configuration\ICollectionItemConfigurator.cs" />
+    <Compile Include="Configuration\Extensions\IExtension.cs" />
     <Compile Include="Configuration\IOptionsConfigurator.cs" />
     <Compile Include="Configuration\IResourceConfigurator.cs" />
     <Compile Include="Configuration\IRootResourceBuilder.cs" />

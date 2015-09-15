@@ -14,18 +14,13 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
 {
     public class TaskRouteConventionTests : ConfigurationTestsBase
     {
-        private readonly UrlPathSettings pathSettings;
+        private readonly ConfigurationContext context;
+        private readonly ConfigurationOptions options;
 
         public TaskRouteConventionTests()
         {
-            pathSettings = new UrlPathSettings(CaseStyle.Lower);
-        }
-
-        private CustomValueCollection CreateConventionData(Type controllerType)
-        {
-            var data = new CustomValueCollection();
-            data.AddControllerTypes(new[] { controllerType });
-            return data;
+            context = new ConfigurationContext(new CustomValueCollection());
+            options = new ConfigurationOptions(new UrlPathSettings(), new DefaultIdNameFormatter());
         }
 
         [Fact]
@@ -33,13 +28,13 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         {
             var resourceData = new CollectionData();
             resourceData.Init("Products", null);
+            resourceData.ExtensionData.AddControllerTypes(new[] { typeof(EditProductsController) });
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            var data = CreateConventionData(typeof (EditProductsController));
-
-            var route = convention
-                .Create(resourceData, new CustomValueCollection(), data, pathSettings, new CustomValueCollection())
-                .Single();
             
+            convention.Extend(resourceData, context, options);
+
+            resourceData.Routes.Should().HaveCount(1);
+            var route = resourceData.Routes.Single();
             route.Path.Should().Be("edit");
         }
 
@@ -48,12 +43,13 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         {
             var resourceData = new CollectionData();
             resourceData.Init("Products", null);
+            resourceData.ExtensionData.AddControllerTypes(new[] { typeof(CreateProductController) });
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            var data = CreateConventionData(typeof(CreateProductController));
-            var route = convention
-                .Create(resourceData, new CustomValueCollection(), data, pathSettings, new CustomValueCollection())
-                .Single();
+            
+            convention.Extend(resourceData, context, options);
 
+            resourceData.Routes.Should().HaveCount(1);
+            var route = resourceData.Routes.Single();
             route.Path.Should().Be("create");
         }
 
@@ -61,28 +57,29 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Tasks
         public void should_format_task_path_using_settings()
         {
             var resourceData = new CollectionData();
-            resourceData.Init("Products", null); var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            var data = CreateConventionData(typeof (CreateProductController));
+            resourceData.Init("Products", null);
+            resourceData.ExtensionData.AddControllerTypes(new[] { typeof(CreateProductController) });
+            var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
+            var options2 = new ConfigurationOptions(new UrlPathSettings(CaseStyle.Upper), options.IdNameFormatter);
             
-            var route = convention
-                .Create(resourceData, new CustomValueCollection(), data, new UrlPathSettings(CaseStyle.Lower), new CustomValueCollection())
-                .Single();
+            convention.Extend(resourceData, context, options2);
 
-            route.Path.Should().Be("create");
+            resourceData.Routes.Should().HaveCount(1);
+            var route = resourceData.Routes.Single();
+            route.Path.Should().Be("CREATE");
         }
 
         [Fact]
-        public void should_not_create_route_for_resource_with_different_level()
+        public void should_not_create_route_for_resource_with_different_type()
         {
             var resourceData = new SingularData();
-            resourceData.Init("Profile", null); 
+            resourceData.Init("Profile", null);
+            resourceData.ExtensionData.AddControllerTypes(new[] { typeof(EditProductsController) });
             var convention = new TaskRouteConvention("CollectionEdit", ResourceType.Collection, "Edit", "GET");
-            var data = CreateConventionData(typeof(EditProductsController));
+            
+            convention.Extend(resourceData, context, options);
 
-            var routes = convention
-                .Create(resourceData, new CustomValueCollection(), data, pathSettings, new CustomValueCollection());
-
-            routes.Should().BeEmpty();
+            resourceData.Routes.Should().BeEmpty();
         }
     }
 }

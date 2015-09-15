@@ -1,27 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 
 namespace RezRouting.Tests.Infrastructure
 {
-    public class TestRouteConventionScheme : IRouteConventionScheme
+    public class TestRouteConventionScheme : ExtensionScheme
     {
-        private readonly IRouteConvention[] conventions;
+        private readonly IExtension[] extensions;
 
-        public TestRouteConventionScheme(IEnumerable<IRouteConvention> conventions) 
-            : this(conventions.ToArray())
+        public TestRouteConventionScheme(IEnumerable<IExtension> extensions)
         {
-        
+            this.extensions = extensions.ToArray();
         }
 
-        public TestRouteConventionScheme(params IRouteConvention[] conventions)
+        protected override IEnumerable<IExtension> GetExtensions()
         {
-            this.conventions = conventions;
-        }
-
-        public IEnumerable<IRouteConvention> GetConventions()
-        {
-            return conventions;
+            return extensions;
         }
     }
 }

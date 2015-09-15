@@ -22,7 +22,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
         {
             Resources = BuildResources(root =>
             {
-                root.ApplyRouteConventions(new CrudRouteConventions());
+                root.Extension(new CrudRoutesScheme());
                 root.Collection("Products", products =>
                 {
                     products.Controller<ProductsController>();
@@ -77,7 +77,7 @@ namespace RezRouting.AspNetMvc.Tests.RouteConventions.Crud
             {
                 products.Items(product => product.Controller<ProductsController>());
             });
-            builder.ApplyRouteConventions(new CrudRouteConventions());
+            builder.Extension(new CrudRoutesScheme());
             var root = builder.Build();
             var routes = root.Children.Expand().SelectMany(x => x.Routes);
             routes.Should().BeEmpty();

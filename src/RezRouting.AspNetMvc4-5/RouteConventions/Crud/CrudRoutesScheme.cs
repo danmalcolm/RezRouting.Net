@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 using RezRouting.Resources;
 
 namespace RezRouting.AspNetMvc.RouteConventions.Crud
 {
     /// <summary>
-    /// Creates IRouteConventions used to map basic Create, Read, Update
-    /// and Delete actions for all types of resource
+    /// A collection of route conventions used to map basic Create, Read, Update
+    /// and Delete actions for collection, collection item and singular resources.
     /// </summary>
-    public class CrudRouteConventions : IRouteConventionScheme
+    public class CrudRoutesScheme : ExtensionScheme
     {
         /// <summary>
         /// Creates the individual route conventions
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IRouteConvention> GetConventions()
+        protected override IEnumerable<IExtension> GetExtensions()
         {
             var collectionIndex = new ActionRouteConvention("Index", ResourceType.Collection, "Index", "GET", "");
             var collectionNew = new ActionRouteConvention("New", ResourceType.Collection, "New", "GET", "new");

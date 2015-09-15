@@ -42,20 +42,22 @@ namespace RezRouting.AspNetMvc.RouteConventions.Tasks
         /// </summary>
         public string HttpMethod { get; set; }
 
-        protected override IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems, IEnumerable<Type> controllerTypes)
+        protected override IEnumerable<RouteData> CreateRoutes(ResourceData resource, ConfigurationContext context, ConfigurationOptions options,
+            IEnumerable<Type> controllerTypes)
         {
+            var urlPathSettings = options.UrlPathSettings;
             if (resource.Type == Type)
             {
                 foreach (var controllerType in controllerTypes)
                 {
-                    var supported = ActionMappingHelper.SupportsAction(controllerType, Action, contextItems);
+                    var supported = ActionMappingHelper.SupportsAction(controllerType, Action, context.Cache);
                     if (supported)
                     {
                         var path = GetPath(resource, controllerType, urlPathSettings);
                         string controllerName = RouteValueHelper.TrimControllerFromTypeName(controllerType);
                         string name = string.Format("{0}.{1}", controllerName, Action);
                         var handler = new MvcAction(controllerType, Action);
-                        var route = new Route(name, HttpMethod, path, handler);
+                        var route = new RouteData(name, HttpMethod, path, handler);
                         yield return route;
                     }
                 }

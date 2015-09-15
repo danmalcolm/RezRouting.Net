@@ -24,5 +24,14 @@ namespace RezRouting.Configuration.Builders
             string idNameAsAncestor = CustomIdNameAsAncestor ?? options.IdNameFormatter.GetIdNameAsAncestor(Name);
             return new IdUrlSegment(idName, idNameAsAncestor);
         }
+
+        protected override ResourceData CreateCopy()
+        {
+            return new CollectionItemData
+            {
+                CustomIdName = CustomIdName,
+                CustomIdNameAsAncestor = CustomIdNameAsAncestor
+            };
+        }
     }
 }

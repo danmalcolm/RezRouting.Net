@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
+using RezRouting.Utility;
 
 namespace RezRouting.Configuration.Builders
 {
@@ -12,13 +13,13 @@ namespace RezRouting.Configuration.Builders
     /// </summary>
     public abstract class ResourceData
     {
-        private readonly List<ResourceData> children = new List<ResourceData>();
-        private readonly List<Route> routes = new List<Route>();
+        private List<ResourceData> children = new List<ResourceData>();
+        private List<RouteData> routes = new List<RouteData>();
 
         public ResourceData()
         {
             CustomProperties = new CustomValueCollection();
-            ConventionData = new CustomValueCollection();
+            ExtensionData = new CustomValueCollection();
         }
 
         internal void Init(string name, ResourceData parent)
@@ -68,18 +69,39 @@ namespace RezRouting.Configuration.Builders
             get { return children.AsEnumerable(); }
         }
 
-        public IEnumerable<Route> Routes
+        public IEnumerable<RouteData> Routes
         {
             get { return routes.AsEnumerable(); }
         }
 
         public CustomValueCollection CustomProperties { get; private set; }
 
-        public CustomValueCollection ConventionData { get; private set; }
+        public CustomValueCollection ExtensionData { get; private set; }
 
         public IdUrlSegment AncestorIdUrlSegment { get; set; }
 
-        public void AddRoute(Route route)
+        /// <summary>
+        /// Gets a "flattened" resource hierarchy, returning all resources in the 
+        /// specified sequence and their descendants
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <returns></returns>
+        private static IEnumerable<ResourceData> Expand(IEnumerable<ResourceData> resources)
+        {
+            return resources.SelectMany(resource => new[] { resource }.Concat(Expand(resource.Children)));
+        }
+
+        /// <summary>
+        /// Gets a "flattened" list of resources, returning the current resource 
+        /// and its descendants
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ResourceData> Expand()
+        {
+            return Expand(new[] { this });
+        }
+
+        public void AddRoute(RouteData route)
         {
             if (route == null) throw new ArgumentNullException("route");
             routes.Add(route);
@@ -92,10 +114,31 @@ namespace RezRouting.Configuration.Builders
         /// <returns></returns>
         protected abstract IUrlSegment GetUrlSegment(ConfigurationOptions options);
         
-        public Resource CreateResource(ConfigurationOptions options, IEnumerable<Resource> children)
+        public Resource CreateResource(ConfigurationOptions options)
         {
+            var childResources = this.children.Select(x => x.CreateResource(options));
+            var routes = this.routes.Select(x => x.CreateRoute());
             var urlSegment = GetUrlSegment(options);
-            return new Resource(Name, urlSegment, Type, AncestorIdUrlSegment, CustomProperties, children);
+            return new Resource(Name, urlSegment, Type, AncestorIdUrlSegment, CustomProperties, routes, childResources);
         }
+
+        /// <summary>
+        /// Creates a duplicate of the current ResourceData object, creating deep 
+        /// copies of all descendant resources and routes within the resource hierarchy
+        /// </summary>
+        /// <returns></returns>
+        public ResourceData Copy(ResourceData parent)
+        {
+            var copy = CreateCopy();
+            copy.Init(Name, parent);
+            children.Each(c => c.Copy(copy)); // They will be added to parent
+            copy.routes = routes.Select(x => x.Copy()).ToList();
+            copy.CustomProperties = new CustomValueCollection(CustomProperties);
+            copy.ExtensionData = new CustomValueCollection(ExtensionData);
+            copy.AncestorIdUrlSegment = AncestorIdUrlSegment;
+            return copy;
+        }
+
+        protected abstract ResourceData CreateCopy();
     }
 }

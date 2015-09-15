@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using RezRouting.Configuration.Builders;
-using RezRouting.Configuration.Conventions;
+using RezRouting.Configuration.Extensions;
 using RezRouting.Resources;
+using RezRouting.Utility;
 
 namespace RezRouting.Configuration
 {
@@ -27,9 +28,11 @@ namespace RezRouting.Configuration
             return new RootResourceBuilder(name);
         }
 
-        private readonly List<IRouteConvention> routeConventions = new List<IRouteConvention>();
         private readonly CustomValueCollection sharedConventionData = new CustomValueCollection();
+
         private readonly OptionsBuilder optionsBuilder = new OptionsBuilder();
+
+        private readonly List<IExtension> extensions = new List<IExtension>();
 
         private RootResourceBuilder(string name = "") : base(null, name)
         {
@@ -37,18 +40,10 @@ namespace RezRouting.Configuration
         }
 
         /// <inheritdoc/>
-        public void ApplyRouteConventions(IRouteConventionScheme scheme)
+        public void Extension(params IExtension[] extensions)
         {
-            if (scheme == null) throw new ArgumentNullException("scheme");
-            var conventions = scheme.GetConventions();
-            this.routeConventions.AddRange(conventions);
-        }
-
-        /// <inheritdoc/>
-        public void ApplyRouteConventions(params IRouteConvention[] conventions)
-        {
-            if (conventions == null) throw new ArgumentNullException("conventions");
-            this.routeConventions.AddRange(conventions);
+            if(extensions == null) throw new ArgumentNullException("extensions");
+            this.extensions.AddRange(extensions);
         }
 
         /// <inheritdoc />
@@ -69,8 +64,15 @@ namespace RezRouting.Configuration
         public Resource Build()
         {
             var options = optionsBuilder.Build();
-            var context = new ConfigurationContext(routeConventions, sharedConventionData);
-            var root = Build(options, context);
+            var context = new ConfigurationContext(sharedConventionData);
+            // Building resources should not modify the state of the manually configured
+            // resource data, so extensions operate on a temporary copy of the resource
+            // data
+            var currentBuildData = Data.Copy(null);
+            // Apply extensions
+            extensions.Each(e => e.Extend(currentBuildData, context, options));
+            
+            var root = currentBuildData.CreateResource(options);
             return root;
         }
     }

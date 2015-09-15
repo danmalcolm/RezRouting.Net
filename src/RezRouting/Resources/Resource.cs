@@ -21,21 +21,17 @@ namespace RezRouting.Resources
         /// <param name="overrideAncestorItemId"></param>
         /// <param name="customProperties"></param>
         /// <param name="children"></param>
-        public Resource(string name, IUrlSegment urlSegment, ResourceType type, IdUrlSegment overrideAncestorItemId, CustomValueCollection customProperties, IEnumerable<Resource> children)
+        public Resource(string name, IUrlSegment urlSegment, ResourceType type, IdUrlSegment overrideAncestorItemId, CustomValueCollection customProperties, IEnumerable<Route> routes, IEnumerable<Resource> children)
         {
             Name = name;
             this.urlSegment = urlSegment;
             this.overrideAncestorItemId = overrideAncestorItemId;
             Type = type;
             CustomProperties = new CustomValueCollection(customProperties);
-            Children = children.ToReadOnlyList();
-            Children.Each(child => child.InitParent(this));
-        }
-
-        internal void InitRoutes(IEnumerable<Route> routes)
-        {
             Routes = routes.ToReadOnlyList();
             Routes.Each(route => route.InitResource(this));
+            Children = children.ToReadOnlyList();
+            Children.Each(child => child.InitParent(this));
         }
 
         private void InitParent(Resource parent)

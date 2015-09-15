@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RezRouting.Configuration.Builders;
-using RezRouting.Configuration.Conventions;
 using RezRouting.Configuration.Options;
 using RezRouting.Resources;
 
@@ -32,17 +31,19 @@ namespace RezRouting.AspNetMvc.RouteConventions
 
         public string Path { get; set; }
 
-        protected override IEnumerable<Route> Create(ResourceData resource, CustomValueCollection sharedConventionData, CustomValueCollection conventionData, UrlPathSettings urlPathSettings, CustomValueCollection contextItems, IEnumerable<Type> controllerTypes)
+        protected override IEnumerable<RouteData> CreateRoutes(ResourceData resource, ConfigurationContext context, ConfigurationOptions options,
+            IEnumerable<Type> controllerTypes)
         {
             if (resource.Type == Type)
             {
+                var urlPathSettings = options.UrlPathSettings;
                 return from controllerType in controllerTypes
-                       where ActionMappingHelper.SupportsAction(controllerType, Action, contextItems)
+                       where ActionMappingHelper.SupportsAction(controllerType, Action, context.Cache)
                        let handler = new MvcAction(controllerType, Action)
                        let path = urlPathSettings.FormatDirectoryName(Path)
-                       select new Route(Name, HttpMethod, path, handler, null);
+                       select new RouteData(Name, HttpMethod, path, handler, null);
             }
-            return Enumerable.Empty<Route>();
+            return Enumerable.Empty<RouteData>();
         }
     }
 }

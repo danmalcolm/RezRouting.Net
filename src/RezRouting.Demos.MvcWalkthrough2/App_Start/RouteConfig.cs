@@ -48,7 +48,7 @@ namespace RezRouting.Demos.MvcWalkthrough2
                     manufacturer.Controller<EditManufacturerController>();
                 });
             });
-            root.ApplyRouteConventions(new CrudRouteConventions());
+            root.Extension(new CrudRoutesScheme());
             root.MapMvcRoutes(routes);
         }
     }

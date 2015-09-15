@@ -59,7 +59,7 @@ namespace RezRouting.Configuration.Builders
         {
             if (configure == null) throw new ArgumentNullException("configure");
 
-            configure(Data.ConventionData);
+            configure(Data.ExtensionData);
         }
 
         /// <inheritdoc />
@@ -111,30 +111,27 @@ namespace RezRouting.Configuration.Builders
             if (httpMethod == null) throw new ArgumentNullException("httpMethod");
             if (path == null) throw new ArgumentNullException("path");
 
-            var route = new Route(name, httpMethod, path, handler, customProperties: customValues, additionalRouteValues: additionalRouteValues);
+            var route = new RouteData(name, httpMethod, path, handler, customProperties: customValues, additionalRouteValues: additionalRouteValues);
             Data.AddRoute(route);
         }
 
         /// <inheritdoc />
         public Resource Build(ConfigurationOptions options, ConfigurationContext context)
         {
-            if (options == null) throw new ArgumentNullException("options");
-
-            // Conventions are applied to a copy of the resource data. They extend this
-            // with any custom routes, leaving the original data intact. Applying conventions
-            // should not modify any routes configured manually.
-            var children = ChildBuilders.Select(x => x.Build(options, context)).ToList();
-            var resource = Data.CreateResource(options, children);
-            var sharedConventionData = context.SharedConventionData;
-            
-            var conventionRoutes = from convention in context.RouteConventions
-                                   from route in convention.Create(Data, sharedConventionData, Data.ConventionData, options.UrlPathSettings, context.Items)
-                                   select route;
-
-            var allRoutes = Data.Routes.Concat(conventionRoutes);
-            resource.InitRoutes(allRoutes);
-
-            return resource;
+            throw new NotImplementedException();
+//            if (options == null) throw new ArgumentNullException("options");
+//            var children = ChildBuilders.Select(x => x.Build(options, context)).ToList();
+//            var resource = Data.CreateResource(options, children);
+//            var sharedConventionData = context.SharedExtensionData;
+//            
+//            var conventionRoutes = from convention in context.RouteConventions
+//                                   from route in convention.Create(Data, sharedConventionData, Data.ExtensionData, options.UrlPathSettings, context.Cache)
+//                                   select route;
+//
+//            var allRoutes = Data.Routes.Concat(conventionRoutes);
+//            resource.InitRoutes(allRoutes);
+//
+//            return resource;
         }
     }
 }

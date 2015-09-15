@@ -1,14 +1,9 @@
 ﻿using System;
-using RezRouting.Utility;
+using RezRouting.Resources;
 
-namespace RezRouting.Resources
+namespace RezRouting.Configuration.Builders
 {
-    /// <summary>
-    /// Represents a route belonging to a Resource. A route maps a URL path and other
-    /// properties of an HTTP request (such as the HTTP method) to the handler 
-    /// responsible for executing the request.
-    /// </summary>
-    public class Route
+    public class RouteData
     {
         /// <summary>
         /// Creates a Route
@@ -19,7 +14,7 @@ namespace RezRouting.Resources
         /// <param name="handler"></param>
         /// <param name="customProperties"></param>
         /// <param name="additionalRouteValues"></param>
-        public Route(string name, string httpMethod, string path, IResourceRouteHandler handler, CustomValueCollection customProperties = null, CustomValueCollection additionalRouteValues = null)
+        public RouteData(string name, string httpMethod, string path, IResourceRouteHandler handler, CustomValueCollection customProperties = null, CustomValueCollection additionalRouteValues = null)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (handler == null) throw new ArgumentNullException("handler");
@@ -37,34 +32,11 @@ namespace RezRouting.Resources
                 ? new CustomValueCollection(additionalRouteValues)
                 : new CustomValueCollection();
         }
-
-        internal void InitResource(Resource resource)
-        {
-            Resource = resource;
-        }
-
+        
         /// <summary>
         /// The name of this Route
         /// </summary>
         public string Name { get; private set; }
-
-        /// <summary>
-        /// The full name of this Route (includes full name of the parent Resource)
-        /// </summary>
-        public string FullName
-        {
-            get
-            {
-                return Resource.FullName.Length > 0
-                    ? Resource.FullName + "." + Name
-                    : Name;
-            }
-        }
-
-        /// <summary>
-        /// The resource to which this Route belongs
-        /// </summary>
-        public Resource Resource { get; private set; }
 
         /// <summary>
         /// The handler that handles this Route
@@ -93,15 +65,14 @@ namespace RezRouting.Resources
         /// </summary>
         public CustomValueCollection AdditionalRouteValues { get; private set; }
 
-        /// <summary>
-        /// The full URL for requests that will be handled by this Route
-        /// </summary>
-        public string Url
+        public RouteData Copy()
         {
-            get
-            {
-                return UrlPathHelper.JoinPaths(Resource.Url, Path);
-            }
+            return new RouteData(Name, HttpMethod, Path, Handler, CustomProperties, AdditionalRouteValues);
+        }
+
+        public Route CreateRoute()
+        {
+            return new Route(Name, HttpMethod, Path, Handler, CustomProperties, AdditionalRouteValues);
         }
     }
 }
